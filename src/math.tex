@@ -1,0 +1,345 @@
+% https://ctan.org/tex-archive/macros/latex/contrib/fp?lang=en
+% https://mirrors.ibiblio.org/CTAN/macros/generic/xint/xint.pdf
+
+\newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
+\newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
+
+\usepackage{xinttools} % for the \xintFor
+\usepackage{xintfrac}
+\usepackage{fp}
+\usepackage{xstring}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Print Utility
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\fractionToNum[3]{
+    \FProot\tmpA{#3}{2}
+    \FPmul\tmpA\tmpA{#2}
+    \FPdiv\tmpB{#1}\tmpA
+    \FPset\fractionNumRes{\tmpB}
+    \ensuremath{
+        \tmpB
+    }
+}
+
+\newcommand\solutionC{%
+    \FPset\finalmul{1}
+    \FPset\tmptmptmptmp\tmptmptmp
+    %
+    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPtrunc\floored\tmptmptmptmp{0}
+        \FPsub\remainder\tmptmptmptmp\floored
+        \FPifgt{\remainder}{0.00001}
+            \FPdiv\mulmul{1}{\remainder}
+            \FPmul\finalmul\finalmul\mulmul
+        \else
+            \xintBreakFor
+        \fi
+        \FPset\tmptmptmptmp\mulmul
+    }
+    \FPround\finalmul\finalmul{8}
+    \FPclip\finalmul\finalmul
+    \FPset\finalmultmp\finalmul
+    % The result will be a multiplicator that is able to round
+    % the number to a whole number, but the result might not be a
+    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
+    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
+    % that the searched for number must be a multiple of 32, in this case 64
+    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
+    \xintFor* ##1 in \innersequence \do {%
+        \FProot\finalmulsqrt\finalmultmp{2}
+        \FPround\finalmulsqrt\finalmulsqrt{4}
+        \FPclip\finalmulsqrt\finalmulsqrt
+        \FPifint{\finalmulsqrt}
+            \xintBreakFor
+        \else
+            \FPadd\finalmultmp\finalmultmp\finalmul
+        \fi
+    }
+    \FPset\finalmul\finalmultmp
+    \FProot\finalmulsqrt\finalmul{2}
+    \FPround\finalmulsqrt\finalmulsqrt{4}
+    \FPclip\finalmulsqrt\finalmulsqrt
+    \FPmul\divisor\divisor\finalmul
+    \FPmul\dividend\dividend\finalmulsqrt
+}
+
+\newcommand\numToFraction[1]{%
+    \FPset\dividend{1}
+    \FPset\divisor{#1}
+    \ensuremath{
+        % reverse fraction
+        \FPdiv\divisor{1}{#1}
+        % Reverse root
+        % Use FPmul instead of FPpow to allow for neg values
+        \FPmul\divisor\divisor\divisor
+        \FPset\tmptmptmp\divisor
+        \FPround\divisor\divisor{10}
+        \FPclip\divisor\divisor
+        \FPifint{\divisor}
+        \else
+            \solutionC
+        \fi
+        %
+        \FPround\divisor\divisor{4}
+        \FPclip\divisor\divisor
+        \FPround\dividend\dividend{4}
+        \FPclip\dividend\dividend
+        %
+        \FPset\outputVar{#1}
+        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
+        \FPset\inputVar{#1}
+        \FPmul\inputVar\inputVar\inputVar
+        \FPround\inputVar\inputVar{8}
+        \FPclip\inputVar\inputVar
+        \FPifint{\inputVar}
+            \FPset\outputVar{\sqrt{\inputVar}}
+        \else
+        \fi
+        \FPset\inputVarA{#1}
+        \FPround\inputVarA\inputVarA{10}
+        \FPclip\inputVarA\inputVarA
+        \FPifint{\inputVarA}
+            \FPset\outputVar{\inputVarA}
+        \else
+        \fi
+        \outputVar
+    }
+}
+
+\newcommand\numToFractionA[1]{%
+    \FPset\inputVarA{#1}
+    \FPround\inputVarA\inputVarA{10}
+    \FPclip\inputVarA\inputVarA
+    \FPifint{\inputVarA}
+        \FPset\outputVar{\inputVarA}
+        \outputVar
+    \else
+        \numToFraction{#1}
+    \fi
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic number calculations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Divide skalar by skalar
+\newcommand\divNumber[3][4] {%
+    \FPset\divNumRes{0}
+    \FPset\dividend{#2}
+    \FPdiv\divNumRes\dividend{#3}
+    % \FPround\divNumRes\divNumRes{#1}
+    % \FPclip\divNumRes\divNumRes
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vector Utility
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\newVecThree[2]{% {Basename}{input}
+    \expandafter\def\csname #1\endcsname{\xintCSVtoList{#2}}%
+}
+
+\newcommand\printVecT[2][0]{%
+    \FPifeq{#1}{0}
+        \FPset\printX{\xintNthElt{1}{#2}}%
+        \FPround\printX\printX{4}
+        \FPclip\printX\printX
+        \FPset\printY{\xintNthElt{2}{#2}}%
+        \FPround\printY\printY{4}
+        \FPclip\printY\printY
+        \FPset\printZ{\xintNthElt{3}{#2}}%
+        \FPround\printZ\printZ{4}
+        \FPclip\printZ\printZ
+        \ensuremath{\trans{\left(\printX, \printY, \printZ\right)}}
+    \else
+        \ensuremath{\trans{\left(\numToFractionA{\xintNthElt{1}{#2}}, \numToFractionA{\xintNthElt{2}{#2}}, \numToFractionA{\xintNthElt{3}{#2}}\right)}}
+    \fi
+}
+
+\newcommand\printVec[2][0]{%
+    \FPifeq{#1}{0}
+        \FPset\printX{\xintNthElt{1}{#2}}%
+        \FPround\printX\printX{4}
+        \FPclip\printX\printX
+        \FPset\printY{\xintNthElt{2}{#2}}%
+        \FPround\printY\printY{4}
+        \FPclip\printY\printY
+        \FPset\printZ{\xintNthElt{3}{#2}}%
+        \FPround\printZ\printZ{4}
+        \FPclip\printZ\printZ
+        \ensuremath{%
+            \begin{pmatrix}
+                \printX\\
+                \printY\\
+                \printZ
+            \end{pmatrix}
+        }
+    \else
+        \ensuremath{%
+            \begin{pmatrix}
+                \numToFractionA{\xintNthElt{1}{#2}}\\
+                \numToFractionA{\xintNthElt{2}{#2}}\\
+                \numToFractionA{\xintNthElt{3}{#2}}
+            \end{pmatrix}
+        }
+    \fi
+}
+
+\newcommand\printVecX[1]{%
+    \xintNthElt{1}{#1}
+}
+
+\newcommand\printVecY[1]{%
+    \xintNthElt{2}{#1}
+}
+
+\newcommand\printVecZ[1]{%
+    \xintNthElt{3}{#1}
+}
+
+\newcommand\printVecW[1]{%
+    \xintNthElt{4}{#1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vector Math
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\printSubVec[2] {%
+    \subVec{#1}{#2}
+    \printVec{\subVecResult}
+}
+
+\newcommand\subVec[2] {%
+    \FPset\subVecX{0}%
+    \FPset\subVecY{0}%
+    \FPset\subVecZ{0}%
+    \FPset\tmpA{\xintNthElt{1}{#1}}%
+    \FPset\tmpB{\xintNthElt{1}{#2}}%
+    \FPsub\subVecX\tmpA\tmpB%
+    \FPclip\subVecX\subVecX%
+    \FPset\tmpA{\xintNthElt{2}{#1}}%
+    \FPset\tmpB{\xintNthElt{2}{#2}}%
+    \FPsub\subVecY\tmpA\tmpB%
+    \FPclip\subVecY\subVecY%
+    \FPset\tmpA{\xintNthElt{3}{#1}}%
+    \FPset\tmpB{\xintNthElt{3}{#2}}%
+    \FPsub\subVecZ\tmpA\tmpB%
+    \FPclip\subVecZ\subVecZ%
+    \newVecThree{subVecResult}{\subVecX,\subVecY,\subVecZ}%
+}
+
+\newcommand\printDivVec[2] {%
+    \divVec{#1}{#2}
+    \printVec{\divVecResult}
+}
+
+% Divide vector by skalar
+\newcommand\divVec[3][4] {%
+    \FPset\divVecX{0}
+    \FPset\divVecY{0}
+    \FPset\divVecZ{0}
+    \FPset\tmp{\xintNthElt{1}{#2}}
+    \FPdiv\divVecX\tmp{#3}
+    % \FPround\divVecX\divVecX{#1}
+    % \FPclip\divVecX\divVecX
+    \FPset\tmp{\xintNthElt{2}{#2}}
+    \FPdiv\divVecY\tmp{#3}
+    % \FPround\divVecY\divVecY{#1}
+    % \FPclip\divVecY\divVecY
+    % \FPset\tmp{\xintNthElt{3}{#2}}
+    % \FPdiv\divVecZ\tmp{#3}
+    % \FPround\divVecZ\divVecZ{#1}
+    % \FPclip\divVecZ\divVecZ
+    \divNumber{\xintNthElt{3}{#2}}{#3}
+    \FPset\divVecZ{\divNumRes}
+    \newVecThree{divVecResult}{\divVecX,\divVecY,\divVecZ}
+}
+
+%%%%%%%%%%%%%%%%%%
+% Subtract two vectors and normalize %
+%%%%%%%%%%%%%%%%%%
+\newcommand\printSubNormVec[3][0] {%
+    \subNormVec{#2}{#3}
+    \printVec[#1]{\subNormVecResult}
+}
+
+% Substract two vectors and normalize the result
+% optional argument: pass 1 for clean output with root
+\newcommand\subNormVec[2] {%
+    \subVec{#1}{#2}
+    \calcNorm{\subVecResult}
+    \divVec{\subVecResult}{\normResult}
+    \FPset\subNormVecX{\xintNthElt{1}{\divVecResult}}
+    \FPset\subNormVecY{\xintNthElt{2}{\divVecResult}}
+    \FPset\subNormVecZ{\xintNthElt{3}{\divVecResult}}
+    \newVecThree{subNormVecResult}{\subNormVecX,\subNormVecY,\subNormVecZ}
+}
+
+%%%%%%%%%%%%%%%%%%
+% Norm of vector %
+%%%%%%%%%%%%%%%%%%
+\newcommand\printNorm[2][2] {%
+    \FPset\tmp{0}
+    \calcNorm{#2}
+    \FPround\tmp\normResult{#1}
+    \FPclip\tmp\tmp
+    \tmp
+}
+
+\newcommand\printNormSqrt[1] {%
+    \FPset\tmp{0}
+    \calcNorm{#1}
+    \numToFractionA{\normResult}
+}
+
+\newcommand\calcNorm[1] {%
+    \FPset\normTotal{0}
+    \FPset\iterVal{0}
+    % Iterate each value, multiply it with itself and sum up
+    \xintFor* ##1 in #1 \do {%
+        % No idea why this needs to be abs,
+        % but negative values are a problem here
+        \FPabs\iterVal{##1}
+        \FPpow\tmpNormB\iterVal{2}
+        \FPadd\normTotal\normTotal\tmpNormB
+    }
+    % \FPround\normTotal\normTotal{4}
+    % \FPclip\normTotal\normTotal
+    % Evaluate root for numbered result
+    \FProot\normRooted\normTotal{2}
+    % \FPround\normRooted\normRooted{4}
+    % \FPclip\normRooted\normRooted
+    % Set output var
+    \def\normResult{}
+    \FPset\normResult{\normRooted}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Skalarproduct / Dotproduct %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\printSkalarp[3][2] {%
+    \FPset\tmp{0}
+    \calcSkalarp{#2}{#3}
+    \FPround\tmp\scalarPResult{#1}
+    \FPclip\tmp\tmp
+    \tmp
+}
+
+\newcommand\calcSkalarp[2] {%
+    \FPset\res{0}
+    \FPset\tmp{0}
+    \xintFor ##1 in {1,2,3} \do {%
+        \FPset\valueA{\xintNthElt{##1}{#1}}
+        \FPset\valueB{\xintNthElt{##1}{#2}}
+        \FPmul\tmp\valueA\valueB
+        \FPadd\res\res\tmp
+    }
+    \def\scalarPResult{}
+    \FPset\scalarPResult{\res}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Utility
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
