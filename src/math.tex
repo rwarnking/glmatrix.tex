@@ -12,6 +12,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Print Utility
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%
+% Cleanup %
+%%%%%%%%%%%
+\newcommand\roundNumber[2][4]{%
+    \FPset\printNum{#2}%
+    \FPround\printNum\printNum{#1}
+    \FPclip\printNum\printNum
+    \printNum
+}
+
+%%%%%%%%%%%%%%%
+% Conversions %
+%%%%%%%%%%%%%%%
+% Convert a fraction with root to a decimal number
+% TODO make #3 optional
 \newcommand\fractionToNum[3]{
     \FProot\tmpA{#3}{2}
     \FPmul\tmpA\tmpA{#2}
@@ -22,6 +37,7 @@
     }
 }
 
+% Convert a decimal number to a fraction with root
 \newcommand\solutionC{%
     \FPset\finalmul{1}
     \FPset\tmptmptmptmp\tmptmptmp
@@ -133,57 +149,43 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Vector Utility
+% Vector Create & Print
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand\newVecThree[2]{% {Basename}{input}
-    \expandafter\def\csname #1\endcsname{\xintCSVtoList{#2}}%
+% Create a vector
+\newcommand\newVec[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
 }
 
 \newcommand\printVecT[2][0]{%
-    \FPifeq{#1}{0}
-        \FPset\printX{\xintNthElt{1}{#2}}%
-        \FPround\printX\printX{4}
-        \FPclip\printX\printX
-        \FPset\printY{\xintNthElt{2}{#2}}%
-        \FPround\printY\printY{4}
-        \FPclip\printY\printY
-        \FPset\printZ{\xintNthElt{3}{#2}}%
-        \FPround\printZ\printZ{4}
-        \FPclip\printZ\printZ
-        \ensuremath{\trans{\left(\printX, \printY, \printZ\right)}}
-    \else
-        \ensuremath{\trans{\left(\numToFractionA{\xintNthElt{1}{#2}}, \numToFractionA{\xintNthElt{2}{#2}}, \numToFractionA{\xintNthElt{3}{#2}}\right)}}
-    \fi
+    \ensuremath{\trans{\left(
+        \xintFor* ##1 in #2 \do {%
+            \FPifeq{#1}{0}
+                \roundNumber{##1}
+            \else
+                \numToFractionA{##1}
+            \fi
+            \xintifForLast{}{%
+                ,
+            }
+        }
+    \right)}}
 }
 
 \newcommand\printVec[2][0]{%
-    \FPifeq{#1}{0}
-        \FPset\printX{\xintNthElt{1}{#2}}%
-        \FPround\printX\printX{4}
-        \FPclip\printX\printX
-        \FPset\printY{\xintNthElt{2}{#2}}%
-        \FPround\printY\printY{4}
-        \FPclip\printY\printY
-        \FPset\printZ{\xintNthElt{3}{#2}}%
-        \FPround\printZ\printZ{4}
-        \FPclip\printZ\printZ
-        \ensuremath{%
-            \begin{pmatrix}
-                \printX\\
-                \printY\\
-                \printZ
-            \end{pmatrix}
-        }
-    \else
-        \ensuremath{%
-            \begin{pmatrix}
-                \numToFractionA{\xintNthElt{1}{#2}}\\
-                \numToFractionA{\xintNthElt{2}{#2}}\\
-                \numToFractionA{\xintNthElt{3}{#2}}
-            \end{pmatrix}
-        }
-    \fi
+    \ensuremath{%
+        \begin{pmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \FPifeq{#1}{0}
+                    \roundNumber{##1}
+                \else
+                    \numToFractionA{##1}
+                \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{pmatrix}
+    }
 }
 
 \newcommand\printVecX[1]{%
@@ -227,7 +229,7 @@
     \FPset\tmpB{\xintNthElt{3}{#2}}%
     \FPsub\subVecZ\tmpA\tmpB%
     \FPclip\subVecZ\subVecZ%
-    \newVecThree{subVecResult}{\subVecX,\subVecY,\subVecZ}%
+    \newVec{subVecResult}{\subVecX,\subVecY,\subVecZ}%
 }
 
 \newcommand\printDivVec[2] {%
@@ -254,7 +256,7 @@
     % \FPclip\divVecZ\divVecZ
     \divNumber{\xintNthElt{3}{#2}}{#3}
     \FPset\divVecZ{\divNumRes}
-    \newVecThree{divVecResult}{\divVecX,\divVecY,\divVecZ}
+    \newVec{divVecResult}{\divVecX,\divVecY,\divVecZ}
 }
 
 %%%%%%%%%%%%%%%%%%
@@ -274,7 +276,7 @@
     \FPset\subNormVecX{\xintNthElt{1}{\divVecResult}}
     \FPset\subNormVecY{\xintNthElt{2}{\divVecResult}}
     \FPset\subNormVecZ{\xintNthElt{3}{\divVecResult}}
-    \newVecThree{subNormVecResult}{\subNormVecX,\subNormVecY,\subNormVecZ}
+    \newVec{subNormVecResult}{\subNormVecX,\subNormVecY,\subNormVecZ}
 }
 
 %%%%%%%%%%%%%%%%%%
@@ -341,5 +343,5 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Matrix Utility
+% Matrix Create & Print
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
