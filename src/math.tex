@@ -156,6 +156,11 @@
     \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
 }
 
+% Append to a vector
+\newcommand\appendToVec[3]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
+}
+
 \newcommand\printVecT[2][0]{%
     \ensuremath{\trans{\left(
         \xintFor* ##1 in #2 \do {%
@@ -188,21 +193,7 @@
     }
 }
 
-\newcommand\printVecX[1]{%
-    \xintNthElt{1}{#1}
-}
 
-\newcommand\printVecY[1]{%
-    \xintNthElt{2}{#1}
-}
-
-\newcommand\printVecZ[1]{%
-    \xintNthElt{3}{#1}
-}
-
-\newcommand\printVecW[1]{%
-    \xintNthElt{4}{#1}
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vector Math
@@ -213,70 +204,82 @@
     \printVec{\subVecResult}
 }
 
-\newcommand\subVec[2] {%
-    \FPset\subVecX{0}%
-    \FPset\subVecY{0}%
-    \FPset\subVecZ{0}%
-    \FPset\tmpA{\xintNthElt{1}{#1}}%
-    \FPset\tmpB{\xintNthElt{1}{#2}}%
-    \FPsub\subVecX\tmpA\tmpB%
-    \FPclip\subVecX\subVecX%
-    \FPset\tmpA{\xintNthElt{2}{#1}}%
-    \FPset\tmpB{\xintNthElt{2}{#2}}%
-    \FPsub\subVecY\tmpA\tmpB%
-    \FPclip\subVecY\subVecY%
-    \FPset\tmpA{\xintNthElt{3}{#1}}%
-    \FPset\tmpB{\xintNthElt{3}{#2}}%
-    \FPsub\subVecZ\tmpA\tmpB%
-    \FPclip\subVecZ\subVecZ%
-    \newVec{subVecResult}{\subVecX,\subVecY,\subVecZ}%
+% Subract list of vectors from first vector in list
+\newcommand\subVec[2][subVecResult] {%
+    \def\veclist{\xintCSVtoList{#2}}
+    \edef\elemOne{\xintNthElt{1}{\veclist}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\subCoord{0}%
+        \xintifForFirst{%
+            \xintFor* ##2 in \veclist \do {%
+                \xintifForFirst{%
+                    \FPset\subCoord{\xintNthElt{##1}{##2}}%
+                }{%
+                    \FPsub\subCoord\subCoord{\xintNthElt{##1}{##2}}%
+                }
+            }
+            \newVec{#1}{\subCoord}
+        }{%
+            \xintFor* ##2 in \veclist \do {%
+                \xintifForFirst{%
+                    \FPset\subCoord{\xintNthElt{##1}{##2}}%
+                }{%
+                    \FPsub\subCoord\subCoord{\xintNthElt{##1}{##2}}%
+                }
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\subCoord}
+        }
+    }
 }
 
-\newcommand\printDivVec[2] {%
-    \divVec{#1}{#2}
-    \printVec{\divVecResult}
+% Sum list of vectors
+\newcommand\sumVec[2][sumVecResult] {%
+    \def\veclist{\xintCSVtoList{#2}}
+    \edef\elemOne{\xintNthElt{1}{\veclist}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\sumCoord{0}%
+        \xintifForFirst{%
+            \xintFor* ##2 in \veclist \do {%
+                \FPadd\sumCoord\sumCoord{\xintNthElt{##1}{##2}}%
+            }
+            \newVec{#1}{\sumCoord}
+        }{%
+            \xintFor* ##2 in \veclist \do {%
+                \FPadd\sumCoord\sumCoord{\xintNthElt{##1}{##2}}%
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\sumCoord}
+        }
+    }
 }
 
 % Divide vector by skalar
-\newcommand\divVec[3][4] {%
-    \FPset\divVecX{0}
-    \FPset\divVecY{0}
-    \FPset\divVecZ{0}
-    \FPset\tmp{\xintNthElt{1}{#2}}
-    \FPdiv\divVecX\tmp{#3}
-    % \FPround\divVecX\divVecX{#1}
-    % \FPclip\divVecX\divVecX
-    \FPset\tmp{\xintNthElt{2}{#2}}
-    \FPdiv\divVecY\tmp{#3}
-    % \FPround\divVecY\divVecY{#1}
-    % \FPclip\divVecY\divVecY
-    % \FPset\tmp{\xintNthElt{3}{#2}}
-    % \FPdiv\divVecZ\tmp{#3}
-    % \FPround\divVecZ\divVecZ{#1}
-    % \FPclip\divVecZ\divVecZ
-    \divNumber{\xintNthElt{3}{#2}}{#3}
-    \FPset\divVecZ{\divNumRes}
-    \newVec{divVecResult}{\divVecX,\divVecY,\divVecZ}
+\newcommand\divVec[3][divVecResult] {%
+    \FPifeq{#3}{0}
+        \PackageError{math package}{In div vector by scalar}{divisor is 0}
+    \else
+    \fi
+    \xintFor* ##1 in #2 \do {%
+        \FPdiv\divNumRes{##1}{#3}
+        \xintifForFirst{%
+            \newVec{#1}{\divNumRes}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\divNumRes}
+        }
+    }
 }
 
-%%%%%%%%%%%%%%%%%%
-% Subtract two vectors and normalize %
-%%%%%%%%%%%%%%%%%%
-\newcommand\printSubNormVec[3][0] {%
-    \subNormVec{#2}{#3}
-    \printVec[#1]{\subNormVecResult}
-}
-
-% Substract two vectors and normalize the result
-% optional argument: pass 1 for clean output with root
-\newcommand\subNormVec[2] {%
-    \subVec{#1}{#2}
-    \calcNorm{\subVecResult}
-    \divVec{\subVecResult}{\normResult}
-    \FPset\subNormVecX{\xintNthElt{1}{\divVecResult}}
-    \FPset\subNormVecY{\xintNthElt{2}{\divVecResult}}
-    \FPset\subNormVecZ{\xintNthElt{3}{\divVecResult}}
-    \newVec{subNormVecResult}{\subNormVecX,\subNormVecY,\subNormVecZ}
+% Multiply vector by skalar
+\newcommand\mulVec[3][mulVecResult] {%
+    \xintFor* ##1 in #2 \do {%
+        \FPmul\mulNumRes{##1}{#3}
+        \xintifForFirst{%
+            \newVec{#1}{\mulNumRes}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\mulNumRes}
+        }
+    }
 }
 
 %%%%%%%%%%%%%%%%%%
