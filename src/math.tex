@@ -193,17 +193,9 @@
     }
 }
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Vector Math
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand\printSubVec[2] {%
-    \subVec{#1}{#2}
-    \printVec{\subVecResult}
-}
-
 % Subract list of vectors from first vector in list
 \newcommand\subVec[2][subVecResult] {%
     \def\veclist{\xintCSVtoList{#2}}
@@ -285,37 +277,24 @@
 %%%%%%%%%%%%%%%%%%
 % Norm of vector %
 %%%%%%%%%%%%%%%%%%
-\newcommand\printNorm[2][2] {%
-    \FPset\tmp{0}
-    \calcNorm{#2}
-    \FPround\tmp\normResult{#1}
-    \FPclip\tmp\tmp
-    \tmp
+\newcommand\normalizeVec[2][normalizeResult] {%
+    \normOfVec{#2}
+    \divVec[#1]{#2}{\normResult}
 }
 
-\newcommand\printNormSqrt[1] {%
-    \FPset\tmp{0}
-    \calcNorm{#1}
-    \numToFractionA{\normResult}
-}
-
-\newcommand\calcNorm[1] {%
+\newcommand\normOfVec[2][normResult] {%
     \FPset\normTotal{0}
     \FPset\iterVal{0}
     % Iterate each value, multiply it with itself and sum up
-    \xintFor* ##1 in #1 \do {%
+    \xintFor* ##1 in #2 \do {%
         % No idea why this needs to be abs,
         % but negative values are a problem here
         \FPabs\iterVal{##1}
         \FPpow\tmpNormB\iterVal{2}
         \FPadd\normTotal\normTotal\tmpNormB
     }
-    % \FPround\normTotal\normTotal{4}
-    % \FPclip\normTotal\normTotal
     % Evaluate root for numbered result
     \FProot\normRooted\normTotal{2}
-    % \FPround\normRooted\normRooted{4}
-    % \FPclip\normRooted\normRooted
     % Set output var
     \def\normResult{}
     \FPset\normResult{\normRooted}
@@ -324,25 +303,57 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Skalarproduct / Dotproduct %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\printSkalarp[3][2] {%
-    \FPset\tmp{0}
-    \calcSkalarp{#2}{#3}
-    \FPround\tmp\scalarPResult{#1}
-    \FPclip\tmp\tmp
-    \tmp
-}
-
-\newcommand\calcSkalarp[2] {%
+\newcommand\scalarP[3][scalarPResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{math package}{In scalar product}{vector A and B do not have same length}
+    \fi
     \FPset\res{0}
     \FPset\tmp{0}
-    \xintFor ##1 in {1,2,3} \do {%
-        \FPset\valueA{\xintNthElt{##1}{#1}}
-        \FPset\valueB{\xintNthElt{##1}{#2}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\valueA{\xintNthElt{##1}{#2}}
+        \FPset\valueB{\xintNthElt{##1}{#3}}
         \FPmul\tmp\valueA\valueB
         \FPadd\res\res\tmp
     }
-    \def\scalarPResult{}
-    \FPset\scalarPResult{\res}
+}
+
+%%%%%%%%%%%%%%%%
+% Crossproduct %
+%%%%%%%%%%%%%%%%
+\newcommand\crossP[3][crossPResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
+    \else
+        \PackageError{math package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{3}
+    \else
+        \PackageError{math package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPset\aa{\xintNthElt{1}{#2}}
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ac{\xintNthElt{3}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPset\bc{\xintNthElt{3}{#3}}
+    \FPset\tmp{0}
+    % x component
+    \FPset\scalarX{0}
+    \FPmul\scalarX\ab\bc
+    \FPmul\tmp\ac\bb
+    \FPsub\scalarX\scalarX\tmp
+    % y component
+    \FPset\scalarY{0}
+    \FPmul\scalarY\ac\ba
+    \FPmul\tmp\aa\bc
+    \FPsub\scalarY\scalarY\tmp
+    % z component
+    \FPset\scalarZ{0}
+    \FPmul\scalarZ\aa\bb
+    \FPmul\tmp\ab\ba
+    \FPsub\scalarZ\scalarZ\tmp
+    \newVec{#1}{\scalarX,\scalarY,\scalarZ}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
