@@ -137,15 +137,50 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Basic number calculations
+% Vector Create & Print & Math
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Divide skalar by skalar
-\newcommand\divNumber[3][4] {%
-    \FPset\divNumRes{0}
-    \FPset\dividend{#2}
-    \FPdiv\divNumRes\dividend{#3}
-    % \FPround\divNumRes\divNumRes{#1}
-    % \FPclip\divNumRes\divNumRes
+% Create a scalar
+\newcommand\newScalar[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2}%
+}
+
+\newcommand\printScalar[2][0]{%
+    \FPifeq{#1}{0}
+        \roundNumber{#2}
+    \else
+        \numToFractionA{#2}
+    \fi
+}
+
+\newcommand\minScalar[3][scalarMinResult]{% {Basename}{input}
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \fi
+}
+
+\newcommand\maxScalar[3][scalarMaxResult]{% {Basename}{input}
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \fi
+}
+
+\newcommand\powScalar[3][scalarPowResult]{% {Basename}{input}
+    \FPpow\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\mulScalar[3][scalarMulResult]{% {Basename}{input}
+    \FPmul\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\divScalar[3][scalarDivResult]{% {Basename}{input}
+    \FPdiv\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -296,8 +331,7 @@
     % Evaluate root for numbered result
     \FProot\normRooted\normTotal{2}
     % Set output var
-    \def\normResult{}
-    \FPset\normResult{\normRooted}
+    \newScalar{#1}{\normRooted}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,6 +351,7 @@
         \FPmul\tmp\valueA\valueB
         \FPadd\res\res\tmp
     }
+    \newScalar{#1}{\res}
 }
 
 %%%%%%%%%%%%%%%%
