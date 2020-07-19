@@ -394,3 +394,129 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Matrix Create & Print
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\newMat[2]{% {Basename}{input}
+    \FPset\numParam{\expandafter\xintLength{#2}}%
+    \FPsub\numParam\numParam{1}
+    \FPdiv\numParam\numParam{2}
+    \FPadd\numParam\numParam{1}
+    % In case only one item/row was given the
+    % matrix-datastructure must be adjusted
+    \FPifeq{\numParam}{1}
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \else
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}
+    \fi
+}
+
+\newcommand\newEmptyMat[1]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{}%
+}
+
+\newcommand\printMat[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \xintFor* ##2 in {##1} \do {%
+                    \xintifForLast{%
+                        \\
+                    }{%
+                        \xintifForFirst{}{&}
+                        \FPifeq{#1}{0}
+                            \roundNumber{##2}
+                        \else
+                            \numToFractionA{##2}
+                        \fi
+                    }
+                }
+            }
+        \end{bmatrix}
+    }
+}
+
+% TODO variable length
+\newcommand\printMatDiag[2][0]{%
+    \ensuremath{%
+        \text{diag}\left(
+        \xintNthElt{1}{\xintNthElt{1}{#2}},
+        \xintNthElt{2}{\xintNthElt{2}{#2}},
+        \xintNthElt{3}{\xintNthElt{3}{#2}}
+        \right)
+    }
+}
+
+\newcommand\appendToMat[3]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
+}
+
+\newcommand\vecToMatRow[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{1}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Math
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Sum list of matrizes
+\newcommand\sumMats[2][sumMatsResult]{%
+    \def\matlist{\xintCSVtoList{#2}}
+    \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    \edef\elemsMat{\xintNthElt{1}{\matlist}}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\value{0}
+            \xintifForFirst{%
+                \xintFor* ##1 in \matlist \do {%
+                    \FPadd\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                }
+                \newVec{rowVec}{\value}
+            }{%
+                \xintifForLast{
+                }{
+                    \xintFor* ##1 in \matlist \do {%
+                        \FPadd\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                    }
+                    \appendToVec{rowVec}{\rowVec}{\value}
+                }
+            }
+        }
+        \vecToMatRow{matRow}{\rowVec}
+        \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+    }
+}
+
+% Multiply matrix with a scalar
+\newcommand\mulScalarMat[3][mulMatScalarResult]{%
+    \edef\elemOne{\xintNthElt{1}{#2}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}-1}}%
+    %
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPset\elem{\xintNthElt{##2}{##1}}
+                \FPmul\elem\elem{#3}
+                \xintifForFirst{%
+                    \newVec{rowVec}{\elem}
+                }{%
+                    \appendToVec{rowVec}{\rowVec}{\elem}
+                }
+            }
+            \vecToMatRow{matRow}{\rowVec}
+            \newMat{#1}{\matRow}
+        }{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPset\elem{\xintNthElt{##2}{##1}}
+                \FPmul\elem\elem{#3}
+                \xintifForFirst{%
+                    \newVec{rowVec}{\elem}
+                }{%
+                    \appendToVec{rowVec}{\rowVec}{\elem}
+                }
+            }
+            \vecToMatRow{matRow}{\rowVec}
+            \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+        }
+    }
+}
