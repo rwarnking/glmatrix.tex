@@ -412,6 +412,16 @@
     \expandafter\edef\csname #1\endcsname{}%
 }
 
+% TODO adjust to variable length
+\newcommand\newDiagMat[2]{% {Basename}{input}
+    \edef\tmpVector{\xintCSVtoList{#2}}%
+    % \expandafter\edef\csname #1\endcsname{}%
+    \newMatRow{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
+    \newMatRow{rowB}{0, \xintNthElt{2}{\tmpVector}, 0}
+    \newMatRow{rowC}{0, 0, \xintNthElt{3}{\tmpVector}}
+    \newMat{#1}{\rowA, \rowB, \rowC}
+}
+
 \newcommand\printMat[2][0]{%
     \ensuremath{%
         \begin{bmatrix}
@@ -444,12 +454,22 @@
     }
 }
 
+\newcommand\newMatRow[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2, 1}}%
+}
+
 \newcommand\appendToMat[3]{% {Basename}{input}
     \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
 }
 
 \newcommand\vecToMatRow[2]{% {Basename}{input}
     \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{1}}%
+}
+
+% TODO automatically do this depending on the function
+% or only have one representation (matrix) and adjust the functions to that
+\newcommand\matColToVec[2]{% {Basename}{input}
+    \newVec{#1}{\xintNthElt{1}{\xintNthElt{1}{#2}}, \xintNthElt{1}{\xintNthElt{2}{#2}}, \xintNthElt{1}{\xintNthElt{3}{#2}}}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -519,4 +539,85 @@
             \appendToMat{#1}{\csname #1\endcsname}{\matRow}
         }
     }
+}
+
+\newcommand\mulVecAsColAndRow[2][mulMatsResult]{%
+    \newMatRow{vecA}{\xintNthElt{1}{#2}}
+    \newMatRow{vecB}{\xintNthElt{2}{#2}}
+    \newMatRow{vecC}{\xintNthElt{3}{#2}}
+    \newMat{tmpMatA}{\vecA, \vecB, \vecC}
+    \vecToMatRow{row}{#2}
+    \newMat{tmpMatB}{\row}
+    \mulMats[#1]{\tmpMatA}{\tmpMatB}
+}
+
+\newcommand\mulMatAndVec[3][mulMatsResult]{%
+    \newMatRow{vecA}{\xintNthElt{1}{#3}}
+    \newMatRow{vecB}{\xintNthElt{2}{#3}}
+    \newMatRow{vecC}{\xintNthElt{3}{#3}}
+    \newMat{matB}{\vecA, \vecB, \vecC}
+    \mulMats[#1]{#2}{\matB}
+}
+
+\newcommand\mulMats[3][mulMatsResult]{%
+    \edef\elemsRow{\xintNthElt{1}{#3}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    %
+    \edef\elemsMat{#2}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \edef\elemsMat{#3}
+    \edef\heightsequenceB{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\value{0}
+            \xintifForFirst{%
+                \xintFor* ##4 in \heightsequenceB \do {%
+                    \FPmul\tmptmp{%
+                    \xintNthElt{##4}{\xintNthElt{##2}{#2}}%
+                    }{%
+                    \xintNthElt{##3}{\xintNthElt{##4}{#3}}%
+                    }
+                    \FPadd\value\value\tmptmp
+                }
+                % }
+                \newVec{rowVec}{\value}
+            }{%
+                \xintifForLast{
+                }{
+                    \xintFor* ##4 in \heightsequenceB \do {%
+                        \FPmul\tmptmp{%
+                        \xintNthElt{##4}{\xintNthElt{##2}{#2}}%
+                        }{%
+                        \xintNthElt{##3}{\xintNthElt{##4}{#3}}%
+                        }
+                        \FPadd\value\value\tmptmp
+                    }
+                    \appendToVec{rowVec}{\rowVec}{\value}
+                }
+            }
+        }
+        \vecToMatRow{matRow}{\rowVec}
+        \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+    }
+    % Test if width and height is correct
+    \edef\expectedheight{\expandafter\xintLength\expandafter{#2}}%
+    \edef\elemsRow{\xintNthElt{1}{#3}}
+    \edef\expectedwidth{\expandafter\xintLength\expandafter{\elemsRow}}%
+    %
+    \edef\elemsRow{\xintNthElt{1}{\csname #1\endcsname}}
+    \edef\actualwidth{\expandafter\xintLength\expandafter{\elemsRow}}%
+    \edef\elemsMat{\csname #1\endcsname}
+    \edef\actualheight{\expandafter\xintLength\expandafter{\elemsMat}}%
+    %
+    \FPifeq{\expectedwidth}{\actualwidth}
+    \else
+        \PackageError{math package}{Matrix width does not match expectation}{width seems to be incorrect}
+    \fi
+    \FPifeq{\expectedheight}{\actualheight}
+    \else
+        \PackageError{math package}{Matrix height does not match expectation}{height seems to be incorrect}
+    \fi
 }
