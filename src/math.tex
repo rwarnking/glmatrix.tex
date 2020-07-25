@@ -621,3 +621,30 @@
         \PackageError{math package}{Matrix height does not match expectation}{height seems to be incorrect}
     \fi
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\newPoint[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2}%
+    \expandafter\edef\csname #1Vec\endcsname{\xintCSVtoList{#2}}%
+}
+
+\newcommand\newPointFromVec[2]{% {Basename}{input}
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{
+            \edef\tmpVal{##1}
+        }{%
+            \edef\tmpVal{\tmpVal, ##1}
+        }
+    }
+    \expandafter\edef\csname #1\endcsname{\tmpVal}%
+}
+
+\newcommand\areaTriangle[4][areaTriangleResult]{%
+    \subVec[subResultAC]{#3, #2}
+    \subVec[subResultAB]{#4, #2}
+    \crossP[crossResult]{\subResultAC}{\subResultAB}
+    \normOfVec[normResult]{\crossResult}
+    \divScalar[#1]{\normResult}{2}
+}
