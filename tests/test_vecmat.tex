@@ -1,0 +1,225 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[reqno]{amsmath}
+\usepackage{amssymb}
+
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage[english,ngerman]{babel}
+% \RequirePackage[utf8]{inputenc}
+
+\usepackage{makecell}
+\usepackage{vmargin}
+
+\setlength{\unitlength}{1cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setpapersize{A4}
+\setmarginsrb{20mm}{15mm}{20mm}{25mm}{54pt}{15mm}{0pt}{0mm}
+
+\input{../math.tex}
+
+\begin{document}
+
+\subsection*{Vector Printing}
+
+\newVec{vecTest}{0.5,2,3}
+
+Create new vector with the values \(0.5, 2, 3\) and print it:
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Transposed Vector & \textbackslash printVecT\{\textbackslash vecTest\} & \printVecT{\vecTest}\\
+        Transposed Vector with fraction & \textbackslash printVecT[1]\{\textbackslash vecTest\} & \printVecT[1]{\vecTest}\\
+        Vector & \textbackslash printVec\{\textbackslash vecTest\} & \printVec{\vecTest}\\
+        Vector with fraction & \textbackslash printVec[1]\{\textbackslash vecName\} & \printVec[1]{\vecTest}\\
+    \end{tabular}
+\end{center}
+
+Append values (\(90, 1, 4, 3\)) to the vector and print it:
+
+\appendToVec{vecTest}{\vecTest}{90, 1,4,3}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Append rows to vector & \textbackslash appendToVec\{vecTest\}\{\textbackslash vecTest\}\{90, 1,4,3\} & \printVec{\vecTest}
+    \end{tabular}
+\end{center}
+
+\subsection*{Vector Math}
+
+\newVec{vecTestA}{5,2,3,4,6,7,8,9}
+\newVec{vecTestB}{0.5,2,2}
+\newVec{vecTestC}{0.5,2,-3}
+
+\sumVec[sumVecResult]{\vecTestA, \vecTestB, \vecTestC}
+\subVec[subVecResult]{\vecTestA, \vecTestB, \vecTestC}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Sum vector list &
+        \makecell[l]{\textbackslash sumVec[sumVecResult]\{\\\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\\\}} &
+        \(\printVec{\vecTestA} + \printVec{\vecTestB} + \printVec{\vecTestC} = \printVec[1]{\sumVecResult} \approx \printVec{\sumVecResult}\)\\
+        Subtract vector list &
+        \makecell[l]{\textbackslash subVec[sumVecResult]\{\\\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\\\}} &
+        \(\printVec{\vecTestA} - \printVec{\vecTestB} - \printVec{\vecTestC} =
+        \printVec[1]{\subVecResult} \approx \printVec{\subVecResult}\)\\
+    \end{tabular}
+\end{center}
+
+\mulVec[mulVecResult]{\vecTestA}{4}
+\divVec[divVecResult]{\vecTestA}{4}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Multiply vector with value &
+        \textbackslash mulVec[mulVecResult]\{\textbackslash vecA\}\{scalar\} &
+        \(\printVec{\vecTestA} * 4 =
+        \printVec[1]{\mulVecResult} \approx \printVec{\mulVecResult}\)\\
+        Divide vector by value &
+        \textbackslash divVec[divVecResult]\{\textbackslash vecA\}\{scalar\} &
+        \(\printVec{\vecTestA} / 4 =
+        \printVec[1]{\divVecResult} \approx \printVec{\divVecResult}\)
+    \end{tabular}
+\end{center}
+
+\scalarP[scalarPResult]{\vecTestA}{\vecTestA}
+\crossP[crossPResult]{\vecTestB}{\vecTestC}
+\normOfVec[normResult]{\vecTestA}
+\normalizeVec[normalizeResult]{\vecTestA}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Dot/Scalar Product &
+        \textbackslash scalarP[scalarPResult]\{\textbackslash vecA\}\{\textbackslash vecB\} &
+        \(\printVec{\vecTestA} \cdot \printVec{\vecTestA} = \printScalar[1]{\scalarPResult} \approx \printScalar{\scalarPResult}\)\\
+        Cross Product &
+        \textbackslash crossP[crossPResult]\{\textbackslash vecB\}\{\textbackslash vecC\} &
+        \(\printVec{\vecTestB} \times \printVec{\vecTestC} = \printVec[1]{\crossPResult} \approx \printVec{\crossPResult}\)
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Norm of Vector &
+        \textbackslash normOfVec[normResult]\{\textbackslash vecA\} &
+        \(\norm{\printVec{\vecTestA}} = \printScalar[1]{\normResult} \approx \printScalar{\normResult}\)\\
+        Normalize Vector &
+        \textbackslash normalizeVec[normalizeResult]\{\textbackslash vecA\} &
+        \(\frac{\printVec{\vecTestA}}{\norm{\printVec{\vecTestA}}} = \printVec[1]{\normalizeResult} \approx \printVec{\normalizeResult}\)
+    \end{tabular}
+\end{center}
+
+\subsection*{Matrix Printing}
+
+\newMatRow{vecA}{0.5,2,3}
+\newMatRow{vecB}{4,5,6}
+\newMatRow{vecC}{7,8,9}
+\newMat{matX}{\vecA, \vecB, \vecC}
+
+\newMatRow{vecA}{0.5,2,3}
+\newMat{matY}{\vecA}
+
+\newMatRow{vecA}{0.5}
+\newMatRow{vecB}{2}
+\newMatRow{vecC}{3}
+\newMat{matZ}{\vecA, \vecB, \vecC}
+
+\[
+    X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}
+\]
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        3x3 & \textbackslash printMat\{\textbackslash matX\} & \printMat{\matX}\\
+        3x3 with fraction & \textbackslash printMat[1]\{\textbackslash matX\} & \printMat[1]{\matX}\\
+        Row Matrix & \textbackslash printMat\{\textbackslash matY\} & \printMat{\matY}\\
+        Row Matrix with fraction & \textbackslash printMat[1]\{\textbackslash matY\} & \printMat[1]{\matY}\\
+        Column Matrix & \textbackslash printMat\{\textbackslash matZ\} & \printMat{\matZ}\\
+        Column Matrix with fraction & \textbackslash printMat[1]\{\textbackslash matZ\} & \printMat[1]{\matZ}\\
+    \end{tabular}
+\end{center}
+
+\subsection*{Matrix Math}
+
+\newMatRow{vecA}{0.5,2,3,4,5}
+\newMatRow{vecB}{6,7,8,9,10}
+\newMatRow{vecC}{11,12,13,14,15}
+\newMat{matG}{\vecA, \vecB, \vecC, \vecC}
+
+\[
+    X = \printMat{\matX}, G = \printMat{\matG}
+\]
+
+\mulScalarMat[mulMatScalarResult]{\matX}{5}
+\mulScalarMat[mulMatScalarResultB]{\matG}{5}
+\sumMats[sumMatsResultA]{\matX, \matX}
+\sumMats[sumMatsResultB]{\matX, \matX, \matX}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        3x3 Matrix mul Scalar & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matX} \cdot 5 = \printMat[1]{\mulMatScalarResult}\)\\
+        Matrix mul Scalar & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matG\}\{value\}} & \(\printMat{\matG} \cdot 5 = \printMat[1]{\mulMatScalarResultB}\)\\
+        Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX\}} & \(\printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultA}\)\\
+        Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX, \dots\}} & \(\printMat{\matX} + \printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultB}\)
+    \end{tabular}
+\end{center}
+
+% TODO TODO bug
+\newMatRow{rowA}{0.5, 1, 2}
+\newMat{matA}{\rowA}
+
+\newMatRow{vecA}{0.5}
+\newMatRow{vecB}{1}
+\newMatRow{vecC}{2}
+\newMat{matB}{\vecA, \vecB, \vecC}
+
+\newMatRow{rowA}{0.5, 1, 2}
+\newMat{matC}{\rowA, \rowA}
+
+\mulMats[mulMatsResultXX]{\matX}{\matX}
+\mulMats[mulMatsResultXB]{\matX}{\matB}
+\mulMats[mulMatsResultCB]{\matC}{\matB}
+\mulMats[mulMatsResultAB]{\matA}{\matB}
+
+\newVec{vecNormal}{0,0,1} % Normal at point
+\mulVecAsColAndRow[mulMatsResultN]{\vecNormal}
+
+\mulMatAndVec[mulMatsResultXN]{\matX}{\vecNormal}
+
+\[
+    X = \printMat{\matX},\ A = \printMat{\matA},\ B = \printMat{\matB},\ C = \printMat{\matC}, \vec{n} = \printVec{\vecNormal}
+\]
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        \(X \cdot X\) &
+        \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash matX\}} &
+        \(\printMat{\matX} \printMat{\matX} = \printMat[1]{\mulMatsResultXX} \approx \printMat{\mulMatsResultXX}\)\\
+        \(X \cdot B\) &
+        \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash matB\}} &
+        \(\printMat{\matX} \printMat{\matB} = \printMat[1]{\mulMatsResultXB} \approx \printMat{\mulMatsResultXB}\)\\
+        \(C \cdot B\) &
+        \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matC\}\{\textbackslash matB\}} &
+        \(\printMat{\matC} \printMat{\matB} = \printMat[1]{\mulMatsResultCB} \approx \printMat{\mulMatsResultCB}\)\\
+        \(A \cdot B\) &
+        \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matA\}\{\textbackslash matB\}} &
+        \(\printMat{\matA} \printMat{\matB} = \printMat[1]{\mulMatsResultAB} \approx \printMat{\mulMatsResultAB}\)\\
+        \(\vec{n} \cdot \trans{\vec{n}}\) &
+        \makecell[l]{\textbackslash mulVecAsColAndRow\\\ [mulMatsResult]\\\{\textbackslash vecNormal\}} &
+        \(\printVec{\vecNormal} \printVecT{\vecNormal} = \printMat{\mulMatsResultN}\)\\
+        \(X \cdot \vec{n}\) &
+        \makecell[l]{\textbackslash mulMatAndVec\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash vecNormal\}} &
+        \(\printMat{\matX} \printVec{\vecNormal} = \printMat{\mulMatsResultXN}\)
+    \end{tabular}
+\end{center}
+
+\end{document}
