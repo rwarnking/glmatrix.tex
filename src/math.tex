@@ -27,7 +27,7 @@
 %%%%%%%%%%%%%%%
 % Convert a fraction with root to a decimal number
 % TODO make #3 optional
-\newcommand\fractionToNum[3]{
+\newcommand\fractionToNum[3]{%
     \FProot\tmpA{#3}{2}
     \FPmul\tmpA\tmpA{#2}
     \FPdiv\tmpB{#1}\tmpA
@@ -84,6 +84,11 @@
 \newcommand\numToFraction[1]{%
     \FPset\dividend{1}
     \FPset\divisor{#1}
+    \FPset\minusSign{1}
+    \FPiflt{\divisor}{0}
+        \FPset\minusSign{-1}
+    \else
+    \fi
     \ensuremath{
         % reverse fraction
         \FPdiv\divisor{1}{#1}
@@ -100,6 +105,7 @@
         %
         \FPround\divisor\divisor{4}
         \FPclip\divisor\divisor
+        \FPmul\dividend\dividend\minusSign
         \FPround\dividend\dividend{4}
         \FPclip\dividend\dividend
         %
@@ -107,10 +113,11 @@
         \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
         \FPset\inputVar{#1}
         \FPmul\inputVar\inputVar\inputVar
+        \FPmul\inputVar\inputVar\minusSign
         \FPround\inputVar\inputVar{8}
         \FPclip\inputVar\inputVar
         \FPifint{\inputVar}
-            \FPset\outputVar{\sqrt{\inputVar}}
+            \FPset\outputVar{\;\sqrt{\inputVar}}
         \else
         \fi
         \FPset\inputVarA{#1}
@@ -128,6 +135,7 @@
     \FPset\inputVarA{#1}
     \FPround\inputVarA\inputVarA{10}
     \FPclip\inputVarA\inputVarA
+    % Prevent division by 0
     \FPifint{\inputVarA}
         \FPset\outputVar{\inputVarA}
         \outputVar
@@ -196,6 +204,7 @@
     \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
 }
 
+% TODO bug last comma is shown when printing a fraction
 \newcommand\printVecT[2][0]{%
     \ensuremath{\trans{\left(
         \xintFor* ##1 in #2 \do {%
@@ -404,7 +413,7 @@
     \FPifeq{\numParam}{1}
         \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
     \else
-        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
     \fi
 }
 
