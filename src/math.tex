@@ -176,8 +176,8 @@
     \fi
 }
 
-\newcommand\powScalar[3][scalarPowResult]{% {Basename}{input}
-    \FPpow\tmp{#2}{#3}
+\newcommand\subScalar[3][scalarSubResult]{% {Basename}{input}
+    \FPsub\tmp{#2}{#3}
     \newScalar{#1}{\tmp}
 }
 
@@ -197,6 +197,16 @@
 % Create a vector
 \newcommand\newVec[2]{% {Basename}{input}
     \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+}
+
+\newcommand\copyVec[2] {%
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{%
+            \newVec{#1}{##1}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{##1}
+        }
+    }
 }
 
 % Append to a vector
@@ -269,6 +279,8 @@
     }
 }
 
+% TODO add check that the variable name that is given does not match
+% any other parameter, since this does not work
 % Sum list of vectors
 \newcommand\sumVec[2][sumVecResult] {%
     \def\veclist{\xintCSVtoList{#2}}
@@ -363,6 +375,27 @@
     \newScalar{#1}{\res}
 }
 
+% Print components of scalarproduct
+\newcommand\printScalarPComp[3][0] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{math package}{In scalar product}{vector A and B do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \ensuremath{
+        \xintFor* ##1 in \innersequence \do {%
+            \FPifeq{#1}{0}
+                \roundNumber{\xintNthElt{##1}{#2}}*\roundNumber{\xintNthElt{##1}{#3}}
+            \else
+                \numToFractionA{\xintNthElt{##1}{#2}}*\roundNumber{\xintNthElt{##1}{#3}}
+            \fi
+            \xintifForLast{}{%
+                +
+            }
+        }
+    }
+}
+
 %%%%%%%%%%%%%%%%
 % Crossproduct %
 %%%%%%%%%%%%%%%%
@@ -398,6 +431,40 @@
     \FPmul\tmp\ab\ba
     \FPsub\scalarZ\scalarZ\tmp
     \newVec{#1}{\scalarX,\scalarY,\scalarZ}
+}
+
+% Print components of crossproduct
+\newcommand\printCrossPComp[3][0] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
+    \else
+        \PackageError{math package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{3}
+    \else
+        \PackageError{math package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPset\aa{\xintNthElt{1}{#2}}
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ac{\xintNthElt{3}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPset\bc{\xintNthElt{3}{#3}}
+    %
+    \ensuremath{
+        \FPifeq{#1}{0}
+            \begin{pmatrix}
+                \roundNumber{\ab}*\roundNumber{\bc} - \roundNumber{\ac}*\roundNumber{\bb}\\
+                \roundNumber{\ac}*\roundNumber{\ba} - \roundNumber{\aa}*\roundNumber{\bc}\\
+                \roundNumber{\aa}*\roundNumber{\bb} - \roundNumber{\ab}*\roundNumber{\ba}
+            \end{pmatrix}
+        \else
+            \begin{pmatrix}
+                \numToFractionA{\ab}*\numToFractionA{\bc} - \numToFractionA{\ac}*\numToFractionA{\bb}\\
+                \numToFractionA{\ac}*\numToFractionA{\ba} - \numToFractionA{\aa}*\numToFractionA{\bc}\\
+                \numToFractionA{\aa}*\numToFractionA{\bb} - \numToFractionA{\ab}*\numToFractionA{\ba}
+            \end{pmatrix}
+        \fi
+    }
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -478,7 +545,16 @@
 % TODO automatically do this depending on the function
 % or only have one representation (matrix) and adjust the functions to that
 \newcommand\matColToVec[2]{% {Basename}{input}
-    \newVec{#1}{\xintNthElt{1}{\xintNthElt{1}{#2}}, \xintNthElt{1}{\xintNthElt{2}{#2}}, \xintNthElt{1}{\xintNthElt{3}{#2}}}
+    \edef\numElems{#2}
+    \edef\colLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
+    \xintFor* ##1 in \colLength \do {%
+        \xintifForFirst{%
+            \newVec{testVec}{\xintNthElt{1}{\xintNthElt{1}{#2}}}
+        }{%
+            \appendToVec{testVec}{\testVec}{\xintNthElt{1}{\xintNthElt{##1}{#2}}}
+        }
+    }
+    \copyVec{#1}{\testVec}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
