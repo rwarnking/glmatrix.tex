@@ -160,6 +160,16 @@
     \fi
 }
 
+\newcommand\printScalarAsPi[2][0]{%
+    \FPdiv\divNumRes{#2}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundNumber{\divNumRes}
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    \pi
+}
+
 \newcommand\minScalar[3][scalarMinResult]{% {Basename}{input}
     \FPiflt{#2}{#3}
         \expandafter\edef\csname #1\endcsname{#2}%
@@ -188,6 +198,22 @@
 
 \newcommand\divScalar[3][scalarDivResult]{% {Basename}{input}
     \FPdiv\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\powScalar[3][scalarPowResult]{% {Basename}{input}
+    \FPpow\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\arccosScalar[2][scalarArccosResult]{% {Basename}{input}
+    \FParccos\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\radianToDegree[2][radianToDegreeResult]{% {Basename}{input}
+    \FPmul\tmp{#2}{180}
+    \FPdiv\tmp{\tmp}{\FPpi}
     \newScalar{#1}{\tmp}
 }
 
