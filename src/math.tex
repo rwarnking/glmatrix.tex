@@ -493,6 +493,30 @@
     }
 }
 
+%%%%%%%%%%%%%%%%
+% Dehomogenize %
+%%%%%%%%%%%%%%%%
+\newcommand\dehomogenVec[2][dehomogenResult]{
+    % TODO check if 4 long or get last comp
+    \FPset\tmpDiv{\xintNthElt{4}{#2}}
+    % \FPadd\tmpDiv\tmpDiv{1}
+    \edef\numElems{#2}
+    \edef\vecLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
+    \xintFor* ##1 in \vecLength \do {%
+        \xintifForFirst{%
+            \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
+            \newVec{tmpVec}{\divResult}
+        }{%
+            \xintifForLast{
+            }{
+                \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
+                \appendToVec{tmpVec}{\tmpVec}{\divResult}
+            }
+        }
+    }
+    \copyVec{#1}{\tmpVec}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Matrix Create & Print
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -758,4 +782,68 @@
     \crossP[crossResult]{\subResultAC}{\subResultAB}
     \normOfVec[normResult]{\crossResult}
     \divScalar[#1]{\normResult}{2}
+}
+
+% #1 Return Value Name
+% #2 right vector
+% #3 up vector
+% #4 direction vector
+% #5 camera position
+\newcommand\newLookAtMat[5][lookAtMatResult]{%
+    \scalarP[scalarRC]{#2}{#5}
+    \mulScalar[scalarRC]{\scalarRC}{-1}
+    \copyVec{tmpVecA}{#2}
+    \appendToVec{tmpVecA}{\tmpVecA}{\scalarRC}
+    % \printVec[1]{\tmpVecA}
+    %
+    \scalarP[scalarUC]{#3}{#5}
+    \mulScalar[scalarUC]{\scalarUC}{-1}
+    \copyVec{tmpVecB}{#3}
+    \appendToVec{tmpVecB}{\tmpVecB}{\scalarUC}
+    %
+    \scalarP[scalarDC]{#4}{#5}
+    \copyVec{tmpVecC}{#4}
+    \mulVec[tmpVecC]{\tmpVecC}{-1}
+    \appendToVec{tmpVecC}{\tmpVecC}{\scalarDC}
+    %
+    \vecToMatRow{vecA}{\tmpVecA}
+    \vecToMatRow{vecB}{\tmpVecB}
+    \vecToMatRow{vecC}{\tmpVecC}
+    \newMatRow{vecD}{0, 0, 0, 1}
+    \newMat{#1}{\vecA, \vecB, \vecC, \vecD}
+}
+
+% #1 center of cube
+% #2 edge length
+\newcommand\getCornersOfCube[2]{%
+    \divScalar[halfEdge]{#2}{2}
+    \newVec{tmpVec}{-\halfEdge,-\halfEdge,-\halfEdge, 0}
+    \sumVec[pointA]{#1, \tmpVec}
+    \newVec{tmpVec}{-\halfEdge,-\halfEdge,\halfEdge, 0}
+    \sumVec[pointB]{#1, \tmpVec}
+    \newVec{tmpVec}{-\halfEdge,\halfEdge,-\halfEdge, 0}
+    \sumVec[pointC]{#1, \tmpVec}
+    \newVec{tmpVec}{-\halfEdge,\halfEdge,\halfEdge, 0}
+    \sumVec[pointD]{#1, \tmpVec}
+    \newVec{tmpVec}{\halfEdge,-\halfEdge,-\halfEdge, 0}
+    \sumVec[pointE]{#1, \tmpVec}
+    \newVec{tmpVec}{\halfEdge,-\halfEdge,\halfEdge, 0}
+    \sumVec[pointF]{#1, \tmpVec}
+    \newVec{tmpVec}{\halfEdge,\halfEdge,-\halfEdge, 0}
+    \sumVec[pointG]{#1, \tmpVec}
+    \newVec{tmpVec}{\halfEdge,\halfEdge,\halfEdge, 0}
+    \sumVec[pointH]{#1, \tmpVec}
+}
+
+\newcommand\stdProject[2]{%
+    \newMatRow{vecA}{1, 0, 0, 0}
+    \newMatRow{vecB}{0, 1, 0, 0}
+    \newMatRow{vecC}{0, 0, 1, 0}
+    \newMatRow{vecD}{0, 0, -1, 0}
+    \newMat{matPstd}{\vecA, \vecB, \vecC, \vecD}
+    \mulMatAndVec[#1]{\matPstd}{#2}
+}
+
+\newcommand\vecToTwoDPoint[2]{%
+    \expandafter\edef\csname #1\endcsname{\xintNthElt{1}{#2}, \xintNthElt{2}{#2}}%
 }
