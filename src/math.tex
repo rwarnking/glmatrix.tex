@@ -1,5 +1,6 @@
 % https://ctan.org/tex-archive/macros/latex/contrib/fp?lang=en
 % https://mirrors.ibiblio.org/CTAN/macros/generic/xint/xint.pdf
+% https://glmatrix.net/docs/index.html
 
 \newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
 \newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
@@ -152,6 +153,11 @@
     \expandafter\edef\csname #1\endcsname{#2}%
 }
 
+\newcommand\newScalarPi[2]{% {Basename}{input}
+    \FPmul\divNumRes{\FPpi}{#2}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
 \newcommand\printScalar[2][0]{%
     \FPifeq{#1}{0}
         \roundNumber{#2}
@@ -270,6 +276,23 @@
                 }
             }
         \end{pmatrix}
+    }
+}
+
+\newcommand\printPoint[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \FPifeq{#1}{0}
+                    \roundNumber{##1}
+                \else
+                    \numToFractionA{##1}
+                \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{bmatrix}
     }
 }
 
@@ -694,6 +717,16 @@
     \mulMats[#1]{#2}{\matB}
 }
 
+% TODO merge with above
+\newcommand\mulMatAndVecF[3][mulMatsResult]{%
+    \newMatRow{vecA}{\xintNthElt{1}{#3}}
+    \newMatRow{vecB}{\xintNthElt{2}{#3}}
+    \newMatRow{vecC}{\xintNthElt{3}{#3}}
+    \newMatRow{vecD}{\xintNthElt{4}{#3}}
+    \newMat{matB}{\vecA, \vecB, \vecC, \vecD}
+    \mulMats[#1]{#2}{\matB}
+}
+
 \newcommand\mulMats[3][mulMatsResult]{%
     \edef\elemsRow{\xintNthElt{1}{#3}}
     \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
@@ -835,6 +868,57 @@
     \sumVec[pointH]{#1, \tmpVec}
 }
 
+% TODO usused and does not work
+% OBACHT: 2D plots do not allow for more than 2 coords
+\newcommand\getVecContent[1]{%
+    % \xintFor* ##1 in #1 \do {%
+    %     \xintifForLast{%
+    %         ##1%
+    %     }{%
+    %         ##1,%
+    %     }%
+    % }%
+    % \xintKeepUnbraced{100}{#1}
+    % \xintListWithSep{,}{#1}
+    % \edef\foo{\xintListWithSep{,}{#1}}
+    % \foo
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}
+}
+
+\newcommand\getVecXY[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}
+}
+
+% #1 suffix for points
+% #2 first mat, for example: trans mat
+% #3 second mat, for example: scale mat
+% #4 third mat, for example: rotation mat
+\newcommand\getShapeHouse[4][]{%
+    \mulMats[fsMat]{#2}{#3}
+    \mulMats[fstMat]{\fsMat}{#4}
+    \newVec{tmpVec}{-0.5, -0.5, 1}
+    \mulMatAndVec{\fstMat}{\tmpVec}
+    \matColToVec{pointA#1}{\mulMatsResult}
+    \copyVec{#1}{\testVec}
+    % \vecToTwoDPoint{pointA}{\pointAA}
+    \newVec{tmpVec}{-0.5, 0.5, 1}
+    \mulMatAndVec{\fstMat}{\tmpVec}
+    \matColToVec{pointB#1}{\mulMatsResult}
+    % \vecToTwoDPoint{pointB}{\pointBB}
+    \newVec{tmpVec}{0.5, 0.5, 1}
+    \mulMatAndVec{\fstMat}{\tmpVec}
+    \matColToVec{pointC#1}{\mulMatsResult}
+    % \vecToTwoDPoint{pointC}{\pointCC}
+    \newVec{tmpVec}{0.5, -0.5, 1}
+    \mulMatAndVec{\fstMat}{\tmpVec}
+    \matColToVec{pointD#1}{\mulMatsResult}
+    % \vecToTwoDPoint{pointD}{\pointDD}
+    \newVec{tmpVec}{0.0, 1.0, 1}
+    \mulMatAndVec{\fstMat}{\tmpVec}
+    \matColToVec{pointE#1}{\mulMatsResult}
+    % \vecToTwoDPoint{pointE}{\pointEE}
+}
+
 \newcommand\stdProject[2]{%
     \newMatRow{vecA}{1, 0, 0, 0}
     \newMatRow{vecB}{0, 1, 0, 0}
@@ -846,4 +930,79 @@
 
 \newcommand\vecToTwoDPoint[2]{%
     \expandafter\edef\csname #1\endcsname{\xintNthElt{1}{#2}, \xintNthElt{2}{#2}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Transformation Matrix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% #1 Return Value Name
+% #2 translation in x
+% #3 translation in y
+\newcommand\newTransMatTwoD[3][transMatResult]{%
+    \newMatRow{rowA}{1, 0, #2}
+    \newMatRow{rowB}{0, 1, #3}
+    \newMatRow{rowC}{0, 0, 1}
+    \newMat{#1}{\rowA, \rowB, \rowC}
+}
+
+% #1 Return Value Name
+% #2 scale in x
+% #3 scale in y
+\newcommand\newScaleMatTwoD[3][scaleMatResult]{%
+    \newMatRow{rowA}{#2, 0, 0}
+    \newMatRow{rowB}{0, #3, 0}
+    \newMatRow{rowC}{0, 0, 1}
+    \newMat{#1}{\rowA, \rowB, \rowC}
+}
+
+% #1 Return Value Name
+% #2 scale in x
+\newcommand\newRotMatTwoD[2][rotMatResult]{%
+    \FPcos\tmpCos{#2}
+    \FPsin\tmpSin{#2}
+    \newMatRow{rowB}{\tmpSin, \tmpCos, 0}
+    \FPmul\tmpSin\tmpSin{-1}
+    \newMatRow{rowA}{\tmpCos, \tmpSin, 0}
+    \newMatRow{rowC}{0, 0, 1}
+    \newMat{#1}{\rowA, \rowB, \rowC}
+}
+
+% #1 result var name
+% #2 fovx
+% #3 fovy
+% #4 near Plane
+% #5 far Plane
+\newcommand\newFrustumMat[5][frustMatResult]{%
+    \FPdiv\tmp{#2}{2}
+    \FPtan\frustumRight\tmp
+    \FPmul\frustumRight{#4}\frustumRight
+    \FPmul\frustumLeft\frustumRight{-1}
+    \FPdiv\tmp{#3}{2}
+    \FPtan\frustumTop\tmp
+    \FPmul\frustumTop{#4}\frustumTop
+    \FPmul\frustumBottom\frustumTop{-1}
+    %
+    \FPmul\cellAA{2}{#4} % AA
+    \FPsub\tmp\frustumRight\frustumLeft
+    \FPdiv\cellAA\cellAA\tmp
+    \FPadd\cellAC\frustumRight\frustumLeft % AC
+    \FPdiv\cellAC\cellAC\tmp
+    \FPmul\cellBB{2}{#4} % BB
+    \FPsub\tmp\frustumTop\frustumBottom
+    \FPdiv\cellBB\cellBB\tmp
+    \FPadd\cellBC\frustumTop\frustumBottom % BC
+    \FPdiv\cellBC\cellBC\tmp
+    \FPmul\cellCC{#5}{-1} % CC
+    \FPsub\cellCC\cellCC{#4}
+    \FPsub\tmp{#5}{#4}
+    \FPdiv\cellCC\cellCC\tmp
+    \FPmul\cellCD{#5}{#4} % CD
+    \FPmul\cellCD{-2}\cellCD
+    \FPdiv\cellCD\cellCD\tmp
+    %
+    \newMatRow{rowA}{\cellAA, 0, \cellAC, 0}
+    \newMatRow{rowB}{0, \cellBB, \cellBC, 0}
+    \newMatRow{rowC}{0, 0, \cellCC, \cellCD}
+    \newMatRow{rowD}{0, 0, -1, 0}
+    \newMat{#1}{\rowA, \rowB, \rowC, \rowD}
 }
