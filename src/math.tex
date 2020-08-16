@@ -1006,3 +1006,242 @@
     \newMatRow{rowD}{0, 0, -1, 0}
     \newMat{#1}{\rowA, \rowB, \rowC, \rowD}
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2D Painters Algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% param1 var name
+% param2 point 1
+% param3 point 2
+% param4 line name
+\newcommand\newTwoDLine[4]{% {Basename}{input}
+    % \edef\minitmp{\xintCSVtoList{#3}}
+    % #2\; #3\;\; \xintCSVtoList{#2, #3}\;\; \minitmp\;\; \xintCSVtoList{#2, \minitmp}\\
+    % \expandafter\edef\csname #1\endcsname{\xintCSVtoList{\xintCSVtoList{#2, #3}, #4}}%
+    % #2\;
+    % \edef\minitmp{\xintCSVtoList{\xintCSVtoList{#2, \xintNthElt{1}{#3}, \xintNthElt{2}{#3}}, #4}}
+    % 1: \xintNthElt{1}{\xintNthElt{1}{\minitmp}}\;
+    % 2: \xintNthElt{2}{\xintNthElt{1}{\minitmp}}\;
+    % 3: \xintNthElt{3}{\xintNthElt{1}{\minitmp}}\;
+    % 4: \xintNthElt{4}{\xintNthElt{1}{\minitmp}}\;
+    % X: \xintNthElt{2}{\minitmp}\;
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{\xintCSVtoList{#2, \xintNthElt{1}{#3}, \xintNthElt{2}{#3}}, #4}}%
+}
+
+\newcommand\lineBehindPlane[3] {%
+    \FPiflt{\xintNthElt{2}{#2}}{\xintNthElt{4}{#2}}
+        \FPset\xOne{\xintNthElt{3}{#2}}
+        \FPset\yOne{\xintNthElt{4}{#2}}
+        \FPset\xTwo{\xintNthElt{1}{#2}}
+        \FPset\yTwo{\xintNthElt{2}{#2}}
+    \else
+        \FPset\xOne{\xintNthElt{1}{#2}}
+        \FPset\yOne{\xintNthElt{2}{#2}}
+        \FPset\xTwo{\xintNthElt{3}{#2}}
+        \FPset\yTwo{\xintNthElt{4}{#2}}
+    \fi
+    \FPset\xEye{\xintNthElt{1}{#3}}
+    \FPset\yEye{\xintNthElt{2}{#3}}
+    % Calc m
+    \FPsub\mVal\yTwo\yOne
+    \FPsub\tmp\xTwo\xOne
+    \FPdiv\mVal\mVal\tmp
+    % Equation
+    \FPsub\eqXVal\yOne\yTwo
+    \FPsub\eqYVal\xTwo\xOne
+    \FPmul\eqCVal\xOne\yTwo
+    \FPmul\tmp\xTwo\yOne
+    \FPsub\eqCVal\eqCVal\tmp
+    % \FPset\eqXVal{\mVal}
+    % \FPset\eqYVal{-1}
+    % \FPmul\eqCVal\mVal\xOne
+    % \FPmul\eqCVal\eqCVal{-1}
+    % \FPadd\eqCVal\eqCVal\yOne
+    % Use eyeposition to get which side is front and back
+    \FPset\eqResult\eqCVal
+    \FPmul\tmp\eqXVal\xEye
+    % \eqXVal\;\xEye\;\tmp\\
+    % \tmp\\
+    \FPadd\eqResult\eqResult\tmp
+    \FPmul\tmp\eqYVal\yEye
+    % \eqYVal\;\yEye\;\tmp\\
+    % \tmp\\
+    \FPadd\eqResult\eqResult\tmp
+    % Check if negative or positive
+    % \eqXVal \; \eqYVal\; \eqCVal \; \eqResult
+    % \eqCVal\;\eqResult
+    \FPifgt{\eqResult}{0}
+        \FPset\eyeToPlane{1}
+    \else
+        \FPset\eyeToPlane{-1}
+    \fi
+    % Test both points of line
+    % Point A
+    \FPset\pCounter{0}
+    \FPset\eqResult\eqCVal
+    \FPmul\tmp\eqXVal{\xintNthElt{1}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    \FPmul\tmp\eqYVal{\xintNthElt{2}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    % Multiply the point result with the eyevalue (-1, 1)
+    % A positive result indicates that both points are on the same side
+    \FPmul\eqResult\eqResult\eyeToPlane
+    \FPifpos{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    \FPifzero{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    % Point B
+    \FPset\eqResult\eqCVal
+    \FPmul\tmp\eqXVal{\xintNthElt{3}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    \FPmul\tmp\eqYVal{\xintNthElt{4}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    % Multiply the point result with the eyevalue (-1, 1)
+    % A positive result indicates that both points are on the same side
+    \FPmul\eqResult\eqResult\eyeToPlane
+    \FPifpos{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    \FPifzero{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    % Final eval
+    \FPifeq{\pCounter}{0}
+        \FPset\lineBehindPlaneResult{0}
+    \else
+    \fi
+    \FPifeq{\pCounter}{1}
+        \FPset\lineBehindPlaneResult{1}
+    \else
+    \fi
+    \FPifeq{\pCounter}{2}
+        \FPset\lineBehindPlaneResult{2}
+    \else
+    \fi
+    \FPifeq{\pCounter}{3}
+        \FPset\lineBehindPlaneResult{2}
+    \else
+    \fi
+    \FPifeq{\pCounter}{4}
+        \FPset\lineBehindPlaneResult{3}
+    \else
+    \fi
+}
+
+% param1 list of lines
+% param2 eye pos
+% param3 view dir
+\newcommand\twoDPaintersAlgorithm[3] {%
+    % iterate all lines
+    % find a line that lies behind the planes of all other lines
+    % when found this line is the first line to be drawn
+    % and is removed from the list
+    % continue doing this until order is clear
+    \def\veclist{\xintCSVtoList{#1}}
+    \def\veclistcopy{\xintCSVtoList{#1}}
+    \def\finalList{}
+    \def\textList{}
+    \FPset\outerCount{0}%
+    \xintFor* ##3 in \veclistcopy \do {%
+        \FPset\bestScore{0}%
+        \FPset\bestIndex{0}%
+        \FPset\innerCount{0}%
+        \def\textListTmp{}
+        \xintFor* ##1 in \veclist \do {%
+            \FPset\score{0}%
+            \def\textListTmpTmp{}
+            \xintFor* ##2 in \veclist \do {%
+                % \xintNthElt{1}{##1}\;
+                % \xintNthElt{2}{##1}\\
+                \lineBehindPlane{\xintNthElt{1}{##1}}{\xintNthElt{1}{##2}}{#2}
+                \FPifeq{\lineBehindPlaneResult}{0}%
+                    % Line ##1, Behind ebene ##2\\
+                    \FPadd\score\score{2}%
+                    %
+                    \edef\textListTmpTmp{\textListTmpTmp, \xintNthElt{2}{##1} hinter \xintNthElt{2}{##2}'s Ebene}%
+                    %
+                \else
+                \fi
+                \FPifeq{\lineBehindPlaneResult}{1}%
+                    % Line ##1, crossing ebene ##2\\
+                    \FPadd\score\score{1}%
+                    \edef\textListTmpTmp{\textListTmpTmp, \xintNthElt{2}{##1} kreuzt \xintNthElt{2}{##2}'s Ebene}%
+                \else
+                \fi
+                \FPifeq{\lineBehindPlaneResult}{2}%
+                    % Line ##1, infront ebene ##2\\
+                    % \edef\textListTmpTmp{\textListTmpTmp, \xintNthElt{2}{##1} vor \xintNthElt{2}{##2}'s Ebene}%
+                \else
+                \fi
+                \FPifeq{\lineBehindPlaneResult}{3}%
+                    % \edef\textListTmpTmp{\textListTmpTmp, \xintNthElt{2}{##1} liegt in \xintNthElt{2}{##2}'s Ebene}%
+                    % Line ##1, in ebene ##2\\
+                \else
+                \fi
+            }
+            \FPifgt{\score}{\bestScore}%
+                % \textListTmpTmp\\
+                \edef\textListTmp{\xintCSVtoList{\textListTmpTmp}}%
+                \FPset\bestScore\score
+                \FPset\bestIndex\innerCount
+            \else
+            \fi
+            \FPadd\innerCount\innerCount{1}%
+            % index \innerCount \; Score \score\\
+            % \FPadd\outerCount\outerCount{1}%
+        }
+        % final Score \bestScore\\
+        \FPset\counterTwo{0}%
+        \def\veclisttmp{}
+        \xintFor* ##1 in \veclist \do {%
+            % ##1\\
+            % \counterTwo\; \bestIndex\;
+            \FPifeq{\counterTwo}{\bestIndex}%
+                \edef\finalList{\finalList \xintCSVtoList{##1}}%
+                % \textListTmp\\
+                \edef\textList{\textList \textListTmp}%
+                % a\\
+            \else
+                \edef\veclisttmp{\veclisttmp \xintCSVtoList{##1}}%
+                % b\\
+            \fi
+            \FPadd\counterTwo\counterTwo{1}%
+        }
+        \edef\veclist{\veclisttmp}%
+        %
+        % \xintifForFirst{%
+        %     \newVec{finalOrder}{\bestIndex}
+        % }{%
+        %     % \appendToVec{finalOrder}{\finalOrder}{\bestIndex}
+        % }
+    % \expandafter\edef\csname #1\endcsname{\sortedlist}%
+    }
+    \begin{itemize}
+        \xintFor* ##1 in \textList \do {%
+            % TODO this is really unpretty, but the first item of each
+            % text block is unfortunately empty (dangling comma) and needs
+            % to be filtered
+            \FPset\lengthTmp{\expandafter\xintLength\expandafter{##1}}%
+            \FPifzero{\lengthTmp}%
+            \else
+                \item ##1
+            \fi
+        }
+    \end{itemize}
+    Reihenfolge: \(
+    \xintFor* ##1 in \finalList \do {%
+        \xintifForLast{%
+            \xintNthElt{2}{##1}
+        }{%
+            \xintNthElt{2}{##1} \Rightarrow
+        }
+        % ##1\\
+    }
+    \)\\
+}
