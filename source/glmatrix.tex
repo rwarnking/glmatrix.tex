@@ -1,0 +1,20 @@
+% inspired by https://glmatrix.net/
+
+\newcommand{\R}{\ensuremath{\textrm{I\!R}}}
+\newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
+\newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
+\newcommand{\klam}[1]{\ensuremath{\left( #1 \right)}}
+\newcommand{\gklam}[1]{\ensuremath{\left\{ #1 \right\}}}
+\newcommand{\bmat}[1]{\ensuremath{\begin{bmatrix} #1 \end{bmatrix}}}
+\newcommand{\pmat}[1]{\ensuremath{\begin{pmatrix} #1 \end{pmatrix}}}
+
+\usepackage{xinttools} % for the \xintFor
+\usepackage{xintfrac}
+\usepackage{fp}
+\usepackage{xstring}
+
+\input{glmatrix/scalar.tex}
+\input{glmatrix/vector.tex}
+\input{glmatrix/matrix.tex}
+\input{glmatrix/shapes.tex}
+\input{glmatrix/cgalgos.tex}

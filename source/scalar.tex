@@ -1,0 +1,374 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Print Utility
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+% Conversions %
+%%%%%%%%%%%%%%%
+% Convert a fraction with root to a decimal number
+% TODO make #3 optional
+\newcommand\fractionToNum[3]{%
+    \FProot\tmpA{#3}{2}
+    \FPmul\tmpA\tmpA{#2}
+    \FPdiv\tmpB{#1}\tmpA
+    \FPset\fractionNumRes{\tmpB}
+    \ensuremath{
+        \tmpB
+    }
+}
+
+% Convert a decimal number to a fraction with root
+\newcommand\solutionC{%
+    \FPset\finalmul{1}
+    \FPset\tmptmptmptmp\tmptmptmp
+    %
+    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPtrunc\floored\tmptmptmptmp{0}
+        \FPsub\remainder\tmptmptmptmp\floored
+        \FPifgt{\remainder}{0.00001}
+            \FPdiv\mulmul{1}{\remainder}
+            \FPmul\finalmul\finalmul\mulmul
+        \else
+            \xintBreakFor
+        \fi
+        \FPset\tmptmptmptmp\mulmul
+    }
+    \FPround\finalmul\finalmul{8}
+    \FPclip\finalmul\finalmul
+    \FPset\finalmultmp\finalmul
+    % The result will be a multiplicator that is able to round
+    % the number to a whole number, but the result might not be a
+    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
+    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
+    % that the searched for number must be a multiple of 32, in this case 64
+    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
+    \xintFor* ##1 in \innersequence \do {%
+        \FProot\finalmulsqrt\finalmultmp{2}
+        \FPround\finalmulsqrt\finalmulsqrt{4}
+        \FPclip\finalmulsqrt\finalmulsqrt
+        \FPifint{\finalmulsqrt}
+            \xintBreakFor
+        \else
+            \FPadd\finalmultmp\finalmultmp\finalmul
+        \fi
+    }
+    \FPset\finalmul\finalmultmp
+    \FProot\finalmulsqrt\finalmul{2}
+    \FPround\finalmulsqrt\finalmulsqrt{4}
+    \FPclip\finalmulsqrt\finalmulsqrt
+    \FPmul\divisor\divisor\finalmul
+    \FPmul\dividend\dividend\finalmulsqrt
+}
+
+\newcommand\numToFraction[1]{%
+    \FPset\dividend{1}
+    \FPset\divisor{#1}
+    \FPset\minusSign{1}
+    \FPiflt{\divisor}{0}
+        \FPset\minusSign{-1}
+    \else
+    \fi
+    \ensuremath{
+        % reverse fraction
+        \FPdiv\divisor{1}{#1}
+        % Reverse root
+        % Use FPmul instead of FPpow to allow for neg values
+        \FPmul\divisor\divisor\divisor
+        \FPset\tmptmptmp\divisor
+        \FPround\divisor\divisor{10}
+        \FPclip\divisor\divisor
+        \FPifint{\divisor}
+        \else
+            \solutionC
+        \fi
+        %
+        \FPround\divisor\divisor{4}
+        \FPclip\divisor\divisor
+        \FPmul\dividend\dividend\minusSign
+        \FPround\dividend\dividend{4}
+        \FPclip\dividend\dividend
+        %
+        \FPset\outputVar{#1}
+        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
+        \FPset\inputVar{#1}
+        \FPmul\inputVar\inputVar\inputVar
+        \FPmul\inputVar\inputVar\minusSign
+        \FPround\inputVar\inputVar{8}
+        \FPclip\inputVar\inputVar
+        \FPifint{\inputVar}
+            \FPset\outputVar{\;\sqrt{\inputVar}}
+        \else
+        \fi
+        \FPset\inputVarA{#1}
+        \FPround\inputVarA\inputVarA{10}
+        \FPclip\inputVarA\inputVarA
+        \FPifint{\inputVarA}
+            \FPset\outputVar{\inputVarA}
+        \else
+        \fi
+        \outputVar
+    }
+}
+
+\newcommand\numToFractionA[1]{%
+    \FPset\inputVarA{#1}
+    \FPround\inputVarA\inputVarA{10}
+    \FPclip\inputVarA\inputVarA
+    % Prevent division by 0
+    \FPifint{\inputVarA}
+        \FPset\outputVar{\inputVarA}
+        \outputVar
+    \else
+        \numToFraction{#1}
+    \fi
+}
+
+\newcommand\radianToDegree[2][radianToDegreeResult]{
+    \FPmul\tmp{#2}{180}
+    \FPdiv\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+
+%%%%%%%%%%%%%%%%%%%
+% Scalar Creation %
+%%%%%%%%%%%%%%%%%%%
+% Create a scalar
+% #1 out, var name to save the result (scalar) to
+% #2 a, scalar value
+\newcommand\newScalar[2]{%
+    \expandafter\edef\csname #1\endcsname{#2}%
+}
+
+% Create a scalar as a multiple of pi
+% #1 out, var name to save the result (scalar) to
+% #2 a, scalar value to multiply with pi
+\newcommand\newScalarPi[2]{
+    \FPmul\divNumRes{\FPpi}{#2}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
+% Clone the given scalar variable to a new variable
+% \newcommand\cloneScalar[2][scalarCloneResult]{
+% }
+
+% Copy value from one scalar variable to another
+% #1 out, var name to save the result (scalar) to
+% #2 a, scalar value
+\newcommand\copyScalar[2][scalarCopyResult]{
+    \setScalar{#1}{#2}
+}
+
+% \newcommand\createScalar[1]{
+% }
+
+% Set a scalar to a value
+% #1 out, var name to save the result (scalar) to
+% #2 a, scalar value
+\newcommand\setScalar[2]{
+    \newScalar{#1}{#2}
+}
+
+% TODO decide whether to use the low level assignments or 
+% use the functions like setScalar to set the variable
+% Set or create a scalar with value 0
+% #1 out, var name to save the result (scalar) to
+\newcommand\zeroScalar[1]{
+    \expandafter\edef\csname #1\endcsname{0}%
+}
+
+% Create a new scalar variable with a random value
+\newcommand\randomScalar[3]{
+    \FPrandom\tmp
+    \lerpScalar[#1]{#2}{#3}{\tmp}
+}
+
+%%%%%%%%%%%%%%%%%%%
+% Scalar Printing %
+%%%%%%%%%%%%%%%%%%%
+% Print the value of this scalar variable
+% #1 whether or not the value should be printed as a fraction (val=1)
+% #2 the value
+\newcommand\printScalar[2][0]{%
+    \FPifeq{#1}{0}
+        % \roundNumber{#2}
+        \roundScalar{#2}
+        \scalarRoundResult
+    \else
+        \numToFractionA{#2}
+    \fi
+}
+
+% Print the value of this scalar variable as a multiple of Pi
+% #1 whether or not the value should be printed as a fraction (val=1)
+% #2 the value
+\newcommand\printScalarAsPi[2][0]{%
+    \FPdiv\divNumRes{#2}{\FPpi}
+    \FPifeq{#1}{0}
+        % \roundNumber{\divNumRes}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    \pi
+}
+
+% TODO rename to roundScalar / printScalarRounded
+% TODO this is just a print function and does not create a new value
+% #1 number of digits after comma, default is 4
+% #2 the value
+\newcommand\printScalarRounded[2][4]{%
+    \FPround\tmp{#2}{#1}
+    \FPclip\tmp\tmp
+    \tmp
+}
+
+% TODO this is most likely not usefull
+% \newcommand\printScalarContent[2][0]{%
+% }
+%%%%%%%%%%%%%%%%%%%%%%%
+% Scalar Modification %
+%%%%%%%%%%%%%%%%%%%%%%%
+% TODO scalarRoundResult
+% #1 number of digits after comma, default is 4
+% #2 the value
+\newcommand\roundScalar[2][4]{%
+    \FPround\tmp{#2}{#1}
+    \FPclip\tmp\tmp
+    \newScalar{scalarRoundResult}{\tmp}
+}
+
+% Ceil the value of this variable
+% #1 out, var name to save the result (scalar) to
+% #2 the value
+\newcommand\ceilScalar[2][scalarCeilResult]{
+    \FPifint{#2}
+    \else
+        \FPadd\tmp{#2}{1}
+    \fi
+    \FPtrunc\tmp\tmp{0}
+    \newScalar{#1}{\tmp}
+}
+
+% Floor the value of this variable
+% #1 out, var name to save the result (scalar) to
+% #2 the value
+\newcommand\floorScalar[2][scalarFloorResult]{
+    \FPtrunc\tmp{#2}{0}
+    \newScalar{#1}{\tmp}
+}
+
+% TODO unsure how this could work
+% \newcommand\forEach{
+% }
+
+%%%%%%%%%%%%%%%
+% Scalar Math %
+%%%%%%%%%%%%%%%
+% Add the values of two scalars
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+\newcommand\addScalar[3][scalarAddResult]{% {Basename}{input}
+    \FPadd\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\subScalar[3][scalarSubResult]{% {Basename}{input}
+    \FPsub\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+% Multiply the values of two scalars
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+\newcommand\mulScalar[3][scalarMulResult]{
+    \FPmul\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+% Divide the values of two scalars
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+\newcommand\divScalar[3][scalarDivResult]{
+    % TODO add check for #3 being 0
+    \FPdiv\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\powScalar[3][scalarPowResult]{% {Basename}{input}
+    \FPpow\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+% TODO negateScalar vs negScalar
+% Negate the value of the given scalar
+% #1 out, var name to save the result (scalar) to
+% #2 a, scalar value
+\newcommand\negateScalar[2][scalarNegateResult]{
+    \FPneg\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+% Lineraly interpolate between values of two scalars
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+% #4 t, interpolation amount range [0-1]
+\newcommand\lerpScalar[4][lerpScalarResult]{
+    \FPsub\tmpA{1}{#4}
+    \FPmul\tmpA{#2}\tmpA
+    \FPmul\tmpB{#3}{#4}
+    \FPadd\tmpA\tmpA\tmpB
+    \newScalar{#1}{\tmpA}
+}
+
+\newcommand\arccosScalar[2][scalarArccosResult]{
+    \FParccos\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+% Adds two scalars after multiplying the second operand by a value
+% \newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{
+% }
+
+% \newcommand\toDegree[4][scalarMulAndAddResult]{
+% }
+
+% \newcommand\toRadian[4][scalarMulAndAddResult]{
+% }
+
+%%%%%%%%%%%%%%%%%%%%%
+% Scalar Comparison %
+%%%%%%%%%%%%%%%%%%%%%
+% Returns whether or not the scalars have the same values. 
+% \newcommand\equalsScalar[3][scalarEqualsResult]{
+% }
+
+% Return the minimum of two scalar values
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+\newcommand\minScalar[3][minScalarResult]{
+    % TODO use \FPmin#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \fi
+}
+
+% Return the maximum of two scalar values
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+\newcommand\maxScalar[3][maxScalarResult]{
+    % TODO use \FPmax#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \fi
+}

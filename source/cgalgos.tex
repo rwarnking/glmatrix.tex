@@ -1,0 +1,522 @@
+\newcommand\areaTriangle[4][areaTriangleResult]{%
+    \subVec[subResultAC]{#3, #2}
+    \subVec[subResultAB]{#4, #2}
+    \crossVec[crossResult]{\subResultAC}{\subResultAB}
+    \lenVec[normResult]{\crossResult}
+    \divScalar[#1]{\normResult}{2}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2D Painters Algorithm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% param1 var name
+% param2 point 1
+% param3 point 2
+% param4 line name
+\newcommand\newTwoDLine[4]{% {Basename}{input}
+    % \edef\minitmp{\xintCSVtoList{#3}}
+    % #2\; #3\;\; \xintCSVtoList{#2, #3}\;\; \minitmp\;\; \xintCSVtoList{#2, \minitmp}\\
+    % \expandafter\edef\csname #1\endcsname{\xintCSVtoList{\xintCSVtoList{#2, #3}, #4}}%
+    % #2\;
+    % \edef\minitmp{\xintCSVtoList{\xintCSVtoList{#2, \xintNthElt{1}{#3}, \xintNthElt{2}{#3}}, #4}}
+    % 1: \xintNthElt{1}{\xintNthElt{1}{\minitmp}}\;
+    % 2: \xintNthElt{2}{\xintNthElt{1}{\minitmp}}\;
+    % 3: \xintNthElt{3}{\xintNthElt{1}{\minitmp}}\;
+    % 4: \xintNthElt{4}{\xintNthElt{1}{\minitmp}}\;
+    % X: \xintNthElt{2}{\minitmp}\;
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{\xintCSVtoList{#2, \xintNthElt{1}{#3}, \xintNthElt{2}{#3}}, #4}}%
+}
+
+\newcommand\lineBehindPlane[3] {%
+    \FPiflt{\xintNthElt{2}{#2}}{\xintNthElt{4}{#2}}
+        \FPset\xOne{\xintNthElt{3}{#2}}
+        \FPset\yOne{\xintNthElt{4}{#2}}
+        \FPset\xTwo{\xintNthElt{1}{#2}}
+        \FPset\yTwo{\xintNthElt{2}{#2}}
+    \else
+        \FPset\xOne{\xintNthElt{1}{#2}}
+        \FPset\yOne{\xintNthElt{2}{#2}}
+        \FPset\xTwo{\xintNthElt{3}{#2}}
+        \FPset\yTwo{\xintNthElt{4}{#2}}
+    \fi
+    \FPset\xEye{\xintNthElt{1}{#3}}
+    \FPset\yEye{\xintNthElt{2}{#3}}
+    % Calc m
+    \FPsub\mVal\yTwo\yOne
+    \FPsub\tmp\xTwo\xOne
+    \FPdiv\mVal\mVal\tmp
+    % Equation
+    \FPsub\eqXVal\yOne\yTwo
+    \FPsub\eqYVal\xTwo\xOne
+    \FPmul\eqCVal\xOne\yTwo
+    \FPmul\tmp\xTwo\yOne
+    \FPsub\eqCVal\eqCVal\tmp
+    % \FPset\eqXVal{\mVal}
+    % \FPset\eqYVal{-1}
+    % \FPmul\eqCVal\mVal\xOne
+    % \FPmul\eqCVal\eqCVal{-1}
+    % \FPadd\eqCVal\eqCVal\yOne
+    % Use eyeposition to get which side is front and back
+    \FPset\eqResult\eqCVal
+    \FPmul\tmp\eqXVal\xEye
+    % \eqXVal\;\xEye\;\tmp\\
+    % \tmp\\
+    \FPadd\eqResult\eqResult\tmp
+    \FPmul\tmp\eqYVal\yEye
+    % \eqYVal\;\yEye\;\tmp\\
+    % \tmp\\
+    \FPadd\eqResult\eqResult\tmp
+    % Check if negative or positive
+    % \eqXVal \; \eqYVal\; \eqCVal \; \eqResult
+    % \eqCVal\;\eqResult
+    \FPifgt{\eqResult}{0}
+        \FPset\eyeToPlane{1}
+    \else
+        \FPset\eyeToPlane{-1}
+    \fi
+    % Test both points of line
+    % Point A
+    \FPset\pCounter{0}
+    \FPset\eqResult\eqCVal
+    \FPmul\tmp\eqXVal{\xintNthElt{1}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    \FPmul\tmp\eqYVal{\xintNthElt{2}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    % Multiply the point result with the eyevalue (-1, 1)
+    % A positive result indicates that both points are on the same side
+    \FPmul\eqResult\eqResult\eyeToPlane
+    \FPifpos{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    \FPifzero{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    % Point B
+    \FPset\eqResult\eqCVal
+    \FPmul\tmp\eqXVal{\xintNthElt{3}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    \FPmul\tmp\eqYVal{\xintNthElt{4}{#1}}
+    \FPadd\eqResult\eqResult\tmp
+    % Multiply the point result with the eyevalue (-1, 1)
+    % A positive result indicates that both points are on the same side
+    \FPmul\eqResult\eqResult\eyeToPlane
+    \FPifpos{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    \FPifzero{\eqResult}
+        \FPadd\pCounter\pCounter{1}
+    \else
+    \fi
+    % Final eval
+    \FPifeq{\pCounter}{0}
+        \FPset\lineBehindPlaneResult{0}
+    \else
+    \fi
+    \FPifeq{\pCounter}{1}
+        \FPset\lineBehindPlaneResult{1}
+    \else
+    \fi
+    \FPifeq{\pCounter}{2}
+        \FPset\lineBehindPlaneResult{2}
+    \else
+    \fi
+    \FPifeq{\pCounter}{3}
+        \FPset\lineBehindPlaneResult{2}
+    \else
+    \fi
+    \FPifeq{\pCounter}{4}
+        \FPset\lineBehindPlaneResult{3}
+    \else
+    \fi
+}
+
+% param1 list of lines
+% param2 eye pos
+% param3 view dir
+\newcommand\twoDPaintersAlgorithm[3] {%
+    % iterate all lines
+    % find a line that lies behind the planes of all other lines
+    % when found this line is the first line to be drawn
+    % and is removed from the list
+    % continue doing this until order is clear
+    \def\veclist{\xintCSVtoList{#1}}
+    \def\veclistcopy{\xintCSVtoList{#1}}
+    \def\finalList{}
+    \def\textList{}
+    \FPset\outerCount{0}%
+    \xintFor* ##3 in \veclistcopy \do {%
+        \FPset\bestScore{0}%
+        \FPset\bestIndex{0}%
+        \FPset\innerCount{0}%
+        \def\textListTmp{}
+        \xintFor* ##1 in \veclist \do {%
+            \FPset\score{0}%
+            \def\textListTmpTmp{}
+            \xintFor* ##2 in \veclist \do {%
+                \lineBehindPlane{\xintNthElt{1}{##1}}{\xintNthElt{1}{##2}}{#2}
+                \FPifeq{\lineBehindPlaneResult}{0}%
+                    % Line ##1, Behind ebene ##2\\
+                    \FPadd\score\score{2}%
+                    \edef\textListTmpTmp{\textListTmpTmp, \xintNthElt{2}{##1} hinter \xintNthElt{2}{##2}'s Ebene}%
+                    %
+                \else
+                \fi
+                \FPifeq{\lineBehindPlaneResult}{1}%
+                    % Line ##1, crossing ebene ##2\\
+                    \FPadd\score\score{1}%
+                    \edef\textListTmpTmp{\textListTmpTmp, \xintNthElt{2}{##1} kreuzt \xintNthElt{2}{##2}'s Ebene}%
+                \else
+                \fi
+                \FPifeq{\lineBehindPlaneResult}{2}%
+                    % Line ##1, infront ebene ##2\\
+                \else
+                \fi
+                \FPifeq{\lineBehindPlaneResult}{3}%
+                    % Line ##1, in ebene ##2\\
+                \else
+                \fi
+            }
+            \FPifgt{\score}{\bestScore}%
+                \edef\textListTmp{\xintCSVtoList{\textListTmpTmp}}%
+                \FPset\bestScore\score
+                \FPset\bestIndex\innerCount
+            \else
+            \fi
+            \FPadd\innerCount\innerCount{1}%
+        }
+        \FPset\counterTwo{0}%
+        \def\veclisttmp{}
+        \xintFor* ##1 in \veclist \do {%
+            \FPifeq{\counterTwo}{\bestIndex}%
+                \edef\finalList{\finalList \xintCSVtoList{##1}}%
+                \edef\textList{\textList \textListTmp}%
+            \else
+                \edef\veclisttmp{\veclisttmp \xintCSVtoList{##1}}%
+            \fi
+            \FPadd\counterTwo\counterTwo{1}%
+        }
+        \edef\veclist{\veclisttmp}%
+    }
+    \begin{itemize}
+        \xintFor* ##1 in \textList \do {%
+            % TODO this is really unpretty, but the first item of each
+            % text block is unfortunately empty (dangling comma) and needs
+            % to be filtered
+            \FPset\lengthTmp{\expandafter\xintLength\expandafter{##1}}%
+            \FPifzero{\lengthTmp}%
+            \else
+                \item ##1
+            \fi
+        }
+    \end{itemize}
+    Reihenfolge: \(
+    \xintFor* ##1 in \finalList \do {%
+        \xintifForLast{%
+            \xintNthElt{2}{##1}
+        }{%
+            \xintNthElt{2}{##1} \Rightarrow
+        }
+    }
+    \)\\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fragment Create & Print
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO is this really needed
+\newcommand\newHex[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2}%
+}
+
+\newcommand\newFragment[2]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+}
+
+% param1 bool print alpha
+% param2 the fragment vector of shape rgb, z, alpha
+% param3 hex(0), decimal(1) or int(2) for color vector
+\newcommand\printFrag[3][0] {%
+    [%
+        \(z=\xintNthElt{4}{#2}\); %
+        \FPifeq{#3}{0}%
+            \convertToHex[numA]{\xintNthElt{1}{#2}}%
+            \convertToHex[numB]{\xintNthElt{2}{#2}}%
+            \convertToHex[numC]{\xintNthElt{3}{#2}}%
+            \(rgb=\#\numA\numB\numC\)%
+        \else%
+        \fi%
+        \FPifeq{#3}{1}%
+            \FPdiv\numA{\xintNthElt{1}{#2}}{255}%
+            \FPtrunc\numA\numA{2}%
+            \FPdiv\numB{\xintNthElt{2}{#2}}{255}%
+            \FPtrunc\numB\numB{2}%
+            \FPdiv\numC{\xintNthElt{3}{#2}}{255}%
+            \FPtrunc\numC\numC{2}%
+            \(rgb=\numA,\numB,\numC\)%
+        \else%
+        \fi%
+        \FPifeq{#3}{2}%
+            \(rgb=\xintNthElt{1}{#2},\xintNthElt{2}{#2},\xintNthElt{3}{#2}\)%
+        \else%
+        \fi%
+        \FPifeq{#1}{1}%
+            , \(a=\xintNthElt{5}{#2}\)%
+        \else%
+        \fi%
+    ]
+}
+
+% TODO allow to convert number of any length
+\newcommand\convertToHex[2][conversionResult]{%
+    \FPset\divResOld{#2}%
+    \FPdiv\divRes\divResOld{16}%
+    \FPtrunc\divRes\divRes{0}%
+    \FPset\tmptmp\divRes%
+    \FPiflt{\tmptmp}{10}%
+        \newHex{tmptmptmp}{\tmptmp}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{10}%
+        \newHex{tmptmptmp}{A}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{11}%
+        \newHex{tmptmptmp}{B}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{12}%
+        \newHex{tmptmptmp}{C}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{13}%
+        \newHex{tmptmptmp}{D}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{14}%
+        \newHex{tmptmptmp}{E}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{15}%
+        \FPset\tmptmp{F}%
+        \newHex{tmptmptmp}{F}%
+    \else
+    \fi
+    \FPmul\divResN\divRes{16}%
+    \FPtrunc\divResN\divResN{0}%
+    \FPsub\subRes\divResOld\divResN%
+    \FPtrunc\subRes\subRes{0}%
+    \FPset\tmptmp\subRes%
+    \FPiflt{\tmptmp}{10}%
+        \newHex{tmptmptmp}{\tmptmptmp \tmptmp}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{10}%
+        \newHex{tmptmptmp}{\tmptmptmp A}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{11}%
+        \newHex{tmptmptmp}{\tmptmptmp B}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{12}%
+        \newHex{tmptmptmp}{\tmptmptmp C}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{13}%
+        \newHex{tmptmptmp}{\tmptmptmp D}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{14}%
+        \newHex{tmptmptmp}{\tmptmptmp E}%
+    \else
+    \fi
+    \FPifeq{\tmptmp}{15}%
+        \FPset\tmptmp{F}%
+        \newHex{tmptmptmp}{\tmptmptmp{}F}%
+    \else
+    \fi
+    \expandafter\edef\csname #1\endcsname{\tmptmptmp}%
+}
+
+\newcommand\printZBufferSteps[1] {%
+    \def\fraglist{\xintCSVtoList{#1}}
+    \begin{enumerate}
+        \def\curfrag{\xintNthElt{1}{\fraglist}}
+        \xintFor* ##2 in \fraglist \do {%
+            \FPiflt{\xintNthElt{4}{##2}}{\xintNthElt{4}{\curfrag}}%
+                \def\curfrag{##2}
+            \else
+            \fi
+            \item \quad \printFrag{\curfrag}{0}
+        }
+    \end{enumerate}
+}
+
+\newcommand\sortFragments[2][sortedFragments] {%
+    \def\fraglist{\xintCSVtoList{#2}}
+    \def\sortedlist{}
+    \FPset\upperbound{100.0}%
+    % \def\curfrag{\xintNthElt{1}{\fraglist}}
+    \xintFor* ##1 in \fraglist \do {%
+        \FPset\curMax{-100.0}%
+        \xintFor* ##2 in \fraglist \do {%
+            % \xintNthElt{4}{##2}\;
+            \FPset\tmpCondition{0}%
+            \FPiflt{\xintNthElt{4}{##2}}{\upperbound}%
+                %\FPset\curMax{\xintNthElt{4}{##2}}%
+                \FPadd\tmpCondition\tmpCondition{1}%
+            \else
+            \fi
+            \FPifgt{\xintNthElt{4}{##2}}{\curMax}%
+                \FPadd\tmpCondition\tmpCondition{1}%
+            \else
+            \fi
+            \FPifeq{\tmpCondition}{2}%
+                %\FPset\curMax{\xintNthElt{4}{##2}}%
+                \FPset\curMax{\xintNthElt{4}{##2}}%
+                % \curMax\;
+            \else
+            \fi
+        }
+        \FPset\upperbound{\curMax}%
+        \xintFor* ##2 in \fraglist \do {%
+            \FPifeq{\xintNthElt{4}{##2}}{\upperbound}%
+                % \printFrag[1]{##2}{0}\\
+                \edef\sortedlist{\sortedlist \xintCSVtoList{##2}}%
+            \else
+            \fi
+        }
+    }
+    \expandafter\edef\csname #1\endcsname{\sortedlist}%
+}
+
+\newcommand\printFragList[2][0] {%
+    \begin{enumerate}
+        \xintFor* ##2 in #2 \do {%
+            \item \quad \printFrag[#1]{##2}{0}
+        }
+    \end{enumerate}
+}
+
+\newcommand\drawColorBand[1] {%
+    \FPset\colorCountMax{\expandafter\xintLength\expandafter{#1}}%
+    \FPadd\colorCountMax\colorCountMax{1}%
+    \begin{tikzpicture}
+        \node[draw, anchor=west] at (\colorCountMax+0.5,0.5) {drawn with black background};
+        \node[draw, anchor=west] at (\colorCountMax+0.5,1.5) {drawn with white background};
+        %
+        \filldraw [fill=black, draw=black, opacity=1] (0,0) rectangle (\colorCountMax,1);
+        \filldraw [fill=white, draw=black, opacity=1] (0,1) rectangle (\colorCountMax,2);
+        %
+        \FPset\colorCounter{1}%
+        \xintFor* ##1 in #1 \do {%
+            \definecolor{curcolor}{RGB}{\xintNthElt{1}{##1}, \xintNthElt{2}{##1}, \xintNthElt{3}{##1}}
+            \filldraw [fill=curcolor, draw=black, opacity=\xintNthElt{5}{##1}] (\colorCounter,0) rectangle (\colorCountMax,2);
+            \FPadd\colorCounter\colorCounter{1}%
+        }
+    \end{tikzpicture}
+}
+
+\newcommand\addFragments[3][addFragResult] {%
+    \FPset\alphaA{\xintNthElt{5}{#2}}%
+    \FPsub\alphaB{1}{\alphaA}%
+    \FPmul\fracR{\xintNthElt{1}{#2}}{\alphaA}%
+    \FPmul\fracG{\xintNthElt{2}{#2}}{\alphaA}%
+    \FPmul\fracB{\xintNthElt{3}{#2}}{\alphaA}%
+    \FPmul\tmpR{\xintNthElt{1}{#3}}{\alphaB}%
+    \FPmul\tmpG{\xintNthElt{2}{#3}}{\alphaB}%
+    \FPmul\tmpB{\xintNthElt{3}{#3}}{\alphaB}%
+    \FPadd\fracR\fracR\tmpR%
+    \FPtrunc\fracR\fracR{0}%
+    \FPadd\fracG\fracG\tmpG%
+    \FPtrunc\fracG\fracG{0}%
+    \FPadd\fracB\fracB\tmpB%
+    \FPtrunc\fracB\fracB{0}%
+    \newFragment{#1}{\fracR, \fracG, \fracB, \xintNthElt{4}{#2}, 1.0}
+}
+
+\newcommand\drawColorCalc[2][0] {%
+    \FPifeq{#1}{0}%
+        \newFragment{backFragment}{0, 0, 0, 1.0, 1.0}
+    \else
+        \newFragment{backFragment}{255, 255, 255, 1.0, 1.0}
+    \fi
+    \FPset\rowPos{0}%
+    \FPset\currentRowIdx{1}%
+    \begin{tikzpicture}
+        \xintFor* ##1 in #2 \do {%
+            \addFragments{##1}{\backFragment}
+            \definecolor{newcolor}{RGB}{\xintNthElt{1}{##1}, \xintNthElt{2}{##1}, \xintNthElt{3}{##1}}
+            \definecolor{oldcolor}{RGB}{\xintNthElt{1}{\backFragment}, \xintNthElt{2}{\backFragment}, \xintNthElt{3}{\backFragment}}
+            \definecolor{finalcolor}{RGB}{\xintNthElt{1}{\addFragResult}, \xintNthElt{2}{\addFragResult}, \xintNthElt{3}{\addFragResult}}
+            %
+            \node at (2.0,\rowPos+0.75) {\(C_{\currentRowIdx} = 0.2\ \cdot \)};
+            \filldraw [fill=newcolor, draw=black] (3,\rowPos) rectangle (4,\rowPos+1.5);
+            \getContrastColor{##1}
+            \node at (3.5,\rowPos+0.75) {%
+                \(%
+                    \textcolor{\contrastColor}{%
+                        \pmat{%
+                            \xintNthElt{1}{##1}\\%
+                            \xintNthElt{2}{##1}\\%
+                            \xintNthElt{3}{##1}%
+                        }%
+                    }%
+                \)%
+            };%
+            \node at (4.75,\rowPos+0.75) {\(+\ 0.8\ \cdot \)};
+            \filldraw [fill=oldcolor, draw=black] (5.5,\rowPos) rectangle (6.5,\rowPos+1.5);
+            \getContrastColor{\backFragment}
+            \node at (6,\rowPos+0.75) {%
+                \(%
+                    \textcolor{\contrastColor}{%
+                        \pmat{%
+                            \xintNthElt{1}{\backFragment}\\%
+                            \xintNthElt{2}{\backFragment}\\%
+                            \xintNthElt{3}{\backFragment}%
+                        }%
+                    }%
+                \)%
+            };%
+            \node at (7,\rowPos+0.75) {\(=\)};
+            \filldraw [fill=finalcolor, draw=black] (7.5,\rowPos) rectangle (9,\rowPos+1.5);
+            \getContrastColor{\addFragResult}
+            \node at (8.25,\rowPos+0.75) {%
+                \(%
+                    \textcolor{\contrastColor}{%
+                        \pmat{%
+                            \xintNthElt{1}{\addFragResult}\\%
+                            \xintNthElt{2}{\addFragResult}\\%
+                            \xintNthElt{3}{\addFragResult}%
+                        }%
+                    }%
+                \)%
+            };%
+            \edef\backFragment{\addFragResult}%
+            \FPsub\rowPos\rowPos{1.75}%
+            \FPadd\currentRowIdx\currentRowIdx{1}%
+            \FPtrunc\currentRowIdx\currentRowIdx{0}%
+        }
+    \end{tikzpicture}
+}
+
+\newcommand\getContrastColor[2][contrastColor] {%
+    \FPset\luminance{0}%
+    % Counting the perceptive luminance - human eye favors green color
+    \FPmul\tmp{\xintNthElt{1}{#2}}{0.299}%
+    \FPadd\luminance\luminance{\tmp}%
+    \FPmul\tmp{\xintNthElt{2}{#2}}{0.587}%
+    \FPadd\luminance\luminance{\tmp}%
+    \FPmul\tmp{\xintNthElt{3}{#2}}{0.114}%
+    \FPadd\luminance\luminance{\tmp}%
+    \FPdiv\luminance\luminance{255}%
+    %
+    \FPifgt{\luminance}{0.5}%
+        \expandafter\edef\csname #1\endcsname{black}%
+    \else
+        \expandafter\edef\csname #1\endcsname{white}%
+    \fi
+}

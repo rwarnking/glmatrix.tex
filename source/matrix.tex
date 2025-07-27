@@ -1,0 +1,579 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Class
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+% Matrix Creation %
+%%%%%%%%%%%%%%%%%%%
+% Create a matrix from values in shape of {{xx, xy, xz}{yx, yy, yz}}
+\newcommand\newMat[2]{
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{%
+            \newMatRow{matRow}{##1}
+            \expandafter\edef\csname #1\endcsname{\xintCSVtoList{\matRow}}
+        }{%
+            \newMatRow{matRow}{##1}
+            \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+        }
+    }
+}
+
+% Create a matrix from row vectors
+% TODO actually this takes matRows and not vecs
+\newcommand\newMatFromRowVec[2]{
+    \FPset\numParam{\expandafter\xintLength{#2}}%
+    \FPsub\numParam\numParam{1}
+    \FPdiv\numParam\numParam{2}
+    \FPadd\numParam\numParam{1}
+    % In case only one item/row was given the
+    % matrix-datastructure must be adjusted
+    \FPifeq{\numParam}{1}
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \else
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \fi
+}
+
+\newcommand\newEmptyMat[1]{
+    \expandafter\edef\csname #1\endcsname{}%
+}
+
+% TODO adjust to variable length
+\newcommand\newDiagMat[2]{
+    \edef\tmpVector{\xintCSVtoList{#2}}%
+    % \expandafter\edef\csname #1\endcsname{}%
+    \newMatRow{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
+    \newMatRow{rowB}{0, \xintNthElt{2}{\tmpVector}, 0}
+    \newMatRow{rowC}{0, 0, \xintNthElt{3}{\tmpVector}}
+    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+}
+
+\newcommand\newMatRow[2]{
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2, 1}}%
+}
+
+\newcommand\appendToMat[3]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
+}
+
+\newcommand\vecToMatRow[2]{
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{1}}%
+}
+
+% TODO BIG !!!
+% THIS might not be needed anymore (sheet04 uses it)
+% TODO automatically do this depending on the function
+% or only have one representation (matrix) and adjust the functions to that
+\newcommand\matColToVec[2]{
+    \edef\numElems{#2}
+    \edef\colLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
+    \xintFor* ##1 in \colLength \do {%
+        \xintifForFirst{%
+            \newVec{testVec}{\xintNthElt{1}{\xintNthElt{1}{#2}}}
+        }{%
+            \appendToVec{testVec}{\testVec}{\xintNthElt{1}{\xintNthElt{##1}{#2}}}
+        }
+    }
+    \copyVec[#1]{\testVec}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Transformation Matrices %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Create translation matrix from given vector
+% #1 out, var name to save the result (matrix) to
+% #2 a, translation vector
+\newcommand\newTransMat[2]{%
+    \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
+    \xintFor* ##1 in \innersequence \do {%
+        \xintifForFirst{%
+            \xintFor* ##2 in \innersequence \do {%
+                \newScalar{tmp}{0}
+                \FPifeq{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                \fi
+                \FPifeq{##1}{##2}
+                    \setScalar{tmp}{1}
+                \else
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \vecToMatRow{matRowB}{\matRow}
+            \newMatFromRowVec{#1}{\matRowB}
+        }{%
+            \xintFor* ##2 in \innersequence \do {%
+                \newScalar{tmp}{0}
+                \FPifeq{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                \fi
+                \FPifeq{##1}{##2}
+                    \setScalar{tmp}{1}
+                \else
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \vecToMatRow{matRowB}{\matRow}
+            \appendToMat{#1}{\csname #1\endcsname}{\matRowB}
+        }
+    }
+}
+
+% Create scaling matrix from given vector
+% #1 out, var name to save the result (matrix) to
+% #2 a, scaling vector
+\newcommand\newScaleMat[2]{%
+    \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
+    \xintFor* ##1 in \innersequence \do {%
+        \xintifForFirst{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPiflt{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                    \setScalar{tmp}{1}
+                \fi
+                \FPifeq{##1}{##2}
+                \else
+                    \setScalar{tmp}{0}
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \vecToMatRow{matRowB}{\matRow}
+            \newMatFromRowVec{#1}{\matRowB}
+        }{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPiflt{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                    \setScalar{tmp}{1}
+                \fi
+                \FPifeq{##1}{##2}
+                \else
+                    \setScalar{tmp}{0}
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \vecToMatRow{matRowB}{\matRow}
+            \appendToMat{#1}{\csname #1\endcsname}{\matRowB}
+        }
+    }
+}
+
+% Create rotation matrix from given scalar (2D)
+% #1 out, var name to save the result (matrix) to
+% #2 a, rotation value (scalar)
+\newcommand\newRotMatTwoD[2][rotMatResult]{%
+    \FPcos\tmpCos{#2}
+    \FPsin\tmpSin{#2}
+    \newMatRow{rowB}{\tmpSin, \tmpCos, 0}
+    \FPmul\tmpSin\tmpSin{-1}
+    \newMatRow{rowA}{\tmpCos, \tmpSin, 0}
+    \newMatRow{rowC}{0, 0, 1}
+    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+}
+
+% #1 Return Value Name
+% #2 translation in x
+% #3 translation in y
+% \newcommand\newTransMatTwoD[3][transMatResult]{%
+%     \newMatRow{rowA}{1, 0, #2}
+%     \newMatRow{rowB}{0, 1, #3}
+%     \newMatRow{rowC}{0, 0, 1}
+%     \newMat{#1}{\rowA, \rowB, \rowC}
+% }
+
+% clone
+% copy
+% create
+
+% fromMat2d
+% fromMat4
+% fromQuat
+% fromQuat2
+% fromRotation
+% fromRotationTranslation
+% fromRotationTranslationScale
+% fromRotationTranslationScaleOrigin
+% fromScaling
+% fromTranslation
+% fromXRotation
+% fromYRotation
+% fromZRotation
+
+% frustum
+% lookAt
+% ortho
+% orthoNO
+% orthoZO
+% perspective
+% perspectiveFromFieldOfView
+% perspectiveNO
+% perspectiveZO
+
+% normalFromMat4
+
+% #1 Return Value Name
+% #2 right vector
+% #3 up vector
+% #4 direction vector
+% #5 camera position
+% TODO
+\newcommand\newLookAtMat[5][lookAtMatResult]{%
+    \dotVec[scalarRC]{#2}{#5}
+    \mulScalar[scalarRC]{\scalarRC}{-1}
+    \copyVec[tmpVecA]{#2}
+    \appendToVec{tmpVecA}{\tmpVecA}{\scalarRC}
+    % \printVec[1]{\tmpVecA}
+    %
+    \dotVec[scalarUC]{#3}{#5}
+    \mulScalar[scalarUC]{\scalarUC}{-1}
+    \copyVec[tmpVecB]{#3}
+    \appendToVec{tmpVecB}{\tmpVecB}{\scalarUC}
+    %
+    \dotVec[scalarDC]{#4}{#5}
+    \copyVec[tmpVecC]{#4}
+    \negateVec[tmpVecC]{\tmpVecC}
+    \appendToVec{tmpVecC}{\tmpVecC}{\scalarDC}
+    %
+    \vecToMatRow{vecA}{\tmpVecA}
+    \vecToMatRow{vecB}{\tmpVecB}
+    \vecToMatRow{vecC}{\tmpVecC}
+    \newMatRow{vecD}{0, 0, 0, 1}
+    \newMatFromRowVec{#1}{\vecA, \vecB, \vecC, \vecD}
+}
+
+\newcommand\newProjMat[1]{%
+    \newMatRow{vecA}{1, 0, 0, 0}
+    \newMatRow{vecB}{0, 1, 0, 0}
+    \newMatRow{vecC}{0, 0, 1, 0}
+    \newMatRow{vecD}{0, 0, -1, 0}
+    \newMatFromRowVec{#1}{\vecA, \vecB, \vecC, \vecD}
+}
+
+% TODO
+\newcommand\stdProject[2]{%
+    \newMatRow{vecA}{1, 0, 0, 0}
+    \newMatRow{vecB}{0, 1, 0, 0}
+    \newMatRow{vecC}{0, 0, 1, 0}
+    \newMatRow{vecD}{0, 0, -1, 0}
+    \newMat{matPstd}{\vecA, \vecB, \vecC, \vecD}
+    \mulMatAndVec[#1]{\matPstd}{#2}
+}
+
+% #1 result var name
+% #2 fovx
+% #3 fovy
+% #4 near Plane
+% #5 far Plane
+% TODO
+\newcommand\newFrustumMat[5][frustMatResult]{%
+    \FPdiv\tmp{#2}{2}
+    \FPtan\frustumRight\tmp
+    \FPmul\frustumRight{#4}\frustumRight
+    \FPmul\frustumLeft\frustumRight{-1}
+    \FPdiv\tmp{#3}{2}
+    \FPtan\frustumTop\tmp
+    \FPmul\frustumTop{#4}\frustumTop
+    \FPmul\frustumBottom\frustumTop{-1}
+    %
+    \FPmul\cellAA{2}{#4} % AA
+    \FPsub\tmp\frustumRight\frustumLeft
+    \FPdiv\cellAA\cellAA\tmp
+    \FPadd\cellAC\frustumRight\frustumLeft % AC
+    \FPdiv\cellAC\cellAC\tmp
+    \FPmul\cellBB{2}{#4} % BB
+    \FPsub\tmp\frustumTop\frustumBottom
+    \FPdiv\cellBB\cellBB\tmp
+    \FPadd\cellBC\frustumTop\frustumBottom % BC
+    \FPdiv\cellBC\cellBC\tmp
+    \FPmul\cellCC{#5}{-1} % CC
+    \FPsub\cellCC\cellCC{#4}
+    \FPsub\tmp{#5}{#4}
+    \FPdiv\cellCC\cellCC\tmp
+    \FPmul\cellCD{#5}{#4} % CD
+    \FPmul\cellCD{-2}\cellCD
+    \FPdiv\cellCD\cellCD\tmp
+    %
+    \newMatRow{rowA}{\cellAA, 0, \cellAC, 0}
+    \newMatRow{rowB}{0, \cellBB, \cellBC, 0}
+    \newMatRow{rowC}{0, 0, \cellCC, \cellCD}
+    \newMatRow{rowD}{0, 0, -1, 0}
+    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC, \rowD}
+}
+
+%%%%%%%%%%%%%%%%%%%
+% Matrix Printing %
+%%%%%%%%%%%%%%%%%%%
+\newcommand\printMat[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \xintFor* ##2 in {##1} \do {%
+                    \xintifForLast{%
+                        \\
+                    }{%
+                        \xintifForFirst{}{&}
+                        \FPifeq{#1}{0}
+                            \roundScalar{##2}
+                            \scalarRoundResult
+                        \else
+                            \numToFractionA{##2}
+                        \fi
+                    }
+                }
+            }
+        \end{bmatrix}
+    }
+}
+
+% TODO variable length
+\newcommand\printMatDiag[2][0]{%
+    \ensuremath{%
+        \text{diag}\left(
+        \xintNthElt{1}{\xintNthElt{1}{#2}},
+        \xintNthElt{2}{\xintNthElt{2}{#2}},
+        \xintNthElt{3}{\xintNthElt{3}{#2}}
+        \right)
+    }
+}
+
+\newcommand\getMatHeight[2][matHeightResult]{%
+    \newScalar{#1}{\expandafter\xintLength\expandafter{#2}}%
+}
+
+\newcommand\getMatWidth[2][matWidthResult]{%
+    \edef\rowElements{\xintNthElt{1}{#2}}%
+    \newScalar{#1}{\expandafter\xintLength\expandafter{\rowElements}}%
+    \subScalar[#1]{\csname #1\endcsname}{1}%
+    %
+    % \newScalar{\matWidthResult}{4}%
+    % \FPset{\matWidthResultA}{4}
+    % \FPsub{\matWidthResultC}{\matWidthResultA}{1}
+    % \FPset{\matWidthResult}{\matWidthResultC}
+    %
+    % \edef\matWidthResult{\matWidthResultC}%
+    % \subScalar[#1]{\csname #1\endcsname}{1}%
+    %
+    % % \expandafter\edef\csname #1\endcsname{\expandafter\xintLength\expandafter{\rowElements}}%
+    % \newScalar{tmp}{\expandafter\xintLength\expandafter{\rowElements}}%
+    % \FPsub\tmp{\tmp}{1}
+    % % \newScalar{#1}{\tmp}
+    % \edef\matWidthResult{\tmp}%
+    % % \subScalar[#1]{\csname #1\endcsname}{1}%
+    % % \newScalar{#1}{\aaa}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Matrix Modification %
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% translate
+% transpose
+% rotate
+% rotateX
+% rotateY
+% rotateZ
+% scale
+% set
+% projection
+% targetTo
+
+%%%%%%%%%%%%%%%
+% Matrix Math %
+%%%%%%%%%%%%%%%
+% Multiply matrix with a scalar
+% #1 out, var name to save the result (matrix) to
+% #2 a, matrix value
+% #3 b, scalar value
+\newcommand\mulScalarMat[3][mulMatScalarResult]{%
+    \edef\elemOne{\xintNthElt{1}{#2}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}-1}}%
+    %
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPset\elem{\xintNthElt{##2}{##1}}
+                \FPmul\elem\elem{#3}
+                \xintifForFirst{%
+                    \newVec{rowVec}{\elem}
+                }{%
+                    \appendToVec{rowVec}{\rowVec}{\elem}
+                }
+            }
+            \vecToMatRow{matRow}{\rowVec}
+            \newMatFromRowVec{#1}{\matRow}
+        }{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPset\elem{\xintNthElt{##2}{##1}}
+                \FPmul\elem\elem{#3}
+                \xintifForFirst{%
+                    \newVec{rowVec}{\elem}
+                }{%
+                    \appendToVec{rowVec}{\rowVec}{\elem}
+                }
+            }
+            \vecToMatRow{matRow}{\rowVec}
+            \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+        }
+    }
+}
+
+\newcommand\mulMat[3][mulMatResult]{%
+    \edef\elemsRow{\xintNthElt{1}{#3}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    %
+    \edef\elemsMat{#2}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \edef\elemsMat{#3}
+    \edef\heightsequenceB{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \edef\elemsRowTmp{\xintNthElt{1}{#2}}
+    \FPset\widthMatA{\expandafter\xintLength\expandafter{\elemsRowTmp}}%
+    \FPsub\widthMatA\widthMatA{1}
+    \FPset\heightMatB{\expandafter\xintLength\expandafter{\elemsMat}}%
+    % TODO check this
+    % \FPifeq{\widthMatA}{\heightMatB}
+    % \else
+    %     \PackageError{glmatrix package}{Dimension mismatch for matrix, could not multiply}{width (\widthMatA) of matrix #2 and height (\heightMatB) of matrix #3 do not match}
+    % \fi
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\value{0}
+            \xintifForFirst{%
+                \xintFor* ##4 in \heightsequenceB \do {%
+                    \FPmul\tmptmp{%
+                    \xintNthElt{##4}{\xintNthElt{##2}{#2}}%
+                    }{%
+                    \xintNthElt{##3}{\xintNthElt{##4}{#3}}%
+                    }
+                    \FPadd\value\value\tmptmp
+                }
+                % }
+                \newVec{rowVec}{\value}
+            }{%
+                \xintifForLast{
+                }{
+                    \xintFor* ##4 in \heightsequenceB \do {%
+                        \FPmul\tmptmp{%
+                        \xintNthElt{##4}{\xintNthElt{##2}{#2}}%
+                        }{%
+                        \xintNthElt{##3}{\xintNthElt{##4}{#3}}%
+                        }
+                        \FPadd\value\value\tmptmp
+                    }
+                    \appendToVec{rowVec}{\rowVec}{\value}
+                }
+            }
+        }
+        \vecToMatRow{matRow}{\rowVec}
+        \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+    }
+    % Test if width and height is correct
+    \edef\expectedheight{\expandafter\xintLength\expandafter{#2}}%
+    \edef\elemsRow{\xintNthElt{1}{#3}}
+    \edef\expectedwidth{\expandafter\xintLength\expandafter{\elemsRow}}%
+    %
+    \edef\elemsRow{\xintNthElt{1}{\csname #1\endcsname}}
+    \edef\actualwidth{\expandafter\xintLength\expandafter{\elemsRow}}%
+    \edef\elemsMat{\csname #1\endcsname}
+    \edef\actualheight{\expandafter\xintLength\expandafter{\elemsMat}}%
+    %
+    \FPifeq{\expectedwidth}{\actualwidth}
+    \else
+        \PackageError{glmatrix package}{Matrix width does not match expectation}{width seems to be incorrect}
+    \fi
+    \FPifeq{\expectedheight}{\actualheight}
+    \else
+        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
+    \fi
+}
+
+% TODO BIG !!!
+\newcommand\mulMatAndVec[3][mulMatResult]{%
+    \newMatRow{vecA}{\xintNthElt{1}{#3}}
+    \newMatRow{vecB}{\xintNthElt{2}{#3}}
+    \newMatRow{vecC}{\xintNthElt{3}{#3}}
+    \newMatFromRowVec{matB}{\vecA, \vecB, \vecC}
+    \mulMat[#1]{#2}{\matB}
+}
+
+% add
+% mul multiply
+% multiplyScalar
+% multiplyScalarAndAdd
+% sub subtract
+
+% Sum list of matrizes
+% TODO
+\newcommand\addMat[2][sumMatResult]{%
+    \def\matlist{\xintCSVtoList{#2}}
+    \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    \edef\elemsMat{\xintNthElt{1}{\matlist}}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\value{0}
+            \xintifForFirst{%
+                \xintFor* ##1 in \matlist \do {%
+                    \FPadd\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                }
+                \newVec{rowVec}{\value}
+            }{%
+                \xintifForLast{
+                }{
+                    \xintFor* ##1 in \matlist \do {%
+                        \FPadd\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                    }
+                    \appendToVec{rowVec}{\rowVec}{\value}
+                }
+            }
+        }
+        \vecToMatRow{matRow}{\rowVec}
+        \appendToMat{#1}{\csname #1\endcsname}{\matRow}
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Matrix Comparison %
+%%%%%%%%%%%%%%%%%%%%%
+% equals
+% getRotation
+% getScaling
+% getTranslation
+
+%%%%%%%%%%%%%%%
+% Matrix Misc %
+%%%%%%%%%%%%%%%
+% adjoint
+% decompose
+% determinant
+% frob
+% identity
+% invert
+
+% LDU
+% str

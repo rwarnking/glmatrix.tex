@@ -1,0 +1,444 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[reqno]{amsmath}
+\usepackage{amssymb}
+
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage[english,ngerman]{babel}
+% \RequirePackage[utf8]{inputenc}
+
+\usepackage{makecell}
+\usepackage{vmargin}
+
+\setlength{\unitlength}{1cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setpapersize{A4}
+\setmarginsrb{20mm}{15mm}{20mm}{25mm}{54pt}{15mm}{0pt}{0mm}
+
+\input{glmatrix/glmatrix.tex}
+
+\begin{document}
+
+\section*{Documentation}
+
+\subsection*{Scalar}
+
+Create new scalar:
+
+\randomScalar{randomScalarResult}{0}{10}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        create scalar & \textbackslash newScalar\{commandName\}\{value\} & value\\
+        create scalar from multiple of \(\pi\) & \textbackslash newScalarPi\{commandName\}\{value\} & \(value*\pi\)\\
+        create random scalar & \textbackslash randomScalar\{commandName\}\{l-bound\}\{u-bound\} & \printScalar{\randomScalarResult}\\
+        copy scalar & \textbackslash copyScalar\{commandName\}\{to copy\} & \\
+        set scalar & \textbackslash setScalar\{commandName\}\{value\} & \\
+        zero scalar & \textbackslash zeroScalar\{commandName\} & \\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarA}{0.5}
+\newScalarPi{scalarB}{0.5}
+
+Print content, with \(a = \printScalar{\scalarA}\) and \(b = \printScalarAsPi{\scalarB}\):
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Output\\ \hline
+        Scalar & \textbackslash printScalar\{\textbackslash commandName\} & \printScalar{\scalarA}\\
+        Scalar as fraction & \textbackslash printScalar[1]\{\textbackslash commandName\} & \printScalar[1]{\scalarA}\\
+        Scalar in \(\pi\) & \textbackslash printScalarAsPi\{\textbackslash commandName\} & \(\printScalarAsPi{\scalarB}\)\\
+        Scalar in \(\pi\) as fraction & \textbackslash printScalarAsPi[1]\{\textbackslash commandName\} & \(\printScalarAsPi[1]{\scalarB}\)\\
+        % Transposed Vector with fraction & \textbackslash printVecT[1]\{\textbackslash vecTest\} & \printVecT[1]{\vecTest}\\
+        % Vector & \textbackslash printVec\{\textbackslash vecTest\} & \printVec{\vecTest}\\
+        % Vector with fraction & \textbackslash printVec[1]\{\textbackslash vecName\} & \printVec[1]{\vecTest}\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarX}{13.3333}
+\newScalar{scalarDigits}{0}
+
+Scalar Modification with \(x = \printScalar{\scalarX}\) and \(digits = \printScalar{\scalarDigits}\):
+\roundScalar[\scalarDigits]{\scalarX}
+\ceilScalar{\scalarX}
+\floorScalar{\scalarX}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Output\\ \hline
+        round scalar & \textbackslash roundScalar[number of digits]\{x\} & \printScalar{\scalarRoundResult}\\
+        ceil scalar & \textbackslash ceilScalar[commandName]\{x\} & \printScalar{\scalarCeilResult}\\
+        floor scalar & \textbackslash floorScalar[commandName]\{x\} & \printScalar{\scalarFloorResult}\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarA}{2}
+\newScalar{scalarB}{4}
+\newScalar{scalarT}{0.3}
+
+Scalar Math, with \(a = \printScalar{\scalarA}\), \(b = \printScalar{\scalarB}\) and \(t = \printScalar{\scalarT}\):
+\addScalar{\scalarA}{\scalarB}
+\subScalar{\scalarA}{\scalarB}
+\mulScalar{\scalarA}{\scalarB}
+\divScalar{\scalarA}{\scalarB}
+\powScalar{\scalarA}{\scalarB}
+\negateScalar{\scalarA}
+\lerpScalar{\scalarA}{\scalarB}{\scalarT}
+\arccosScalar{\scalarA}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Output\\ \hline
+        \(a + b\) & \textbackslash addScalar[commandName]\{a\}\{b\} & \printScalar{\scalarAddResult}\\
+        \(a - b\) & \textbackslash subScalar[commandName]\{a\}\{b\} & \printScalar{\scalarSubResult}\\
+        \(a * b\) & \textbackslash mulScalar[commandName]\{a\}\{b\} & \printScalar{\scalarMulResult}\\
+        \(\frac{a}{b}\) & \textbackslash divScalar[commandName]\{a\}\{b\} & \printScalar{\scalarDivResult}\\
+        \(a^b\) & \textbackslash powScalar[commandName]\{a\}\{b\} & \printScalar{\scalarPowResult}\\
+        \(-a\) & \textbackslash negateScalar[commandName]\{a\} & \printScalar{\scalarNegateResult}\\
+        \((1-t)a+t*b\) & \textbackslash lerpScalar[commandName]\{a\}\{b\}\{t\} & \printScalar{\lerpScalarResult}\\
+        \(\arccos{a}\) & \textbackslash arccosScalar[commandName]\{a\} & \printScalar{\scalarArccosResult}\\
+    \end{tabular}
+\end{center}
+
+Scalar comparison, with \(a = \printScalar{\scalarA}\) and \(b = \printScalar{\scalarB}\):
+\minScalar{\scalarA}{\scalarB}
+\maxScalar{\scalarA}{\scalarB}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Output\\ \hline
+        \(min(a, b)\) & \textbackslash minScalar[commandName]\{a\}\{b\} & \printScalar{\minScalarResult}\\
+        \(max(a, b)\) & \textbackslash maxScalar[commandName]\{a\}\{b\} & \printScalar{\maxScalarResult}\\
+    \end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Vector}
+
+Create new vector:
+
+\randomVec{randomVecResultTwo}{2}{0}{10}
+\randomVec{randomVecResultThree}{3}{0}{10}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        create vector & \textbackslash newVec\{commandName\}\{x, y, z\} & {x, y, z}\\
+        copy vector & \textbackslash copyVec[commandName]\{\(\vec{a}\)\} & {x, y, z}\\
+        % create scalar from multiple of \(\pi\) & \textbackslash newScalarPi\{commandName\}\{value\} & \(value*\pi\)\\
+        create random vector & \textbackslash randomVec\{commandName\}\{2\}\{l-bound\}\{u-bound\} & \printVec{\randomVecResultTwo}\\
+        create random vector & \textbackslash randomVec\{commandName\}\{3\}\{l-bound\}\{u-bound\} & \printVec{\randomVecResultThree}\\
+        % set scalar & \textbackslash setScalar\{commandName\}\{value\} & \\
+        % zero scalar & \textbackslash zeroScalar\{commandName\} & \\
+    \end{tabular}
+\end{center}
+
+\newVec{vecA}{0.5, 2, 3}
+% TODO vecPi
+\newVec{vecB}{1.57079632679, 1.57079632679, 1.57079632679}
+
+Print vector with the values \(\printVecT{\vecA}\) and \(\printVecAsPiT{\vecB}\):
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Print transposed vector & \textbackslash printVecT\{\textbackslash commandName\} & \printVecT{\vecA}\\
+        Print transposed vector with fraction & \textbackslash printVecT[1]\{\textbackslash commandName\} & \printVecT[1]{\vecA}\\
+        Print vector & \textbackslash printVec\{\textbackslash commandName\} & \printVec{\vecA}\\
+        Print vector with fraction & \textbackslash printVec[1]\{\textbackslash commandName\} & \printVec[1]{\vecA}\\
+        Print transposed vector in \(\pi\) & \textbackslash printVecAsPiT\{\textbackslash commandName\} & \printVecAsPiT{\vecB}\\
+        Print transposed vector in \(\pi\) with fraction & \textbackslash printVecAsPiT[1]\{\textbackslash commandName\} & \printVecAsPiT[1]{\vecB}\\
+        Print vector in \(\pi\) & \textbackslash printVecAsPi\{\textbackslash commandName\} & \printVecAsPi{\vecB}\\
+        Print vector in \(\pi\) with fraction & \textbackslash printVecAsPi[1]\{\textbackslash commandName\} & \printVecAsPi[1]{\vecB}\\
+        Print vector content only & \textbackslash printVecContentXY\{\textbackslash commandName\} & \printVecContentXY{\vecA}\\
+        Print vector content only & \textbackslash printVecContentXYZ\{\textbackslash commandName\} & \printVecContentXYZ{\vecA}\\
+    \end{tabular}
+\end{center}
+
+\newVec{vecA}{5, 2, 3}
+\newVec{vecB}{0.5, 1.75, 2}
+\newVec{vecC}{0.5, 2, -3}
+
+Vector Modification with \(\vec{b} = \printVecT{\vecB}\):
+% \roundVec[\scalarDigits]{\vecA}
+\ceilVec{\vecB}
+\floorVec{\vecB}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Output\\ \hline
+        % round scalar & \textbackslash roundScalar[number of digits]\{x\} & \printScalar{\scalarRoundResult}\\
+        ceil scalar & \textbackslash ceilScalar[commandName]\{\(\vec{b}\)\} & \printVec{\ceilVecResult}\\
+        floor vec & \textbackslash floorVec[commandName]\{\(\vec{b}\)\} & \printVec{\floorVecResult}\\
+    \end{tabular}
+\end{center}
+
+Vector Math, with \(\vec{a} = \printVecT{\vecA}\), \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVecT{\vecC}\):
+
+\addVec[addVecResult]{\vecA, \vecB, \vecC}
+\subVec[subVecResult]{\vecA, \vecB, \vecC}
+\scaleVec{\vecA}{\scalarA}
+% \mulVec{\vecA}{\vecB}
+% \divVec{\vecA}{\vecB}
+% \powVec{\vecA}{\vecB}
+\negateVec[negateVecResult]{\vecA}
+\dotVec[dotVecResult]{\vecA}{\vecA}
+\lenVec[lenVecResult]{\vecA}
+\crossVec[crossVecResult]{\vecA}{\vecB}
+% \lerpVec{\vecA}{\vecB}{\scalarT}
+% \arccosVec{\vecA}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Example\\ \hline
+        \(\vec{a} + \vec{b} + \vec{c}\) &
+        \makecell[l]{\textbackslash addVec[addVecResult]\{\\\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\\\}} &
+        \(\printVec{\vecA} + \printVec{\vecB} + \printVec{\vecC} = \printVec[1]{\addVecResult} \approx \printVec{\addVecResult}\)\\
+        \(\vec{a} - \vec{b} - \vec{c}\) &
+        \makecell[l]{\textbackslash subVec[subVecResult]\{\\\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\\\}} &
+        \(\printVec{\vecA} - \printVec{\vecB} - \printVec{\vecC} =
+        \printVec[1]{\subVecResult} \approx \printVec{\subVecResult}\)\\
+        \(\vec{a} * n\) &
+        \textbackslash scaleVec[scaleVecResult]\{\textbackslash vecA\}\{\textbackslash scalarA\} &
+        \(\printVec{\vecA} * \printScalar{\scalarA} = \printVec{\scaleVecResult}\)\\
+        \(\vec{a} * -1\) &
+        \textbackslash negateVec[negateVecResult]\{\textbackslash vecA\} &
+        \(\printVec{\vecA} * -1 = \printVec{\negateVecResult}\)\\
+        \(\vec{a} \cdot \vec{a}\) &
+        \textbackslash dotVec[dotVecResult]\{\textbackslash vecA\}\{\textbackslash vecA\} &
+        \(\printVec{\vecA} \cdot \printVec{\vecA} = \printScalar{\dotVecResult}\)\\
+        \(\norm{\vec{a}}\) &
+        \textbackslash lenVec[lenVecResult]\{\textbackslash vecA\} &
+        \(\norm{\printVec{\vecA}} = \printScalar{\lenVecResult}\)\\
+        \(\vec{a} \times \vec{b}\) &
+        \textbackslash crossVec[crossVecResult]\{\textbackslash vecA\}\{\textbackslash vecB\} &
+        \(\printVec{\vecA} \times \printVec{\vecB} = \printVec{\crossVecResult}\)\\
+    \end{tabular}
+\end{center}
+
+Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVecT{\vecC}\):
+\minVec{\vecB}{\vecC}
+\maxVec{\vecB}{\vecC}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Output\\ \hline
+        \(\min{\vec{b}, \vec{c}}\) & \textbackslash minVec[commandName]\{\(\vec{b}\)\}\{\(\vec{c}\)\} & \printVec{\minVecResult}\\
+        \(\max{\vec{b}, \vec{c}}\) & \textbackslash maxVec[commandName]\{\(\vec{b}\)\}\{\(\vec{c}\)\} & \printVec{\maxVecResult}\\
+    \end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Matrix}
+
+% \newMatRow{vecA}{0.5,2,3}
+% \newMatRow{vecB}{4,5,6}
+% \newMatRow{vecC}{7,8,9}
+% \newMat{matX}{\vecA, \vecB, \vecC}
+
+\newMat{matX}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+
+% TODO newMatFromRowVec{}
+% \newMatRow{vecA}{0.5,2,3}
+% \newMat{matY}{\vecA}
+
+\newMat{matY}{{{0.5,2,3}}}
+
+% \newMatRow{vecA}{0.5}
+% \newMatRow{vecB}{2}
+% \newMatRow{vecC}{3}
+% \newMat{matZ}{\vecA, \vecB, \vecC}
+
+\newMat{matZ}{{{0.5}{4}{7}}}
+
+\newVec{vecTest}{5, 2, 3}
+\newTransMat{matTrans}{\vecTest}
+\newScaleMat{matScale}{\vecTest}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        create matrix \(3\times3\) & \textbackslash newMatrix\{commandName\}\{\{xx, xy, xz\}\{\(\cdots\)\}\{\(\cdots\)\}\} & \printMat{\matX}\\
+        create matrix \(1\times3\) & \textbackslash newMatrix\{commandName\}\{\{xx, xy, xz\}\} & \printMat{\matY}\\
+        create matrix \(3\times1\) & \textbackslash newMatrix\{commandName\}\{\{xx\}\{yx\}\{zx\}\} & \printMat{\matZ}\\
+        translation matrix & \textbackslash newTransMat\{commandName\}\{\textbackslash vecA\} & \printMat{\matTrans}\\
+        scaling matrix & \textbackslash newScaleMat\{commandName\}\{\textbackslash vecA\} & \printMat{\matScale}\\
+        % create matrix \(3\times3\) & \textbackslash newMatrix\{commandName\}\{\textbackslash rowA, \textbackslash rowB, \textbackslash rowC\} & \printMat{\matX}\\
+        % create matrix \(1\times3\) & \textbackslash newMatrix\{commandName\}\{\textbackslash rowA\} & \printMat{\matY}\\
+        % create matrix \(3\times1\) & \textbackslash newMatrix\{commandName\}\{\textbackslash rowA, \textbackslash rowB, \textbackslash rowC\} & \printMat{\matZ}\\
+    \end{tabular}
+\end{center}
+
+Print matrix \(X = \printMat{\matX}\):
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        print matrix \(3\times3\) & \textbackslash printMat\{\textbackslash commandName\} & \printMat{\matX}\\
+        print matrix \(3\times3\) & \textbackslash printMat[1]\{\textbackslash commandName\} & \printMat[1]{\matX}\\
+        print matrix \(1\times3\) & \textbackslash printMat\{\textbackslash commandName\} & \printMat{\matY}\\
+        print matrix \(1\times3\) & \textbackslash printMat[1]\{\textbackslash commandName\} & \printMat[1]{\matY}\\
+        print matrix \(3\times1\) & \textbackslash printMat\{\textbackslash commandName\} & \printMat{\matZ}\\
+        print matrix \(3\times1\) & \textbackslash printMat[1]\{\textbackslash commandName\} & \printMat[1]{\matZ}\\
+    \end{tabular}
+\end{center}
+
+Matrix Modification with \(X = \printMat{\matX}\):
+
+Matrix Math, with \(X = \printMat{\matX}\):
+
+\mulScalarMat[mulMatScalarResult]{\matX}{5}
+\mulMat[mulMatResult]{\matX}{\matZ}
+
+\newVec{vecAA}{0.5,4,7}
+\newMat{matXX}{{{0.5,2,3}{4,5,6}{7,8,9}{7,8,9}{7,8,9}}}
+% \newMat{matXX}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+\transformVec{\matXX}{\vecAA}
+\printVec{\transformVecResult}
+
+% \newScalar{aaa}{5}%
+% \subScalar[aaa]{\aaa}{1}%
+% \subScalar[aaa]{\aaa}{1}%
+% \printScalar{\aaa}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        \(A * x | A \in \R^{m\times n}, x \in \R\) & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matX} \cdot 5 = \printMat{\mulMatScalarResult}\)\\
+        \(A \cdot B | A \in \R^{m\times n}, B \in \R^{n\times p}\) & \makecell[l]{\textbackslash mulMat\\\ [mulMatResult]\\\{\textbackslash matX\}\{\textbackslash matZ\}} & \(\printMat{\matX} \printMat{\matZ} = \printMat{\mulMatResult}\)\\
+        % Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX\}} & \(\printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultA}\)\\
+        % Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX, \dots\}} & \(\printMat{\matX} + \printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultB}\)
+    \end{tabular}
+\end{center}
+
+
+% \[
+%     X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}
+% \]
+
+% Append values (\(90, 1, 4, 3\)) to the vector and print it:
+
+% \appendToVec{vecTest}{\vecTest}{90, 1,4,3}
+
+% \begin{center}
+%     \begin{tabular}{ l l c }
+%         Description & Command & Result\\ \hline
+%         Append rows to vector & \textbackslash appendToVec\{vecTest\}\{\textbackslash vecTest\}\{90, 1,4,3\} & \printVec{\vecTest}
+%     \end{tabular}
+% \end{center}
+
+% \subsection*{Vector Math}
+
+% \subsection*{Matrix Printing}
+
+% \newMatRow{vecA}{0.5,2,3}
+% \newMatRow{vecB}{4,5,6}
+% \newMatRow{vecC}{7,8,9}
+% \newMat{matX}{\vecA, \vecB, \vecC}
+
+% \newMatRow{vecA}{0.5,2,3}
+% \newMat{matY}{\vecA}
+
+% \newMatRow{vecA}{0.5}
+% \newMatRow{vecB}{2}
+% \newMatRow{vecC}{3}
+% \newMat{matZ}{\vecA, \vecB, \vecC}
+
+% \[
+%     X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}
+% \]
+
+% \begin{center}
+%     \begin{tabular}{ l l c }
+%         Description & Command & Result\\ \hline
+%         3x3 & \textbackslash printMat\{\textbackslash matX\} & \printMat{\matX}\\
+%         3x3 with fraction & \textbackslash printMat[1]\{\textbackslash matX\} & \printMat[1]{\matX}\\
+%         Row Matrix & \textbackslash printMat\{\textbackslash matY\} & \printMat{\matY}\\
+%         Row Matrix with fraction & \textbackslash printMat[1]\{\textbackslash matY\} & \printMat[1]{\matY}\\
+%         Column Matrix & \textbackslash printMat\{\textbackslash matZ\} & \printMat{\matZ}\\
+%         Column Matrix with fraction & \textbackslash printMat[1]\{\textbackslash matZ\} & \printMat[1]{\matZ}\\
+%     \end{tabular}
+% \end{center}
+
+% \subsection*{Matrix Math}
+
+% \newMatRow{vecA}{0.5,2,3,4,5}
+% \newMatRow{vecB}{6,7,8,9,10}
+% \newMatRow{vecC}{11,12,13,14,15}
+% \newMat{matG}{\vecA, \vecB, \vecC, \vecC}
+
+% \[
+%     X = \printMat{\matX}, G = \printMat{\matG}
+% \]
+
+% \mulScalarMat[mulMatScalarResult]{\matX}{5}
+% \mulScalarMat[mulMatScalarResultB]{\matG}{5}
+% \sumMats[sumMatsResultA]{\matX, \matX}
+% \sumMats[sumMatsResultB]{\matX, \matX, \matX}
+
+% \begin{center}
+%     \begin{tabular}{ l l c }
+%         Description & Command & Result\\ \hline
+%         3x3 Matrix mul Scalar & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matX} \cdot 5 = \printMat[1]{\mulMatScalarResult}\)\\
+%         Matrix mul Scalar & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matG\}\{value\}} & \(\printMat{\matG} \cdot 5 = \printMat[1]{\mulMatScalarResultB}\)\\
+%         Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX\}} & \(\printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultA}\)\\
+%         Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX, \dots\}} & \(\printMat{\matX} + \printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultB}\)
+%     \end{tabular}
+% \end{center}
+
+% % TODO TODO bug
+% \newMatRow{rowA}{0.5, 1, 2}
+% \newMat{matA}{\rowA}
+
+% \newMatRow{vecA}{0.5}
+% \newMatRow{vecB}{1}
+% \newMatRow{vecC}{2}
+% \newMat{matB}{\vecA, \vecB, \vecC}
+
+% \newMatRow{rowA}{0.5, 1, 2}
+% \newMat{matC}{\rowA, \rowA}
+
+% \mulMats[mulMatsResultXX]{\matX}{\matX}
+% \mulMats[mulMatsResultXB]{\matX}{\matB}
+% \mulMats[mulMatsResultCB]{\matC}{\matB}
+% \mulMats[mulMatsResultAB]{\matA}{\matB}
+
+% \newVec{vecNormal}{0,0,1} % Normal at point
+% \mulVecAsColAndRow[mulMatsResultN]{\vecNormal}
+
+% \mulMatAndVec[mulMatsResultXN]{\matX}{\vecNormal}
+
+% \[
+%     X = \printMat{\matX},\ A = \printMat{\matA},\ B = \printMat{\matB},\ C = \printMat{\matC}, \vec{n} = \printVec{\vecNormal}
+% \]
+
+% \begin{center}
+%     \begin{tabular}{ l l c }
+%         Description & Command & Result\\ \hline
+%         \(X \cdot X\) &
+%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash matX\}} &
+%         \(\printMat{\matX} \printMat{\matX} = \printMat[1]{\mulMatsResultXX} \approx \printMat{\mulMatsResultXX}\)\\
+%         \(X \cdot B\) &
+%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash matB\}} &
+%         \(\printMat{\matX} \printMat{\matB} = \printMat[1]{\mulMatsResultXB} \approx \printMat{\mulMatsResultXB}\)\\
+%         \(C \cdot B\) &
+%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matC\}\{\textbackslash matB\}} &
+%         \(\printMat{\matC} \printMat{\matB} = \printMat[1]{\mulMatsResultCB} \approx \printMat{\mulMatsResultCB}\)\\
+%         \(A \cdot B\) &
+%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matA\}\{\textbackslash matB\}} &
+%         \(\printMat{\matA} \printMat{\matB} = \printMat[1]{\mulMatsResultAB} \approx \printMat{\mulMatsResultAB}\)\\
+%         \(\vec{n} \cdot \trans{\vec{n}}\) &
+%         \makecell[l]{\textbackslash mulVecAsColAndRow\\\ [mulMatsResult]\\\{\textbackslash vecNormal\}} &
+%         \(\printVec{\vecNormal} \printVecT{\vecNormal} = \printMat{\mulMatsResultN}\)\\
+%         \(X \cdot \vec{n}\) &
+%         \makecell[l]{\textbackslash mulMatAndVec\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash vecNormal\}} &
+%         \(\printMat{\matX} \printVec{\vecNormal} = \printMat{\mulMatsResultXN}\)
+%     \end{tabular}
+% \end{center}
+
+\end{document}

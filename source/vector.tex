@@ -1,0 +1,708 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vector Class
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+% Vector Creation %
+%%%%%%%%%%%%%%%%%%%
+% Create a vector
+% #1 out, var name to save the result (vector) to
+% #2 a, vector value
+\newcommand\newVec[2]{
+    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+}
+
+% Create a vector as a multiple of pi
+% #1 out, var name to save the result (vector) to
+% #2 a, vector value to multiply with pi
+% \newcommand\newVecPi[2]{
+% }
+
+% Clone the given vector variable to a new variable
+% \newcommand\cloneVec[2][cloneVecResult]{
+% }
+
+% Copy values from one vector variable to another
+% #1 out, var name to save the result (vector) to
+% #2 a, vector value
+% TODO does it make sence to have the name be an optional parameter?
+\newcommand\copyVec[2][copyVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{%
+            \newVec{#1}{##1}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{##1}
+        }
+    }
+}
+
+% \newcommand\createVec[1]{
+% }
+
+% Set a vector to a value
+% #1 out, var name to save the result (vector) to
+% #2 a, vector value
+% \newcommand\setVec[2]{
+%     \newVector{#1}{#2}
+% }
+
+% TODO decide whether to use the low level assignments or 
+% use the functions like setVector to set the variable
+% Set or create a vector with value 0
+% #1 out, var name to save the result (vector) to
+% TODO number of dimensions
+% \newcommand\zeroVec[1]{
+% }
+
+% Create a new vector variable with a random value
+% #1 out, var name to save the result (vector) to
+% #2 number of dimensions
+% #3 lower bound
+% #4 upper bound
+\newcommand\randomVec[4]{
+    \edef\innersequence{\xintSeq[+1]{+1}{#2}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPrandom\tmp
+        \lerpScalar{#3}{#4}{\tmp}
+        \xintifForFirst{%
+            \newVec{#1}{\lerpScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\lerpScalarResult}
+        }
+    }
+}
+
+% Append to a vector
+\newcommand\appendToVec[3]{% {Basename}{input}
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
+}
+
+%%%%%%%%%%%%%%%%%%%
+% Vector Printing %
+%%%%%%%%%%%%%%%%%%%
+% Print the values of this vector variable in matrix notation
+% #1 whether or not the value should be printed as a fraction (val=1)
+% #2 the vector
+\newcommand\printVec[2][0]{%
+    \ensuremath{%
+        \begin{pmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{pmatrix}
+    }
+}
+
+% Print the values of this vector variable in transposed notation
+% #1 whether or not the value should be printed as a fraction (val=1)
+% #2 the vector
+% TODO bug: last comma is shown when printing some fractions
+% 0.5 & 0.25 work, 1.5, 2.5, 3.5 do not (all have number >1)
+\newcommand\printVecT[2][0]{%
+    \ensuremath{\trans{\left(
+        \xintFor* ##1 in #2 \do {%
+            \FPifeq{#1}{0}
+                \roundScalar{##1}
+                \scalarRoundResult
+            \else
+                \numToFractionA{##1}
+            \fi
+            \xintifForLast{}{%
+                ,
+            }
+        }
+    \right)}}
+}
+
+% Print the value of this vector variable as a multiple of Pi
+% #1 whether or not the values should be printed as a fraction (val=1)
+% #2 the vector
+\newcommand\printVecAsPi[2][0]{%
+    \ensuremath{%
+        \begin{pmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \printScalarAsPi[#1]{##1}
+                % \FPifeq{#1}{0}
+                %     \roundScalar{##1}
+                %     \scalarRoundResult
+                % \else
+                %     \numToFractionA{##1}
+                % \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{pmatrix}
+    }
+}
+
+% Print the value of this vector variable as a multiple of Pi and in transposed notation
+% #1 whether or not the values should be printed as a fraction (val=1)
+% #2 the vector
+\newcommand\printVecAsPiT[2][0]{%
+    \ensuremath{\trans{\left(
+        \xintFor* ##1 in #2 \do {%
+            \printScalarAsPi[#1]{##1}
+            \xintifForLast{}{%
+                ,
+            }
+        }
+    \right)}}
+}
+
+\newcommand\printAsPoint[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{bmatrix}
+    }
+}
+
+\newcommand\printVecContentXY[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}
+}
+
+% TODO check if this can be scaled to n entries
+\newcommand\printVecContentXYZ[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}
+}
+
+\newcommand\printVecContentXYZW[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}, \xintNthElt{4}{#1}
+}
+
+\newcommand\getVecHeight[2][vecHeightResult]{%
+    \newScalar{#1}{\expandafter\xintLength\expandafter{#2}}
+}
+
+% Print components of scalarproduct
+\newcommand\printScalarPComp[3][0] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{In scalar product}{vector A and B do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \ensuremath{
+        \xintFor* ##1 in \innersequence \do {%
+            \FPifeq{#1}{0}
+                \printScalarRounded{\xintNthElt{##1}{#2}}*\printScalarRounded{\xintNthElt{##1}{#3}}
+            \else
+                \numToFractionA{\xintNthElt{##1}{#2}}*\numToFractionA{\xintNthElt{##1}{#3}}
+            \fi
+            \xintifForLast{}{%
+                +
+            }
+        }
+    }
+}
+
+% Print components of crossproduct
+\newcommand\printCrossPComp[3][0] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPset\aa{\xintNthElt{1}{#2}}
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ac{\xintNthElt{3}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPset\bc{\xintNthElt{3}{#3}}
+    %
+    \ensuremath{
+        \FPifeq{#1}{0}
+            \begin{pmatrix}
+                \printScalarRounded{\ab}*\printScalarRounded{\bc} - \printScalarRounded{\ac}*\printScalarRounded{\bb}\\
+                \printScalarRounded{\ac}*\printScalarRounded{\ba} - \printScalarRounded{\aa}*\printScalarRounded{\bc}\\
+                \printScalarRounded{\aa}*\printScalarRounded{\bb} - \printScalarRounded{\ab}*\printScalarRounded{\ba}
+            \end{pmatrix}
+        \else
+            \begin{pmatrix}
+                \numToFractionA{\ab}*\numToFractionA{\bc} - \numToFractionA{\ac}*\numToFractionA{\bb}\\
+                \numToFractionA{\ac}*\numToFractionA{\ba} - \numToFractionA{\aa}*\numToFractionA{\bc}\\
+                \numToFractionA{\aa}*\numToFractionA{\bb} - \numToFractionA{\ab}*\numToFractionA{\ba}
+            \end{pmatrix}
+        \fi
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Vector Modification %
+%%%%%%%%%%%%%%%%%%%%%%%
+% TODO vectorRoundResult
+% #1 number of digits after comma, default is 4
+% #2 the vector
+% \newcommand\roundVec[2][4]{%
+% }
+
+% Ceil all values of this vector
+% #1 out, var name to save the result (vector) to
+% #2 the vector
+\newcommand\ceilVec[2][ceilVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \FPifint{##1}
+        \else
+            \FPadd\tmp{##1}{1}
+        \fi
+        \FPtrunc\tmp\tmp{0}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+% Floor all values of this vector
+% #1 out, var name to save the result (vector) to
+% #2 the vector
+\newcommand\floorVec[2][floorVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \FPtrunc\tmp{##1}{0}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+% TODO unsure how this could work
+% \newcommand\forEach{
+% }
+
+\newcommand\dehomogenVec[2][dehomogenResult]{
+    % TODO check if 4 long or get last comp
+    \FPset\tmpDiv{\xintNthElt{4}{#2}}
+    % \FPadd\tmpDiv\tmpDiv{1}
+    \edef\numElems{#2}
+    \edef\vecLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
+    \xintFor* ##1 in \vecLength \do {%
+        \xintifForFirst{%
+            \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
+            \newVec{tmpVec}{\divResult}
+        }{%
+            \xintifForLast{
+            }{
+                \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
+                \appendToVec{tmpVec}{\tmpVec}{\divResult}
+            }
+        }
+    }
+    \copyVec[#1]{\tmpVec}
+}
+
+%%%%%%%%%%%%%%%
+% Vector Math %
+%%%%%%%%%%%%%%%
+% Add the values of n vectors
+% #1 out, var name to save the result (vector) to
+% #2 a, list of vectors
+% TODO add check that the variable name that is given does not match
+% any other parameter, since this does not work
+% TODO rewrite to have one vec #2 and a list of vecs #3 to add
+\newcommand\addVec[2][addVecResult]{
+    \def\veclist{\xintCSVtoList{#2}}
+    \edef\elemOne{\xintNthElt{1}{\veclist}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\sumCoord{0}%
+        \xintifForFirst{%
+            \xintFor* ##2 in \veclist \do {%
+                \FPadd\sumCoord\sumCoord{\xintNthElt{##1}{##2}}%
+            }
+            \newVec{#1}{\sumCoord}
+        }{%
+            \xintFor* ##2 in \veclist \do {%
+                \FPadd\sumCoord\sumCoord{\xintNthElt{##1}{##2}}%
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\sumCoord}
+        }
+    }
+}
+
+% Subract list of vectors from first vector in list
+% #1 out, var name to save the result (vector) to
+% #2 a, list of vectors
+% TODO add check that the variable name that is given does not match
+% any other parameter, since this does not work
+% TODO rewrite to have one vec #2 and a list of vecs #3 to add
+\newcommand\subVec[2][subVecResult]{
+    \def\veclist{\xintCSVtoList{#2}}
+    \edef\elemOne{\xintNthElt{1}{\veclist}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\subCoord{0}%
+        \xintifForFirst{%
+            \xintFor* ##2 in \veclist \do {%
+                \xintifForFirst{%
+                    \FPset\subCoord{\xintNthElt{##1}{##2}}%
+                }{%
+                    \FPsub\subCoord\subCoord{\xintNthElt{##1}{##2}}%
+                }
+            }
+            \newVec{#1}{\subCoord}
+        }{%
+            \xintFor* ##2 in \veclist \do {%
+                \xintifForFirst{%
+                    \FPset\subCoord{\xintNthElt{##1}{##2}}%
+                }{%
+                    \FPsub\subCoord\subCoord{\xintNthElt{##1}{##2}}%
+                }
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\subCoord}
+        }
+    }
+}
+
+% Multiply the values of two vectors
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+% \newcommand\mulVec[3][mulVecResult]{
+% }
+
+% Divide the values of two vectors
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+% \newcommand\divVec[3][divVecResult]{
+% }
+
+% Multiply vector by skalar
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+\newcommand\scaleVec[3][scaleVecResult] {%
+    \xintFor* ##1 in #2 \do {%
+        \FPmul\tmp{##1}{#3}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+% Divide vector by skalar
+% TODO adjust function name, for function which divides vec with vec
+\newcommand\divVec[3][divVecResult] {%
+    \FPifeq{#3}{0}
+        \PackageError{glmatrix package}{In div vector by scalar}{divisor is 0}
+    \else
+    \fi
+    \xintFor* ##1 in #2 \do {%
+        \FPdiv\divNumRes{##1}{#3}
+        \xintifForFirst{%
+            \newVec{#1}{\divNumRes}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\divNumRes}
+        }
+    }
+}
+
+% \newcommand\powVec[3][powVecResult]{% {Basename}{input}
+% }
+
+% TODO negateVec vs negVec
+% Negate the value of the given vector
+% #1 out, var name to save the result (vector) to
+% #2 a, vector value
+\newcommand\negateVec[2][negateVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \FPneg\tmp{##1}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+% Lineraly interpolate between values of two vectors
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+% #4 t, interpolation amount range [0-1]
+% \newcommand\lerpVec[4][lerpVecResult]{
+% }
+
+% \newcommand\arccosVec[2][accosVecResult]{
+% }
+
+% Adds two vectors after multiplying the second operand by a value
+% \newcommand\mulAndAddVec[4][mulAndAddVecResult]{
+% }
+
+% Skalarproduct / Dotproduct
+% #1 out, var name to save the result (scalar) to
+% #2 a, first vector value
+% #3 b, second vector value
+\newcommand\dotVec[3][dotVecResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{In scalar product}{vector A and B do not have same length}
+    \fi
+    \FPset\res{0}
+    \FPset\tmp{0}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\valueA{\xintNthElt{##1}{#2}}
+        \FPset\valueB{\xintNthElt{##1}{#3}}
+        \FPmul\tmp\valueA\valueB
+        \FPadd\res\res\tmp
+    }
+    \newScalar{#1}{\res}
+}
+
+% Get length of vector
+% #1 out, var name to save the result (scalar) to
+% #2 a, vector value
+\newcommand\lenVec[2][lenVecResult] {%
+    \FPset\normTotal{0}
+    \FPset\iterVal{0}
+    % Iterate each value, multiply it with itself and sum up
+    \xintFor* ##1 in #2 \do {%
+        % No idea why this needs to be abs,
+        % but negative values are a problem here
+        \FPabs\iterVal{##1}
+        \FPpow\tmpNormB\iterVal{2}
+        \FPadd\normTotal\normTotal\tmpNormB
+    }
+    % Evaluate root for numbered result
+    \FProot\normRooted\normTotal{2}
+    % Set output var
+    \newScalar{#1}{\normRooted}
+}
+
+% Calculate crossproduct for two vectors
+% TODO this only works for 3d vectors currently
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+\newcommand\crossVec[3][crossVecResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPset\aa{\xintNthElt{1}{#2}}
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ac{\xintNthElt{3}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPset\bc{\xintNthElt{3}{#3}}
+    \FPset\tmp{0}
+    % x component
+    \FPset\scalarX{0}
+    \FPmul\scalarX\ab\bc
+    \FPmul\tmp\ac\bb
+    \FPsub\scalarX\scalarX\tmp
+    % y component
+    \FPset\scalarY{0}
+    \FPmul\scalarY\ac\ba
+    \FPmul\tmp\aa\bc
+    \FPsub\scalarY\scalarY\tmp
+    % z component
+    \FPset\scalarZ{0}
+    \FPmul\scalarZ\aa\bb
+    \FPmul\tmp\ab\ba
+    \FPsub\scalarZ\scalarZ\tmp
+    \newVec{#1}{\scalarX,\scalarY,\scalarZ}
+}
+
+% Get the smallest angle between two vectors
+% #1 out, var name to save the result (scalar) to
+% #2 a, first vector value
+% #3 b, second vector value
+% \newcommand\angleVec[3][angleVecResult] {%
+% }
+
+% Calculates the euclidian distance between two vectors
+% \newcommand\distVec[3][distVecResult] {%
+% }
+
+\newcommand\normalizeVec[2][normalizeVecResult] {%
+    \lenVec{#2}
+    \divVec[#1]{#2}{\lenVecResult}
+}
+
+% \newcommand\rotateVec[3][distVecResult] {%
+% }
+
+% \newcommand\signedAngleVec[3][distVecResult] {%
+% }
+
+% \newcommand\sqrDistVec[3][distVecResult] {%
+% }
+
+% \newcommand\sqrLenVec[3][distVecResult] {%
+% }
+
+% \newcommand\transformMat2[3][distVecResult] {%
+% }
+
+% \newcommand\transformMat2d[3][distVecResult] {%
+% }
+
+% \newcommand\transformMat3[3][distVecResult] {%
+% }
+
+% \newcommand\transformMat4[3][distVecResult] {%
+% }
+
+% Multiply the given vector with a matrix (for transformation)
+% #1 out, var name to save the result (vector) to
+% #2 a, matrix value
+% #3 b, vector value
+\newcommand\transformVec[3][transformVecResult] {%
+    \getVecHeight{#3}%
+    \getMatHeight{#2}%
+    \getMatWidth{#2}%
+    % Check that matrix and vector can be multiplied
+    \FPifeq{\matWidthResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Dimension mismatch for matrix and vector, could not multiply}{width (\matWidthResult) of matrix #2 and height (\vecHeightResult) of vector #3 do not match}
+    \fi
+    % Create iterator sequences from height of vector and matrix
+    \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \edef\matHeightSequence{\xintSeq[+1]{+1}{\matHeightResult}}%
+    % Iterate all rows of the matrix
+    \xintFor* ##2 in \matHeightSequence \do {%
+        \FPset\cellVal{0}
+        % Differentiate between first and other entries to create the new vector variable
+        \xintifForFirst{%
+            % Now iterate each entry of the current row
+            % Use this indec to access the entry in the matrix and in the vector
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                % Add to storage variable
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \newVec{#1}{\cellVal}
+        }{
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\cellVal}
+        }
+    }
+    % Test if width and height is correct
+    \expandafter\getVecHeight\expandafter{\csname #1\endcsname}%
+    \FPifeq{\matHeightResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Vector height does not match expectation}{height of vector is \vecHeightResult but should be \matHeightResult}
+    \fi
+}
+
+% \newcommand\bezier[3][distVecResult] {%
+% }
+
+% \newcommand\hermite[3][distVecResult] {%
+% }
+
+% \newcommand\rotateX[3][distVecResult] {%
+% }
+
+% \newcommand\rotateY[3][distVecResult] {%
+% }
+
+% \newcommand\rotateZ[3][distVecResult] {%
+% }
+
+% \newcommand\slerp[3][distVecResult] {%
+% }
+
+% \newcommand\transformQuat[3][distVecResult] {%
+% }
+
+% TODO BIG
+\newcommand\mulVecAsColAndRow[2][mulMatsResult]{%
+    \newMatRow{vecA}{\xintNthElt{1}{#2}}
+    \newMatRow{vecB}{\xintNthElt{2}{#2}}
+    \newMatRow{vecC}{\xintNthElt{3}{#2}}
+    \newMatFromRowVec{tmpMatA}{\vecA, \vecB, \vecC}
+    \vecToMatRow{row}{#2}
+    \newMat{tmpMatB}{\row}
+    \mulMat[#1]{\tmpMatA}{\tmpMatB}
+}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Vector Comparison %
+%%%%%%%%%%%%%%%%%%%%%
+% Returns whether or not the vectors have the same values. 
+% \newcommand\equalsVec[3][equalsVecResult]{
+% }
+
+% Return the componentwise minimum of two vector values
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+\newcommand\minVec[3][minVecResult]{
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{In vector minimum}{vector A and B do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \minScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
+        \xintifForFirst{%
+            \newVec{#1}{\minScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\minScalarResult}
+        }
+    }
+}
+
+% Return the componentwise maximum of two vector values
+% #1 out, var name to save the result (vector) to
+% #2 a, first vector value
+% #3 b, second vector value
+\newcommand\maxVec[3][maxVecResult]{
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{In vector minimum}{vector A and B do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \maxScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
+        \xintifForFirst{%
+            \newVec{#1}{\maxScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\maxScalarResult}
+        }
+    }
+}
