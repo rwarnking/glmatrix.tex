@@ -16,7 +16,7 @@
 \setpapersize{A4}
 \setmarginsrb{20mm}{15mm}{20mm}{25mm}{54pt}{15mm}{0pt}{0mm}
 
-\input{glmatrix/glmatrix.tex}
+\input{source/glmatrix.tex}
 
 \begin{document}
 
@@ -233,8 +233,8 @@ Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVe
 \end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \subsection*{Matrix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \newMatRow{vecA}{0.5,2,3}
 % \newMatRow{vecB}{4,5,6}
@@ -242,23 +242,19 @@ Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVe
 % \newMat{matX}{\vecA, \vecB, \vecC}
 
 \newMat{matX}{{{0.5,2,3}{4,5,6}{7,8,9}}}
-
-% TODO newMatFromRowVec{}
-% \newMatRow{vecA}{0.5,2,3}
-% \newMat{matY}{\vecA}
-
 \newMat{matY}{{{0.5,2,3}}}
-
-% \newMatRow{vecA}{0.5}
-% \newMatRow{vecB}{2}
-% \newMatRow{vecC}{3}
-% \newMat{matZ}{\vecA, \vecB, \vecC}
-
-\newMat{matZ}{{{0.5}{4}{7}}}
+\newMat{matZ}{{{0.5}{42}{7}}}
 
 \newVec{vecTest}{5, 2, 3}
 \newTransMat{matTrans}{\vecTest}
 \newScaleMat{matScale}{\vecTest}
+\newScalarPi{scalarB}{0.5}
+\newRotMatTwoD{\scalarB}
+\newDiagMat{matDiagResult}{\printVecContentXYZ{\vecTest}}
+\newProjMat{projMatResult}
+\newLookAtMat{\vecA}{\vecB}{\vecC}{\vecTest}
+% TODO radian or degree?
+\newFrustumMat{90}{90}{1}{6}
 
 \begin{center}
     \begin{tabular}{ l l c }
@@ -268,9 +264,11 @@ Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVe
         create matrix \(3\times1\) & \textbackslash newMatrix\{commandName\}\{\{xx\}\{yx\}\{zx\}\} & \printMat{\matZ}\\
         translation matrix & \textbackslash newTransMat\{commandName\}\{\textbackslash vecA\} & \printMat{\matTrans}\\
         scaling matrix & \textbackslash newScaleMat\{commandName\}\{\textbackslash vecA\} & \printMat{\matScale}\\
-        % create matrix \(3\times3\) & \textbackslash newMatrix\{commandName\}\{\textbackslash rowA, \textbackslash rowB, \textbackslash rowC\} & \printMat{\matX}\\
-        % create matrix \(1\times3\) & \textbackslash newMatrix\{commandName\}\{\textbackslash rowA\} & \printMat{\matY}\\
-        % create matrix \(3\times1\) & \textbackslash newMatrix\{commandName\}\{\textbackslash rowA, \textbackslash rowB, \textbackslash rowC\} & \printMat{\matZ}\\
+        rotation matrix \((\printScalarAsPi{\scalarB})\) & \textbackslash newRotMatTwoD[commandName]\{angle\} & \printMat{\rotMatResult}\\
+        diag matrix \((\printVecT{\vecTest})\) & \textbackslash newDiagMat[commandName]\{diag values\} & \printMat{\matDiagResult}\\
+        proj matrix & \textbackslash newProjMat\{commandName\} & \printMat{\projMatResult}\\
+        lookAt matrix & \textbackslash newLookAtMat[commandName]\{up\}\{right\}\{dir\}\{cam\} & \printMat{\lookAtMatResult}\\
+        frustum matrix & \textbackslash newFrustumMat[commandName]\{fovx\}\{fovy\}\{near\}\{far\} & \printMat{\frustMatResult}\\
     \end{tabular}
 \end{center}
 
@@ -285,160 +283,60 @@ Print matrix \(X = \printMat{\matX}\):
         print matrix \(1\times3\) & \textbackslash printMat[1]\{\textbackslash commandName\} & \printMat[1]{\matY}\\
         print matrix \(3\times1\) & \textbackslash printMat\{\textbackslash commandName\} & \printMat{\matZ}\\
         print matrix \(3\times1\) & \textbackslash printMat[1]\{\textbackslash commandName\} & \printMat[1]{\matZ}\\
+        print diag matrix & \textbackslash printMatDiag[1]\{\textbackslash commandName\} & \printMatDiag{\matDiagResult}\\
     \end{tabular}
 \end{center}
 
-Matrix Modification with \(X = \printMat{\matX}\):
+Matrix Modification with \(X = \printMat{\matX}\), \(Y = \printMat{\matY}\), \(Z = \printMat{\matZ}\):
 
-Matrix Math, with \(X = \printMat{\matX}\):
-
-\mulScalarMat[mulMatScalarResult]{\matX}{5}
-\mulMat[mulMatResult]{\matX}{\matZ}
-
-\newVec{vecAA}{0.5,4,7}
-\newMat{matXX}{{{0.5,2,3}{4,5,6}{7,8,9}{7,8,9}{7,8,9}}}
-% \newMat{matXX}{{{0.5,2,3}{4,5,6}{7,8,9}}}
-\transformVec{\matXX}{\vecAA}
-\printVec{\transformVecResult}
-
-% \newScalar{aaa}{5}%
-% \subScalar[aaa]{\aaa}{1}%
-% \subScalar[aaa]{\aaa}{1}%
-% \printScalar{\aaa}
+\transposeMat[transposeMatResultA]{\matX}
+\transposeMat[transposeMatResultB]{\matY}
+\transposeMat[transposeMatResultC]{\matZ}
 
 \begin{center}
     \begin{tabular}{ l l c }
         Description & Command & Result\\ \hline
-        \(A * x | A \in \R^{m\times n}, x \in \R\) & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matX} \cdot 5 = \printMat{\mulMatScalarResult}\)\\
-        \(A \cdot B | A \in \R^{m\times n}, B \in \R^{n\times p}\) & \makecell[l]{\textbackslash mulMat\\\ [mulMatResult]\\\{\textbackslash matX\}\{\textbackslash matZ\}} & \(\printMat{\matX} \printMat{\matZ} = \printMat{\mulMatResult}\)\\
-        % Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX\}} & \(\printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultA}\)\\
-        % Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX, \dots\}} & \(\printMat{\matX} + \printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultB}\)
+        \(X^{-1}\) & \textbackslash transposeMat\{\textbackslash commandName\} & \printMat{\transposeMatResultA}\\
+        \(Y^{-1}\) & \textbackslash transposeMat\{\textbackslash commandName\} & \printMat{\transposeMatResultB}\\
+        \(Z^{-1}\) & \textbackslash transposeMat\{\textbackslash commandName\} & \printMat{\transposeMatResultC}\\
     \end{tabular}
 \end{center}
 
 
-% \[
-%     X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}
-% \]
+Matrix Math, with \(X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}\):
 
-% Append values (\(90, 1, 4, 3\)) to the vector and print it:
+\mulScalarMat[mulMatScalarResultA]{\matX}{5}
+\mulScalarMat[mulMatScalarResultB]{\matZ}{5}
+\mulMat[mulMatResultA]{\matX}{\matZ}
+\mulMat[mulMatResultB]{\matY}{\matZ}
+\mulMat[mulMatResultC]{\matZ}{\matY}
+\addMat[addMatResultA]{\matX}{\matX}
+\addMat[addMatResultB]{\matZ}{\matZ}
+\subMat[subMatResultA]{\matX}{\matX}
+\subMat[subMatResultB]{\matZ}{\matZ, \matZ}
 
-% \appendToVec{vecTest}{\vecTest}{90, 1,4,3}
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        \(A + B | A \in \R^{m\times n}, B \in \R^{m\times n}\) & \makecell[l]{\textbackslash addMat\\\ [addMatResult]\\\{\textbackslash matX\}\{\textbackslash matY\}} & \(\printMat{\matX} + \printMat{\matX} = \printMat{\addMatResultA}\)\\
+        \(A + B | A \in \R^{m\times n}, B \in \R^{m\times n}\) & \makecell[l]{\textbackslash addMat\\\ [addMatResult]\\\{\textbackslash matX\}\{\textbackslash matY\}} & \(\printMat{\matZ} + \printMat{\matZ} = \printMat{\addMatResultB}\)\\
+        \(A - B | A \in \R^{m\times n}, B \in \R^{m\times n}\) & \makecell[l]{\textbackslash subMat\\\ [subMatResultA]\\\{\textbackslash matX\}\{\textbackslash matY\}} & \(\printMat{\matX} - \printMat{\matX} = \printMat{\subMatResultA}\)\\
+        \(A - B - C | A, B, C \in \R^{m\times n}\) & \makecell[l]{\textbackslash subMat\\\ [subMatResultA]\\\{\textbackslash matX\}\{\textbackslash matY, \textbackslash matZ\}} & \(\printMat{\matZ} - \printMat{\matZ} - \printMat{\matZ} = \printMat{\subMatResultB}\)\\
+        \(A * x | A \in \R^{m\times n}, x \in \R\) & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matX} \cdot 5 = \printMat{\mulMatScalarResultA}\)\\
+        \(A * x | A \in \R^{m\times n}, x \in \R\) & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matZ} \cdot 5 = \printMat{\mulMatScalarResultB}\)\\
+        \(A \cdot B | A \in \R^{m\times n}, B \in \R^{n\times p}\) & \makecell[l]{\textbackslash mulMat\\\ [mulMatResultA]\\\{\textbackslash matX\}\{\textbackslash matZ\}} & \(\printMat{\matX} \printMat{\matZ} = \printMat{\mulMatResultA}\)\\
+        \(A \cdot B | A \in \R^{3\times 1}, B \in \R^{1\times 3}\) & \makecell[l]{\textbackslash mulMat\\\ [mulMatResult]\\\{\textbackslash matX\}\{\textbackslash matZ\}} & \(\printMat{\matY} \printMat{\matZ} = \printMat{\mulMatResultB}\)\\
+        \(A \cdot B | A \in \R^{1\times 3}, B \in \R^{3\times 1}\) & \makecell[l]{\textbackslash mulMat\\\ [mulMatResult]\\\{\textbackslash matX\}\{\textbackslash matZ\}} & \(\printMat{\matZ} \printMat{\matY} = \printMat{\mulMatResultC}\)\\
+    \end{tabular}
+\end{center}
 
-% \begin{center}
-%     \begin{tabular}{ l l c }
-%         Description & Command & Result\\ \hline
-%         Append rows to vector & \textbackslash appendToVec\{vecTest\}\{\textbackslash vecTest\}\{90, 1,4,3\} & \printVec{\vecTest}
-%     \end{tabular}
-% \end{center}
+\getMatTranslation{\matTrans}
 
-% \subsection*{Vector Math}
-
-% \subsection*{Matrix Printing}
-
-% \newMatRow{vecA}{0.5,2,3}
-% \newMatRow{vecB}{4,5,6}
-% \newMatRow{vecC}{7,8,9}
-% \newMat{matX}{\vecA, \vecB, \vecC}
-
-% \newMatRow{vecA}{0.5,2,3}
-% \newMat{matY}{\vecA}
-
-% \newMatRow{vecA}{0.5}
-% \newMatRow{vecB}{2}
-% \newMatRow{vecC}{3}
-% \newMat{matZ}{\vecA, \vecB, \vecC}
-
-% \[
-%     X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}
-% \]
-
-% \begin{center}
-%     \begin{tabular}{ l l c }
-%         Description & Command & Result\\ \hline
-%         3x3 & \textbackslash printMat\{\textbackslash matX\} & \printMat{\matX}\\
-%         3x3 with fraction & \textbackslash printMat[1]\{\textbackslash matX\} & \printMat[1]{\matX}\\
-%         Row Matrix & \textbackslash printMat\{\textbackslash matY\} & \printMat{\matY}\\
-%         Row Matrix with fraction & \textbackslash printMat[1]\{\textbackslash matY\} & \printMat[1]{\matY}\\
-%         Column Matrix & \textbackslash printMat\{\textbackslash matZ\} & \printMat{\matZ}\\
-%         Column Matrix with fraction & \textbackslash printMat[1]\{\textbackslash matZ\} & \printMat[1]{\matZ}\\
-%     \end{tabular}
-% \end{center}
-
-% \subsection*{Matrix Math}
-
-% \newMatRow{vecA}{0.5,2,3,4,5}
-% \newMatRow{vecB}{6,7,8,9,10}
-% \newMatRow{vecC}{11,12,13,14,15}
-% \newMat{matG}{\vecA, \vecB, \vecC, \vecC}
-
-% \[
-%     X = \printMat{\matX}, G = \printMat{\matG}
-% \]
-
-% \mulScalarMat[mulMatScalarResult]{\matX}{5}
-% \mulScalarMat[mulMatScalarResultB]{\matG}{5}
-% \sumMats[sumMatsResultA]{\matX, \matX}
-% \sumMats[sumMatsResultB]{\matX, \matX, \matX}
-
-% \begin{center}
-%     \begin{tabular}{ l l c }
-%         Description & Command & Result\\ \hline
-%         3x3 Matrix mul Scalar & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matX\}\{value\}} & \(\printMat{\matX} \cdot 5 = \printMat[1]{\mulMatScalarResult}\)\\
-%         Matrix mul Scalar & \makecell[l]{\textbackslash mulScalarMat\\\ [mulMatScalarResult]\\\{\textbackslash matG\}\{value\}} & \(\printMat{\matG} \cdot 5 = \printMat[1]{\mulMatScalarResultB}\)\\
-%         Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX\}} & \(\printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultA}\)\\
-%         Matrix sum & \makecell[l]{\textbackslash sumMats\\\ [sumMatsResult]\\\{\textbackslash matX, \textbackslash matX, \dots\}} & \(\printMat{\matX} + \printMat{\matX} + \printMat{\matX} = \printMat[1]{\sumMatsResultB}\)
-%     \end{tabular}
-% \end{center}
-
-% % TODO TODO bug
-% \newMatRow{rowA}{0.5, 1, 2}
-% \newMat{matA}{\rowA}
-
-% \newMatRow{vecA}{0.5}
-% \newMatRow{vecB}{1}
-% \newMatRow{vecC}{2}
-% \newMat{matB}{\vecA, \vecB, \vecC}
-
-% \newMatRow{rowA}{0.5, 1, 2}
-% \newMat{matC}{\rowA, \rowA}
-
-% \mulMats[mulMatsResultXX]{\matX}{\matX}
-% \mulMats[mulMatsResultXB]{\matX}{\matB}
-% \mulMats[mulMatsResultCB]{\matC}{\matB}
-% \mulMats[mulMatsResultAB]{\matA}{\matB}
-
-% \newVec{vecNormal}{0,0,1} % Normal at point
-% \mulVecAsColAndRow[mulMatsResultN]{\vecNormal}
-
-% \mulMatAndVec[mulMatsResultXN]{\matX}{\vecNormal}
-
-% \[
-%     X = \printMat{\matX},\ A = \printMat{\matA},\ B = \printMat{\matB},\ C = \printMat{\matC}, \vec{n} = \printVec{\vecNormal}
-% \]
-
-% \begin{center}
-%     \begin{tabular}{ l l c }
-%         Description & Command & Result\\ \hline
-%         \(X \cdot X\) &
-%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash matX\}} &
-%         \(\printMat{\matX} \printMat{\matX} = \printMat[1]{\mulMatsResultXX} \approx \printMat{\mulMatsResultXX}\)\\
-%         \(X \cdot B\) &
-%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash matB\}} &
-%         \(\printMat{\matX} \printMat{\matB} = \printMat[1]{\mulMatsResultXB} \approx \printMat{\mulMatsResultXB}\)\\
-%         \(C \cdot B\) &
-%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matC\}\{\textbackslash matB\}} &
-%         \(\printMat{\matC} \printMat{\matB} = \printMat[1]{\mulMatsResultCB} \approx \printMat{\mulMatsResultCB}\)\\
-%         \(A \cdot B\) &
-%         \makecell[l]{\textbackslash mulMats\\\ [mulMatsResult]\\\{\textbackslash matA\}\{\textbackslash matB\}} &
-%         \(\printMat{\matA} \printMat{\matB} = \printMat[1]{\mulMatsResultAB} \approx \printMat{\mulMatsResultAB}\)\\
-%         \(\vec{n} \cdot \trans{\vec{n}}\) &
-%         \makecell[l]{\textbackslash mulVecAsColAndRow\\\ [mulMatsResult]\\\{\textbackslash vecNormal\}} &
-%         \(\printVec{\vecNormal} \printVecT{\vecNormal} = \printMat{\mulMatsResultN}\)\\
-%         \(X \cdot \vec{n}\) &
-%         \makecell[l]{\textbackslash mulMatAndVec\\\ [mulMatsResult]\\\{\textbackslash matX\}\{\textbackslash vecNormal\}} &
-%         \(\printMat{\matX} \printVec{\vecNormal} = \printMat{\mulMatsResultXN}\)
-%     \end{tabular}
-% \end{center}
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Result\\ \hline
+        Translation of \(M\) & \makecell[l]{\textbackslash matTranslationResult\\\ [matScalingResult]\\\{\textbackslash matX\}} & \(\printMat{\matTrans} \xrightarrow{} \printVec{\matTranslationResult}\)\\
+    \end{tabular}
+\end{center}
 
 \end{document}
