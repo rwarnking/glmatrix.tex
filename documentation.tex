@@ -22,7 +22,9 @@
 
 \section*{Documentation}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Scalar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Create new scalar:
 
@@ -52,26 +54,28 @@ Print content, with \(a = \printScalar{\scalarA}\) and \(b = \printScalarAsPi{\s
         Scalar as fraction & \textbackslash printScalar[1]\{\textbackslash commandName\} & \printScalar[1]{\scalarA}\\
         Scalar in \(\pi\) & \textbackslash printScalarAsPi\{\textbackslash commandName\} & \(\printScalarAsPi{\scalarB}\)\\
         Scalar in \(\pi\) as fraction & \textbackslash printScalarAsPi[1]\{\textbackslash commandName\} & \(\printScalarAsPi[1]{\scalarB}\)\\
-        % Transposed Vector with fraction & \textbackslash printVecT[1]\{\textbackslash vecTest\} & \printVecT[1]{\vecTest}\\
-        % Vector & \textbackslash printVec\{\textbackslash vecTest\} & \printVec{\vecTest}\\
-        % Vector with fraction & \textbackslash printVec[1]\{\textbackslash vecName\} & \printVec[1]{\vecTest}\\
+        Scalar rounded \(\lceil b\rfloor_{dp=0}\) & \textbackslash printScalarRounded[digits]\{\textbackslash commandName\} & \(\printScalarRounded[0]{\scalarB}\)\\
     \end{tabular}
 \end{center}
 
 \newScalar{scalarX}{13.3333}
 \newScalar{scalarDigits}{0}
 
-Scalar Modification with \(x = \printScalar{\scalarX}\) and \(digits = \printScalar{\scalarDigits}\):
+Scalar Modification with \(x = \printScalar{\scalarX}\), \(decimal places = \printScalar{\scalarDigits}\) and \(b = \printScalarAsPi{\scalarB}\):
 \roundScalar[\scalarDigits]{\scalarX}
 \ceilScalar{\scalarX}
 \floorScalar{\scalarX}
+\radianToDegree{\scalarB}
+\toRadian{\scalarX}
 
 \begin{center}
     \begin{tabular}{ l l c }
         Description & Command & Output\\ \hline
-        round scalar & \textbackslash roundScalar[number of digits]\{x\} & \printScalar{\scalarRoundResult}\\
-        ceil scalar & \textbackslash ceilScalar[commandName]\{x\} & \printScalar{\scalarCeilResult}\\
-        floor scalar & \textbackslash floorScalar[commandName]\{x\} & \printScalar{\scalarFloorResult}\\
+        round scalar \(\lceil x\rfloor_{dp=\printScalar{\scalarDigits}}\) & \textbackslash roundScalar[number of digits]\{x\} & \printScalar{\scalarRoundResult}\\
+        ceil scalar \(\lceil x\rceil_{dp=\printScalar{\scalarDigits}}\) & \textbackslash ceilScalar[commandName]\{x\} & \printScalar{\scalarCeilResult}\\
+        floor scalar \(\lfloor x\rfloor_{dp=\printScalar{\scalarDigits}}\) & \textbackslash floorScalar[commandName]\{x\} & \printScalar{\scalarFloorResult}\\
+        convert scalar (\(b\)) to degree & \textbackslash radianToDegree[commandName]\{b\} & \printScalar{\radianToDegreeResult}\\
+        convert scalar (\(x\)) to radian & \textbackslash toRadian[commandName]\{x\} & \printScalar{\degreeToRadianResult}\\
     \end{tabular}
 \end{center}
 
@@ -88,6 +92,7 @@ Scalar Math, with \(a = \printScalar{\scalarA}\), \(b = \printScalar{\scalarB}\)
 \negateScalar{\scalarA}
 \lerpScalar{\scalarA}{\scalarB}{\scalarT}
 \arccosScalar{\scalarA}
+\mulAndAddScalar{\scalarA}{\scalarB}{\scalarT}
 
 \begin{center}
     \begin{tabular}{ l l c }
@@ -99,6 +104,7 @@ Scalar Math, with \(a = \printScalar{\scalarA}\), \(b = \printScalar{\scalarB}\)
         \(a^b\) & \textbackslash powScalar[commandName]\{a\}\{b\} & \printScalar{\scalarPowResult}\\
         \(-a\) & \textbackslash negateScalar[commandName]\{a\} & \printScalar{\scalarNegateResult}\\
         \((1-t)a+t*b\) & \textbackslash lerpScalar[commandName]\{a\}\{b\}\{t\} & \printScalar{\lerpScalarResult}\\
+        \(a + t * b\) & \textbackslash mulAndAddScalar[commandName]\{a\}\{b\}\{t\} & \printScalar{\scalarMulAndAddResult}\\
         \(\arccos{a}\) & \textbackslash arccosScalar[commandName]\{a\} & \printScalar{\scalarArccosResult}\\
     \end{tabular}
 \end{center}
@@ -115,14 +121,100 @@ Scalar comparison, with \(a = \printScalar{\scalarA}\) and \(b = \printScalar{\s
     \end{tabular}
 \end{center}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Apply function to a list of scalar values (inplace):
 
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{1}{\scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, x + b\) & \textbackslash forEachScalar\{L\}\{1\}\{b\} & \(\printScalar{\scalarA} + \printScalar{\scalarT} = \printScalar{\scalarAnew}, \printScalar{\scalarB} + \printScalar{\scalarT} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{2}{\scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, x - b\) & \textbackslash forEachScalar\{L\}\{2\}\{b\} & \(\printScalar{\scalarA} - \printScalar{\scalarT} = \printScalar{\scalarAnew}, \printScalar{\scalarB} - \printScalar{\scalarT} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{3}{\scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, x * b\) & \textbackslash forEachScalar\{L\}\{3\}\{b\} & \(\printScalar{\scalarA} * \printScalar{\scalarT} = \printScalar{\scalarAnew}, \printScalar{\scalarB} * \printScalar{\scalarT} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{4}{\scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, \frac{x}{b}\) & \textbackslash forEachScalar\{L\}\{4\}\{b\} & \(\frac{\printScalar{\scalarA}}{\printScalar{\scalarT}} = \printScalar{\scalarAnew}, \frac{\printScalar{\scalarB}}{\printScalar{\scalarT}} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{5}{\scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, x^b\) & \textbackslash forEachScalar\{L\}\{5\}\{b\} & \(\printScalar{\scalarA}^{\printScalar{\scalarT}} = \printScalar{\scalarAnew}, \printScalar{\scalarB}^{\printScalar{\scalarT}} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{6}{}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, -x\) & \textbackslash forEachScalar\{L\}\{6\}\{b\} & \(-\printScalar{\scalarA} = \printScalar{\scalarAnew}, -\printScalar{\scalarB} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{7}{\scalarT, \scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, (1-t)x+t*b\) & \textbackslash forEachScalar\{L\}\{7\}\{b\} & \((1-t)\printScalar{\scalarA}+\printScalar{\scalarT}*\printScalar{\scalarT} = \printScalar{\scalarAnew}, (1-t)\printScalar{\scalarB}+\printScalar{\scalarT}*\printScalar{\scalarT} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarAnew}{2}
+\newScalar{scalarBnew}{4}
+\forEachScalar{scalarAnew, scalarBnew}{8}{\scalarT, \scalarT}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, x+t*b\) & \textbackslash forEachScalar\{L\}\{8\}\{b\} & \(\printScalar{\scalarA}+\printScalar{\scalarT}*\printScalar{\scalarT} = \printScalar{\scalarAnew}, \printScalar{\scalarB}+\printScalar{\scalarT}*\printScalar{\scalarT} = \printScalar{\scalarBnew}\)\\
+    \end{tabular}
+\end{center}
+
+\newScalar{scalarTnew}{0.3}
+\newScalar{scalarAnew}{0.3}
+\forEachScalar{scalarAnew, scalarTnew}{9}{}
+\begin{center}
+    \begin{tabular}{ l l c }
+        \(\forall x \in L, \arccos{x}\) & \textbackslash forEachScalar\{L\}\{9\}\{b\} & \(\arccos{\printScalar{\scalarT}} = \printScalar{\scalarAnew}, \arccos{\printScalar{\scalarT}} = \printScalar{\scalarTnew}\)\\
+    \end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Vector}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Create new vector:
 
 \randomVec{randomVecResultTwo}{2}{0}{10}
 \randomVec{randomVecResultThree}{3}{0}{10}
+
+\newVecPi{vecB}{0.5, 0.5, 0.5}
+\zeroVec[3]{vecC}
 
 \begin{center}
     \begin{tabular}{ l l c }
@@ -130,16 +222,15 @@ Create new vector:
         create vector & \textbackslash newVec\{commandName\}\{x, y, z\} & {x, y, z}\\
         copy vector & \textbackslash copyVec[commandName]\{\(\vec{a}\)\} & {x, y, z}\\
         % create scalar from multiple of \(\pi\) & \textbackslash newScalarPi\{commandName\}\{value\} & \(value*\pi\)\\
+        create vector in \(\pi\)& \textbackslash newVecPi\{commandName\}\{x, y, z\} & \printVec{\vecB}\\
         create random vector & \textbackslash randomVec\{commandName\}\{2\}\{l-bound\}\{u-bound\} & \printVec{\randomVecResultTwo}\\
         create random vector & \textbackslash randomVec\{commandName\}\{3\}\{l-bound\}\{u-bound\} & \printVec{\randomVecResultThree}\\
+        create zero vector & \textbackslash zeroVec[dims]\{commandName\} & \printVec{\vecC}\\
         % set scalar & \textbackslash setScalar\{commandName\}\{value\} & \\
-        % zero scalar & \textbackslash zeroScalar\{commandName\} & \\
     \end{tabular}
 \end{center}
 
 \newVec{vecA}{0.5, 2, 3}
-% TODO vecPi
-\newVec{vecB}{1.57079632679, 1.57079632679, 1.57079632679}
 
 Print vector with the values \(\printVecT{\vecA}\) and \(\printVecAsPiT{\vecB}\):
 
@@ -156,6 +247,7 @@ Print vector with the values \(\printVecT{\vecA}\) and \(\printVecAsPiT{\vecB}\)
         Print vector in \(\pi\) with fraction & \textbackslash printVecAsPi[1]\{\textbackslash commandName\} & \printVecAsPi[1]{\vecB}\\
         Print vector content only & \textbackslash printVecContentXY\{\textbackslash commandName\} & \printVecContentXY{\vecA}\\
         Print vector content only & \textbackslash printVecContentXYZ\{\textbackslash commandName\} & \printVecContentXYZ{\vecA}\\
+        Print vector as point & \textbackslash printAsPoint\{\textbackslash commandName\} & \printAsPoint{\vecA}\\
     \end{tabular}
 \end{center}
 
@@ -164,15 +256,15 @@ Print vector with the values \(\printVecT{\vecA}\) and \(\printVecAsPiT{\vecB}\)
 \newVec{vecC}{0.5, 2, -3}
 
 Vector Modification with \(\vec{b} = \printVecT{\vecB}\):
-% \roundVec[\scalarDigits]{\vecA}
+\roundVec[1]{roundVecResult}{\vecB}
 \ceilVec{\vecB}
 \floorVec{\vecB}
 
 \begin{center}
     \begin{tabular}{ l l c }
         Description & Command & Output\\ \hline
-        % round scalar & \textbackslash roundScalar[number of digits]\{x\} & \printScalar{\scalarRoundResult}\\
-        ceil scalar & \textbackslash ceilScalar[commandName]\{\(\vec{b}\)\} & \printVec{\ceilVecResult}\\
+        round vec & \textbackslash roundVec[number of digits]\{\(\vec{b}\)\} & \printVec{\roundVecResult}\\
+        ceil vec & \textbackslash ceilVec[commandName]\{\(\vec{b}\)\} & \printVec{\ceilVecResult}\\
         floor vec & \textbackslash floorVec[commandName]\{\(\vec{b}\)\} & \printVec{\floorVecResult}\\
     \end{tabular}
 \end{center}
@@ -182,41 +274,120 @@ Vector Math, with \(\vec{a} = \printVecT{\vecA}\), \(\vec{b} = \printVecT{\vecB}
 \addVec[addVecResult]{\vecA, \vecB, \vecC}
 \subVec[subVecResult]{\vecA, \vecB, \vecC}
 \scaleVec{\vecA}{\scalarA}
-% \mulVec{\vecA}{\vecB}
-% \divVec{\vecA}{\vecB}
-% \powVec{\vecA}{\vecB}
-\negateVec[negateVecResult]{\vecA}
-\dotVec[dotVecResult]{\vecA}{\vecA}
-\lenVec[lenVecResult]{\vecA}
-\crossVec[crossVecResult]{\vecA}{\vecB}
-% \lerpVec{\vecA}{\vecB}{\scalarT}
-% \arccosVec{\vecA}
+\mulVec[mulVecResultA]{\vecA}{\vecB}
+\mulVec[mulVecResultB]{\vecA}{\vecB, \vecC}
+\divVVec[divVecResultA]{\vecA}{\vecB}
+\divVVec[divVecResultB]{\vecA}{\vecB, \vecC}
+\scaleAndAddVec{\vecA}{\vecB}{\scalarT}
 
 \begin{center}
     \begin{tabular}{ l l c }
         Description & Command & Example\\ \hline
         \(\vec{a} + \vec{b} + \vec{c}\) &
-        \makecell[l]{\textbackslash addVec[addVecResult]\{\\\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\\\}} &
+        \makecell[l]{\textbackslash addVec[addVecResult]\\\{\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\}} &
         \(\printVec{\vecA} + \printVec{\vecB} + \printVec{\vecC} = \printVec[1]{\addVecResult} \approx \printVec{\addVecResult}\)\\
         \(\vec{a} - \vec{b} - \vec{c}\) &
-        \makecell[l]{\textbackslash subVec[subVecResult]\{\\\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\\\}} &
+        \makecell[l]{\textbackslash subVec[subVecResult]\\\{\textbackslash vecA, \textbackslash vecB, \textbackslash vecC\}} &
         \(\printVec{\vecA} - \printVec{\vecB} - \printVec{\vecC} =
         \printVec[1]{\subVecResult} \approx \printVec{\subVecResult}\)\\
+        \(\vec{a} * \vec{b}\) &
+        \makecell[l]{\textbackslash mulVec[mulVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}} &
+        \(\printVec{\vecA} * \printVec{\vecB} =
+        \printVec[1]{\mulVecResultA} \approx \printVec{\mulVecResultA}\)\\
+        \(\vec{a} * \vec{b} * \vec{c}\) &
+        \makecell[l]{\textbackslash mulVec[mulVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB, \textbackslash vecC\}} &
+        \(\printVec{\vecA} * \printVec{\vecB} * \printVec{\vecC} =
+        \printVec[1]{\mulVecResultB} \approx \printVec{\mulVecResultB}\)\\
+        \(\frac{\vec{a}}{\vec{b}}\) &
+        \makecell[l]{\textbackslash divVVec[divVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}} &
+        \(\printVec{\vecA} \div \printVec{\vecB} =
+        \printVec[1]{\divVecResultA} \approx \printVec{\divVecResultA}\)\\
+        \(\frac{\frac{\vec{a}}{\vec{b}}}{\vec{c}}\) &
+        \makecell[l]{\textbackslash divVVec[divVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB, \textbackslash vecC\}} &
+        \(\left(\printVec{\vecA} \div \printVec{\vecB}\right) \div \printVec{\vecC} =
+        \printVec[1]{\divVecResultB} \approx \printVec{\divVecResultB}\)\\
+        \(\vec{a} + \vec{b} * t\) &
+        \makecell[l]{\textbackslash scaleAndAddVec[scaleAndAddVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}\{\textbackslash scalarT\}} &
+        \(\printVec{\vecA} + \printVec{\vecB} * \printScalar{\scalarT} =
+        \printVec{\scaleAndAddVecResult}\)\\
+    \end{tabular}
+\end{center}
+
+\negateVec[negateVecResult]{\vecA}
+\dotVec[dotVecResult]{\vecA}{\vecA}
+\lenVec[lenVecResult]{\vecA}
+\sqrLenVec{\vecA}
+\crossVec[crossVecResult]{\vecA}{\vecB}
+\lerpVec{\vecA}{\vecB}{\scalarT}
+\slerpVec{\vecA}{\vecB}{\scalarT}
+\newVec{vecD}{1, 0, 0}
+\hermiteVec{\vecA}{\vecB}{\vecC}{\vecD}{\scalarT}
+\distVec{\vecA}{\vecB}
+\sqrDistVec{\vecA}{\vecB}
+\angleVec{\vecA}{\vecB}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Example\\ \hline
         \(\vec{a} * n\) &
-        \textbackslash scaleVec[scaleVecResult]\{\textbackslash vecA\}\{\textbackslash scalarA\} &
+        \makecell[l]{\textbackslash scaleVec[scaleVecResult]\\\{\textbackslash vecA\}\{\textbackslash scalarA\}} &
         \(\printVec{\vecA} * \printScalar{\scalarA} = \printVec{\scaleVecResult}\)\\
         \(\vec{a} * -1\) &
-        \textbackslash negateVec[negateVecResult]\{\textbackslash vecA\} &
+        \makecell[l]{\textbackslash negateVec[negateVecResult]\\\{\textbackslash vecA\}} &
         \(\printVec{\vecA} * -1 = \printVec{\negateVecResult}\)\\
         \(\vec{a} \cdot \vec{a}\) &
-        \textbackslash dotVec[dotVecResult]\{\textbackslash vecA\}\{\textbackslash vecA\} &
+        \makecell[l]{\textbackslash dotVec[dotVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecA\}} &
         \(\printVec{\vecA} \cdot \printVec{\vecA} = \printScalar{\dotVecResult}\)\\
         \(\norm{\vec{a}}\) &
-        \textbackslash lenVec[lenVecResult]\{\textbackslash vecA\} &
+        \makecell[l]{\textbackslash lenVec[lenVecResult]\\\{\textbackslash vecA\}} &
         \(\norm{\printVec{\vecA}} = \printScalar{\lenVecResult}\)\\
+        \(\norm{\vec{a}}^2\) &
+        \makecell[l]{\textbackslash sqrLenVec[sqrLenVecResult]\\\{\textbackslash vecA\}} &
+        \(\norm{\printVec{\vecA}}^2 = \printScalar{\sqrLenVecResult}\)\\
         \(\vec{a} \times \vec{b}\) &
-        \textbackslash crossVec[crossVecResult]\{\textbackslash vecA\}\{\textbackslash vecB\} &
+        \makecell[l]{\textbackslash crossVec[crossVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}} &
         \(\printVec{\vecA} \times \printVec{\vecB} = \printVec{\crossVecResult}\)\\
+        \((1-t) \vec{a} + t * \vec{b}\) &
+        \makecell[l]{\textbackslash lerpVec[lerpVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}\{t\}} &
+        \((1-\printScalar{\scalarT}) \printVec{\vecA} + \printScalar{\scalarT} * \printVec{\vecB} = \printVec{\lerpVecResult}\)\\
+        \(\frac{\sin{(1-t)\Omega}}{\sin{\Omega}}\vec{a} + \frac{\sin{t\Omega}}{\sin{\Omega}}\vec{b}\) &
+        \makecell[l]{\textbackslash slerpVec[slerpVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}\{t\}} &
+        \(\frac{\sin{(1-\printScalar{\scalarT})\printScalarAsPi{\angleVecResult}}}{\sin{\printScalarAsPi{\angleVecResult}}}\printVec{\vecA} + \frac{\sin{\printScalar{\scalarT}*\printScalarAsPi{\angleVecResult}}}{\sin{\printScalarAsPi{\angleVecResult}}}\printVec{\vecB} = \printVec{\slerpVecResult}\)\\
+        \(hermite (\vec{a}, \vec{b}, \vec{a}, \vec{a})\) &
+        \makecell[l]{\textbackslash hermiteVec[hermiteVecResult]\\\{\(\vec{a}\)\}\{\(\vec{b}\)\}\{\(\vec{c}\)\}\{\(\vec{d}\)\}\{t\}} &
+        \(\printVec{\hermiteVecResult}\)\\
+        \(\norm{\vec{a} - \vec{b}}\) &
+        \makecell[l]{\textbackslash distVec[distVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}} &
+        \(\norm{\printVec{\vecA} - \printVec{\vecB}} = \printScalar{\distVecResult}\)\\
+        \(\norm{\vec{a} - \vec{b}}^2\) &
+        \makecell[l]{\textbackslash sqrDistVec[sqrDistVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}} &
+        \(\norm{\printVec{\vecA} - \printVec{\vecB}}^2 = \printScalar{\sqrDistVecResult}\)\\
+        \(\measuredangle \vec{a}\vec{b}\) &
+        \makecell[l]{\textbackslash angleVec[angleVecResult]\\\{\textbackslash vecA\}\{\textbackslash vecB\}} &
+        \(\measuredangle \left(\printVec{\vecA}\printVec{\vecB}\right) = \printScalarAsPi{\angleVecResult}\)\\
+    \end{tabular}
+\end{center}
+
+\newVec{vecAA}{0.5,4,7,1}
+\newMat{matXX}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+\newMat{matXY}{{{0.5,2,3}{4,5,6}{7,8,9}{10,11,12}}}
+\newMat{matXZ}{{{0.5,2,3,1}{4,5,6,1}{7,8,9,1}{10,11,12,1}}}
+\transformVec[transformVecResultA]{\matXX}{\vecA}
+\transformVec[transformVecResultB]{\matXY}{\vecA}
+\transformVec[transformVecResultC]{\matXZ}{\vecAA}
+
+\begin{center}
+    \begin{tabular}{ l l c }
+        Description & Command & Example\\ \hline
+        \(A \cdot \vec{v} | A \in \R^{m\times n}, \vec{v} \in \R^{n\times 1}\) &
+        \makecell[l]{\textbackslash transformVec[transformVecResult]\\\{\textbackslash matM\}\{\textbackslash vecA\}} &
+        \(\printMat{\matXX}\printVec{\vecA} = \printVec{\transformVecResultA}\)\\
+        \(A \cdot \vec{v} | A \in \R^{m\times n}, \vec{v} \in \R^{n\times 1}\) &
+        \makecell[l]{\textbackslash transformVec[transformVecResult]\\\{\textbackslash matM\}\{\textbackslash vecA\}} &
+        \(\printMat{\matXY}\printVec{\vecA} = \printVec{\transformVecResultB}\)\\
+        \(A \cdot \vec{v} | A \in \R^{m\times n}, \vec{v} \in \R^{n\times 1}\) &
+        \makecell[l]{\textbackslash transformVec[transformVecResult]\\\{\textbackslash matM\}\{\textbackslash vecA\}} &
+        \(\printMat{\matXZ}\printVec{\vecAA} = \printVec{\transformVecResultC}\)\\
     \end{tabular}
 \end{center}
 
@@ -227,8 +398,8 @@ Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVe
 \begin{center}
     \begin{tabular}{ l l c }
         Description & Command & Output\\ \hline
-        \(\min{\vec{b}, \vec{c}}\) & \textbackslash minVec[commandName]\{\(\vec{b}\)\}\{\(\vec{c}\)\} & \printVec{\minVecResult}\\
-        \(\max{\vec{b}, \vec{c}}\) & \textbackslash maxVec[commandName]\{\(\vec{b}\)\}\{\(\vec{c}\)\} & \printVec{\maxVecResult}\\
+        \(\min{\vec{b}, \vec{c}}\) & \textbackslash minVec[commandName]\{\(\vec{b}\)\}\{\(\vec{c}\)\} & \(\min{\left(\printVec{\vecB}, \printVec{\vecC}\right)} = \printVec{\minVecResult}\)\\
+        \(\max{\vec{b}, \vec{c}}\) & \textbackslash maxVec[commandName]\{\(\vec{b}\)\}\{\(\vec{c}\)\} & \(\max{\left(\printVec{\vecB}, \printVec{\vecC}\right)} = \printVec{\maxVecResult}\)\\
     \end{tabular}
 \end{center}
 
@@ -242,7 +413,18 @@ Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVe
 % \newMat{matX}{\vecA, \vecB, \vecC}
 
 \newMat{matX}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+
+% TODO newMatFromRowVec{}
+% \newMatRow{vecA}{0.5,2,3}
+% \newMat{matY}{\vecA}
+
 \newMat{matY}{{{0.5,2,3}}}
+
+% \newMatRow{vecA}{0.5}
+% \newMatRow{vecB}{2}
+% \newMatRow{vecC}{3}
+% \newMat{matZ}{\vecA, \vecB, \vecC}
+
 \newMat{matZ}{{{0.5}{42}{7}}}
 
 \newVec{vecTest}{5, 2, 3}
@@ -302,7 +484,6 @@ Matrix Modification with \(X = \printMat{\matX}\), \(Y = \printMat{\matY}\), \(Z
     \end{tabular}
 \end{center}
 
-
 Matrix Math, with \(X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\matZ}\):
 
 \mulScalarMat[mulMatScalarResultA]{\matX}{5}
@@ -338,5 +519,6 @@ Matrix Math, with \(X = \printMat{\matX}, Y = \printMat{\matY}, Z = \printMat{\m
         Translation of \(M\) & \makecell[l]{\textbackslash matTranslationResult\\\ [matScalingResult]\\\{\textbackslash matX\}} & \(\printMat{\matTrans} \xrightarrow{} \printVec{\matTranslationResult}\)\\
     \end{tabular}
 \end{center}
+
 
 \end{document}
