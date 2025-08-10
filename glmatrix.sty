@@ -1,4 +1,11 @@
 % inspired by https://glmatrix.net/
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{glmatrix}[2025/08/10 glmatrix package]
+
+\RequirePackage{xinttools}
+\RequirePackage{xintfrac}
+\RequirePackage{fp}
+\RequirePackage{xstring}
 
 \newcommand{\R}{\ensuremath{\textrm{I\!R}}}
 \newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
@@ -8,13 +15,6 @@
 \newcommand{\bmat}[1]{\ensuremath{\begin{bmatrix} #1 \end{bmatrix}}}
 \newcommand{\pmat}[1]{\ensuremath{\begin{pmatrix} #1 \end{pmatrix}}}
 
-\usepackage{xinttools} % for the \xintFor
-\usepackage{xintfrac}
-\usepackage{fp}
-\usepackage{xstring}
-
-\input{glmatrix/scalar.tex}
-\input{glmatrix/vector.tex}
-\input{glmatrix/matrix.tex}
-\input{glmatrix/shapes.tex}
-\input{glmatrix/cgalgos.tex}
+\input{source/scalar.tex}
+\input{source/vector.tex}
+\input{source/matrix.tex}
