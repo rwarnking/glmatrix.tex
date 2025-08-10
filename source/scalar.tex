@@ -87,18 +87,30 @@
         \FPmul\dividend\dividend\minusSign
         \FPround\dividend\dividend{4}
         \FPclip\dividend\dividend
-        %
+        % TODO this should not be necessary
         \FPset\outputVar{#1}
+        % Create fraction from dividend and divisor
         \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
+        % If the sqrt can be resolved
+        \FPset\tmpDivisor{\divisor}
+        \FProot\tmpDivisor\tmpDivisor{2}
+        \FPround\tmpDivisor\tmpDivisor{8}
+        \FPclip\tmpDivisor\tmpDivisor
+        \FPifint{\tmpDivisor}
+            \FPset\outputVar{\frac{\dividend}{\tmpDivisor}}
+        \else
+        \fi
+        %
         \FPset\inputVar{#1}
         \FPmul\inputVar\inputVar\inputVar
         \FPmul\inputVar\inputVar\minusSign
         \FPround\inputVar\inputVar{8}
         \FPclip\inputVar\inputVar
         \FPifint{\inputVar}
-            \FPset\outputVar{\;\sqrt{\inputVar}}
+            \FPset\outputVar{\,\sqrt{\inputVar}}
         \else
         \fi
+        % If #1 was an int all along
         \FPset\inputVarA{#1}
         \FPround\inputVarA\inputVarA{10}
         \FPclip\inputVarA\inputVarA
@@ -123,12 +135,6 @@
     \fi
 }
 
-\newcommand\radianToDegree[2][radianToDegreeResult]{
-    \FPmul\tmp{#2}{180}
-    \FPdiv\tmp{\tmp}{\FPpi}
-    \newScalar{#1}{\tmp}
-}
-
 %%%%%%%%%%%%%%%%%%%
 % Scalar Creation %
 %%%%%%%%%%%%%%%%%%%
@@ -147,6 +153,13 @@
     \expandafter\edef\csname #1\endcsname{\divNumRes}%
 }
 
+% Create a new scalar variable with a random value
+\newcommand\randomScalar[3]{
+    \FPrandom\tmp
+    \lerpScalar[#1]{#2}{#3}{\tmp}
+}
+
+% TODO is this useful?
 % Clone the given scalar variable to a new variable
 % \newcommand\cloneScalar[2][scalarCloneResult]{
 % }
@@ -158,6 +171,7 @@
     \setScalar{#1}{#2}
 }
 
+% TODO is this useful?
 % \newcommand\createScalar[1]{
 % }
 
@@ -176,26 +190,20 @@
     \expandafter\edef\csname #1\endcsname{0}%
 }
 
-% Create a new scalar variable with a random value
-\newcommand\randomScalar[3]{
-    \FPrandom\tmp
-    \lerpScalar[#1]{#2}{#3}{\tmp}
-}
-
 %%%%%%%%%%%%%%%%%%%
 % Scalar Printing %
 %%%%%%%%%%%%%%%%%%%
 % Print the value of this scalar variable
 % #1 whether or not the value should be printed as a fraction (val=1)
 % #2 the value
+% TODO ensure math to remove additional whitespace
 \newcommand\printScalar[2][0]{%
-    \FPifeq{#1}{0}
-        % \roundNumber{#2}
-        \roundScalar{#2}
-        \scalarRoundResult
-    \else
-        \numToFractionA{#2}
-    \fi
+    \FPifeq{#1}{0}%
+        \roundScalar{#2}%
+        \scalarRoundResult%
+    \else%
+        \numToFractionA{#2}%
+    \fi%
 }
 
 % Print the value of this scalar variable as a multiple of Pi
@@ -204,7 +212,6 @@
 \newcommand\printScalarAsPi[2][0]{%
     \FPdiv\divNumRes{#2}{\FPpi}
     \FPifeq{#1}{0}
-        % \roundNumber{\divNumRes}
         \roundScalar{\divNumRes}
         \scalarRoundResult
     \else
@@ -213,8 +220,22 @@
     \pi
 }
 
+% Print the value of this scalar variable in degree
+% #1 whether or not the value should be printed as a fraction (val=1)
+% #2 the value
+\newcommand\printPiScalarInDegree[2][0]{%
+    \FPmul\tmp{#2}{180}
+    \FPdiv\divNumRes{\tmp}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    ^\circ
+}
+
 % TODO rename to roundScalar / printScalarRounded
-% TODO this is just a print function and does not create a new value
 % #1 number of digits after comma, default is 4
 % #2 the value
 \newcommand\printScalarRounded[2][4]{%
@@ -223,19 +244,17 @@
     \tmp
 }
 
-% TODO this is most likely not usefull
-% \newcommand\printScalarContent[2][0]{%
-% }
 %%%%%%%%%%%%%%%%%%%%%%%
 % Scalar Modification %
 %%%%%%%%%%%%%%%%%%%%%%%
-% TODO scalarRoundResult
+% TODO add default param scalarRoundResult does not work since
+% there is already a default param
 % #1 number of digits after comma, default is 4
 % #2 the value
 \newcommand\roundScalar[2][4]{%
-    \FPround\tmp{#2}{#1}
-    \FPclip\tmp\tmp
-    \newScalar{scalarRoundResult}{\tmp}
+    \FPround\tmp{#2}{#1}%
+    \FPclip\tmp\tmp%
+    \newScalar{scalarRoundResult}{\tmp}%
 }
 
 % Ceil the value of this variable
@@ -258,9 +277,20 @@
     \newScalar{#1}{\tmp}
 }
 
-% TODO unsure how this could work
-% \newcommand\forEach{
-% }
+% TODO naming
+% \newcommand\toDegree
+\newcommand\radianToDegree[2][radianToDegreeResult]{
+    \FPmul\tmp{#2}{180}
+    \FPdiv\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+
+% TODO naming
+\newcommand\toRadian[2][degreeToRadianResult]{
+    \FPdiv\tmp{#2}{180}
+    \FPmul\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
 
 %%%%%%%%%%%%%%%
 % Scalar Math %
@@ -292,8 +322,11 @@
 % #1 out, var name to save the result (scalar) to
 % #2 a, first scalar value
 % #3 b, second scalar value
-\newcommand\divScalar[3][scalarDivResult]{
-    % TODO add check for #3 being 0
+\newcommand\divScalar[3][scalarDivResult]{%
+    \FPifeq{#3}{0}
+        \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
+    \else
+    \fi
     \FPdiv\tmp{#2}{#3}
     \newScalar{#1}{\tmp}
 }
@@ -331,14 +364,16 @@
 }
 
 % Adds two scalars after multiplying the second operand by a value
-% \newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{
-% }
-
-% \newcommand\toDegree[4][scalarMulAndAddResult]{
-% }
-
-% \newcommand\toRadian[4][scalarMulAndAddResult]{
-% }
+% #1 = #2 + #3 * #4
+% #1 out, var name to save the result (scalar) to
+% #2 a, first scalar value
+% #3 b, second scalar value
+% #4 c, muliplier
+\newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{
+    \FPmul\tmp{#3}{#4}
+    \FPadd\tmp{#2}{\tmp}
+    \newScalar{#1}{\tmp}
+}
 
 %%%%%%%%%%%%%%%%%%%%%
 % Scalar Comparison %
@@ -371,4 +406,62 @@
     \else
         \expandafter\edef\csname #1\endcsname{#2}%
     \fi
+}
+
+%%%%%%%%%%%%%
+% Functions %
+%%%%%%%%%%%%%
+% Apply the given function to a list of variables.
+% TODO try to use a string as #2 instead of the integer, 
+% this would allow for dynamic function calls, not requireing the if else
+% utelise \csname #2\endcsname for that
+% #1 list of commands (var names) that should be altered
+% #2 the chosen function
+% #3 params for function
+\newcommand\forEachScalar[3]{
+    \FPiflt{#2}{10}
+    \else
+        \PackageError{glmatrix package}{In forEach scalar}{selection function that is not implemented (chose between 1 to 9 for parameter 2)}
+    \fi
+    %
+    \def\varList{\xintCSVtoList{#1}}
+    \def\paramList{\xintCSVtoList{#3}}
+    \xintFor* ##1 in \varList \do {%
+        \FPifeq{#2}{1}
+            \addScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{2}
+            \subScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{3}
+            \mulScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{4}
+            \divScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{5}
+            \powScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{6}
+            \negateScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+        \FPifeq{#2}{7}
+            \lerpScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{8}
+            \mulAndAddScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{9}
+            \arccosScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+    }
 }
