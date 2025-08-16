@@ -346,11 +346,11 @@
     \newEmptyMat{#1}
     \xintFor* ##1 in \widthSequence \do {%
         \xintFor* ##2 in \heightSequence \do {%
-            \FPset\value{\xintNthElt{##1}{\xintNthElt{##2}{#2}}}
+            \FPset\tmpValue{\xintNthElt{##1}{\xintNthElt{##2}{#2}}}
             \xintifForFirst{%
-                \newVec{rowVec}{\value}
+                \newVec{rowVec}{\tmpValue}
             }{%
-                \appendToVec{rowVec}{\rowVec}{\value}
+                \appendToVec{rowVec}{\rowVec}{\tmpValue}
             }
         }
         \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
@@ -382,19 +382,19 @@
     \newEmptyMat{#1}
     \xintFor* ##2 in \heightsequence \do {%
         \xintFor* ##3 in \widthsequence \do {%
-            \FPset\value{\xintNthElt{##3}{\xintNthElt{##2}{#2}}}
+            \FPset\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{#2}}}
             \xintifForFirst{%
                 \xintFor* ##1 in \matlist \do {%
-                    \FPadd\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                    \FPadd\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
                 }
-                \newVec{rowVec}{\value}
+                \newVec{rowVec}{\tmpValue}
             }{%
                 % \xintifForLast{
                 % }{
                     \xintFor* ##1 in \matlist \do {%
-                        \FPadd\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                        \FPadd\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
                     }
-                    \appendToVec{rowVec}{\rowVec}{\value}
+                    \appendToVec{rowVec}{\rowVec}{\tmpValue}
                 % }
             }
         }
@@ -417,17 +417,17 @@
     \newEmptyMat{#1}
     \xintFor* ##2 in \heightsequence \do {%
         \xintFor* ##3 in \widthsequence \do {%
-            \FPset\value{\xintNthElt{##3}{\xintNthElt{##2}{#2}}}
+            \FPset\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{#2}}}
             \xintifForFirst{%
                 \xintFor* ##1 in \matlist \do {%
-                    \FPsub\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                    \FPsub\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
                 }
-                \newVec{rowVec}{\value}
+                \newVec{rowVec}{\tmpValue}
             }{%
                 \xintFor* ##1 in \matlist \do {%
-                    \FPsub\value\value{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                    \FPsub\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
                 }
-                \appendToVec{rowVec}{\rowVec}{\value}
+                \appendToVec{rowVec}{\rowVec}{\tmpValue}
             }
         }
         \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
@@ -541,12 +541,12 @@
     \getMatHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\matHeightResult}}
     \xintFor* ##1 in \sequence \do {%
-        \FPset\value{\xintNthElt{\matWidthResult}{\xintNthElt{##1}{#2}}}
+        \FPset\tmpValue{\xintNthElt{\matWidthResult}{\xintNthElt{##1}{#2}}}
         \xintifForFirst{%
-            \newVec{#1}{\value}
+            \newVec{#1}{\tmpValue}
         }{%
             \xintifForLast{}{
-                \appendToVec{#1}{\csname #1\endcsname}{\value}
+                \appendToVec{#1}{\csname #1\endcsname}{\tmpValue}
             }
         }
     }
