@@ -7,14 +7,14 @@
 % Create a vector
 % #1 out, var name to save the result (vector) to
 % #2 a, vector value
-\newcommand\newVec[2]{
+\newcommand\newVec[2]{%
     \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
 }
 
 % Create a vector as a multiple of pi
 % #1 out, var name to save the result (vector) to
 % #2 a, vector value to multiply with pi
-\newcommand\newVecPi[2]{
+\newcommand\newVecPi[2]{%
     \def\tmpVec{\xintCSVtoList{#2}}
     \xintFor* ##1 in \tmpVec \do {%
         \newScalarPi{tmp}{##1}
@@ -104,14 +104,21 @@
 \newcommand\printVec[2][0]{%
     \ensuremath{%
         \begin{pmatrix}
-            \xintFor* ##1 in #2 \do {%
-                \FPifeq{#1}{0}
-                    \roundScalar{##1}
-                    \scalarRoundResult
-                \else
-                    \numToFractionA{##1}
-                \fi
-                \xintifForLast{}{%
+            \xintFor* ##1 in {#2} \do {%
+                \xintifForLast{
+                    \FPifeq{#1}{0}
+                        \roundScalar{##1}
+                        \scalarRoundResult
+                    \else
+                        \numToFractionA{##1}
+                    \fi
+                }{%
+                    \FPifeq{#1}{0}
+                        \roundScalar{##1}
+                        \scalarRoundResult
+                    \else
+                        \numToFractionA{##1}
+                    \fi
                     \\
                 }
             }
@@ -126,18 +133,25 @@
 % 0.5 & 0.25 work, 1.5, 2.5, 3.5 do not (all have number >1)
 \newcommand\printVecT[2][0]{%
     \ensuremath{\trans{\left(
-        \xintFor* ##1 in #2 \do {%
-            \FPifeq{#1}{0}
-                \roundScalar{##1}
-                \scalarRoundResult
-            \else
-                \numToFractionA{##1}
-            \fi
-            \xintifForLast{}{%
+        \xintFor* ##1 in {#2} \do {%
+            \xintifForLast{
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+            }{%
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
                 ,
             }
         }
-    \right)}}
+    \right)}}%
 }
 
 % Print the value of this vector variable as a multiple of Pi
@@ -182,7 +196,7 @@
 \newcommand\printAsPoint[2][0]{%
     \ensuremath{%
         \begin{bmatrix}
-            \xintFor* ##1 in #2 \do {%
+            \xintFor* ##1 in {#2} \do {%
                 \FPifeq{#1}{0}
                     \roundScalar{##1}
                     \scalarRoundResult
@@ -197,6 +211,11 @@
     }
 }
 
+    % \xintListWithSep{, }{#1}%
+\newcommand\printVecContent[1]{%
+    \xintNthElt{1}{#1},\xintNthElt{3}{#1},\xintNthElt{2}{#1}%
+}
+
 % TODO check if this can be scaled to n entries
 % Returns the x and y component of the given vector
 % #1 the vector
@@ -207,7 +226,7 @@
 % Returns the x, y and z component of the given vector
 % #1 the vector
 \newcommand\printVecContentXYZ[1]{%
-    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}%
 }
 
 % Returns the x, y, z and w component of the given vector
@@ -491,11 +510,11 @@
 % #3 b, second vector value
 \newcommand\scaleVec[3][scaleVecResult] {%
     \xintFor* ##1 in #2 \do {%
-        \FPmul\tmp{##1}{#3}
+        \FPmul\tmpVal{##1}{#3}
         \xintifForFirst{%
-            \newVec{#1}{\tmp}
+            \newVec{#1}{\tmpVal}
         }{%
-            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+            \appendToVec{#1}{\csname #1\endcsname}{\tmpVal}
         }
     }
 }

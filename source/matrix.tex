@@ -28,6 +28,7 @@
 % Create a matrix from row vectors
 % TODO actually this takes matRows and not vecs
 \newcommand\newMatFromRowVec[2]{
+    % TODO remove this?
     \FPset\numParam{\expandafter\xintLength{#2}}%
     \FPsub\numParam\numParam{1}
     \FPdiv\numParam\numParam{2}
@@ -39,6 +40,27 @@
     \else
         \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
     \fi
+}
+
+\newcommand\newMatFromColVecs[2]{
+    \edef\tmpVecList{\xintCSVtoList{#2}}%
+    \copyVec[tmpHeightVec]{{\xintNthElt{1}{\tmpVecList}}}
+    \getVecHeight[numRows]{\tmpHeightVec}
+    \edef\numColumns{\expandafter\xintLength\expandafter{\tmpVecList}}
+    \edef\colSequence{\xintSeq[+1]{+1}{\numColumns}}
+    \edef\rowSequence{\xintSeq[+1]{+1}{\numRows}}
+    \newEmptyMat{#1}
+    \xintFor* ##1 in \colSequence \do {%
+        \xintFor* ##2 in \rowSequence \do {%
+            \newScalar{tmpValue}{\xintNthElt{##1}{\xintNthElt{##2}{\tmpVecList}}}
+            \xintifForFirst{%
+                \newVec{matRow}{\tmpValue}
+            }{%
+                \appendToVec{matRow}{\matRow}{\tmpValue}
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\matRow}
+    }
 }
 
 \newcommand\newEmptyMat[1]{
@@ -461,6 +483,7 @@
     \edef\elemsRow{\xintNthElt{1}{#3}}
     \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
     %
+    % TODO remove one of these
     \edef\elemsMat{#2}
     \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
     %
@@ -537,6 +560,10 @@
 % #1 out, var name to save the result (vector) to
 % #2 a, matrix value
 \newcommand\getMatTranslation[2][matTranslationResult]{%
+    \FPifeq{\expectedheight}{\actualheight}
+    \else
+        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
+    \fi
     \getMatWidth{#2}
     \getMatHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\matHeightResult}}
@@ -555,6 +582,24 @@
 %%%%%%%%%%%%%%%
 % Matrix Misc %
 %%%%%%%%%%%%%%%
+
+\newcommand\detMat[2][detMatResult]{%
+    \getMatWidth{#2}
+    \getMatHeight{#2}
+    \FPifgt{\matWidthResult}{2}
+        \PackageError{glmatrix package}{Function not yet implemented}{Determinante can only be calculated for 2x2 matrices}
+    \else
+    \fi
+    \FPifgt{\matHeightResult}{2}
+        \PackageError{glmatrix package}{Function not yet implemented}{Determinante can only be calculated for 2x2 matrices}
+    \else
+    \fi
+    %
+    \mulScalar[tmpAD]{\xintNthElt{1}{\xintNthElt{1}{#2}}}{\xintNthElt{2}{\xintNthElt{2}{#2}}}
+    \mulScalar[tmpBC]{\xintNthElt{1}{\xintNthElt{2}{#2}}}{\xintNthElt{2}{\xintNthElt{1}{#2}}}
+    \subScalar[#1]{\tmpAD}{\tmpBC}
+}
+
 % adjoint
 % decompose
 % determinant

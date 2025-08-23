@@ -273,7 +273,7 @@ Vector Math, with \(\vec{a} = \printVecT{\vecA}\), \(\vec{b} = \printVecT{\vecB}
 
 \addVec[addVecResult]{\vecA, \vecB, \vecC}
 \subVec[subVecResult]{\vecA, \vecB, \vecC}
-\scaleVec{\vecA}{\scalarA}
+\scaleVec[scaleVecResultA]{\vecA}{\scalarA}
 \mulVec[mulVecResultA]{\vecA}{\vecB}
 \mulVec[mulVecResultB]{\vecA}{\vecB, \vecC}
 \divVVec[divVecResultA]{\vecA}{\vecB}
@@ -331,7 +331,7 @@ Vector Math, with \(\vec{a} = \printVecT{\vecA}\), \(\vec{b} = \printVecT{\vecB}
         Description & Command & Example\\ \hline
         \(\vec{a} * n\) &
         \makecell[l]{\textbackslash scaleVec[scaleVecResult]\\\{\textbackslash vecA\}\{\textbackslash scalarA\}} &
-        \(\printVec{\vecA} * \printScalar{\scalarA} = \printVec{\scaleVecResult}\)\\
+        \(\printVec{\vecA} * \printScalar{\scalarA} = \printVec{\scaleVecResultA}\)\\
         \(\vec{a} * -1\) &
         \makecell[l]{\textbackslash negateVec[negateVecResult]\\\{\textbackslash vecA\}} &
         \(\printVec{\vecA} * -1 = \printVec{\negateVecResult}\)\\
@@ -394,6 +394,9 @@ Vector Math, with \(\vec{a} = \printVecT{\vecA}\), \(\vec{b} = \printVecT{\vecB}
 Vector comparison, with \(\vec{b} = \printVecT{\vecB}\) and \(\vec{c} = \printVecT{\vecC}\):
 \minVec{\vecB}{\vecC}
 \maxVec{\vecB}{\vecC}
+
+\getVecHeight{\vecB}
+\vecHeightResult\\
 
 \begin{center}
     \begin{tabular}{ l l c }
