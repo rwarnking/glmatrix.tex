@@ -4,16 +4,20 @@
 %%%%%%%%%%%%%%%%%%%
 % Vector Creation %
 %%%%%%%%%%%%%%%%%%%
-% Create a vector
+% Create a new vector.
+% Example: \textbackslash newVec\{myNewVec\}\{2, 3, 4\}
+% Example: \textbackslash myNewVec \(\xrightarrow{} \begin{pmatrix}2\\3\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, vector value
+% #2 vector, vector value that is assigned to #1
 \newcommand\newVec[2]{%
     \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
 }
 
-% Create a vector as a multiple of pi
+% Create a new vector that is a multiple of pi.
+% Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
+% Example: \textbackslash myNewVec \(\xrightarrow{} \begin{pmatrix}\frac{1}{2}\pi\\\pi\\2\pi\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, vector value to multiply with pi
+% #2 vector, vector value that is multiplied with pi and assigned to out
 \newcommand\newVecPi[2]{%
     \def\tmpVec{\xintCSVtoList{#2}}
     \xintFor* ##1 in \tmpVec \do {%
@@ -26,14 +30,34 @@
     }
 }
 
+% Create a new vector variable with a random value between lower and
+% upper bound. The value is obtained by creating a random value between 0 and 1
+% and then interpolating between lower and upper bound.
+% #1 out, var name to save the result (vector) to
+% #2 lower bound, scalar that limits the possible values at the bottom
+% #3 upper bound, scalar that limits the possible values at the top
+% #4 TODO, TODO
+\newcommand\randomVec[4]{
+    \edef\innersequence{\xintSeq[+1]{+1}{#2}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPrandom\tmp
+        \lerpScalar{#3}{#4}{\tmp}
+        \xintifForFirst{%
+            \newVec{#1}{\lerpScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\lerpScalarResult}
+        }
+    }
+}
+
 % TODO
 % Clone the given vector variable to a new variable
 % \newcommand\cloneVec[2][cloneVecResult]{
 % }
 
-% Copy values from one vector variable to another
+% Copy values from one vector variable to another.
 % #1 out, var name to save the result (vector) to
-% #2 a, vector value
+% #2 vector, vector which values are assigned to out
 % TODO does it make sence to have the name be an optional parameter?
 \newcommand\copyVec[2][copyVecResult]{
     \xintFor* ##1 in #2 \do {%
@@ -49,19 +73,18 @@
 % \newcommand\createVec[1]{
 % }
 
-% Set a vector to a value
+% Set the values of a given vector.
 % #1 out, var name to save the result (vector) to
-% #2 a, vector value
-% \newcommand\setVec[2]{
+% #2 vector, vector that is assigned to out
+% \newcommand\setVec[2]{%
 %     \newVector{#1}{#2}
 % }
 
-% TODO decide whether to use the low level assignments or 
-% use the functions like setVector to set the variable
-% Set or create a vector with value 0
+% TODO decide whether to use the low level assignments or use the functions like setVector to set the variable
+% Set or create a vector with value 0.
 % #1 out, var name to save the result (vector) to
 % #2 dims, number of dimensions (rows)
-\newcommand\zeroVec[2][3]{
+\newcommand\zeroVec[2][3]{%
     \edef\sequence{\xintSeq[+1]{+1}{#1}}%
     \xintFor* ##1 in \sequence \do {%
         \xintifForFirst{%
@@ -72,35 +95,24 @@
     }
 }
 
-% Create a new vector variable with a random value
+% TODO is it really necessary/useful to differentiate between #1 and #2
+% Append a scalar to a already defined vector.
 % #1 out, var name to save the result (vector) to
-% #2 number of dimensions
-% #3 lower bound
-% #4 upper bound
-\newcommand\randomVec[4]{
-    \edef\innersequence{\xintSeq[+1]{+1}{#2}}%
-    \xintFor* ##1 in \innersequence \do {%
-        \FPrandom\tmp
-        \lerpScalar{#3}{#4}{\tmp}
-        \xintifForFirst{%
-            \newVec{#1}{\lerpScalarResult}
-        }{%
-            \appendToVec{#1}{\csname #1\endcsname}{\lerpScalarResult}
-        }
-    }
-}
-
-% Append to a vector
-\newcommand\appendToVec[3]{% {Basename}{input}
+% #2 vector, the currently present values
+% #3 scalar, the scalar to add to #2
+\newcommand\appendToVec[3]{%
     \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
 }
 
 %%%%%%%%%%%%%%%%%%%
 % Vector Printing %
 %%%%%%%%%%%%%%%%%%%
-% Print the values of this vector variable in vector notation
-% #1 whether or not the value should be printed as a fraction (val=1)
-% #2 the vector
+% Print the values of this vector variable in vector notation.
+% Equation: \(\begin{pmatrix} v1\\ ...\\ vN \end{pmatrix}\)
+% Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
+% Example: \textbackslash printVec\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{pmatrix}1\\2\\3\end{pmatrix}\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the vector that should be printed
 \newcommand\printVec[2][0]{%
     \ensuremath{%
         \begin{pmatrix}
@@ -126,11 +138,13 @@
     }
 }
 
-% Print the values of this vector variable in transposed notation
-% #1 whether or not the value should be printed as a fraction (val=1)
-% #2 the vector
-% TODO bug: last comma is shown when printing some fractions
-% 0.5 & 0.25 work, 1.5, 2.5, 3.5 do not (all have number >1)
+% Print the values of this vector variable in transposed notation.
+% Equation: \(\trans{(v1, ..., vN)}\)
+% Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
+% Example: \textbackslash printVecT\{\textbackslash myNewVec\} \(\xrightarrow{} \trans{(1, 2, 3)}\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the vector that should be printed
+% TODO bug: last comma is shown when printing some fractions 0.5 and 0.25 work, 1.5, 2.5, 3.5 do not (all have number >1)
 \newcommand\printVecT[2][0]{%
     \ensuremath{\trans{\left(
         \xintFor* ##1 in {#2} \do {%
@@ -154,9 +168,36 @@
     \right)}}%
 }
 
-% Print the value of this vector variable as a multiple of Pi
-% #1 whether or not the values should be printed as a fraction (val=1)
-% #2 the vector
+% Print the value of the given vector in point notation.
+% Equation: \(\begin{bmatrix}#2\end{bmatrix}\)
+% Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
+% Example: \textbackslash printAsPoint\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the vector that should be printed
+\newcommand\printAsPoint[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in {#2} \do {%
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{bmatrix}
+    }
+}
+
+% Print the value of the given vector as a multiple of Pi in vector notation.
+% Equation: \(\begin{pmatrix}\left\{\frac{#2}{\pi}\right\}\end{pmatrix}\pi\)
+% Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
+% Example: \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{bmatrix}0.5\pi\\\pi\\2\pi\end{bmatrix}\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the vector that should be printed
 \newcommand\printVecAsPi[2][0]{%
     \ensuremath{%
         \begin{pmatrix}
@@ -176,9 +217,12 @@
     }
 }
 
-% Print the value of this vector variable as a multiple of Pi and in transposed notation
-% #1 whether or not the values should be printed as a fraction (val=1)
-% #2 the vector
+% Print the value of the given vector as a multiple of Pi in transposed notation.
+% Equation: \(\trans{\left(\left\{\frac{#2}{\pi}\right\}\right)}\pi\)
+% Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
+% Example: \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\xrightarrow{} \trans{(0.5\pi\\\pi\\2\pi)}\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the vector that should be printed
 \newcommand\printVecAsPiT[2][0]{%
     \ensuremath{\trans{\left(
         \xintFor* ##1 in #2 \do {%
@@ -190,63 +234,49 @@
     \right)}}
 }
 
-% Print the values of this vector variable in point notation
-% #1 whether or not the value should be printed as a fraction (val=1)
-% #2 the vector
-\newcommand\printAsPoint[2][0]{%
-    \ensuremath{%
-        \begin{bmatrix}
-            \xintFor* ##1 in {#2} \do {%
-                \FPifeq{#1}{0}
-                    \roundScalar{##1}
-                    \scalarRoundResult
-                \else
-                    \numToFractionA{##1}
-                \fi
-                \xintifForLast{}{%
-                    \\
-                }
-            }
-        \end{bmatrix}
-    }
-}
-
-    % \xintListWithSep{, }{#1}%
+% TODO xintListWithSep{, }{#1}%
+% Print all values of the given vector commaseparated.
+% Equation: \(v1, ..., vN\)
+% #1 vector, the vector which values should be printed
 \newcommand\printVecContent[1]{%
     \xintNthElt{1}{#1},\xintNthElt{3}{#1},\xintNthElt{2}{#1}%
 }
 
-% TODO check if this can be scaled to n entries
-% Returns the x and y component of the given vector
-% #1 the vector
+% Returns the x and y component of the given vector.
+% Equation: \(X(v), Y(v)\)
+% #1 vector, the vector which values should be printed
 \newcommand\printVecContentXY[1]{%
     \xintNthElt{1}{#1}, \xintNthElt{2}{#1}
 }
 
-% Returns the x, y and z component of the given vector
-% #1 the vector
+% Returns the x, y and z component of the given vector.
+% Equation: \(X(v), Y(v), Z(v)\)
+% #1 vector, the vector which values should be printed
 \newcommand\printVecContentXYZ[1]{%
     \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}%
 }
 
 % Returns the x, y, z and w component of the given vector
-% #1 the vector
+% Equation: \(X(v), Y(v), Z(v), W(v)\)
+% #1 vector, the vector which values should be printed
 \newcommand\printVecContentXYZW[1]{%
     \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}, \xintNthElt{4}{#1}
 }
 
-% Returns the number of components that given vector has (num dims)
+% Returns the number of components that given vector has (num dims).
 % #1 out, var name to save the result (scalar) to
-% #2 the vector
+% #2 vector, the vector of which to return the height
 \newcommand\getVecHeight[2][vecHeightResult]{%
     \newScalar{#1}{\expandafter\xintLength\expandafter{#2}}
 }
 
-% Print components of scalarproduct
-% #1 whether or not the value should be printed as a fraction (val=1)
-% #2 the first vector
-% #3 the second vector
-% TODO this has a dangling + sign at the end when last elem is a fraction
+% Print the intermediate components of the scalarproduct calculation.
+% Equation: \(D1(v1) * D1(v2) + ... + DN(v1) * DN(v2)\)
+% Error: When both vectors do not have the same length
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the first vector
+% #3 vector, the second vector
+% TODO this has a dangling + sign at the end when last elem is a fraction maybe fixable when copying code into the xintforlast
 \newcommand\printScalarPComp[3][0] {%
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
     \else
@@ -267,10 +297,12 @@
     }
 }
 
-% Print components of crossproduct
-% #1 whether or not the value should be printed as a fraction (val=1)
-% #2 the first vector
-% #3 the second vector
+% Print the intermediate components of the crossproduct calculation.
+% Equation: \(\begin{pmatrix} ab*bc - ac*bb\\ ac*ba-aa*bc\\ aa*bb-ab*ba \end{pmatrix}\)
+% Error: When one of both vectors does not have length 3
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 vector, the first vector
+% #3 vector, the second vector
 \newcommand\printCrossPComp[3][0] {%
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
     \else
@@ -307,9 +339,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 % Vector Modification %
 %%%%%%%%%%%%%%%%%%%%%%%
-% TODO add default param vectorRoundResult does not work since
-% #1 number of digits after comma, default is 4
-% #2 the vector
+% TODO add default param scalarRoundResult does not work since
+% there is already a default param
+% Round the values ot the given vector.
+% #1 digits, number of digits after comma
+% #2 out, var name to save the result (scalar) to
+% #3 vector, the vector that schould be rounded
 \newcommand\roundVec[3][4]{%
     \xintFor* ##1 in #3 \do {%
         \FPround\tmp{##1}{#1}
@@ -321,9 +356,9 @@
     }
 }
 
-% Ceil all values of this vector
+% Ceil the values of thr given vector.
 % #1 out, var name to save the result (vector) to
-% #2 the vector
+% #2 vector, the vector that should be ceiled
 \newcommand\ceilVec[2][ceilVecResult]{
     \xintFor* ##1 in #2 \do {%
         \FPifint{##1}
@@ -339,9 +374,9 @@
     }
 }
 
-% Floor all values of this vector
+% Floor the values of the given vector.
 % #1 out, var name to save the result (vector) to
-% #2 the vector
+% #2 vector, the vector that should be floored
 \newcommand\floorVec[2][floorVecResult]{
     \xintFor* ##1 in #2 \do {%
         \FPtrunc\tmp{##1}{0}
@@ -354,6 +389,9 @@
 }
 
 % TODO should this be dehomogenVecResult?
+% Dehomogenize the values of the given vector.
+% #1 out, var name to save the result (vector) to
+% #2 vector, the vector that should be dehomogenized
 \newcommand\dehomogenVec[2][dehomogenResult]{
     % TODO check if 4 long or get last comp
     \FPset\tmpDiv{\xintNthElt{4}{#2}}
@@ -378,11 +416,14 @@
 %%%%%%%%%%%%%%%
 % Vector Math %
 %%%%%%%%%%%%%%%
-% Add the values of n vectors
+% Add the values of n vectors.
+% Equation: \(out = vectors[1] + vectors[2] + ...\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash addVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}1\\2\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, list of vectors
-% TODO add check that the variable name that is given does not match
-% any other parameter, since this does not work
+% #2 vectors, list of vectors to sum
+% TODO add check that the variable name that is given does not match any other parameter, since this does not work (inplace)
 % TODO rewrite to have one vec #2 and a list of vecs #3 to add
 \newcommand\addVec[2][addVecResult]{
     \def\veclist{\xintCSVtoList{#2}}
@@ -404,11 +445,14 @@
     }
 }
 
-% Subract list of vectors from first vector in list
+% Subract list of vectors from first vector of that list.
+% Equation: \(out = vectors[1] - vectors[2] - ...\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash subVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}0\\0\\0\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, list of vectors
-% TODO add check that the variable name that is given does not match
-% any other parameter, since this does not work
+% #2 vectors, list of vectors
+% TODO add check that the variable name that is given does not match any other parameter, since this does not work
 % TODO rewrite to have one vec #2 and a list of vecs #3 to add
 \newcommand\subVec[2][subVecResult]{
     \def\veclist{\xintCSVtoList{#2}}
@@ -438,10 +482,14 @@
     }
 }
 
-% Multiply the values of two vectors
+% Multiply the values of a vector with these of a list of vectors. The list can have 1-N entries.
+% Equation: \(out = vector * vectors[1] * vectors[2] * ...\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash mulVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}0.25\\1\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value - can also be a list of vectors
+% #2 vector, the vector to multiply
+% #3 vectors, the list of vectors with which to multiply
 \newcommand\mulVec[3][mulVecResult]{
     \def\vecList{\xintCSVtoList{#3}}
     \getVecHeight{#2}
@@ -467,10 +515,14 @@
     }
 }
 
-% Divide the values of two vectors
+% Divide the values of a vector with these of a list of vectors. The list can have 1-N entries.
+% Equation: \(out = (vector / vectors[1] / vectors[2] / ...)\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash divVVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value - can also be a list of vectors
+% #2 vector, the vector to divide
+% #3 vectors, the list of vectors to divide with
 \newcommand\divVVec[3][divVecResult]{
     \def\vecList{\xintCSVtoList{#3}}
     \getVecHeight{#2}
@@ -504,10 +556,15 @@
     }
 }
 
-% Multiply vector by skalar
+% Multiply vector by skalar.
+% Equation: \(vector * scalar\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newScalar\{myNewScalar\}\{2\}
+% Example: \textbackslash scaleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash scaleVecResult \(\xrightarrow{} \begin{pmatrix}1\\2\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector, the vector to scale
+% #3 scalar, the scalar to scale with
 \newcommand\scaleVec[3][scaleVecResult] {%
     \xintFor* ##1 in #2 \do {%
         \FPmul\tmpVal{##1}{#3}
@@ -519,9 +576,16 @@
     }
 }
 
-% Divide vector by skalar
-% TODO adjust function name, for function which divides vec with vec
-% negative scaling / shrinking
+% Divide vector by skalar.
+% Equation: \(\frac{vector}{scalar}\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newScalar\{myNewScalar\}\{2\}
+% Example: \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash divVecResult \(\xrightarrow{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
+% #1 out, var name to save the result (vector) to
+% #2 vector, the vector to divide
+% #3 scalar, the scalar to divide with
+% TODO adjust function name, for function which divides vec with vec, negative scaling / shrinking
 \newcommand\divVec[3][divVecResult] {%
     \FPifeq{#3}{0}
         \PackageError{glmatrix package}{In div vector by scalar}{divisor is 0}
@@ -537,20 +601,13 @@
     }
 }
 
-% Adds two vectors after multiplying the second operand by a value
-% #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value - to be multiplied with #4
-% #4 scalar value
-\newcommand\scaleAndAddVec[4][scaleAndAddVecResult]{
-    \scaleVec{#3}{#4}
-    \addVec[#1]{#2, \scaleVecResult}
-}
-
 % TODO negateVec vs negVec
 % Negate the value of the given vector
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash negateVecResult\{\textbackslash myNewVecA\}
+% Example: \textbackslash negateVecResult \(\xrightarrow{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, vector value
+% #2 vector, the vector to negate
 \newcommand\negateVec[2][negateVecResult]{
     \xintFor* ##1 in #2 \do {%
         \FPneg\tmp{##1}
@@ -562,10 +619,32 @@
     }
 }
 
-% Lineraly interpolate between values of two vectors
+% Adds two vectors after multiplying the second one by a value.
+% Equation: \(#1 = #2 + #3 * #4\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash newScalar\{myNewScalar\}\{2\}
+% Example: \textbackslash scaleAndAddVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash scaleAndAddVecResult \(\xrightarrow{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the vector to add to
+% #3 vector 2, the vector that is multiplied and then added
+% #4 scalar, the scalar that is the muliplier
+\newcommand\scaleAndAddVec[4][scaleAndAddVecResult]{
+    \scaleVec{#3}{#4}
+    \addVec[#1]{#2, \scaleVecResult}
+}
+
+% Lineraly interpolate between values of two vectors.
+% Equation: \(out = (1-t) * vector1 + t * vector2\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}
+% Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
+% Example: \textbackslash lerpVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash lerpVecResult \(\xrightarrow{} \begin{pmatrix}0.75\\1.5\\3\end{pmatrix}\)
+% #1 out, var name to save the result (vector) to
+% #2 vector 1, the start vector
+% #3 vector 2, the end vector
 % #4 t, interpolation amount range [0-1]
 \newcommand\lerpVec[4][lerpVecResult]{
     % \def\vecList{\xintCSVtoList{#3}}
@@ -586,10 +665,11 @@
     }
 }
 
-% Performs a spherical linear interpolation between two vectors
+% Performs a spherical linear interpolation between two vectors.
+% Equation: TODO
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the start vector
+% #3 vector 2, the end vector
 % #4 t, interpolation amount range [0-1]
 \newcommand\slerpVec[4][slerpVecResult] {%
     \angleVec{#2}{#3}
@@ -606,12 +686,13 @@
     \addVec[#1]{\tmpA, \tmpB}
 }
 
-% Perform a hermite interpolation with two control points
+% Perform a hermite interpolation with two control points.
+% Equation: TODO
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value -- control point 1
-% #4 c, third vector value -- control point 2
-% #5 d, fourth vector value
+% #2 vector 1, the start vector
+% #3 control 1, the first control point
+% #4 control 2, the secont control point
+% #5 vector 2, the end vector
 % #6 t, interpolation amount range [0-1]
 % TODO no idea if this works as intended
 \newcommand\hermiteVec[6][hermiteVecResult] {%
@@ -639,10 +720,16 @@
 % \newcommand\bezier[3][distVecResult] {%
 % }
 
-% Skalarproduct / Dotproduct
+% Calculate the skalarproduct/dotproduct of the given two vectors.
+% Equation: \(X(v[1]) * X(v[2]) + Y(v[1]) * Y(v[2]) + ...\)
+% Error: When both vectors do not have the same length
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}
+% Example: \textbackslash dotVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash dotVecResult \(\xrightarrow{} 10.5\)
 % #1 out, var name to save the result (scalar) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the first vector
+% #3 vector 2, the second vector
 \newcommand\dotVec[3][dotVecResult] {%
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
     \else
@@ -660,9 +747,13 @@
     \newScalar{#1}{\res}
 }
 
-% Get length of the vector
+% Calculate the length of the given vector.
+% Equation: \(\sqrt{X(v)^2 + Y(v)^2 + ...}\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash lenVec\{\textbackslash myNewVecA\}
+% Example: \textbackslash lenVecResult \(\xrightarrow{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
-% #2 a, vector value
+% #2 vector, the vector for which to calculate the length
 \newcommand\lenVec[2][lenVecResult] {%
     \FPset\normTotal{0}
     \FPset\iterVal{0}
@@ -680,9 +771,13 @@
     \newScalar{#1}{\normRooted}
 }
 
-% Get the squared length of the vector
+% Calculate the squared length of the given vector.
+% Equation: \(X(v)^2 + Y(v)^2 + ...\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash sqrLenVec\{\textbackslash myNewVecA\}
+% Example: \textbackslash sqrLenVecResult \(\xrightarrow{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
-% #2 a, vector value
+% #2 vector, the vector for which to calculate the squared length
 \newcommand\sqrLenVec[2][sqrLenVecResult] {%
     \FPset\normTotal{0}
     \FPset\iterVal{0}
@@ -698,19 +793,29 @@
     \newScalar{#1}{\normTotal}
 }
 
-% Divide all componendt of the vector by its length
+% Divide all componendt of the vector by its length.
+% Equation: \(out = \begin{pmatrix} \frac{X(v)}{\norm{v}}\\ \frac{Y(v)}{\norm{v}}\\ ...\end{pmatrix}\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash normalizeVec\{\textbackslash myNewVecA\}
+% Example: \textbackslash normalizeVecResult \(\xrightarrow{} TODO vector\)
 % #1 out, var name to save the result (vector) to
-% #2 a, vector value
+% #2 vector, the vector which to normalize
 \newcommand\normalizeVec[2][normalizeVecResult] {%
     \lenVec{#2}
     \divVec[#1]{#2}{\lenVecResult}
 }
 
-% Calculate crossproduct for two vectors
 % TODO this only works for 3d vectors currently
+% Calculate crossproduct for the two given vectors.
+% Equation: \(out = \begin{pmatrix} ab*bc - ac*bb\\ ac*ba-aa*bc\\ aa*bb-ab*ba \end{pmatrix}\)
+% Error: When one of both vectors does not have length 3
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash crossVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash crossVecResult \(\xrightarrow{} TODO vector\)
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector, the first vector
+% #3 vector, the second vector
 \newcommand\crossVec[3][crossVecResult] {%
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
     \else
@@ -745,10 +850,15 @@
     \newVec{#1}{\scalarX,\scalarY,\scalarZ}
 }
 
-% Get the angle between two vectors in radian
+% Get the angle between the given two vectors in radian.
+% Equation: \(out = angle(v1, v2)\)
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash angleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash angleVecResult \(\xrightarrow{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the first vector
+% #3 vector 2, the second vector
 % TODO 180 degree does not work
 % TODO check if vector length to short (1)
 \newcommand\angleVec[3][angleVecResult] {%
@@ -764,20 +874,31 @@
 % \newcommand\signedAngleVec[3][distVecResult] {%
 % }
 
-% Calculates the euclidian distance between two vectors
+% Calculates the euclidian distance between the given two vectors.
+% Equation: TODO
+% Error: When vector 1 and 2 do not have the same length
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash distVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash distVecResult \(\xrightarrow{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the first vector
+% #3 vector 2, the second vector
 \newcommand\distVec[3][distVecResult] {%
     \sqrDistVec{#2}{#3}
     \FProot\res\sqrDistVecResult{2}
     \newScalar{#1}{\res}
 }
 
-% Calculates the squared euclidian distance between two vectors
+% Calculates the squared euclidian distance between two vectors.
+% Error: When vector 1 and 2 do not have the same length
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash distVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash distVecResult \(\xrightarrow{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the first vector
+% #3 vector 2, the second vector
 \newcommand\sqrDistVec[3][sqrDistVecResult] {%
     \getVecHeight[getVecHeightA]{#2}
     \getVecHeight[getVecHeightB]{#3}
@@ -798,12 +919,16 @@
     \newScalar{#1}{\res}
 }
 
-% Multiply the given vector with a matrix (for transformation)
+% Multiply the given vector with a matrix (for transformation).
+% Error: When matrix and vector have a dimension mismatch
+% Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{0.5, 1, 2\}\{0.5, 1, 2\}\{0.5, 1, 2\}\}
+% Example: \textbackslash transformVec\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
+% Example: \textbackslash transformVecResult \(\xrightarrow{} TODO vector\)
 % #1 out, var name to save the result (vector) to
-% #2 a, matrix value
-% #3 b, vector value
-% TODO if the vector is smaller than the matrix the missing components
-% should automatically be set to one
+% #2 matrix, the matrix to transform the vetor with
+% #3 vector, the vector to transform
+% TODO if the vector is smaller than the matrix the missing components, should automatically be set to one
 \newcommand\transformVec[3][transformVecResult] {%
     \getVecHeight{#3}%
     \getMatHeight{#2}%
@@ -887,6 +1012,10 @@
 % }
 
 % TODO BIG
+% Multiply a vector (column) with itself (row) resulting in a matrix.
+% Error: When matrix and vector have a dimension mismatch
+% #1 out, var name to save the result (matrix) to
+% #2 vector, the vector to multiply with itself
 \newcommand\mulVecAsColAndRow[2][mulMatsResult]{%
     \newMatRow{vecA}{\xintNthElt{1}{#2}}
     \newMatRow{vecB}{\xintNthElt{2}{#2}}
@@ -904,10 +1033,12 @@
 % \newcommand\equalsVec[3][equalsVecResult]{
 % }
 
-% Return the componentwise minimum of two vector values
+% Return the componentwise minimum of the given two vectors.
+% Equation: \(\begin{pmatrix} \min(X(v1), X(v2))\\ \min(Y(v1), Y(v2))\\ ... \end{pmatrix}\)
+% Error: When vector 1 and 2 do not have the same length
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the first vector
+% #3 vector 2, the second vector
 \newcommand\minVec[3][minVecResult]{
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
     \else
@@ -924,10 +1055,12 @@
     }
 }
 
-% Return the componentwise maximum of two vector values
+% Return the componentwise maximum of the given two vectors.
+% Equation: \(\begin{pmatrix} \max(X(v1), X(v2))\\ \max(Y(v1), Y(v2))\\ ... \end{pmatrix}\)
+% Error: When vector 1 and 2 do not have the same length
 % #1 out, var name to save the result (vector) to
-% #2 a, first vector value
-% #3 b, second vector value
+% #2 vector 1, the first vector
+% #3 vector 2, the second vector
 \newcommand\maxVec[3][maxVecResult]{
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
     \else
@@ -957,6 +1090,10 @@
 % \newcommand\forEach{
 % }
 
+% TODO
+% #1 a, a
+% #2 a, a
+% #3 a, a
 \newcommand\solveVecEQL[3][solveVecEQLResult]{
     \getVecHeight{#3}%
     \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%

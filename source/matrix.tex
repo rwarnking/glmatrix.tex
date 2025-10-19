@@ -4,7 +4,15 @@
 %%%%%%%%%%%%%%%%%%%
 % Matrix Creation %
 %%%%%%%%%%%%%%%%%%%
-% Create a matrix from values in shape of {{xx, xy, xz}{yx, yy, yz}}
+% Create a new matrix from values.
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}\)
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5,2,3\}\}\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&2&3\end{pmatrix}\)
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5\}\{4\}\{7\}\}\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5\\4\\7\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 values, matrix value that is assigned to #1 with the shape {{xx, xy, xz, ...}{yx, yy, yz, ...}...}
 \newcommand\newMat[2]{
     \xintFor* ##1 in #2 \do {%
         \newVec{matRow}{##1}
@@ -16,6 +24,10 @@
     }
 }
 
+% TODO matRow should be #2?
+% Create a new matrix from a row.
+% #1 out, var name to save the result (matrix) to
+% #2 row, matrix row that is assigned to #1
 \newcommand\newMatFromRow[2]{
     \newScalar{tmpWidth}{\expandafter\xintLength\expandafter{#2}}%
     \FPifeq{\tmpWidth}{1}
@@ -25,9 +37,10 @@
     \fi
 }
 
-% Create a matrix from row vectors
-% TODO actually this takes matRows and not vecs
-\newcommand\newMatFromRowVec[2]{
+% Create a matrix from row vectors.
+% #1 out, var name to save the result (matrix) to
+% #2 rows, the rows that are used to construct the matrix
+\newcommand\newMatFromRowVec[2]{%
     % TODO remove this?
     \FPset\numParam{\expandafter\xintLength{#2}}%
     \FPsub\numParam\numParam{1}
@@ -42,7 +55,10 @@
     \fi
 }
 
-\newcommand\newMatFromColVecs[2]{
+% Create a matrix from column vectors.
+% #1 out, var name to save the result (matrix) to
+% #2 columns, the columns that are used to construct the matrix
+\newcommand\newMatFromColVecs[2]{%
     \edef\tmpVecList{\xintCSVtoList{#2}}%
     \copyVec[tmpHeightVec]{{\xintNthElt{1}{\tmpVecList}}}
     \getVecHeight[numRows]{\tmpHeightVec}
@@ -63,11 +79,20 @@
     }
 }
 
+% Create a new empty matrix.
+% Example: \textbackslash newEmptyMat\{myNewMatrix\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \emptyset\)
+% #1 out, var name to save the result (matrix) to
 \newcommand\newEmptyMat[1]{
     \expandafter\edef\csname #1\endcsname{}%
 }
 
 % TODO adjust to variable length
+% Create a matrix diagonal matrix from the given vector.
+% Example: \textbackslash newDiagMat[myNewMatrix]\{0.5,2,3\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 diag, the vector that defines the matrix diagonal
 \newcommand\newDiagMat[2]{
     \edef\tmpVector{\xintCSVtoList{#2}}%
     % \expandafter\edef\csname #1\endcsname{}%
@@ -77,6 +102,10 @@
     \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
 }
 
+% Append the given row to the given matrix.
+% #1 out, var name to save the result (matrix) to
+% #2 matrix, the matrix to append the vector to
+% #3 vector, the row vector that should be appended to the matrix
 \newcommand\appendRowToMat[3]{
     \newScalar{tmpWidth}{\expandafter\xintLength\expandafter{#3}}%
     \FPifeq{\tmpWidth}{1}
@@ -89,9 +118,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Transformation Matrices %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Create translation matrix from given vector
+% Create translation matrix from the given vector.
+% Example: \textbackslash newVec\{vecTest\}\{5, 2, 3\}
+% Example: \textbackslash newTransMat\{myNewMatrix\}\{\textbackslash vecTest\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0&5\\0&1&0&2\\0&0&1&3\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 a, translation vector
+% #2 vector, the translation vector to construct the matrix from
 \newcommand\newTransMat[2]{%
     \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
@@ -136,9 +168,12 @@
     }
 }
 
-% Create scaling matrix from given vector
+% Create scaling matrix from the given vector.
+% Example: \textbackslash newVec\{vecTest\}\{5, 2, 3\}
+% Example: \textbackslash newTransMat\{myNewMatrix\}\{\textbackslash vecTest\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}5&0&0&0\\0&2&0&0\\0&0&3&0\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 a, scaling vector
+% #2 vector, the scaling vector to construct the matrix from
 \newcommand\newScaleMat[2]{%
     \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
@@ -183,9 +218,12 @@
     }
 }
 
-% Create rotation matrix from given scalar (2D)
+% Create rotation matrix from the given scalar (2D).
+% Example: \textbackslash newScalarPi\{scalarTest\}\{0.5\}
+% Example: \textbackslash newRotMatTwoD[myNewMatrix]\{\textbackslash scalarTest\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0&-1&0\\1&0&0\\0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 a, rotation value (scalar)
+% #2 scalar, the rotation value
 \newcommand\newRotMatTwoD[2][rotMatResult]{%
     \FPcos\tmpCos{#2}
     \FPsin\tmpSin{#2}
@@ -196,12 +234,18 @@
     \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
 }
 
-% #1 Return Value Name
-% #2 right vector
-% #3 up vector
-% #4 direction vector
-% #5 camera position
-% TODO
+% Create a new lookAt matrix.
+% Example: \textbackslash newVec\{right\}\{5, 2, 3\}
+% Example: \textbackslash newVec\{up\}\{0.5, 1.75, 2\}
+% Example: \textbackslash newVec\{dir\}\{0.5, 2, -3\}
+% Example: \textbackslash newVec\{pos\}\{5, 2, 3\}
+% Example: \textbackslash newLookAtMat[myNewMatrix]\{\textbackslash right\}\{\textbackslash up\}\{\textbackslash dir\}\{\textbackslash pos\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}5&2&3&-38\\0.5&1.75&2&-12\\-0.5&-2&3&-2.5\\0&0&0&1\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 right, the right vector
+% #3 up, the up vector
+% #4 dir, the direction vector
+% #5 pos, the camera position vector
 \newcommand\newLookAtMat[5][lookAtMatResult]{%
     \dotVec[scalarRC]{#2}{#5}
     \mulScalar[scalarRC]{\scalarRC}{-1}
@@ -223,6 +267,10 @@
     \newMatFromRowVec{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
+% Create a new projection matrix.
+% Example: \textbackslash newProjMat\{\textbackslash myNewMatrix\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&-1&0\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
 \newcommand\newProjMat[1]{%
     \newVec{tmpVecA}{1, 0, 0, 0}
     \newVec{tmpVecB}{0, 1, 0, 0}
@@ -231,12 +279,18 @@
     \newMatFromRowVec{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
-% #1 result var name
-% #2 fovx
-% #3 fovy
-% #4 near Plane
-% #5 far Plane
-% TODO
+% Create a new frustum matrix.
+% Example: \textbackslash newScalar\{fovx\}\{90\}
+% Example: \textbackslash newScalar\{fovy\}\{90\}
+% Example: \textbackslash newScalar\{near\}\{1\}
+% Example: \textbackslash newScalar\{far\}\{6\}
+% Example: \textbackslash newFrustumMat[myNewMatrix]\{\textbackslash fovx\}\{\textbackslash fovy\}\{\textbackslash near\}\{\textbackslash far\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.6174&0&0&0\\0&06174&0&0\\0&0&-1.4&-2.4\\0&0&-1&0\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 fovx, the fovx scalar
+% #3 fovy, the fovy scalar
+% #4 near, the position of the near plane (scalar)
+% #5 far, the psition of the far lane (scalar)
 \newcommand\newFrustumMat[5][frustMatResult]{%
     \FPdiv\tmp{#2}{2}
     \FPtan\frustumRight\tmp
@@ -303,6 +357,12 @@
 %%%%%%%%%%%%%%%%%%%
 % Matrix Printing %
 %%%%%%%%%%%%%%%%%%%
+% Print the values of this matrix variable.
+% Equation: \(\begin{bmatrix} a_{11} & \dots & a_{1n}\\ \vdots & \ddots & \vdots\\ a_{m1} & \dots & a_{mn}\end{bmatrix}\)
+% Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
+% Example: \textbackslash printMat\{\textbackslash myNewMatrix\} \(\xrightarrow{} \begin{bmatrix} a_{11} & \dots & a_{1n}\\ \vdots & \ddots & \vdots\\ a_{m1} & \dots & a_{mn}\end{bmatrix}\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 matrix, the matrix that should be printed
 \newcommand\printMat[2][0]{%
     \ensuremath{%
         \begin{bmatrix}
@@ -332,6 +392,11 @@
     }
 }
 
+% Print only the diagonal values of this matrix variable.
+% Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
+% Example: \textbackslash printMatDiag\{\textbackslash myNewMatrix\} \(\xrightarrow{} \text{diag}(a_{11}, a_{22}, a_{mm})\)
+% #1 fraction, whether or not the value should be printed as a fraction (val=1)
+% #2 matrix, the matrix that should be printed
 % TODO variable length
 % TODO two params
 \newcommand\printMatDiag[2][0]{%
@@ -344,10 +409,22 @@
     }
 }
 
+% Get the height of the given matrix.
+% Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
+% Example: \textbackslash getMatHeight\{myNewMatrix\}
+% Example: \textbackslash matHeightResult \(\xrightarrow{} m\)
+% #1 out, var name to save the result (scalar) to
+% #2 matrix, the matrix from which to get the height
 \newcommand\getMatHeight[2][matHeightResult]{%
     \newScalar{#1}{\expandafter\xintLength\expandafter{#2}}%
 }
 
+% Get the width of the given matrix.
+% Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
+% Example: \textbackslash getMatWidth\{myNewMatrix\}
+% Example: \textbackslash matWidthResult \(\xrightarrow{} n\)
+% #1 out, var name to save the result (scalar) to
+% #2 matrix, the matrix from which to get the width
 \newcommand\getMatWidth[2][matWidthResult]{%
     \edef\rowElements{\xintNthElt{1}{#2}}%
     \newScalar{#1}{\expandafter\xintLength\expandafter{\rowElements}}%
@@ -358,8 +435,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 % Transpose a given Matrix. The parameter can also be a vector,
 % but the result will be a matrix.
+% Equation: \(X^{-1}\)
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash transposeMat\{\textbackslash myNewMatrix\} \(\xrightarrow{} \begin{bmatrix}0.5&4&7\\2&5&8\\3&6&9\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 the matrix to transpose
+% #2 matrix, the matrix to transpose
 \newcommand\transposeMat[2][transposeMatResult]{%
     \getMatWidth{#2}
     \getMatHeight{#2}
@@ -393,7 +473,14 @@
 % Matrix Math %
 %%%%%%%%%%%%%%%
 % Add two or more matrices.
-% TODO
+% Equation: \(A + B \vert A \in \R^{m\times n}, B \in \R^{m\times n}\)
+% Example: \textbackslash newMatrix\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash newMatrix\{myNewMatrixB\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash addMat[addMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
+% Example: \textbackslash addMatResult \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 matrix, the matrix to add to
+% #3 matrices, the matrizes to add
 \newcommand\addMat[3][addMatResult]{%
     \def\matlist{\xintCSVtoList{#3}}
     \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
@@ -424,6 +511,15 @@
     }
 }
 
+% Subtract two or more matrices.
+% Equation: \(A - B \vert A \in \R^{m\times n}, B \in \R^{m\times n}\)
+% Example: \textbackslash newMatrix\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash newMatrix\{myNewMatrixB\}\{\{\{0.25,1,2\}\{3,2,1\}\{3,3,3\}\}\} 
+% Example: \textbackslash subMat[subMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
+% Example: \textbackslash subMatResult \(\xrightarrow{} \begin{bmatrix}0.25&1&1\\1&3&4\\4&5&6\end{bmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 matrix, the matrix to subtract from
+% #3 matrices, the matrizes to subtract
 \newcommand\subMat[3][subMatResult]{%
     % \getMatWidth{#2}
     % \edef\widthsequence{\xintSeq[+1]{+1}{\matWidthResult}}%
@@ -456,10 +552,17 @@
     }
 }
 
-% Multiply matrix with a scalar
+% Multiply the given matrix with a scalar.
+% Example: \textbackslash mulScalarMat[addMatResult]\{\textbackslash matX\}\{\textbackslash scalar\}
+
+% Equation: \(A * B \vert A \in \R^{m\times n}, B \in \R\)
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash newScalar\{myNewScalar\}\{2\} 
+% Example: \textbackslash mulScalarMat[mulMatScalarResult]\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash mulMatScalarResult \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 a, matrix value
-% #3 b, scalar value
+% #2 matrix, the matrix to multiply
+% #3 scalar, the scalar to multiply with
 \newcommand\mulScalarMat[3][mulMatScalarResult]{%
     \edef\elemOne{\xintNthElt{1}{#2}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
@@ -479,6 +582,16 @@
     }
 }
 
+% Multiply the given matrix with another matrix.
+% Error: When the matrizes have a dimension mismatch
+% Equation: \(A * B \vert A \in \R^{m\times n}, B \in \R^{m\times n}\)
+% Example: \textbackslash newMatrix\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash newMatrix\{myNewMatrixB\}\{\{\{0.25,1,2\}\{3,2,1\}\{3,3,3\}\}\} 
+% Example: \textbackslash mulMat[mulMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
+% Example: \textbackslash mulMatResult \(\xrightarrow{} \begin{bmatrix}15.125&13.5&12\\34&32&31\\52.75&50&49\end{bmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 matrix 1, the matrix to multiply
+% #3 matrix 2, the matrix to multiply with
 \newcommand\mulMat[3][mulMatResult]{%
     \edef\elemsRow{\xintNthElt{1}{#3}}
     \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
@@ -556,9 +669,13 @@
 % getRotation
 % getScaling
 
-% Get the translation component from the given matrix
+% Get the translation component from the given matrix.
+% Equation: \(trans(A) \vert A \in \R^{m\times n}\)
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash getMatTranslation[matTranslationResult]\{\textbackslash myNewMatrix\}
+% Example: \textbackslash matTranslationResult \(\xrightarrow{} \begin{pmatrix}3\\6\\\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
-% #2 a, matrix value
+% #2 matrix, the matrix to extract the translation from
 \newcommand\getMatTranslation[2][matTranslationResult]{%
     \FPifeq{\expectedheight}{\actualheight}
     \else
@@ -582,7 +699,13 @@
 %%%%%%%%%%%%%%%
 % Matrix Misc %
 %%%%%%%%%%%%%%%
-
+% Get the determinate of the given matrix.
+% Equation: \(det(A) \vert A \in \R^{m\times n}\)
+% Example: \textbackslash newMatrix\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\} 
+% Example: \textbackslash detMat[detMatResult]\{\textbackslash myNewMatrix\}
+% Example: \textbackslash detMatResult \(\xrightarrow{} 1.5\)
+% #1 out, var name to save the result (scalar) to
+% #2 matrix, the matrix to calculate the determinate for
 \newcommand\detMat[2][detMatResult]{%
     \getMatWidth{#2}
     \getMatHeight{#2}
