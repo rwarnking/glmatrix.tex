@@ -283,7 +283,7 @@
 % Scalar Modification %
 %%%%%%%%%%%%%%%%%%%%%%%
 % TODO add default param scalarRoundResult does not work since
-% there is already a default param
+% TODO there is already a default param
 % Round the value ot the given scalar and save it.
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
 % Example: \textbackslash roundScalar\{\textbackslash myNewScalar\}
@@ -503,12 +503,12 @@
 %%%%%%%%%%%%%%%%%%%%%
 % Scalar Comparison %
 %%%%%%%%%%%%%%%%%%%%%
-% Returns whether or not the scalars have the same values. 
+% Returns whether or not the scalars have the same values.
 % \newcommand\equalsScalar[3][scalarEqualsResult]{
 % }
 
 % Return the minimum of two scalar values.
-% Equation: \(#2 < #3 ? #2 : #3\)
+% Equation: \(#1 = #2 \text{ falls } #2 < #3 \text{ sonst } #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash minScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
@@ -526,11 +526,13 @@
 }
 
 % Return the maximum of two scalar values.
-% Equation: \(#2 > #3 ? #2 : #3\)
+% Equation: \(#1 = #2 \text{ falls } #2 > #3 \text{ sonst } #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash maxScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash maxScalarResult \(\xrightarrow{} 3\)
+% Example: \textbackslash maxScalar[resultName]\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
+% Example: \textbackslash resultName \(\xrightarrow{} 3\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar 1, first scalar value
 % #3 scalar 2, second scalar value

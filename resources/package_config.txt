@@ -1,0 +1,7 @@
+pkg_name=glmatrix
+pkg_description=TODO
+pkg_author=Rene Warnking
+pkg_author_email=TODO
+pkg_date=today
+pkg_version=0.1
+pkg_info_text=Math library for computer graphics

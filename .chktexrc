@@ -1,0 +1,7 @@
+# Use this to ignore linter errors of a specific error code.
+# For example, code 24 warns when an index may be misplaced due
+# to spaces (page spillover).
+# https://tex.stackexchange.com/questions/552210/
+# 1: Disable Command terminated with space
+# 44: Vertical rules in tables are ugly
+CmdLine { -n 1 }
