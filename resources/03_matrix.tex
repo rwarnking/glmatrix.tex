@@ -39,6 +39,11 @@
 }
 
 % Create a new matrix from the given row vectors.
+% Example: \textbackslash newVec\{myRowVecA\}\{1, 0, 0\}
+% Example: \textbackslash newVec\{myRowVecB\}\{0, 2, 0\}
+% Example: \textbackslash newVec\{myRowVecC\}\{0, 0, 3\}
+% Example: \textbackslash newMatFromRowVec\{myNewMatrix\}\{\textbackslash myRowVecA, \textbackslash myRowVecB, \textbackslash myRowVecC\}
+% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 rows, the rows that are used to construct the matrix
 \newcommand\newMatFromRowVec[2]{%
@@ -98,12 +103,15 @@
 % #1 out, var name to save the result (matrix) to
 % #2 diag, the vector that defines the matrix diagonal
 \newcommand\newDiagMat[2]{
-    \edef\tmpVector{\xintCSVtoList{#2}}%
-    % \expandafter\edef\csname #1\endcsname{}%
-    \newVec{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
-    \newVec{rowB}{0, \xintNthElt{2}{\tmpVector}, 0}
-    \newVec{rowC}{0, 0, \xintNthElt{3}{\tmpVector}}
-    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of newDiagMat seems to be a command but must be a string}
+    \else
+        \edef\tmpVector{\xintCSVtoList{#2}}%
+        \newVec{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
+        \newVec{rowB}{0, \xintNthElt{2}{\tmpVector}, 0}
+        \newVec{rowC}{0, 0, \xintNthElt{3}{\tmpVector}}
+        \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+    \fi
 }
 
 % Append the given row to the given matrix.
@@ -497,6 +505,18 @@
 % #2 matrix, the matrix to add to
 % #3 matrices, the matrizes to add
 \newcommand\addMat[3][addMatResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of addMat seems to be a command but must be a string}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of addMat does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of addMat does not seem to be a command}
+    \fi
     \def\matlist{\xintCSVtoList{#3}}
     \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
     \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
@@ -579,6 +599,18 @@
 % #2 matrix, the matrix to multiply
 % #3 scalar, the scalar to multiply with
 \newcommand\mulScalarMat[3][mulMatScalarResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of mulScalarMat seems to be a command but must be a string}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of mulScalarMat does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of mulScalarMat does not seem to be a command}
+    \fi
     \edef\elemOne{\xintNthElt{1}{#2}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
     %

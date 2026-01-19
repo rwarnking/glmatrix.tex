@@ -10,7 +10,11 @@
 % #1 out, var name to save the result (vector) to
 % #2 values, values that are assigned to #1
 \newcommand\newVec[2]{%
-    \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of newVec seems to be a command but must be a string}
+    \else
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \fi
 }
 
 % Create a new vector and assign the given values as a multiple of pi.
@@ -511,6 +515,19 @@
 % #3 vectors, the list of vectors with which to subtract
 % TODO add check that the variable name that is given does not match any other parameter, since this does not work
 \newcommand\subVec[3][subVecResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of subVec seems to be a command but must be a string}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of subVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of subVec does not seem to be a command}
+    \fi
+    %
     \def\vecList{\xintCSVtoList{#3}}
     \getVecHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
@@ -788,6 +805,18 @@
 % #2 vector 1, the first vector
 % #3 vector 2, the second vector
 \newcommand\dotVec[3][dotVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of dotVec seems to be a command but must be a string}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of dotVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of dotVec does not seem to be a command}
+    \fi
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
     \else
         \PackageError{glmatrix package}{In dot product}{vector A and B do not have same length}
@@ -860,6 +889,14 @@
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector which to normalize
 \newcommand\normalizeVec[2][normalizeVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of normalizeVec seems to be a command but must be a string}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of normalizeVec does not seem to be a command}
+    \fi
     \lenVec{#2}
     \divVec[#1]{#2}{\lenVecResult}
 }
@@ -993,6 +1030,18 @@
 % #3 vector, the vector to transform
 % TODO if the vector is smaller than the matrix the missing components, should automatically be set to one
 \newcommand\transformVec[3][transformVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of transformVec seems to be a command but must be a string}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of transformVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of transformVec does not seem to be a command}
+    \fi
     \getVecHeight{#3}%
     \getMatHeight{#2}%
     \getMatWidth{#2}%
@@ -1126,6 +1175,10 @@
 % #2 vector 1, the first vector
 % #3 vector 2, the second vector
 \newcommand\maxVec[3][maxVecResult]{
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{argument 1 of maxVec seems to be a command but must be a string}
+    \else
+    \fi
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
     \else
         \PackageError{glmatrix package}{In vector minimum}{vector A and B do not have same length}
