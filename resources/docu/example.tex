@@ -1,0 +1,59 @@
+\section{Example}
+
+Given the following equation:
+\[A B (\vec{v} + \vec{w})\ \vert\ v, w \in \R^3, A, B \in \R^{3\times3}\]
+
+The following code recreates the equation with exemplary values and
+directly calculates the results. Finally the results are used to print a step by step solution of the given equation with the chosen values.\\
+Note:
+\begin{itemize}
+\setlength\itemsep{0em}
+\item While creating a new vector or matrix is done via a simple string, accessing its content after creation is done via the command (with backslash)
+\item This package mainly provides commands for calculation. These commands assign the calculated result automatically to a variable using the optional parameter (for example \textbackslash addVec). If you wish to specify the name of the variable yourself you may pass a string for the optional argument.
+\end{itemize}
+
+\lstset{style=latexStyle}
+\begin{lstlisting}[gobble=4]
+% Initialize vectors and add them together
+\newVec{myVecV}{1,2,3}
+\newVec{myVecW}{7,8,9}
+\addVec[addVecResult]{\myVecV}{\myVecW}
+
+% Initialize two matrizes and multiply them with each other
+\newMat{myMatA}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+\newDiagMat{myMatB}{2, 3, 4}
+\mulMat[mulMatResult]{\myMatA}{\myMatB}
+
+% Transform the vector with the created matrix
+\transformVec{\mulMatResult}{\addVecResult}
+
+% Create the output
+\begin{align}
+    \printMat{\myMatA} \printMat{\myMatB}
+    \left(\printVec{\myVecV} + \printVec{\myVecW}\right)
+    =
+    \printMat{\mulMatResult}
+    \printVec{\addVecResult}
+    =
+    \printMat{\transformVecResult}
+\end{align}
+\end{lstlisting}
+\vspace{5mm}
+
+When compiling the \LaTeX{} code the following output is created.
+\begin{align*}
+    \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}
+    \begin{pmatrix}2&0&0\\0&3&0\\0&0&4\end{pmatrix}
+    \left(
+        \begin{pmatrix}1\\2\\3\end{pmatrix} +
+        \begin{pmatrix}7\\8\\9\end{pmatrix}
+    \right)
+    = \begin{pmatrix}1&6&12\\8&15&24\\14&24&36\end{pmatrix}
+    \begin{pmatrix}8\\10\\12\end{pmatrix}
+    = \begin{pmatrix}212\\502\\784\end{pmatrix}
+\end{align*}
+
+All three classes provide various commands to print the content of a variable
+for all kind of use cases, for example when printing a vector inside a text the \textbackslash printVecT command allows to print a transposed version of the vectors contents.
+
+\clearpage

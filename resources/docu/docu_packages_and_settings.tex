@@ -1,0 +1,135 @@
+\usepackage{xcolor}
+\definecolor{uos-red}{cmyk}{0.2, 1, 0.65, 0.25}
+
+\usepackage{etoc}
+\setcounter{tocdepth}{2} % show only sections and subsections
+\usepackage{hyperref}
+\hypersetup{
+  linkcolor=uos-red,
+}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\usepackage{makecell}
+
+\usepackage{amsmath}
+
+\usepackage{tcolorbox}
+
+\usepackage{listings}
+
+\tcbset{
+  mydocbox/.style={
+    sharp corners,
+    boxrule=0.8pt,
+    left=6pt,
+    right=6pt,
+    top=6pt,
+    bottom=6pt,
+    % breakable
+  }
+}
+
+% Red box
+\newtcolorbox{descriptionbox}{
+  mydocbox,
+  colback=gray!15,
+  colframe=gray!75!black,
+  title=Description,
+  fonttitle=\bfseries
+}
+
+% Red box
+\newtcolorbox{warningbox}{
+  mydocbox,
+  colback=red!15,
+  colframe=red!75!black,
+  title=Warning,
+  fonttitle=\bfseries
+}
+
+% Blue box
+\newtcolorbox{equationbox}{
+  mydocbox,
+  colback=blue!10,
+  colframe=blue!70!black,
+  title=Equation,
+  fonttitle=\bfseries
+}
+
+% Yellow box
+\newtcolorbox{examplebox}{
+  mydocbox,
+  colback=yellow!20,
+  colframe=yellow!60!black,
+  title=Example,
+  fonttitle=\bfseries
+}
+
+\lstdefinelanguage{latex}
+{
+	sensitive=true,
+	alsoletter={\\},
+	morekeywords=[1]{
+        \\newVec, \\addVec, \\newMat, \\newDiagMat, \\mulMat, \\transformVec, \\printMat, \\printVec, \\begin, \\end, \\left, \\right
+	},
+	morekeywords=[2]{
+    align
+	},
+	morekeywords=[3]{
+    \\myMatA, \\myMatB, \\myVecV, \\myVecW, \\mulMatResult, \\addVecResult, \\transformVecResult
+	},
+}
+
+% [LaTeX]TeX
+\lstdefinestyle{latexStyle}{
+    language=latex,
+	tabsize=2,
+	basicstyle=\footnotesize\ttfamily,
+    upquote=true,
+    % frame=leftline,
+	columns=fixed,
+	showstringspaces=false,
+	extendedchars=true,
+	breaklines=true,
+    aboveskip=1em,
+    belowskip=0.1em,
+	showtabs=false,
+	showspaces=false,
+    showstringspaces=false,
+    numberstyle=\color[rgb]{0.5,0.5,0.5},
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{.3, .53, .42},
+    comment=[l]\%,
+    %\color{syntaxComment},
+	keywordstyle=[1]\color[rgb]{.13, .13, 1},
+	keywordstyle=[2]\color[rgb]{.19, .52, .58},
+	keywordstyle=[3]\color[rgb]{.51, .25, .73},
+	keywordstyle=[4]\color[rgb]{0.4,0.4,0.4},
+	stringstyle=\color[rgb]{0.639,0.082,0.082},
+}
+
+% \usepackage{etoolbox}
+% \appto{DescribeMacro}{\color{blue}}
+
+% \usepackage[a4paper, left=2.5cm, right=2.5cm, top=2cm, bottom=2cm]{geometry}
+
+\setlength{\parindent}{0pt}
+
+\usepackage{fancyhdr}
+
+% TODO make this modular
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{%
+    \hyperref[subsec:scalar]{Scalar} |
+    \hyperref[subsec:vector]{Vector} |
+    \hyperref[subsec:matrix]{Matrix}
+}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\makeatletter
+\newcommand{\setlabel}[2]{%
+  \phantomsection
+  \def\@currentlabel{\unexpanded{#1}}\label{#2}%
+}
+\makeatother
