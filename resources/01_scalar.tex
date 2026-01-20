@@ -142,7 +142,7 @@
 %%%%%%%%%%%%%%%%%%%
 % Scalar Creation %
 %%%%%%%%%%%%%%%%%%%
-% Create a new scalar.
+% Create a new scalar and assign the given value.
 % Example: \textbackslash newScalar\{myNewScalar\}\{3\}
 % Example: \textbackslash myNewScalar \(\xrightarrow{}\) 3
 % #1 out, var name to save the result (scalar) to
@@ -151,7 +151,7 @@
     \expandafter\edef\csname #1\endcsname{#2}%
 }
 
-% Create a new scalar that is a multiple of pi.
+% Create a new scalar and assign the given value as a multiple of pi.
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{3\}
 % Example: \textbackslash myNewScalar \(\xrightarrow{}\) 9.42
 % #1 out, var name to save the result (scalar) to
@@ -231,7 +231,7 @@
 }
 
 % Print the value of the given scalar as a multiple of Pi.
-% Equation: \(\left\{\frac{scalar}{\pi}\right\}\pi\)
+% Equation: \(\left\{\frac{#2}{\pi}\right\}\pi\)
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{0.5\}
 % Example: \textbackslash printScalarAsPi[1]\{\textbackslash myNewScalar\} \(\xrightarrow{} \frac{1}{2} \pi\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
@@ -250,7 +250,7 @@
 % Print the value of the given scalar in degree.
 % This macro does do a conversion and therefore expects the input to be in radian.
 % A degree sign is automatically added.
-% Equation: \((scalar*180/\pi)^\circ\)
+% Equation: \(\left\{\frac{#2*180}{\pi}\right\}^\circ\)
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{0.5\}
 % Example: \textbackslash printPiScalarInDegree[1]\{\textbackslash myNewScalar\} \(\xrightarrow{} 90^\circ\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
@@ -366,57 +366,57 @@
 % Scalar Math %
 %%%%%%%%%%%%%%%
 % Add the values of two scalars.
-% Equation: \(out = scalar1 + scalar2\)
+% Equation: \(#1 = #2 + #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{1\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{2\}
 % Example: \textbackslash addScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash scalarAddResult \(\xrightarrow{} 3\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the first scalar of the sum
-% #3 scalar 2, the second scalar of the sum
+% #2 scalar s, the first scalar of the sum
+% #3 scalar t, the second scalar of the sum
 \newcommand\addScalar[3][scalarAddResult]{%
     \FPadd\tmp{#2}{#3}
     \newScalar{#1}{\tmp}
 }
 
 % Subtract the values of two scalars.
-% Equation: \(out = scalar1 - scalar2\)
+% Equation: \(#1 = #2 - #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{1\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{2\}
 % Example: \textbackslash subScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash scalarSubResult \(\xrightarrow{} -1\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the scalar to subtract from
-% #3 scalar 2, the scalar to subtract
+% #2 scalar s, the scalar to subtract from
+% #3 scalar t, the scalar to subtract
 \newcommand\subScalar[3][scalarSubResult]{%
     \FPsub\tmp{#2}{#3}
     \newScalar{#1}{\tmp}
 }
 
 % Multiply the values of two scalars.
-% Equation: \(out = scalar1 * scalar2\)
+% Equation: \(#1 = #2 * #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash mulScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash scalarMulResult \(\xrightarrow{} 6\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the scalar to multiply
-% #3 scalar 2, the scalar with which to multply
+% #2 scalar s, the scalar to multiply
+% #3 scalar t, the scalar with which to multply
 \newcommand\mulScalar[3][scalarMulResult]{
     \FPmul\tmp{#2}{#3}
     \newScalar{#1}{\tmp}
 }
 
 % Divide the values of two scalars.
-% Equation: \(out = \frac{scalar1}{scalar2}\)
+% Equation: \(#1 = \frac{#2}{#3}\)
 % Error: On division by zero
 % Example: \textbackslash newScalar\{myNewScalarA\}\{6\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash divScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash scalarDivResult \(\xrightarrow{} 2\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the scalar to divide
-% #3 scalar 2, the scalar to divide with
+% #2 scalar s, the scalar to divide
+% #3 scalar t, the scalar to divide with
 \newcommand\divScalar[3][scalarDivResult]{%
     \FPifeq{#3}{0}
         \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
@@ -427,14 +427,14 @@
 }
 
 % Raise the values of one scalar by another.
-% Equation: \(out = scalar1 ^ scalar2\)
+% Equation: \(#1 = #2 ^ #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash powScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash scalarPowResult \(\xrightarrow{} 8\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the scalar to raise
-% #3 scalar 2, the scalar with which to raise
+% #2 scalar s, the scalar to raise
+% #3 scalar t, the scalar with which to raise
 \newcommand\powScalar[3][scalarPowResult]{%
     \FPpow\tmp{#2}{#3}
     \newScalar{#1}{\tmp}
@@ -442,7 +442,7 @@
 
 % TODO negateScalar vs negScalar
 % Negate the value of the given scalar.
-% Equation: \(out = -scalar\)
+% Equation: \(#1 = -#2\)
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash negateScalar\{\textbackslash myNewScalar\}
 % Example: \textbackslash scalarNegateResult \(\xrightarrow{} -2\)
@@ -454,7 +454,7 @@
 }
 
 % Get the arccos of the value of the given scalar.
-% Equation: \(out = arccos(scalar)\)
+% Equation: \(#1 = arccos(#2)\)
 % Example: \textbackslash newScalar\{myNewScalar\}\{TODO\}
 % Example: \textbackslash arccosScalar\{\textbackslash myNewScalar\}
 % Example: \textbackslash scalarArccosResult \(\xrightarrow{} TODO\)
@@ -472,9 +472,9 @@
 % Example: \textbackslash mulAndAddScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash scalarMulAndAddResult \(\xrightarrow{} 11\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the scalar to add to
-% #3 scalar 2, the scalar that is multiplied and then added
-% #4 scalar 3, the scalar that is the muliplier
+% #2 scalar s, the scalar to add to
+% #3 scalar t, the scalar that is multiplied and then added
+% #4 scalar u, the scalar that is the muliplier
 \newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{%
     \FPmul\tmp{#3}{#4}
     \FPadd\tmp{#2}{\tmp}
@@ -482,16 +482,16 @@
 }
 
 % Lineraly interpolate between values of two scalars.
-% Equation: \(out = (1-t) * scalar1 + t * scalar2\)
+% Equation: \(#1 = (1-#4) * #2 + #4 * #3\)
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash newScalar\{myNewScalarT\}\{0.5\}
 % Example: \textbackslash lerpScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}\{\textbackslash myNewScalarT\}
 % Example: \textbackslash lerpScalarResult \(\xrightarrow{} 2.5\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the start scalar
-% #3 scalar 2, the end scalar
-% #4 t, interpolation amount range [0-1]
+% #2 scalar i, the start scalar
+% #3 scalar j, the end scalar
+% #4 scalar t, interpolation amount range [0-1]
 \newcommand\lerpScalar[4][lerpScalarResult]{%
     \FPsub\tmpA{1}{#4}
     \FPmul\tmpA{#2}\tmpA
@@ -514,8 +514,8 @@
 % Example: \textbackslash minScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash minScalarResult \(\xrightarrow{} 2\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, the first scalar
-% #3 scalar 2, the second scalar
+% #2 scalar s, the first scalar
+% #3 scalar t, the second scalar
 \newcommand\minScalar[3][minScalarResult]{%
     % TODO use \FPmin#1#2#3
     \FPiflt{#2}{#3}
@@ -534,8 +534,8 @@
 % Example: \textbackslash maxScalar[resultName]\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
 % Example: \textbackslash resultName \(\xrightarrow{} 3\)
 % #1 out, var name to save the result (scalar) to
-% #2 scalar 1, first scalar value
-% #3 scalar 2, second scalar value
+% #2 scalar s, first scalar value
+% #3 scalar t, second scalar value
 \newcommand\maxScalar[3][maxScalarResult]{%
     % TODO use \FPmax#1#2#3
     \FPiflt{#2}{#3}
@@ -552,7 +552,7 @@
 % Example: \textbackslash betweenScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}\{\textbackslash myNewScalarC\}
 % Example: \textbackslash betweenScalarResult \(\xrightarrow{} 1\)
 % #1 out, var name to save the result (scalar) to (0 or 1)
-% #2 scalar 1, the scalar to test
+% #2 scalar, the scalar to test
 % #3 lower bound, #2 needs to be greater then this for this macro to return 1
 % #4 upper bound, #2 needs to be smaller than this for this macro to return 1
 \newcommand\betweenScalar[4][betweenScalarResult]{%

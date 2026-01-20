@@ -5,7 +5,7 @@
 % Matrix Creation %
 %%%%%%%%%%%%%%%%%%%
 % Create a new matrix from the given values.
-% Equation: \(#1 = \mathbf{M} \in \R^{m\times n} = \begin{bmatrix} v_{11} & \dots & v_{1n}\\ \vdots & \ddots & \vdots\\ v_{m1} & \dots & v_{mn}\end{bmatrix}\)
+% Equation: \(#1 = \mathbf{M} \in \R^{m\times n} = \begin{bmatrix} #2_{11} & \dots & #2_{1n}\\ \vdots & \ddots & \vdots\\ #2_{m1} & \dots & #2_{mn}\end{bmatrix}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\}\}
@@ -13,7 +13,7 @@
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5\}\{4\}\{7\}\}\}
 % Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5\\4\\7\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 values, matrix value that is assigned to #1
+% #2 scalars, matrix values that are assigned to #1
 \newcommand\newMat[2]{
     \xintFor* ##1 in #2 \do {%
         \newVec{matRow}{##1}
@@ -97,11 +97,11 @@
 
 % TODO adjust to variable length
 % Create a new diagonal matrix from the given vector.
-% Equation: \(#1 = \mathbf{M} \in \R^{3\times 3} = \begin{bmatrix} v_1 & 0 & 0\\ 0 & v_2 & 0\\ 0 & 0 & v_3\end{bmatrix}\)
+% Equation: \(#1 = \mathbf{M} \in \R^{3\times 3} = \begin{bmatrix} #2_1 & 0 & 0\\ 0 & #2_2 & 0\\ 0 & 0 & #2_3\end{bmatrix}\)
 % Example: \textbackslash newDiagMat\{myNewMatrix\}\{0.5,2,3\}
 % Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 diag, the vector that defines the matrix diagonal
+% #2 scalars, the values that define the diagonal of the matrix
 \newcommand\newDiagMat[2]{
     \if\noexpand#1\relax
         \PackageError{glmatrix package}{argument mismatch}{argument 1 of newDiagMat seems to be a command but must be a string}
@@ -115,10 +115,10 @@
 }
 
 % Append the given row to the given matrix.
-% Equation: \(#1 = \begin{bmatrix}\mathbf{M} \\\mathbf{r}\end{bmatrix} \in \R^{m+1\times n} \vert \mathbf{M} \in \R^{m\times n}, \mathbf{r} \in \R^{1\times n}\)
+% Equation: \(#1 = \begin{bmatrix}#2 \\#3\end{bmatrix} \in \R^{m+1\times n}\ \vert\ #2 \in \R^{m\times n}, #3 \in \R^{1\times n}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix, the matrix to append the vector to
-% #3 vector, the row vector that should be appended to the matrix
+% #3 vector r, the row vector that should be appended to the matrix
 \newcommand\appendRowToMat[3]{
     \newScalar{tmpWidth}{\expandafter\xintLength\expandafter{#3}}%
     \FPifeq{\tmpWidth}{1}
@@ -132,12 +132,12 @@
 % Transformation Matrices %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Create translation matrix from the given vector.
-% Equation: \(#1 = \mathbf{T} \in \R^{4\times 4} = \begin{bmatrix}1 & 0 & 0 & t_x \\0 & 1 & 0 & t_y \\0 & 0 & 1 & t_z \\0 & 0 & 0 & 1\end{bmatrix}\)
+% Equation: \(#1 = \mathbf{T} \in \R^{4\times 4} = \begin{bmatrix}1 & 0 & 0 & #2_x \\0 & 1 & 0 & #2_y \\0 & 0 & 1 & #2_z \\0 & 0 & 0 & 1\end{bmatrix}\)
 % Example: \textbackslash newVec\{vecTest\}\{5, 2, 3\}
 % Example: \textbackslash newTransMat\{myNewMatrix\}\{\textbackslash vecTest\}
 % Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0&5\\0&1&0&2\\0&0&1&3\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 vector, the translation vector to construct the matrix from
+% #2 vector t, the translation vector to construct the matrix from
 \newcommand\newTransMat[2]{%
     \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
@@ -183,12 +183,12 @@
 }
 
 % Create scaling matrix from the given vector.
-% Equation: \(#1 = \mathbf{S} \in \R^{4\times 4} = \begin{bmatrix}s_x & 0 & 0 & 0 \\0 & s_y & 0 & 0 \\0 & 0 & s_z & 0 \\0 & 0 & 0 & 1\end{bmatrix}\)
+% Equation: \(#1 = \mathbf{S} \in \R^{4\times 4} = \begin{bmatrix}#2_x & 0 & 0 & 0 \\0 & #2_y & 0 & 0 \\0 & 0 & #2_z & 0 \\0 & 0 & 0 & 1\end{bmatrix}\)
 % Example: \textbackslash newVec\{vecTest\}\{5, 2, 3\}
 % Example: \textbackslash newScaleMat\{myNewMatrix\}\{\textbackslash vecTest\}
 % Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}5&0&0&0\\0&2&0&0\\0&0&3&0\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 vector, the scaling vector to construct the matrix from
+% #2 vector s, the scaling vector to construct the matrix from
 \newcommand\newScaleMat[2]{%
     \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
@@ -251,7 +251,7 @@
 }
 
 % Create a new lookAt matrix.
-% Equation: \(#1 = \mathbf{L} \in \R^{4\times 4} = \begin{bmatrix}r_x & r_y & r_z & -\mathbf{r} \cdot \mathbf{p} \\u_x & u_y & u_z & -\mathbf{u} \cdot \mathbf{p} \\-d_x & -d_y & -d_z & \mathbf{d} \cdot \mathbf{p} \\0 & 0 & 0 & 1\end{bmatrix}\)
+% Equation: \(#1 = \mathbf{L} \in \R^{4\times 4} = \begin{bmatrix}\mathbf{r}_x & \mathbf{r}_y & \mathbf{r}_z & -\mathbf{r} \cdot \mathbf{p} \\\mathbf{u}_x & \mathbf{u}_y & \mathbf{u}_z & -\mathbf{u} \cdot \mathbf{p} \\-\mathbf{d}_x & -\mathbf{d}_y & -\mathbf{d}_z & \mathbf{d} \cdot \mathbf{p} \\0 & 0 & 0 & 1\end{bmatrix}\)
 % Example: \textbackslash newVec\{right\}\{5, 2, 3\}
 % Example: \textbackslash newVec\{up\}\{0.5, 1.75, 2\}
 % Example: \textbackslash newVec\{dir\}\{0.5, 2, -3\}
@@ -429,7 +429,7 @@
 }
 
 % Get the height of the given matrix.
-% Equation: \(#1 = rows(\mathbf{M}) \vert \mathbf{M} \in \R^{m\times n}\)
+% Equation: \(#1 = rows(\mathbf{M})\ \vert\ \mathbf{M} \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
 % Example: \textbackslash getMatHeight\{myNewMatrix\}
 % Example: \textbackslash matHeightResult \(\xrightarrow{} m\)
@@ -440,7 +440,7 @@
 }
 
 % Get the width of the given matrix.
-% Equation: \(#1 = cols(\mathbf{M}) \vert \mathbf{M} \in \R^{m\times n}\)
+% Equation: \(#1 = cols(\mathbf{M})\ \vert\ \mathbf{M} \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
 % Example: \textbackslash getMatWidth\{myNewMatrix\}
 % Example: \textbackslash matWidthResult \(\xrightarrow{} n\)
@@ -494,7 +494,7 @@
 % Matrix Math %
 %%%%%%%%%%%%%%%
 % Add two or more matrices.
-% Equation: \(#1 = \mathbf{M} = \mathbf{A} + \mathbf{B} \vert \mathbf{M}, \mathbf{A}, \mathbf{B} \in \R^{m\times n}\)
+% Equation: \(#1 = \mathbf{X} = #2 + \mathbf{B}\ \vert\ \mathbf{M}, #2, \mathbf{B} \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newMat\{myNewMatrixB\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash addMat\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
@@ -547,7 +547,7 @@
 }
 
 % Subtract two or more matrices.
-% Equation: \(#1 = \mathbf{M} = \mathbf{A} - \mathbf{B} \vert \mathbf{M}, \mathbf{A}, \mathbf{B} \in \R^{m\times n}\)
+% Equation: \(#1 = \mathbf{X} = #2 - \mathbf{B}\ \vert\ \mathbf{X}, #2, \mathbf{B} \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newMat\{myNewMatrixB\}\{\{\{0.25,1,2\}\{3,2,1\}\{3,3,3\}\}\}
 % Example: \textbackslash subMat[subMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
@@ -588,7 +588,7 @@
 }
 
 % Multiply the given matrix with a scalar.
-% Equation: \(#1 = \mathbf{M} = \mathbf{A} * s \vert \mathbf{M}, \mathbf{A} \in \R^{m\times n}, s \in \R\)
+% Equation: \(#1 = \mathbf{X} = #2 * #3\ \vert\ \mathbf{X}, #2 \in \R^{m\times n}, #3 \in \R\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash mulScalarMat\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
@@ -631,14 +631,14 @@
 
 % Multiply the given matrix with another matrix.
 % Error: When the matrizes have a dimension mismatch
-% Equation: \(#1 = \mathbf{M} = \mathbf{A} \mathbf{B} \vert \mathbf{A} \in \R^{m\times n}, \mathbf{B} \in \R^{n\times p}, \mathbf{M} \in \R^{m\times p}\)
+% Equation: \(#1 = \mathbf{X} = #2 #3\ \vert\ #2 \in \R^{m\times n}, #3 \in \R^{n\times p}, \mathbf{X} \in \R^{m\times p}\)
 % Example: \textbackslash newMat\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newMat\{myNewMatrixB\}\{\{\{0.25,1,2\}\{3,2,1\}\{3,3,3\}\}\}
 % Example: \textbackslash mulMat[mulMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
 % Example: \textbackslash mulMatResult \(\xrightarrow{} \begin{bmatrix}15.125&13.5&12\\34&32&31\\52.75&50&49\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
-% #2 matrix 1, the matrix to multiply
-% #3 matrix 2, the matrix to multiply with
+% #2 matrix M, the matrix to multiply
+% #3 matrix N, the matrix to multiply with
 \newcommand\mulMat[3][mulMatResult]{%
     \edef\elemsRow{\xintNthElt{1}{#3}}
     \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
@@ -717,7 +717,7 @@
 % getScaling
 
 % Get the translation component from the given matrix.
-% Equation: \(#1 = \mathbf{v} = trans(\mathbf{M}) \vert \mathbf{M} \in \R^{m\times n}, \mathbf{v} \in \R^{m-1}\)
+% Equation: \(#1 = \mathbf{v} = trans(#2)\ \vert\ #2 \in \R^{m\times n}, \mathbf{v} \in \R^{m-1}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash getMatTranslation[matTranslationResult]\{\textbackslash myNewMatrix\}
 % Example: \textbackslash matTranslationResult \(\xrightarrow{} \begin{pmatrix}3\\6\\\end{pmatrix}\)
@@ -747,7 +747,7 @@
 % Matrix Misc %
 %%%%%%%%%%%%%%%
 % Get the determinate of the given matrix.
-% Equation: \(#1 = det(\mathbf{M}) \vert \mathbf{M} \in \R^{m\times n}\)
+% Equation: \(#1 = det(#2)\ \vert\ #2 \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash detMat[detMatResult]\{\textbackslash myNewMatrix\}
 % Example: \textbackslash detMatResult \(\xrightarrow{} 1.5\)
