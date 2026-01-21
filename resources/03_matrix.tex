@@ -104,7 +104,7 @@
 % #2 scalars, the values that define the diagonal of the matrix
 \newcommand\newDiagMat[2]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{argument 1 of newDiagMat seems to be a command but must be a string}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newDiagMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
     \else
         \edef\tmpVector{\xintCSVtoList{#2}}%
         \newVec{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
@@ -506,17 +506,18 @@
 % #3 matrices, the matrizes to add
 \newcommand\addMat[3][addMatResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{argument 1 of addMat seems to be a command but must be a string}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of addMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
     \else
         \PackageError{glmatrix package}{argument mismatch}{argument 2 of addMat does not seem to be a command}
     \fi
-    \if\noexpand#3\relax
-    \else
-        \PackageError{glmatrix package}{argument mismatch}{argument 3 of addMat does not seem to be a command}
-    \fi
+    % TODO this does not work if it is a list
+    % \if\noexpand#3\relax
+    % \else
+    %     \PackageError{glmatrix package}{argument mismatch}{argument 3 of addMat does not seem to be a command}
+    % \fi
     \def\matlist{\xintCSVtoList{#3}}
     \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
     \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
@@ -600,16 +601,12 @@
 % #3 scalar, the scalar to multiply with
 \newcommand\mulScalarMat[3][mulMatScalarResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{argument 1 of mulScalarMat seems to be a command but must be a string}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of mulScalarMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
     \else
         \PackageError{glmatrix package}{argument mismatch}{argument 2 of mulScalarMat does not seem to be a command}
-    \fi
-    \if\noexpand#3\relax
-    \else
-        \PackageError{glmatrix package}{argument mismatch}{argument 3 of mulScalarMat does not seem to be a command}
     \fi
     \edef\elemOne{\xintNthElt{1}{#2}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%

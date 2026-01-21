@@ -161,6 +161,17 @@
     \expandafter\edef\csname #1\endcsname{\divNumRes}%
 }
 
+% Create a scalar from a given fraction
+% Example: \textbackslash newScalarFraction\{myScalarFraction\}\{3\}\{10\}
+% Example: \textbackslash myScalarFraction \(\xrightarrow{}\frac{3}{10}\)
+% #1 out, var name to save the result (scalar) to
+% #2 scalar n, nominator
+% #3 scalar d, denominator
+\newcommand\newScalarFraction[3]{
+    \FPdiv\divNumRes{#2}{#3}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
 % Create a new scalar variable with a random value between lower and
 % upper bound. The value is obtained by creating a random value between 0 and 1
 % and then interpolating between lower and upper bound.
