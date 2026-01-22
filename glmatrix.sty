@@ -1,0 +1,1896 @@
+%%
+%% This is file `glmatrix.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% glmatrix.dtx  (with options: `package')
+%% ---------------------------------------------------------------
+%% glmatrix --- TODO
+%% Maintained by Rene Warnking
+%% E-mail: TODO
+%% Released under the LaTeX Project Public License v1.3c or later
+%% See http://www.latex-project.org/lppl.txt
+%% ---------------------------------------------------------------
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{glmatrix}[2026/01/22 v0.1 Math library for computer graphics]
+
+\RequirePackage{xinttools}
+\RequirePackage{xintfrac}
+\RequirePackage{fp}
+
+\newcommand{\R}{\ensuremath{\textrm{I\!R}}}
+\newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
+\newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newcommand\newScalar[2]{%
+    \expandafter\edef\csname #1\endcsname{#2}%
+}
+
+\newcommand\newScalarPi[2]{
+    \FPmul\divNumRes{\FPpi}{#2}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
+\newcommand\newScalarFraction[3]{
+    \FPdiv\divNumRes{#2}{#3}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
+\newcommand\randomScalar[3]{%
+    \FPrandom\tmp
+    \lerpScalar[#1]{#2}{#3}{\tmp}
+}
+
+\newcommand\copyScalar[2][scalarCopyResult]{%
+    \setScalar{#1}{#2}
+}
+
+\newcommand\setScalar[2]{%
+    \newScalar{#1}{#2}
+}
+
+\newcommand\zeroScalar[1]{%
+    \expandafter\edef\csname #1\endcsname{0}%
+}
+
+\newcommand\printScalar[2][0]{%
+    \FPifeq{#1}{0}%
+        \roundScalar{#2}%
+        \scalarRoundResult%
+    \else%
+        \numToFractionA{#2}%
+    \fi%
+}
+
+\newcommand\printScalarAsPi[2][0]{%
+    \FPdiv\divNumRes{#2}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    \pi
+}
+
+\newcommand\printPiScalarInDegree[2][0]{%
+    \FPmul\tmp{#2}{180}
+    \FPdiv\divNumRes{\tmp}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    ^\circ
+}
+
+\newcommand\printScalarRounded[2][4]{%
+    \FPround\tmp{#2}{#1}
+    \FPclip\tmp\tmp
+    \tmp
+}
+
+\newcommand\roundScalar[2][4]{%
+    \FPround\tmp{#2}{#1}%
+    \FPclip\tmp\tmp%
+    \newScalar{scalarRoundResult}{\tmp}%
+}
+
+\newcommand\ceilScalar[2][scalarCeilResult]{
+    \FPifint{#2}
+        \FPset\tmp{#2}
+    \else
+        \FPadd\tmp{#2}{1}
+    \fi
+    \FPtrunc\tmp\tmp{0}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\floorScalar[2][scalarFloorResult]{
+    \FPtrunc\tmp{#2}{0}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\clipScalar[2][clipScalarResult]{
+    \FPclip\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\radianToDegree[2][radianToDegreeResult]{
+    \FPmul\tmp{#2}{180}
+    \FPdiv\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\toRadian[2][degreeToRadianResult]{
+    \FPdiv\tmp{#2}{180}
+    \FPmul\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\addScalar[3][scalarAddResult]{%
+    \FPadd\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\subScalar[3][scalarSubResult]{%
+    \FPsub\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\mulScalar[3][scalarMulResult]{
+    \FPmul\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\divScalar[3][scalarDivResult]{%
+    \FPifeq{#3}{0}
+        \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
+    \else
+    \fi
+    \FPdiv\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\powScalar[3][scalarPowResult]{%
+    \FPpow\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\negateScalar[2][scalarNegateResult]{%
+    \FPneg\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\arccosScalar[2][scalarArccosResult]{%
+    \FParccos\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{%
+    \FPmul\tmp{#3}{#4}
+    \FPadd\tmp{#2}{\tmp}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\lerpScalar[4][lerpScalarResult]{%
+    \FPsub\tmpA{1}{#4}
+    \FPmul\tmpA{#2}\tmpA
+    \FPmul\tmpB{#3}{#4}
+    \FPadd\tmpA\tmpA\tmpB
+    \newScalar{#1}{\tmpA}
+}
+
+\newcommand\minScalar[3][minScalarResult]{%
+    % TODO use \FPmin#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \fi
+}
+
+\newcommand\maxScalar[3][maxScalarResult]{%
+    % TODO use \FPmax#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \fi
+}
+
+\newcommand\betweenScalar[4][betweenScalarResult]{%
+    \FPset\betweenScalarResult{0}
+    \FPiflt{#2}{#3}
+    \else
+        \FPadd\betweenScalarResult\betweenScalarResult{1}
+    \fi
+    \FPifgt{#2}{#4}
+    \else
+        \FPadd\betweenScalarResult\betweenScalarResult{1}
+    \fi
+    \FPifeq{\betweenScalarResult}{2}
+        \FPset\betweenScalarResult{1}
+    \else
+        \FPset\betweenScalarResult{0}
+    \fi
+}
+
+\newcommand\forEachScalar[3]{
+    \FPiflt{#2}{10}
+    \else
+        \PackageError{glmatrix package}{In forEach scalar}{selection function that is not implemented (chose between 1 to 9 for parameter 2)}
+    \fi
+    %
+    \def\varList{\xintCSVtoList{#1}}
+    \def\paramList{\xintCSVtoList{#3}}
+    \xintFor* ##1 in \varList \do {%
+        \FPifeq{#2}{1}
+            \addScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{2}
+            \subScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{3}
+            \mulScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{4}
+            \divScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{5}
+            \powScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{6}
+            \negateScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+        \FPifeq{#2}{7}
+            \lerpScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{8}
+            \mulAndAddScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{9}
+            \arccosScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+    }
+}
+
+\newcommand\fractionToNum[3]{%
+    \FProot\tmpA{#3}{2}
+    \FPmul\tmpA\tmpA{#2}
+    \FPdiv\tmpB{#1}\tmpA
+    \FPset\fractionNumRes{\tmpB}
+    \ensuremath{
+        \tmpB
+    }
+}
+
+\newcommand\solutionC{%
+    \FPset\finalmul{1}
+    \FPset\tmptmptmptmp\tmptmptmp
+    %
+    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPtrunc\floored\tmptmptmptmp{0}
+        \FPsub\remainder\tmptmptmptmp\floored
+        \FPifgt{\remainder}{0.00001}
+            \FPdiv\mulmul{1}{\remainder}
+            \FPmul\finalmul\finalmul\mulmul
+        \else
+            \xintBreakFor
+        \fi
+        \FPset\tmptmptmptmp\mulmul
+    }
+    \FPround\finalmul\finalmul{8}
+    \FPclip\finalmul\finalmul
+    \FPset\finalmultmp\finalmul
+    % The result will be a multiplicator that is able to round
+    % the number to a whole number, but the result might not be a
+    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
+    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
+    % that the searched for number must be a multiple of 32, in this case 64
+    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
+    \xintFor* ##1 in \innersequence \do {%
+        \FProot\finalmulsqrt\finalmultmp{2}
+        \FPround\finalmulsqrt\finalmulsqrt{4}
+        \FPclip\finalmulsqrt\finalmulsqrt
+        \FPifint{\finalmulsqrt}
+            \xintBreakFor
+        \else
+            \FPadd\finalmultmp\finalmultmp\finalmul
+        \fi
+    }
+    \FPset\finalmul\finalmultmp
+    \FProot\finalmulsqrt\finalmul{2}
+    \FPround\finalmulsqrt\finalmulsqrt{4}
+    \FPclip\finalmulsqrt\finalmulsqrt
+    \FPmul\divisor\divisor\finalmul
+    \FPmul\dividend\dividend\finalmulsqrt
+}
+
+\newcommand\numToFraction[1]{%
+    \FPset\dividend{1}
+    \FPset\divisor{#1}
+    \FPset\minusSign{1}
+    \FPiflt{\divisor}{0}
+        \FPset\minusSign{-1}
+    \else
+    \fi
+    \ensuremath{
+        % reverse fraction
+        \FPdiv\divisor{1}{#1}
+        % Reverse root
+        % Use FPmul instead of FPpow to allow for neg values
+        \FPmul\divisor\divisor\divisor
+        \FPset\tmptmptmp\divisor
+        \FPround\divisor\divisor{10}
+        \FPclip\divisor\divisor
+        \FPifint{\divisor}
+        \else
+            \solutionC
+        \fi
+        %
+        \FPround\divisor\divisor{4}
+        \FPclip\divisor\divisor
+        \FPmul\dividend\dividend\minusSign
+        \FPround\dividend\dividend{4}
+        \FPclip\dividend\dividend
+        % TODO this should not be necessary
+        \FPset\outputVar{#1}
+        % Create fraction from dividend and divisor
+        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
+        % If the sqrt can be resolved
+        \FPset\tmpDivisor{\divisor}
+        \FProot\tmpDivisor\tmpDivisor{2}
+        \FPround\tmpDivisor\tmpDivisor{8}
+        \FPclip\tmpDivisor\tmpDivisor
+        \FPifint{\tmpDivisor}
+            \FPset\outputVar{\frac{\dividend}{\tmpDivisor}}
+        \else
+        \fi
+        %
+        \FPset\inputVar{#1}
+        \FPmul\inputVar\inputVar\inputVar
+        \FPmul\inputVar\inputVar\minusSign
+        \FPround\inputVar\inputVar{8}
+        \FPclip\inputVar\inputVar
+        \FPifint{\inputVar}
+            \FPset\outputVar{\,\sqrt{\inputVar}}
+        \else
+        \fi
+        % If #1 was an int all along
+        \FPset\inputVarA{#1}
+        \FPround\inputVarA\inputVarA{10}
+        \FPclip\inputVarA\inputVarA
+        \FPifint{\inputVarA}
+            \FPset\outputVar{\inputVarA}
+        \else
+        \fi
+        \outputVar
+    }
+}
+
+\newcommand\numToFractionA[1]{%
+    \FPset\inputVarA{#1}
+    \FPround\inputVarA\inputVarA{10}
+    \FPclip\inputVarA\inputVarA
+    % Prevent division by 0
+    \FPifint{\inputVarA}
+        \FPset\outputVar{\inputVarA}
+        \outputVar
+    \else
+        \numToFraction{#1}
+    \fi
+}
+
+
+\newcommand\newVec[2]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \fi
+}
+
+\newcommand\newVecPi[2]{%
+    \def\tmpVec{\xintCSVtoList{#2}}
+    \xintFor* ##1 in \tmpVec \do {%
+        \newScalarPi{tmp}{##1}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+\newcommand\randomVec[4]{
+    \edef\innersequence{\xintSeq[+1]{+1}{#2}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPrandom\tmp
+        \lerpScalar{#3}{#4}{\tmp}
+        \xintifForFirst{%
+            \newVec{#1}{\lerpScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\lerpScalarResult}
+        }
+    }
+}
+
+\newcommand\copyVec[2][copyVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \xintifForFirst{%
+            \newVec{#1}{##1}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{##1}
+        }
+    }
+}
+
+\newcommand\zeroVec[2][zeroVecResult]{%
+    \edef\sequence{\xintSeq[+1]{+1}{#1}}%
+    \xintFor* ##1 in \sequence \do {%
+        \xintifForFirst{%
+            \newVec{#2}{0}
+        }{%
+            \appendToVec{#2}{\csname #2\endcsname}{0}
+        }
+    }
+}
+
+\newcommand\appendToVec[3]{%
+    \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
+}
+
+\newcommand\printVec[2][0]{%
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of printVec seems to be a string but must be a command.}
+    \fi
+    \ensuremath{%
+        \begin{pmatrix}
+            \xintFor* ##1 in {#2} \do {%
+                \xintifForLast{
+                    \FPifeq{#1}{0}
+                        \roundScalar{##1}
+                        \scalarRoundResult
+                    \else
+                        \numToFractionA{##1}
+                    \fi
+                }{%
+                    \FPifeq{#1}{0}
+                        \roundScalar{##1}
+                        \scalarRoundResult
+                    \else
+                        \numToFractionA{##1}
+                    \fi
+                    \\
+                }
+            }
+        \end{pmatrix}
+    }
+}
+
+\newcommand\printVecT[2][0]{%
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of printVecT seems to be a string but must be a command.}
+    \fi
+    \ensuremath{\trans{\left(
+        \xintFor* ##1 in {#2} \do {%
+            \xintifForLast{
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+            }{%
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+                ,
+            }
+        }
+    \right)}}%
+}
+
+\newcommand\printVecAsPoint[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in {#2} \do {%
+                \FPifeq{#1}{0}
+                    \roundScalar{##1}
+                    \scalarRoundResult
+                \else
+                    \numToFractionA{##1}
+                \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{bmatrix}
+    }
+}
+
+\newcommand\printVecAsPi[2][0]{%
+    \ensuremath{%
+        \begin{pmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \printScalarAsPi[#1]{##1}
+                % \FPifeq{#1}{0}
+                %     \roundScalar{##1}
+                %     \scalarRoundResult
+                % \else
+                %     \numToFractionA{##1}
+                % \fi
+                \xintifForLast{}{%
+                    \\
+                }
+            }
+        \end{pmatrix}
+    }
+}
+
+\newcommand\printVecAsPiT[2][0]{%
+    \ensuremath{\trans{\left(
+        \xintFor* ##1 in #2 \do {%
+            \printScalarAsPi[#1]{##1}
+            \xintifForLast{}{%
+                ,
+            }
+        }
+    \right)}}
+}
+
+\newcommand\printVecContent[1]{%
+    \xintNthElt{1}{#1},\xintNthElt{3}{#1},\xintNthElt{2}{#1}%
+}
+
+\newcommand\printVecContentXY[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}
+}
+
+\newcommand\printVecContentXYZ[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}%
+}
+
+\newcommand\printVecContentXYZW[1]{%
+    \xintNthElt{1}{#1}, \xintNthElt{2}{#1}, \xintNthElt{3}{#1}, \xintNthElt{4}{#1}
+}
+
+\newcommand\getVecHeight[2][vecHeightResult]{%
+    \newScalar{#1}{\expandafter\xintLength\expandafter{#2}}
+}
+
+\newcommand\printScalarPComp[3][0] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{In scalar product}{vector A and B do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \ensuremath{
+        \xintFor* ##1 in \innersequence \do {%
+            \FPifeq{#1}{0}
+                \printScalarRounded{\xintNthElt{##1}{#2}}*\printScalarRounded{\xintNthElt{##1}{#3}}
+            \else
+                \numToFractionA{\xintNthElt{##1}{#2}}*\numToFractionA{\xintNthElt{##1}{#3}}
+            \fi
+            \xintifForLast{}{%
+                +
+            }
+        }
+    }
+}
+
+\newcommand\printCrossPComp[3][0] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPset\aa{\xintNthElt{1}{#2}}
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ac{\xintNthElt{3}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPset\bc{\xintNthElt{3}{#3}}
+    %
+    \ensuremath{
+        \FPifeq{#1}{0}
+            \begin{pmatrix}
+                \printScalarRounded{\ab}*\printScalarRounded{\bc} - \printScalarRounded{\ac}*\printScalarRounded{\bb}\\
+                \printScalarRounded{\ac}*\printScalarRounded{\ba} - \printScalarRounded{\aa}*\printScalarRounded{\bc}\\
+                \printScalarRounded{\aa}*\printScalarRounded{\bb} - \printScalarRounded{\ab}*\printScalarRounded{\ba}
+            \end{pmatrix}
+        \else
+            \begin{pmatrix}
+                \numToFractionA{\ab}*\numToFractionA{\bc} - \numToFractionA{\ac}*\numToFractionA{\bb}\\
+                \numToFractionA{\ac}*\numToFractionA{\ba} - \numToFractionA{\aa}*\numToFractionA{\bc}\\
+                \numToFractionA{\aa}*\numToFractionA{\bb} - \numToFractionA{\ab}*\numToFractionA{\ba}
+            \end{pmatrix}
+        \fi
+    }
+}
+
+\newcommand\roundVec[3][4]{%
+    \xintFor* ##1 in #3 \do {%
+        \FPround\tmp{##1}{#1}
+        \xintifForFirst{%
+            \newVec{#2}{\tmp}
+        }{%
+            \appendToVec{#2}{\csname #2\endcsname}{\tmp}
+        }
+    }
+}
+
+\newcommand\ceilVec[2][ceilVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \FPifint{##1}
+        \else
+            \FPadd\tmp{##1}{1}
+        \fi
+        \FPtrunc\tmp\tmp{0}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+\newcommand\floorVec[2][floorVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \FPtrunc\tmp{##1}{0}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+\newcommand\dehomogenVec[2][dehomogenVecResult]{
+    % TODO check if 4 long or get last comp
+    \FPset\tmpDiv{\xintNthElt{4}{#2}}
+    % \FPadd\tmpDiv\tmpDiv{1}
+    \edef\numElems{#2}
+    \edef\vecLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
+    \xintFor* ##1 in \vecLength \do {%
+        \xintifForFirst{%
+            \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
+            \newVec{tmpVec}{\divResult}
+        }{%
+            % \xintifForLast{
+            % }{
+                \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
+                \appendToVec{tmpVec}{\tmpVec}{\divResult}
+            % }
+        }
+    }
+    \copyVec[#1]{\tmpVec}
+}
+
+\newcommand\addVec[3][addVecResult]{%
+    \def\vecList{\xintCSVtoList{#3}}
+    \getVecHeight{#2}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    % Iterate each row / dimension
+    \xintFor* ##1 in \sequence \do {%
+        % Assign value of start vector (param #2)
+        \FPset\sumValue{\xintNthElt{##1}{#2}}%
+        % If this is the first iteration create a new vector
+        \xintifForFirst{%
+            % Iterate all vectors that are part of param #3
+            \xintFor* ##2 in \vecList \do {%
+                % Multiply with row value of current vector
+                \FPadd\sumValue\sumValue{\xintNthElt{##1}{##2}}%
+            }
+            \newVec{#1}{\sumValue}
+        }{%
+            \xintFor* ##2 in \vecList \do {%
+                \FPadd\sumValue\sumValue{\xintNthElt{##1}{##2}}%
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\sumValue}
+        }
+    }
+}
+
+\newcommand\subVec[3][subVecResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of subVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of subVec does not seem to be a command}
+    \fi
+    % TODO does not work on list of commands
+    % \if\noexpand#3\relax
+    % \else
+    %     \PackageError{glmatrix package}{argument mismatch}{argument 3 of subVec does not seem to be a command}
+    % \fi
+    %
+    \def\vecList{\xintCSVtoList{#3}}
+    \getVecHeight{#2}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    % Iterate each row / dimension
+    \xintFor* ##1 in \sequence \do {%
+        % Assign value of start vector (param #2)
+        \FPset\subValue{\xintNthElt{##1}{#2}}%
+        % If this is the first iteration create a new vector
+        \xintifForFirst{%
+            % Iterate all vectors that are part of param #3
+            \xintFor* ##2 in \vecList \do {%
+                % Multiply with row value of current vector
+                \FPsub\subValue\subValue{\xintNthElt{##1}{##2}}%
+            }
+            \newVec{#1}{\subValue}
+        }{%
+            \xintFor* ##2 in \vecList \do {%
+                \FPsub\subValue\subValue{\xintNthElt{##1}{##2}}%
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\subValue}
+        }
+    }
+}
+
+\newcommand\mulVec[3][mulVecResult]{
+    \def\vecList{\xintCSVtoList{#3}}
+    \getVecHeight{#2}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    % Iterate each row / dimension
+    \xintFor* ##1 in \sequence \do {%
+        % Assign value of start vector (param #2)
+        \FPset\mulValue{\xintNthElt{##1}{#2}}%
+        % If this is the first iteration create a new vector
+        \xintifForFirst{%
+            % Iterate all vectors that are part of param #3
+            \xintFor* ##2 in \vecList \do {%
+                % Multiply with row value of current vector
+                \FPmul\mulValue\mulValue{\xintNthElt{##1}{##2}}%
+            }
+            \newVec{#1}{\mulValue}
+        }{%
+            \xintFor* ##2 in \vecList \do {%
+                \FPmul\mulValue\mulValue{\xintNthElt{##1}{##2}}%
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\mulValue}
+        }
+    }
+}
+
+\newcommand\divVec[3][divVecResult]{
+    \def\vecList{\xintCSVtoList{#3}}
+    \getVecHeight{#2}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    % Iterate each row / dimension
+    \xintFor* ##1 in \sequence \do {%
+        % Assign value of start vector (param #2)
+        \FPset\divValue{\xintNthElt{##1}{#2}}%
+        % If this is the first iteration create a new vector
+        \xintifForFirst{%
+            % Iterate all vectors that are part of param #3
+            \xintFor* ##2 in \vecList \do {%
+                \FPifeq{\xintNthElt{##1}{##2}}{0}
+                    \PackageError{glmatrix package}{In divVec function: division by zero}{you are trying to divide by 0}
+                \else
+                \fi
+                % Divide with row value of current vector
+                \FPdiv\divValue\divValue{\xintNthElt{##1}{##2}}%
+            }
+            \newVec{#1}{\divValue}
+        }{%
+            \xintFor* ##2 in \vecList \do {%
+                \FPifeq{\xintNthElt{##1}{##2}}{0}
+                    \PackageError{glmatrix package}{In divVec function: division by zero}{you are trying to divide by 0}
+                \else
+                \fi
+                \FPdiv\divValue\divValue{\xintNthElt{##1}{##2}}%
+            }
+            \appendToVec{#1}{\csname #1\endcsname}{\divValue}
+        }
+    }
+}
+
+\newcommand\scaleVec[3][scaleVecResult] {%
+    \xintFor* ##1 in #2 \do {%
+        \FPmul\tmpVal{##1}{#3}
+        \xintifForFirst{%
+            \newVec{#1}{\tmpVal}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmpVal}
+        }
+    }
+}
+
+\newcommand\divVecScalar[3][divVecScalarResult] {%
+    \FPifeq{#3}{0}
+        \PackageError{glmatrix package}{In div vector by scalar}{divisor is 0}
+    \else
+    \fi
+    \xintFor* ##1 in #2 \do {%
+        \FPdiv\divNumRes{##1}{#3}
+        \xintifForFirst{%
+            \newVec{#1}{\divNumRes}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\divNumRes}
+        }
+    }
+}
+
+\newcommand\negateVec[2][negateVecResult]{
+    \xintFor* ##1 in #2 \do {%
+        \FPneg\tmp{##1}
+        \xintifForFirst{%
+            \newVec{#1}{\tmp}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
+        }
+    }
+}
+
+\newcommand\scaleAndAddVec[4][scaleAndAddVecResult]{
+    \scaleVec{#3}{#4}
+    \addVec[#1]{#2, \scaleVecResult}
+}
+
+\newcommand\lerpVec[4][lerpVecResult]{
+    % \def\vecList{\xintCSVtoList{#3}}
+    \getVecHeight{#2}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    % Iterate each row / dimension
+    \xintFor* ##1 in \sequence \do {%
+        % Assign value of start vector (param #2)
+        % \FPset\divValue{\xintNthElt{##1}{#2}}%
+        % If this is the first iteration create a new vector
+        \xintifForFirst{%
+            \lerpScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}{#4}
+            \newVec{#1}{\lerpScalarResult}
+        }{%
+            \lerpScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}{#4}
+            \appendToVec{#1}{\csname #1\endcsname}{\lerpScalarResult}
+        }
+    }
+}
+
+\newcommand\slerpVec[4][slerpVecResult] {%
+    \angleVec{#2}{#3}
+    \FPsin\angleTotal{\angleVecResult}
+    \FPsub\ratioA{1}{#4}
+    \FPmul\ratioA\ratioA{\angleVecResult}
+    \FPsin\ratioA\ratioA
+    \FPdiv\ratioA\ratioA\angleTotal
+    \FPmul\ratioB{#4}{\angleVecResult}
+    \FPsin\ratioB\ratioB
+    \FPdiv\ratioB\ratioB\angleTotal
+    \scaleVec[tmpA]{#2}{\ratioA}
+    \scaleVec[tmpB]{#3}{\ratioB}
+    \addVec[#1]{\tmpA, \tmpB}
+}
+
+\newcommand\hermiteVec[6][hermiteVecResult] {%
+    \FPmul\tQuad{#6}{#6}
+    \FPmul\factorA{#6}{2}
+    \FPsub\factorA\factorA{3}
+    \FPmul\factorA\factorA\tQuad
+    \FPadd\factorA\factorA{1}
+    \FPsub\factorB{#6}{2}
+    \FPmul\factorB\factorB\tQuad
+    \FPadd\factorB\factorB{#6}
+    \FPsub\factorC{#6}{1}
+    \FPmul\factorC\factorC\tQuad
+    \FPmul\factorD{#6}{2}
+    \FPsub\factorD{3}\factorD
+    \FPmul\factorD\factorD\tQuad
+    \scaleVec[tmpA]{#2}{\factorA}
+    \scaleVec[tmpB]{#3}{\factorB}
+    \scaleVec[tmpC]{#4}{\factorC}
+    \scaleVec[tmpD]{#5}{\factorD}
+    \addVec[#1]{\tmpA, \tmpB, \tmpC, \tmpD}
+}
+
+\newcommand\dotVec[3][dotVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of dotVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of dotVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of dotVec does not seem to be a command}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{In dot product}{vector A and B do not have same length}
+    \fi
+    \FPset\res{0}
+    \FPset\tmp{0}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPset\valueA{\xintNthElt{##1}{#2}}
+        \FPset\valueB{\xintNthElt{##1}{#3}}
+        \FPmul\tmp\valueA\valueB
+        \FPadd\res\res\tmp
+    }
+    \newScalar{#1}{\res}
+}
+
+\newcommand\lenVec[2][lenVecResult] {%
+    \FPset\normTotal{0}
+    \FPset\iterVal{0}
+    % Iterate each value, multiply it with itself and sum up
+    \xintFor* ##1 in #2 \do {%
+        % No idea why this needs to be abs,
+        % but negative values are a problem here
+        \FPabs\iterVal{##1}
+        \FPpow\tmpNormB\iterVal{2}
+        \FPadd\normTotal\normTotal\tmpNormB
+    }
+    % Evaluate root for numbered result
+    \FProot\normRooted\normTotal{2}
+    % Set output var
+    \newScalar{#1}{\normRooted}
+}
+
+\newcommand\sqrLenVec[2][sqrLenVecResult] {%
+    \FPset\normTotal{0}
+    \FPset\iterVal{0}
+    % Iterate each value, multiply it with itself and sum up
+    \xintFor* ##1 in #2 \do {%
+        % No idea why this needs to be abs,
+        % but negative values are a problem here
+        \FPabs\iterVal{##1}
+        \FPpow\tmpNormB\iterVal{2}
+        \FPadd\normTotal\normTotal\tmpNormB
+    }
+    % Set output var
+    \newScalar{#1}{\normTotal}
+}
+
+\newcommand\normalizeVec[2][normalizeVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of normalizeVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of normalizeVec does not seem to be a command}
+    \fi
+    \lenVec{#2}
+    \divVecScalar[#1]{#2}{\lenVecResult}
+}
+
+\newcommand\crossVec[3][crossVecResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{3}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 3}
+    \fi
+    \FPset\aa{\xintNthElt{1}{#2}}
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ac{\xintNthElt{3}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPset\bc{\xintNthElt{3}{#3}}
+    \FPset\tmp{0}
+    % x component
+    \FPset\scalarX{0}
+    \FPmul\scalarX\ab\bc
+    \FPmul\tmp\ac\bb
+    \FPsub\scalarX\scalarX\tmp
+    % y component
+    \FPset\scalarY{0}
+    \FPmul\scalarY\ac\ba
+    \FPmul\tmp\aa\bc
+    \FPsub\scalarY\scalarY\tmp
+    % z component
+    \FPset\scalarZ{0}
+    \FPmul\scalarZ\aa\bb
+    \FPmul\tmp\ab\ba
+    \FPsub\scalarZ\scalarZ\tmp
+    \newVec{#1}{\scalarX,\scalarY,\scalarZ}
+}
+
+\newcommand\angleVec[3][angleVecResult] {%
+    \dotVec[dotVW]{#2}{#3}
+    \lenVec[normV]{#2}
+    \lenVec[normW]{#3}
+    \mulScalar[mulNormVW]{\normV}{\normW}
+    \divScalar{\dotVW}{\mulNormVW}
+    \arccosScalar[#1]{\scalarDivResult}
+}
+
+\newcommand\distVec[3][distVecResult] {%
+    \sqrDistVec{#2}{#3}
+    \FProot\res\sqrDistVecResult{2}
+    \newScalar{#1}{\res}
+}
+
+\newcommand\sqrDistVec[3][sqrDistVecResult] {%
+    \getVecHeight[getVecHeightA]{#2}
+    \getVecHeight[getVecHeightB]{#3}
+    \FPifeq{\getVecHeightA}{\getVecHeightB}
+    \else
+        \PackageError{glmatrix package}{In sqrt distance}{vector #2 and #3 do not have same length}
+    \fi
+    \FPset\res{0}
+    \FPset\tmp{0}
+    \edef\sequence{\xintSeq[+1]{+1}{\getVecHeightA}}%
+    \xintFor* ##1 in \sequence \do {%
+        \FPset\valueA{\xintNthElt{##1}{#2}}
+        \FPset\valueB{\xintNthElt{##1}{#3}}
+        \FPsub\tmp\valueA\valueB
+        \FPmul\tmp\tmp\tmp
+        \FPadd\res\res\tmp
+    }
+    \newScalar{#1}{\res}
+}
+
+\newcommand\transformVec[3][transformVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of transformVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of transformVec does not seem to be a command}
+    \fi
+    \getVecHeight{#3}%
+    \getMatHeight{#2}%
+    \getMatWidth{#2}%
+    % Check that matrix and vector can be multiplied
+    \FPifeq{\matWidthResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Dimension mismatch for matrix and vector, could not multiply}{width (\matWidthResult) of matrix #2 and height (\vecHeightResult) of vector #3 do not match}
+    \fi
+    % Create iterator sequences from height of vector and matrix
+    \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \edef\matHeightSequence{\xintSeq[+1]{+1}{\matHeightResult}}%
+    % Iterate all rows of the matrix
+    \xintFor* ##2 in \matHeightSequence \do {%
+        \FPset\cellVal{0}
+        % Differentiate between first and other entries to create the new vector variable
+        \xintifForFirst{%
+            % Now iterate each entry of the current row
+            % Use this indec to access the entry in the matrix and in the vector
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                % Add to storage variable
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \FPclip\cellVal\cellVal
+            \newVec{#1}{\cellVal}
+        }{
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \FPclip\cellVal\cellVal
+            \appendToVec{#1}{\csname #1\endcsname}{\cellVal}
+        }
+    }
+    % Test if width and height is correct
+    \expandafter\getVecHeight\expandafter{\csname #1\endcsname}%
+    \FPifeq{\matHeightResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Vector height does not match expectation}{height of vector is \vecHeightResult but should be \matHeightResult}
+    \fi
+}
+
+\newcommand\tensorVec[2][tensorVecResult]{%
+    \newMatRow{vecA}{\xintNthElt{1}{#2}}
+    \newMatRow{vecB}{\xintNthElt{2}{#2}}
+    \newMatRow{vecC}{\xintNthElt{3}{#2}}
+    \newMatFromRowVecs{tmpMatA}{\vecA, \vecB, \vecC}
+    \vecToMatRow{row}{#2}
+    \newMat{tmpMatB}{\row}
+    \mulMat[#1]{\tmpMatA}{\tmpMatB}
+}
+
+\newcommand\minVec[3][minVecResult]{
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of minVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{incompatible size}{vector A and B of minVec do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \minScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
+        \xintifForFirst{%
+            \newVec{#1}{\minScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\minScalarResult}
+        }
+    }
+}
+
+\newcommand\maxVec[3][maxVecResult]{
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of maxVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
+    \else
+        \PackageError{glmatrix package}{incompatible size}{vector A and B of maxVec do not have same length}
+    \fi
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \maxScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
+        \xintifForFirst{%
+            \newVec{#1}{\maxScalarResult}
+        }{%
+            \appendToVec{#1}{\csname #1\endcsname}{\maxScalarResult}
+        }
+    }
+}
+
+\newcommand\solveVecEQL[3][solveVecEQLResult]{
+    \getVecHeight{#3}%
+    \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \xintFor* ##1 in \vecHeightSequence \do {%
+        \FPneg\tmpVar{\xintNthElt{##1}{#3}}
+        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\tmpVar}
+        % \maxScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
+        % \xintifForFirst{%
+        %     \newVec{#1}{\maxScalarResult}
+        % }{%
+        %     \appendToVec{#1}{\csname #1\endcsname}{\maxScalarResult}
+        % }
+        \xintifForFirst{%
+            \setScalar{#1}{\glCurSol}
+        }{%
+            \FPifeq{\csname #1\endcsname}{\glCurSol}
+            \else
+                \PackageError{glmatrix package}{Could not solve equation}{varying results for different dimensions}
+            \fi
+        }
+    }
+}%    \end{macrocode}
+
+
+\newcommand\newMat[2]{
+    \xintFor* ##1 in #2 \do {%
+        \newVec{matRow}{##1}
+        \xintifForFirst{%
+            \newMatFromRow{#1}{\matRow}
+        }{%
+            \appendRowToMat{#1}{\csname #1\endcsname}{\matRow}
+        }
+    }
+}
+
+\newcommand\newMatFromRow[2]{
+    \newScalar{tmpWidth}{\expandafter\xintLength\expandafter{#2}}%
+    \FPifeq{\tmpWidth}{1}
+        \expandafter\edef\csname #1\endcsname{{\xintCSVtoList{\matRow}}}
+    \else
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{\matRow}}
+    \fi
+}
+
+\newcommand\newMatFromRowVecs[2]{%
+    % TODO remove this?
+    \FPset\numParam{\expandafter\xintLength{#2}}%
+    \FPsub\numParam\numParam{1}
+    \FPdiv\numParam\numParam{2}
+    \FPadd\numParam\numParam{1}
+    % In case only one item/row was given the
+    % matrix-datastructure must be adjusted
+    \FPifeq{\numParam}{1}
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \else
+        \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
+    \fi
+}
+
+\newcommand\newMatFromColVecs[2]{%
+    \edef\tmpVecList{\xintCSVtoList{#2}}%
+    \copyVec[tmpHeightVec]{{\xintNthElt{1}{\tmpVecList}}}
+    \getVecHeight[numRows]{\tmpHeightVec}
+    \edef\numColumns{\expandafter\xintLength\expandafter{\tmpVecList}}
+    \edef\colSequence{\xintSeq[+1]{+1}{\numColumns}}
+    \edef\rowSequence{\xintSeq[+1]{+1}{\numRows}}
+    \newEmptyMat{#1}
+    \xintFor* ##1 in \colSequence \do {%
+        \xintFor* ##2 in \rowSequence \do {%
+            \newScalar{tmpValue}{\xintNthElt{##1}{\xintNthElt{##2}{\tmpVecList}}}
+            \xintifForFirst{%
+                \newVec{matRow}{\tmpValue}
+            }{%
+                \appendToVec{matRow}{\matRow}{\tmpValue}
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\matRow}
+    }
+}
+
+\newcommand\newEmptyMat[1]{
+    \expandafter\edef\csname #1\endcsname{}%
+}
+
+\newcommand\newDiagMat[2]{
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newDiagMat seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+        \edef\tmpVector{\xintCSVtoList{#2}}%
+        \newVec{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
+        \newVec{rowB}{0, \xintNthElt{2}{\tmpVector}, 0}
+        \newVec{rowC}{0, 0, \xintNthElt{3}{\tmpVector}}
+        \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC}
+    \fi
+}
+
+\newcommand\appendRowToMat[3]{
+    \newScalar{tmpWidth}{\expandafter\xintLength\expandafter{#3}}%
+    \FPifeq{\tmpWidth}{1}
+        \expandafter\edef\csname #1\endcsname{#2 {\xintCSVtoList{#3}}}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#2 \xintCSVtoList{#3}}%
+    \fi
+}
+
+\newcommand\newTransMat[2]{%
+    \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
+    \xintFor* ##1 in \innersequence \do {%
+        \xintifForFirst{%
+            \xintFor* ##2 in \innersequence \do {%
+                \newScalar{tmp}{0}
+                \FPifeq{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                \fi
+                \FPifeq{##1}{##2}
+                    \setScalar{tmp}{1}
+                \else
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \newMatFromRow{#1}{\matRow}
+        }{%
+            \xintFor* ##2 in \innersequence \do {%
+                \newScalar{tmp}{0}
+                \FPifeq{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                \fi
+                \FPifeq{##1}{##2}
+                    \setScalar{tmp}{1}
+                \else
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \appendRowToMat{#1}{\csname #1\endcsname}{\matRow}
+        }
+    }
+}
+
+\newcommand\newScaleMat[2]{%
+    \edef\vecLength{\expandafter\xintLength\expandafter{#2 1}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{#2}+1}}
+    \xintFor* ##1 in \innersequence \do {%
+        \xintifForFirst{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPiflt{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                    \setScalar{tmp}{1}
+                \fi
+                \FPifeq{##1}{##2}
+                \else
+                    \setScalar{tmp}{0}
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \newMatFromRow{#1}{\matRow}
+        }{%
+            \xintFor* ##2 in \innersequence \do {%
+                \FPiflt{##2}{\vecLength}
+                    \setScalar{tmp}{\xintNthElt{##1}{#2}}
+                \else
+                    \setScalar{tmp}{1}
+                \fi
+                \FPifeq{##1}{##2}
+                \else
+                    \setScalar{tmp}{0}
+                \fi
+                \xintifForFirst{%
+                    \newVec{matRow}{\tmp}
+                }{%
+                    \appendToVec{matRow}{\matRow}{\tmp}
+                }
+            }
+            \appendRowToMat{#1}{\csname #1\endcsname}{\matRow}
+        }
+    }
+}
+
+\newcommand\newRotMatTwoD[2][rotMatResult]{%
+    \FPcos\tmpCos{#2}
+    \FPsin\tmpSin{#2}
+    \newVec{rowB}{\tmpSin, \tmpCos, 0}
+    \FPmul\tmpSin\tmpSin{-1}
+    \newVec{rowA}{\tmpCos, \tmpSin, 0}
+    \newVec{rowC}{0, 0, 1}
+    \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC}
+}
+
+\newcommand\newLookAtMat[5][lookAtMatResult]{%
+    \dotVec[scalarRC]{#2}{#5}
+    \mulScalar[scalarRC]{\scalarRC}{-1}
+    \copyVec[tmpVecA]{#2}
+    \appendToVec{tmpVecA}{\tmpVecA}{\scalarRC}
+    % \printVec[1]{\tmpVecA}
+    %
+    \dotVec[scalarUC]{#3}{#5}
+    \mulScalar[scalarUC]{\scalarUC}{-1}
+    \copyVec[tmpVecB]{#3}
+    \appendToVec{tmpVecB}{\tmpVecB}{\scalarUC}
+    %
+    \dotVec[scalarDC]{#4}{#5}
+    \copyVec[tmpVecC]{#4}
+    \negateVec[tmpVecC]{\tmpVecC}
+    \appendToVec{tmpVecC}{\tmpVecC}{\scalarDC}
+    %
+    \newVec{tmpVecD}{0, 0, 0, 1}
+    \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
+}
+
+\newcommand\newProjMat[1]{%
+    \newVec{tmpVecA}{1, 0, 0, 0}
+    \newVec{tmpVecB}{0, 1, 0, 0}
+    \newVec{tmpVecC}{0, 0, 1, 0}
+    \newVec{tmpVecD}{0, 0, -1, 0}
+    \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
+}
+
+\newcommand\newFrustumMat[5][frustMatResult]{%
+    \FPdiv\tmp{#2}{2}
+    \FPtan\frustumRight\tmp
+    \FPmul\frustumRight{#4}\frustumRight
+    \FPmul\frustumLeft\frustumRight{-1}
+    \FPdiv\tmp{#3}{2}
+    \FPtan\frustumTop\tmp
+    \FPmul\frustumTop{#4}\frustumTop
+    \FPmul\frustumBottom\frustumTop{-1}
+    %
+    \FPmul\cellAA{2}{#4} % AA
+    \FPsub\tmp\frustumRight\frustumLeft
+    \FPdiv\cellAA\cellAA\tmp
+    \FPadd\cellAC\frustumRight\frustumLeft % AC
+    \FPdiv\cellAC\cellAC\tmp
+    \FPmul\cellBB{2}{#4} % BB
+    \FPsub\tmp\frustumTop\frustumBottom
+    \FPdiv\cellBB\cellBB\tmp
+    \FPadd\cellBC\frustumTop\frustumBottom % BC
+    \FPdiv\cellBC\cellBC\tmp
+    \FPmul\cellCC{#5}{-1} % CC
+    \FPsub\cellCC\cellCC{#4}
+    \FPsub\tmp{#5}{#4}
+    \FPdiv\cellCC\cellCC\tmp
+    \FPmul\cellCD{#5}{#4} % CD
+    \FPmul\cellCD{-2}\cellCD
+    \FPdiv\cellCD\cellCD\tmp
+    %
+    \newVec{rowA}{\cellAA, 0, \cellAC, 0}
+    \newVec{rowB}{0, \cellBB, \cellBC, 0}
+    \newVec{rowC}{0, 0, \cellCC, \cellCD}
+    \newVec{rowD}{0, 0, -1, 0}
+    \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC, \rowD}
+}
+
+\newcommand\printMat[2][0]{%
+    \ensuremath{%
+        \begin{bmatrix}
+            \xintFor* ##1 in #2 \do {%
+                \xintFor* ##2 in {##1} \do {%
+                    \xintifForLast{%
+                        \xintifForFirst{}{&}
+                        \FPifeq{#1}{0}
+                            \roundScalar{##2}
+                            \scalarRoundResult
+                        \else
+                            \numToFractionA{##2}
+                        \fi
+                        \\
+                    }{%
+                        \xintifForFirst{}{&}
+                        \FPifeq{#1}{0}
+                            \roundScalar{##2}
+                            \scalarRoundResult
+                        \else
+                            \numToFractionA{##2}
+                        \fi
+                    }
+                }
+            }
+        \end{bmatrix}
+    }
+}
+
+\newcommand\printMatDiag[2][0]{%
+    \ensuremath{%
+        \text{diag}\left(
+        \xintNthElt{1}{\xintNthElt{1}{#2}},
+        \xintNthElt{2}{\xintNthElt{2}{#2}},
+        \xintNthElt{3}{\xintNthElt{3}{#2}}
+        \right)
+    }
+}
+
+\newcommand\getMatHeight[2][matHeightResult]{%
+    \newScalar{#1}{\expandafter\xintLength\expandafter{#2}}%
+}
+
+\newcommand\getMatWidth[2][matWidthResult]{%
+    \edef\rowElements{\xintNthElt{1}{#2}}%
+    \newScalar{#1}{\expandafter\xintLength\expandafter{\rowElements}}%
+}
+
+\newcommand\transposeMat[2][transposeMatResult]{%
+    \getMatWidth{#2}
+    \getMatHeight{#2}
+    \edef\widthSequence{\xintSeq[+1]{+1}{\matWidthResult}}
+    \edef\heightSequence{\xintSeq[+1]{+1}{\matHeightResult}}
+    \newEmptyMat{#1}
+    \xintFor* ##1 in \widthSequence \do {%
+        \xintFor* ##2 in \heightSequence \do {%
+            \FPset\tmpValue{\xintNthElt{##1}{\xintNthElt{##2}{#2}}}
+            \xintifForFirst{%
+                \newVec{rowVec}{\tmpValue}
+            }{%
+                \appendToVec{rowVec}{\rowVec}{\tmpValue}
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
+    }
+}
+
+\newcommand\addMat[3][addMatResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of addMat seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of addMat does not seem to be a command}
+    \fi
+    % TODO this does not work if it is a list
+    % \if\noexpand#3\relax
+    % \else
+    %     \PackageError{glmatrix package}{argument mismatch}{argument 3 of addMat does not seem to be a command}
+    % \fi
+    \def\matlist{\xintCSVtoList{#3}}
+    \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    \edef\elemsMat{\xintNthElt{1}{\matlist}}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{#2}}}
+            \xintifForFirst{%
+                \xintFor* ##1 in \matlist \do {%
+                    \FPadd\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                }
+                \newVec{rowVec}{\tmpValue}
+            }{%
+                % \xintifForLast{
+                % }{
+                    \xintFor* ##1 in \matlist \do {%
+                        \FPadd\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                    }
+                    \appendToVec{rowVec}{\rowVec}{\tmpValue}
+                % }
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
+    }
+}
+
+\newcommand\subMat[3][subMatResult]{%
+    % \getMatWidth{#2}
+    % \edef\widthsequence{\xintSeq[+1]{+1}{\matWidthResult}}%
+    \getMatHeight{#2}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\matHeightResult}}%
+    %
+    \def\matlist{\xintCSVtoList{#3}}
+    \edef\elemsRow{\xintNthElt{1}{\xintNthElt{1}{\matlist}}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    % \edef\elemsMat{\xintNthElt{1}{\matlist}}
+    % \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{#2}}}
+            \xintifForFirst{%
+                \xintFor* ##1 in \matlist \do {%
+                    \FPsub\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                }
+                \newVec{rowVec}{\tmpValue}
+            }{%
+                \xintFor* ##1 in \matlist \do {%
+                    \FPsub\tmpValue\tmpValue{\xintNthElt{##3}{\xintNthElt{##2}{##1}}}
+                }
+                \appendToVec{rowVec}{\rowVec}{\tmpValue}
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
+    }
+}
+
+\newcommand\mulMatScalar[3][mulMatScalarResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of mulMatScalar seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of mulMatScalar does not seem to be a command}
+    \fi
+    \edef\elemOne{\xintNthElt{1}{#2}}
+    \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##1 in #2 \do {%
+        \xintFor* ##2 in \innersequence \do {%
+            \FPset\elem{\xintNthElt{##2}{##1}}
+            \FPmul\elem\elem{#3}
+            \xintifForFirst{%
+                \newVec{rowVec}{\elem}
+            }{%
+                \appendToVec{rowVec}{\rowVec}{\elem}
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
+    }
+}
+
+\newcommand\mulMatVec[3][mulMatVecResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of transformVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of transformVec does not seem to be a command}
+    \fi
+    \getVecHeight{#3}%
+    \getMatHeight{#2}%
+    \getMatWidth{#2}%
+    % Check that matrix and vector can be multiplied
+    \FPifeq{\matWidthResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Dimension mismatch for matrix and vector, could not multiply}{width (\matWidthResult) of matrix #2 and height (\vecHeightResult) of vector #3 do not match}
+    \fi
+    % Create iterator sequences from height of vector and matrix
+    \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \edef\matHeightSequence{\xintSeq[+1]{+1}{\matHeightResult}}%
+    % Iterate all rows of the matrix
+    \xintFor* ##2 in \matHeightSequence \do {%
+        \FPset\cellVal{0}
+        % Differentiate between first and other entries to create the new vector variable
+        \xintifForFirst{%
+            % Now iterate each entry of the current row
+            % Use this indec to access the entry in the matrix and in the vector
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                % Add to storage variable
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \FPclip\cellVal\cellVal
+            \newVec{#1}{\cellVal}
+        }{
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \FPclip\cellVal\cellVal
+            \appendToVec{#1}{\csname #1\endcsname}{\cellVal}
+        }
+    }
+    % Test if width and height is correct
+    \expandafter\getVecHeight\expandafter{\csname #1\endcsname}%
+    \FPifeq{\matHeightResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Vector height does not match expectation}{height of vector is \vecHeightResult but should be \matHeightResult}
+    \fi
+}
+
+\newcommand\mulMat[3][mulMatResult]{%
+    \edef\elemsRow{\xintNthElt{1}{#3}}
+    \edef\widthsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsRow}}}%
+    %
+    % TODO remove one of these
+    \edef\elemsMat{#2}
+    \edef\heightsequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \edef\elemsMat{#3}
+    \edef\heightsequenceB{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemsMat}}}%
+    %
+    \edef\elemsRowTmp{\xintNthElt{1}{#2}}
+    \FPset\widthMatA{\expandafter\xintLength\expandafter{\elemsRowTmp}}%
+    \FPset\heightMatB{\expandafter\xintLength\expandafter{\elemsMat}}%
+    % TODO check this
+    \FPifeq{\widthMatA}{\heightMatB}
+    \else
+        \PackageError{glmatrix package}{Dimension mismatch for matrix, could not multiply}{width (\widthMatA) of matrix #2 and height (\heightMatB) of matrix #3 do not match}
+    \fi
+    %
+    \newEmptyMat{#1}
+    \xintFor* ##2 in \heightsequence \do {%
+        \xintFor* ##3 in \widthsequence \do {%
+            \FPset\tmpValue{0}
+            \xintifForFirst{%
+                \xintFor* ##4 in \heightsequenceB \do {%
+                    \FPmul\tmptmp{%
+                        \xintNthElt{##4}{\xintNthElt{##2}{#2}}%
+                    }{%
+                        \xintNthElt{##3}{\xintNthElt{##4}{#3}}%
+                    }
+                    \FPadd\tmpValue\tmpValue\tmptmp
+                }
+                \newVec{rowVec}{\tmpValue}
+            }{%
+                \xintFor* ##4 in \heightsequenceB \do {%
+                    \FPmul\tmptmp{%
+                        \xintNthElt{##4}{\xintNthElt{##2}{#2}}%
+                    }{%
+                        \xintNthElt{##3}{\xintNthElt{##4}{#3}}%
+                    }
+                    \FPadd\tmpValue\tmpValue\tmptmp
+                }
+                \appendToVec{rowVec}{\rowVec}{\tmpValue}
+            }
+        }
+        \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
+    }
+    % Test if width and height is correct
+    \edef\expectedheight{\expandafter\xintLength\expandafter{#2}}%
+    \edef\elemsRow{\xintNthElt{1}{#3}}
+    \edef\expectedwidth{\expandafter\xintLength\expandafter{\elemsRow}}%
+    %
+    \edef\elemsRow{\xintNthElt{1}{\csname #1\endcsname}}
+    \edef\actualwidth{\expandafter\xintLength\expandafter{\elemsRow}}%
+    \edef\elemsMat{\csname #1\endcsname}
+    \edef\actualheight{\expandafter\xintLength\expandafter{\elemsMat}}%
+    %
+    \FPifeq{\expectedwidth}{\actualwidth}
+    \else
+        \PackageError{glmatrix package}{Matrix width does not match expectation}{width seems to be incorrect}
+    \fi
+    \FPifeq{\expectedheight}{\actualheight}
+    \else
+        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
+    \fi
+}
+
+\newcommand\getMatTranslation[2][matTranslationResult]{%
+    \FPifeq{\expectedheight}{\actualheight}
+    \else
+        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
+    \fi
+    \getMatWidth{#2}
+    \getMatHeight{#2}
+    \edef\sequence{\xintSeq[+1]{+1}{\matHeightResult}}
+    \xintFor* ##1 in \sequence \do {%
+        \FPset\tmpValue{\xintNthElt{\matWidthResult}{\xintNthElt{##1}{#2}}}
+        \xintifForFirst{%
+            \newVec{#1}{\tmpValue}
+        }{%
+            \xintifForLast{}{
+                \appendToVec{#1}{\csname #1\endcsname}{\tmpValue}
+            }
+        }
+    }
+}
+
+\newcommand\detMat[2][detMatResult]{%
+    \getMatWidth{#2}
+    \getMatHeight{#2}
+    \FPifgt{\matWidthResult}{2}
+        \PackageError{glmatrix package}{Function not yet implemented}{Determinante can only be calculated for \(2 \times 2\) matrices}
+    \else
+    \fi
+    \FPifgt{\matHeightResult}{2}
+        \PackageError{glmatrix package}{Function not yet implemented}{Determinante can only be calculated for \(2 \times 2\) matrices}
+    \else
+    \fi
+    %
+    \mulScalar[tmpAD]{\xintNthElt{1}{\xintNthElt{1}{#2}}}{\xintNthElt{2}{\xintNthElt{2}{#2}}}
+    \mulScalar[tmpBC]{\xintNthElt{1}{\xintNthElt{2}{#2}}}{\xintNthElt{2}{\xintNthElt{1}{#2}}}
+    \subScalar[#1]{\tmpAD}{\tmpBC}
+}
+
+%% Copyright (C) 2026/01/22 by
+%%   Rene Warnking <TODO>
+%% 
+%% It may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License (LPPL), either version 1.3c of
+%% this license or (at your option) any later version.  The latest
+%% version of this license is in the file:
+%%    http://www.latex-project.org/lppl.txt
+%% This work is maintained (as per LPPL maintenance status) by
+%%   Rene Warnking.
+%% 
+%% This work consists of the file  glmatrix.dtx
+%%           and the derived files glmatrix.pdf,
+%%                                 glmatrix.sty and
+%%                                 glmatrix.ins.
+%% 
+%%
+%% End of file `glmatrix.sty'.
