@@ -42,11 +42,11 @@
 % Example: \textbackslash newVec\{myRowVecA\}\{1, 0, 0\}
 % Example: \textbackslash newVec\{myRowVecB\}\{0, 2, 0\}
 % Example: \textbackslash newVec\{myRowVecC\}\{0, 0, 3\}
-% Example: \textbackslash newMatFromRowVec\{myNewMatrix\}\{\textbackslash myRowVecA, \textbackslash myRowVecB, \textbackslash myRowVecC\}
+% Example: \textbackslash newMatFromRowVecs\{myNewMatrix\}\{\textbackslash myRowVecA, \textbackslash myRowVecB, \textbackslash myRowVecC\}
 % Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 rows, the rows that are used to construct the matrix
-\newcommand\newMatFromRowVec[2]{%
+\newcommand\newMatFromRowVecs[2]{%
     % TODO remove this?
     \FPset\numParam{\expandafter\xintLength{#2}}%
     \FPsub\numParam\numParam{1}
@@ -104,13 +104,13 @@
 % #2 scalars, the values that define the diagonal of the matrix
 \newcommand\newDiagMat[2]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newDiagMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newDiagMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
         \edef\tmpVector{\xintCSVtoList{#2}}%
         \newVec{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
         \newVec{rowB}{0, \xintNthElt{2}{\tmpVector}, 0}
         \newVec{rowC}{0, 0, \xintNthElt{3}{\tmpVector}}
-        \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+        \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC}
     \fi
 }
 
@@ -247,7 +247,7 @@
     \FPmul\tmpSin\tmpSin{-1}
     \newVec{rowA}{\tmpCos, \tmpSin, 0}
     \newVec{rowC}{0, 0, 1}
-    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+    \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC}
 }
 
 % Create a new lookAt matrix.
@@ -281,7 +281,7 @@
     \appendToVec{tmpVecC}{\tmpVecC}{\scalarDC}
     %
     \newVec{tmpVecD}{0, 0, 0, 1}
-    \newMatFromRowVec{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
+    \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
 % Create a new projection matrix.
@@ -294,7 +294,7 @@
     \newVec{tmpVecB}{0, 1, 0, 0}
     \newVec{tmpVecC}{0, 0, 1, 0}
     \newVec{tmpVecD}{0, 0, -1, 0}
-    \newMatFromRowVec{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
+    \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
 % Create a new frustum matrix.
@@ -342,7 +342,7 @@
     \newVec{rowB}{0, \cellBB, \cellBC, 0}
     \newVec{rowC}{0, 0, \cellCC, \cellCD}
     \newVec{rowD}{0, 0, -1, 0}
-    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC, \rowD}
+    \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC, \rowD}
 }
 
 % clone
@@ -506,7 +506,7 @@
 % #3 matrices, the matrizes to add
 \newcommand\addMat[3][addMatResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of addMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of addMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -592,21 +592,21 @@
 % Equation: \(#1 = \mathbf{X} = #2 * #3\ \vert\ \mathbf{X}, #2 \in \R^{m\times n}, #3 \in \R\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
-% Example: \textbackslash mulScalarMat\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash mulMatScalar\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
 % Example: \textbackslash mulMatScalarResult \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
-% Example: \textbackslash mulScalarMat[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash mulMatScalar[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
 % Example: \textbackslash resultName \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix, the matrix to multiply
 % #3 scalar, the scalar to multiply with
-\newcommand\mulScalarMat[3][mulMatScalarResult]{%
+\newcommand\mulMatScalar[3][mulMatScalarResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of mulScalarMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of mulMatScalar seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
     \else
-        \PackageError{glmatrix package}{argument mismatch}{argument 2 of mulScalarMat does not seem to be a command}
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of mulMatScalar does not seem to be a command}
     \fi
     \edef\elemOne{\xintNthElt{1}{#2}}
     \edef\innersequence{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\elemOne}}}%
@@ -624,6 +624,82 @@
         }
         \appendRowToMat{#1}{\csname #1\endcsname}{\rowVec}
     }
+}
+
+% Multiply the given matrix with a vector (for transformation).
+% Equation: \(#1 = #2 \cdot #3\ \vert\ #2 \in \R^{m\times n}, #3 \in \R^n\)
+% Error: When matrix and vector have a dimension mismatch
+% Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
+% Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5, 1, 2\}\{4, 5, 6\}\{7, 8, 9\}\}\}
+% Example: \textbackslash mulMatVec\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
+% Example: \textbackslash mulMatVecResult \(\xrightarrow{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% Example: \textbackslash mulMatVec[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
+% Example: \textbackslash resultName \(\xrightarrow{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% #1 out, var name to save the result (vector) to
+% #2 matrix, the matrix to transform the vetor with
+% #3 vector, the vector to transform
+% TODO if the vector is smaller than the matrix the missing components, should automatically be set to one
+\newcommand\mulMatVec[3][mulMatVecResult]{%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of transformVec does not seem to be a command}
+    \fi
+    \if\noexpand#3\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 3 of transformVec does not seem to be a command}
+    \fi
+    \getVecHeight{#3}%
+    \getMatHeight{#2}%
+    \getMatWidth{#2}%
+    % Check that matrix and vector can be multiplied
+    \FPifeq{\matWidthResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Dimension mismatch for matrix and vector, could not multiply}{width (\matWidthResult) of matrix #2 and height (\vecHeightResult) of vector #3 do not match}
+    \fi
+    % Create iterator sequences from height of vector and matrix
+    \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \edef\matHeightSequence{\xintSeq[+1]{+1}{\matHeightResult}}%
+    % Iterate all rows of the matrix
+    \xintFor* ##2 in \matHeightSequence \do {%
+        \FPset\cellVal{0}
+        % Differentiate between first and other entries to create the new vector variable
+        \xintifForFirst{%
+            % Now iterate each entry of the current row
+            % Use this indec to access the entry in the matrix and in the vector
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                % Add to storage variable
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \FPclip\cellVal\cellVal
+            \newVec{#1}{\cellVal}
+        }{
+            \xintFor* ##3 in \vecHeightSequence \do {%
+                \FPmul\tmp{%
+                    \xintNthElt{##3}{\xintNthElt{##2}{#2}}%
+                }{%
+                    \xintNthElt{##3}{#3}%
+                }
+                \FPadd\cellVal\cellVal\tmp
+            }
+            \FPclip\cellVal\cellVal
+            \appendToVec{#1}{\csname #1\endcsname}{\cellVal}
+        }
+    }
+    % Test if width and height is correct
+    \expandafter\getVecHeight\expandafter{\csname #1\endcsname}%
+    \FPifeq{\matHeightResult}{\vecHeightResult}
+    \else
+        \PackageError{glmatrix package}{Vector height does not match expectation}{height of vector is \vecHeightResult but should be \matHeightResult}
+    \fi
 }
 
 % Multiply the given matrix with another matrix.

@@ -5,8 +5,7 @@
 [<img alt="Licence" src="https://img.shields.io/github/license/rwarnking/glmatrix.tex?style=for-the-badge" height="23">](https://github.com/rwarnking/glmatrix.tex/blob/main/LICENSE)
 
 ## Description
-This is a small python application to convert .tex files to one .dtx file.
-All functionalities are accesseable via a simple GUI or console.
+This is a latex package repository.
 
 ## Table of Contents
 - [glmatrix.tex](#glmatrixtex)

@@ -11,7 +11,7 @@
 % #2 values, values that are assigned to #1
 \newcommand\newVec[2]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
         \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
     \fi
@@ -133,6 +133,10 @@
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
 \newcommand\printVec[2][0]{%
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of printVec seems to be a string but must be a command.}
+    \fi
     \ensuremath{%
         \begin{pmatrix}
             \xintFor* ##1 in {#2} \do {%
@@ -165,6 +169,10 @@
 % #2 vector, the vector that should be printed
 % TODO bug: last comma is shown when printing some fractions 0.5 and 0.25 work, 1.5, 2.5, 3.5 do not (all have number >1)
 \newcommand\printVecT[2][0]{%
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of printVecT seems to be a string but must be a command.}
+    \fi
     \ensuremath{\trans{\left(
         \xintFor* ##1 in {#2} \do {%
             \xintifForLast{
@@ -190,10 +198,10 @@
 % Print the values of the given vector in point notation.
 % Equation: \(\begin{bmatrix}#2_1\\ \ldots\\ #2_n\end{bmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
-% Example: \textbackslash printAsPoint\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
+% Example: \textbackslash printVecAsPoint\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
-\newcommand\printAsPoint[2][0]{%
+\newcommand\printVecAsPoint[2][0]{%
     \ensuremath{%
         \begin{bmatrix}
             \xintFor* ##1 in {#2} \do {%
@@ -516,7 +524,7 @@
 % TODO add check that the variable name that is given does not match any other parameter, since this does not work
 \newcommand\subVec[3][subVecResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of subVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of subVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -591,11 +599,11 @@
 % Equation: \begin{align*}#1 &= #2 \oslash #3_1 \oslash \ldots \oslash #3_m\\ &= \begin{pmatrix}#2_1 / #3_{1,1} / \ldots / #3_{m,1}\\\ldots\\#2_n / #3_{1,n} / \ldots / #3_{m,n}\end{pmatrix}\end{align*}
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
-% Example: \textbackslash divVVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
+% Example: \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to divide
 % #3 vectors, the list of vectors to divide with
-\newcommand\divVVec[3][divVecResult]{
+\newcommand\divVec[3][divVecResult]{
     \def\vecList{\xintCSVtoList{#3}}
     \getVecHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
@@ -652,13 +660,13 @@
 % Equation: \(#1 = \begin{pmatrix}\frac{#2_1}{#3}\\\ldots\\\frac{#2_n}{#3}\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
-% Example: \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash divVecResult \(\xrightarrow{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
+% Example: \textbackslash divVecScalar\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}
+% Example: \textbackslash divVecScalarResult \(\xrightarrow{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to divide
 % #3 scalar, the scalar to divide with
 % TODO adjust function name, for function which divides vec with vec, negative scaling / shrinking
-\newcommand\divVec[3][divVecResult] {%
+\newcommand\divVecScalar[3][divVecScalarResult] {%
     \FPifeq{#3}{0}
         \PackageError{glmatrix package}{In div vector by scalar}{divisor is 0}
     \else
@@ -807,7 +815,7 @@
 % #3 vector w, the second vector
 \newcommand\dotVec[3][dotVecResult] {%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of dotVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of dotVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -891,7 +899,7 @@
 % #2 vector, the vector which to normalize
 \newcommand\normalizeVec[2][normalizeVecResult] {%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of normalizeVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of normalizeVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -899,7 +907,7 @@
         \PackageError{glmatrix package}{argument mismatch}{argument 2 of normalizeVec does not seem to be a command}
     \fi
     \lenVec{#2}
-    \divVec[#1]{#2}{\lenVecResult}
+    \divVecScalar[#1]{#2}{\lenVecResult}
 }
 
 % TODO this only works for 3d vectors currently
@@ -1032,7 +1040,7 @@
 % TODO if the vector is smaller than the matrix the missing components, should automatically be set to one
 \newcommand\transformVec[3][transformVecResult] {%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -1134,7 +1142,7 @@
     \newMatRow{vecA}{\xintNthElt{1}{#2}}
     \newMatRow{vecB}{\xintNthElt{2}{#2}}
     \newMatRow{vecC}{\xintNthElt{3}{#2}}
-    \newMatFromRowVec{tmpMatA}{\vecA, \vecB, \vecC}
+    \newMatFromRowVecs{tmpMatA}{\vecA, \vecB, \vecC}
     \vecToMatRow{row}{#2}
     \newMat{tmpMatB}{\row}
     \mulMat[#1]{\tmpMatA}{\tmpMatB}
@@ -1155,7 +1163,7 @@
 % #3 vector w, the second vector
 \newcommand\minVec[3][minVecResult]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of minVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of minVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
@@ -1181,7 +1189,7 @@
 % #3 vector w, the second vector
 \newcommand\maxVec[3][maxVecResult]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of maxVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the arguemtn, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of maxVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
