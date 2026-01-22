@@ -104,7 +104,7 @@
 % #2 scalars, the values that define the diagonal of the matrix
 \newcommand\newDiagMat[2]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newDiagMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newDiagMat seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
         \edef\tmpVector{\xintCSVtoList{#2}}%
         \newVec{rowA}{\xintNthElt{1}{\tmpVector}, 0, 0}
@@ -506,7 +506,7 @@
 % #3 matrices, the matrizes to add
 \newcommand\addMat[3][addMatResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of addMat seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of addMat seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -601,7 +601,7 @@
 % #3 scalar, the scalar to multiply with
 \newcommand\mulMatScalar[3][mulMatScalarResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of mulMatScalar seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of mulMatScalar seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -641,7 +641,7 @@
 % TODO if the vector is smaller than the matrix the missing components, should automatically be set to one
 \newcommand\mulMatVec[3][mulMatVecResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax

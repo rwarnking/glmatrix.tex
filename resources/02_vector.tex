@@ -11,7 +11,7 @@
 % #2 values, values that are assigned to #1
 \newcommand\newVec[2]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of newVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
         \expandafter\edef\csname #1\endcsname{\xintCSVtoList{#2}}%
     \fi
@@ -524,7 +524,7 @@
 % TODO add check that the variable name that is given does not match any other parameter, since this does not work
 \newcommand\subVec[3][subVecResult]{%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of subVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of subVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -815,7 +815,7 @@
 % #3 vector w, the second vector
 \newcommand\dotVec[3][dotVecResult] {%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of dotVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of dotVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -899,7 +899,7 @@
 % #2 vector, the vector which to normalize
 \newcommand\normalizeVec[2][normalizeVecResult] {%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of normalizeVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of normalizeVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -1040,7 +1040,7 @@
 % TODO if the vector is smaller than the matrix the missing components, should automatically be set to one
 \newcommand\transformVec[3][transformVecResult] {%
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of transformVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \if\noexpand#2\relax
@@ -1163,7 +1163,7 @@
 % #3 vector w, the second vector
 \newcommand\minVec[3][minVecResult]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of minVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of minVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
@@ -1189,7 +1189,7 @@
 % #3 vector w, the second vector
 \newcommand\maxVec[3][maxVecResult]{
     \if\noexpand#1\relax
-        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of maxVec seems to be a command but must be a string. If it is not a command you might have used to identical letter at the beginning of the argument, please change that.}
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of maxVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
     \else
     \fi
     \FPifeq{\expandafter\xintLength\expandafter{#2}}{\expandafter\xintLength\expandafter{#3}}
