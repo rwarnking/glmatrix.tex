@@ -7,11 +7,11 @@
 % Create a new matrix from the given values.
 % Equation: \(#1 = \mathbf{M} \in \R^{m\times n} = \begin{bmatrix} #2_{11} & \dots & #2_{1n}\\ \vdots & \ddots & \vdots\\ #2_{m1} & \dots & #2_{mn}\end{bmatrix}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\}\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&2&3\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0.5&2&3\end{pmatrix}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5\}\{4\}\{7\}\}\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5\\4\\7\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0.5\\4\\7\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 scalars, matrix values that are assigned to #1
 \newcommand\newMat[2]{
@@ -43,7 +43,7 @@
 % Example: \textbackslash newVec\{myRowVecB\}\{0, 2, 0\}
 % Example: \textbackslash newVec\{myRowVecC\}\{0, 0, 3\}
 % Example: \textbackslash newMatFromRowVecs\{myNewMatrix\}\{\textbackslash myRowVecA, \textbackslash myRowVecB, \textbackslash myRowVecC\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}1&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 rows, the rows that are used to construct the matrix
 \newcommand\newMatFromRowVecs[2]{%
@@ -89,7 +89,7 @@
 % Obacht: It is not necessary to call this to create a new matrix before using any of the arithmetic commands.
 % Equation: \(#1 = \mathbf{M} = \emptyset\)
 % Example: \textbackslash newEmptyMat\{myNewMatrix\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \emptyset\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \emptyset\)
 % #1 out, var name to save the result (matrix) to
 \newcommand\newEmptyMat[1]{
     \expandafter\edef\csname #1\endcsname{}%
@@ -99,7 +99,7 @@
 % Create a new diagonal matrix from the given vector.
 % Equation: \(#1 = \mathbf{M} \in \R^{3\times 3} = \begin{bmatrix} #2_1 & 0 & 0\\ 0 & #2_2 & 0\\ 0 & 0 & #2_3\end{bmatrix}\)
 % Example: \textbackslash newDiagMat\{myNewMatrix\}\{0.5,2,3\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.5&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0.5&0&0\\0&2&0\\0&0&3\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 scalars, the values that define the diagonal of the matrix
 \newcommand\newDiagMat[2]{
@@ -135,7 +135,7 @@
 % Equation: \(#1 = \mathbf{T} \in \R^{4\times 4} = \begin{bmatrix}1 & 0 & 0 & #2_x \\0 & 1 & 0 & #2_y \\0 & 0 & 1 & #2_z \\0 & 0 & 0 & 1\end{bmatrix}\)
 % Example: \textbackslash newVec\{vecTest\}\{5, 2, 3\}
 % Example: \textbackslash newTransMat\{myNewMatrix\}\{\textbackslash vecTest\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0&5\\0&1&0&2\\0&0&1&3\\0&0&0&1\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}1&0&0&5\\0&1&0&2\\0&0&1&3\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 vector t, the translation vector to construct the matrix from
 \newcommand\newTransMat[2]{%
@@ -186,7 +186,7 @@
 % Equation: \(#1 = \mathbf{S} \in \R^{4\times 4} = \begin{bmatrix}#2_x & 0 & 0 & 0 \\0 & #2_y & 0 & 0 \\0 & 0 & #2_z & 0 \\0 & 0 & 0 & 1\end{bmatrix}\)
 % Example: \textbackslash newVec\{vecTest\}\{5, 2, 3\}
 % Example: \textbackslash newScaleMat\{myNewMatrix\}\{\textbackslash vecTest\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}5&0&0&0\\0&2&0&0\\0&0&3&0\\0&0&0&1\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}5&0&0&0\\0&2&0&0\\0&0&3&0\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 vector s, the scaling vector to construct the matrix from
 \newcommand\newScaleMat[2]{%
@@ -237,7 +237,7 @@
 % Equation: \(#1 = \mathbf{R} \in \R^{3\times 3}\)
 % Example: \textbackslash newScalarPi\{scalarTest\}\{0.5\}
 % Example: \textbackslash newRotMatTwoD[myNewMatrix]\{\textbackslash scalarTest\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0&-1&0\\1&0&0\\0&0&1\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0&-1&0\\1&0&0\\0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 scalar, the rotation value
 \newcommand\newRotMatTwoD[2][rotMatResult]{%
@@ -257,7 +257,7 @@
 % Example: \textbackslash newVec\{dir\}\{0.5, 2, -3\}
 % Example: \textbackslash newVec\{pos\}\{5, 2, 3\}
 % Example: \textbackslash newLookAtMat[myNewMatrix]\{\textbackslash right\}\{\textbackslash up\}\{\textbackslash dir\}\{\textbackslash pos\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}5&2&3&-38\\0.5&1.75&2&-12\\-0.5&-2&3&-2.5\\0&0&0&1\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}5&2&3&-38\\0.5&1.75&2&-12\\-0.5&-2&3&-2.5\\0&0&0&1\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 right, the right vector
 % #3 up, the up vector
@@ -287,7 +287,7 @@
 % Create a new projection matrix.
 % Equation: \(#1 = \mathbf{P} \in \R^{4\times 4}\)
 % Example: \textbackslash newProjMat\{\textbackslash myNewMatrix\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&-1&0\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&-1&0\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 \newcommand\newProjMat[1]{%
     \newVec{tmpVecA}{1, 0, 0, 0}
@@ -304,7 +304,7 @@
 % Example: \textbackslash newScalar\{near\}\{1\}
 % Example: \textbackslash newScalar\{far\}\{6\}
 % Example: \textbackslash newFrustumMat[myNewMatrix]\{\textbackslash fovx\}\{\textbackslash fovy\}\{\textbackslash near\}\{\textbackslash far\}
-% Example: \textbackslash myNewMatrix \(\xrightarrow{} \begin{pmatrix}0.6174&0&0&0\\0&06174&0&0\\0&0&-1.4&-2.4\\0&0&-1&0\end{pmatrix}\)
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0.6174&0&0&0\\0&06174&0&0\\0&0&-1.4&-2.4\\0&0&-1&0\end{pmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 fovx, the fovx scalar
 % #3 fovy, the fovy scalar
@@ -379,7 +379,7 @@
 % Print the values of this matrix variable.
 % Equation: \(\begin{bmatrix} a_{11} & \dots & a_{1n}\\ \vdots & \ddots & \vdots\\ a_{m1} & \dots & a_{mn}\end{bmatrix}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
-% Example: \textbackslash printMat\{\textbackslash myNewMatrix\} \(\xrightarrow{} \begin{bmatrix} a_{11} & \dots & a_{1n}\\ \vdots & \ddots & \vdots\\ a_{m1} & \dots & a_{mn}\end{bmatrix}\)
+% Example: \textbackslash printMat\{\textbackslash myNewMatrix\} \(\mapsto{} \begin{bmatrix} a_{11} & \dots & a_{1n}\\ \vdots & \ddots & \vdots\\ a_{m1} & \dots & a_{mn}\end{bmatrix}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 matrix, the matrix that should be printed
 \newcommand\printMat[2][0]{%
@@ -413,7 +413,7 @@
 
 % Print only the diagonal values of this matrix variable.
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
-% Example: \textbackslash printMatDiag\{\textbackslash myNewMatrix\} \(\xrightarrow{} \text{diag}(a_{11}, a_{22}, a_{mm})\)
+% Example: \textbackslash printMatDiag\{\textbackslash myNewMatrix\} \(\mapsto{} \text{diag}(a_{11}, a_{22}, a_{mm})\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 matrix, the matrix that should be printed
 % TODO variable length
@@ -432,7 +432,7 @@
 % Equation: \(#1 = rows(\mathbf{M})\ \vert\ \mathbf{M} \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
 % Example: \textbackslash getMatHeight\{myNewMatrix\}
-% Example: \textbackslash matHeightResult \(\xrightarrow{} m\)
+% Example: \textbackslash matHeightResult \(\mapsto{} m\)
 % #1 out, var name to save the result (scalar) to
 % #2 matrix, the matrix from which to get the height
 \newcommand\getMatHeight[2][matHeightResult]{%
@@ -443,7 +443,7 @@
 % Equation: \(#1 = cols(\mathbf{M})\ \vert\ \mathbf{M} \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{\(a_{11},\dots,a_{1n}\)\}\{\(a_{21},\dots,a_{2n}\)\}\{\(a_{m1},\dots,a_{mn}\)\}\}\}
 % Example: \textbackslash getMatWidth\{myNewMatrix\}
-% Example: \textbackslash matWidthResult \(\xrightarrow{} n\)
+% Example: \textbackslash matWidthResult \(\mapsto{} n\)
 % #1 out, var name to save the result (scalar) to
 % #2 matrix, the matrix from which to get the width
 \newcommand\getMatWidth[2][matWidthResult]{%
@@ -458,7 +458,7 @@
 % but the result will be a matrix.
 % Equation: \(#1 = \trans{\mathbf{M}}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
-% Example: \textbackslash transposeMat\{\textbackslash myNewMatrix\} \(\xrightarrow{} \begin{bmatrix}0.5&4&7\\2&5&8\\3&6&9\end{bmatrix}\)
+% Example: \textbackslash transposeMat\{\textbackslash myNewMatrix\} \(\mapsto{} \begin{bmatrix}0.5&4&7\\2&5&8\\3&6&9\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix, the matrix to transpose
 \newcommand\transposeMat[2][transposeMatResult]{%
@@ -498,9 +498,9 @@
 % Example: \textbackslash newMat\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newMat\{myNewMatrixB\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash addMat\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
-% Example: \textbackslash addMatResult \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
+% Example: \textbackslash addMatResult \(\mapsto{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
 % Example: \textbackslash addMat[resultName]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix, the matrix to add to
 % #3 matrices, the matrizes to add
@@ -552,7 +552,7 @@
 % Example: \textbackslash newMat\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newMat\{myNewMatrixB\}\{\{\{0.25,1,2\}\{3,2,1\}\{3,3,3\}\}\}
 % Example: \textbackslash subMat[subMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
-% Example: \textbackslash subMatResult \(\xrightarrow{} \begin{bmatrix}0.25&1&1\\1&3&4\\4&5&6\end{bmatrix}\)
+% Example: \textbackslash subMatResult \(\mapsto{} \begin{bmatrix}0.25&1&1\\1&3&4\\4&5&6\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix, the matrix to subtract from
 % #3 matrices, the matrizes to subtract
@@ -593,9 +593,9 @@
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash mulMatScalar\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash mulMatScalarResult \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
+% Example: \textbackslash mulMatScalarResult \(\mapsto{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
 % Example: \textbackslash mulMatScalar[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{bmatrix}1&4&6\\8&10&12\\14&16&18\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix, the matrix to multiply
 % #3 scalar, the scalar to multiply with
@@ -632,9 +632,9 @@
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5, 1, 2\}\{4, 5, 6\}\{7, 8, 9\}\}\}
 % Example: \textbackslash mulMatVec\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
-% Example: \textbackslash mulMatVecResult \(\xrightarrow{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% Example: \textbackslash mulMatVecResult \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
 % Example: \textbackslash mulMatVec[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 matrix, the matrix to transform the vetor with
 % #3 vector, the vector to transform
@@ -708,7 +708,7 @@
 % Example: \textbackslash newMat\{myNewMatrixA\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash newMat\{myNewMatrixB\}\{\{\{0.25,1,2\}\{3,2,1\}\{3,3,3\}\}\}
 % Example: \textbackslash mulMat[mulMatResult]\{\textbackslash myNewMatrixA\}\{\textbackslash myNewMatrixB\}
-% Example: \textbackslash mulMatResult \(\xrightarrow{} \begin{bmatrix}15.125&13.5&12\\34&32&31\\52.75&50&49\end{bmatrix}\)
+% Example: \textbackslash mulMatResult \(\mapsto{} \begin{bmatrix}15.125&13.5&12\\34&32&31\\52.75&50&49\end{bmatrix}\)
 % #1 out, var name to save the result (matrix) to
 % #2 matrix M, the matrix to multiply
 % #3 matrix N, the matrix to multiply with
@@ -793,7 +793,7 @@
 % Equation: \(#1 = \mathbf{v} = trans(#2)\ \vert\ #2 \in \R^{m\times n}, \mathbf{v} \in \R^{m-1}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash getMatTranslation[matTranslationResult]\{\textbackslash myNewMatrix\}
-% Example: \textbackslash matTranslationResult \(\xrightarrow{} \begin{pmatrix}3\\6\\\end{pmatrix}\)
+% Example: \textbackslash matTranslationResult \(\mapsto{} \begin{pmatrix}3\\6\\\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 matrix, the matrix to extract the translation from
 \newcommand\getMatTranslation[2][matTranslationResult]{%
@@ -823,7 +823,7 @@
 % Equation: \(#1 = det(#2)\ \vert\ #2 \in \R^{m\times n}\)
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5,2,3\}\{4,5,6\}\{7,8,9\}\}\}
 % Example: \textbackslash detMat[detMatResult]\{\textbackslash myNewMatrix\}
-% Example: \textbackslash detMatResult \(\xrightarrow{} 1.5\)
+% Example: \textbackslash detMatResult \(\mapsto{} 1.5\)
 % #1 out, var name to save the result (scalar) to
 % #2 matrix, the matrix to calculate the determinate for
 \newcommand\detMat[2][detMatResult]{%

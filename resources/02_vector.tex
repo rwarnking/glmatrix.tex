@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%
 % Create a new vector and assign the given values.
 % Example: \textbackslash newVec\{myNewVec\}\{2, 3, 4\}
-% Example: \textbackslash myNewVec \(\xrightarrow{} \begin{pmatrix}2\\3\\4\end{pmatrix}\)
+% Example: \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}2\\3\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 values, values that are assigned to #1
 \newcommand\newVec[2]{%
@@ -19,7 +19,7 @@
 
 % Create a new vector and assign the given values as a multiple of pi.
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
-% Example: \textbackslash myNewVec \(\xrightarrow{} \begin{pmatrix}\frac{1}{2}\pi\\\pi\\2\pi\end{pmatrix}\)
+% Example: \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}\frac{1}{2}\pi\\\pi\\2\pi\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 values, values that are multiplied with pi and assigned to #1
 \newcommand\newVecPi[2]{%
@@ -40,7 +40,7 @@
 % The value is obtained by creating a random value between 0 and 1
 % and then interpolating between lower and upper bound.
 % Example: \textbackslash randomVec\{myNewVec\}\{4\}\{3\}\{10\}
-% Example: \textbackslash myNewVec \(\xrightarrow{} \begin{pmatrix}5, 4, 8, 4\end{pmatrix}\)
+% Example: \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}5, 4, 8, 4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 dimensions, scalar that defines the number of dimensions #1 should have
 % #3 lower bound, scalar that limits the possible values at the bottom
@@ -66,7 +66,7 @@
 % Copy values from one vector variable to another.
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash copyVec[copyVecResult]\{\textbackslash myNewVec\}
-% Example: \textbackslash copyVecResult \(\xrightarrow{} \begin{pmatrix}0.5\\ 1\\ 2\end{pmatrix}\)
+% Example: \textbackslash copyVecResult \(\mapsto{} \begin{pmatrix}0.5\\ 1\\ 2\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, vector which values are assigned to #1
 % TODO does it make sence to have the name be an optional parameter?
@@ -97,7 +97,7 @@
 % Obacht: It is not necessary to call this to create a new vector.
 % This is just for convenience when requiring a vector with initialized with zero.
 % Example: \textbackslash zeroVec[zeroVecResult]\{3\}
-% Example: \textbackslash zeroVecResult \(\xrightarrow{} \begin{pmatrix}0\\ 0\\ 0\end{pmatrix}\)
+% Example: \textbackslash zeroVecResult \(\mapsto{} \begin{pmatrix}0\\ 0\\ 0\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 dims, number of dimensions (rows)
 \newcommand\zeroVec[2][zeroVecResult]{%
@@ -115,7 +115,7 @@
 % Append a dimension with the given value to an already defined vector.
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1\}
 % Example: \textbackslash appendToVec\{myNewVec\}\{\textbackslash myNewVec\}\{-10\}
-% Example: \textbackslash myNewVec \(\xrightarrow{} \begin{pmatrix}0.5\\ 1\\ -10\end{pmatrix}\)
+% Example: \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}0.5\\ 1\\ -10\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the currently present values
 % #3 scalar, the scalar to add to #2
@@ -129,7 +129,7 @@
 % Print the values of the given vector in vector notation.
 % Equation: \(\begin{pmatrix} #2_1\\ \ldots\\ #2_n \end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
-% Example: \textbackslash printVec\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{pmatrix}1\\2\\3\end{pmatrix}\)
+% Example: \textbackslash printVec\{\textbackslash myNewVec\} \(\mapsto{} \begin{pmatrix}1\\2\\3\end{pmatrix}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
 \newcommand\printVec[2][0]{%
@@ -164,7 +164,7 @@
 % Print the values of the given vector in transposed notation.
 % Equation: \(\trans{(#2_1, \ldots, #2_n)}\)
 % Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
-% Example: \textbackslash printVecT\{\textbackslash myNewVec\} \(\xrightarrow{} \trans{(1, 2, 3)}\)
+% Example: \textbackslash printVecT\{\textbackslash myNewVec\} \(\mapsto{} \trans{(1, 2, 3)}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
 % TODO bug: last comma is shown when printing some fractions 0.5 and 0.25 work, 1.5, 2.5, 3.5 do not (all have number >1)
@@ -198,7 +198,7 @@
 % Print the values of the given vector in point notation.
 % Equation: \(\begin{bmatrix}#2_1\\ \ldots\\ #2_n\end{bmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{1, 2, 3\}
-% Example: \textbackslash printVecAsPoint\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
+% Example: \textbackslash printVecAsPoint\{\textbackslash myNewVec\} \(\mapsto{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
 \newcommand\printVecAsPoint[2][0]{%
@@ -222,7 +222,7 @@
 % Print the values of the given vector as a multiple of \(\pi\) in vector notation.
 % Equation: \(\begin{pmatrix}\left\{\frac{#2_1}{\pi}\right\}\\ \ldots\\ \left\{\frac{#2_n}{\pi}\right\}\end{pmatrix}\pi\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
-% Example: \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\xrightarrow{} \begin{pmatrix}0.5\pi\\\pi\\2\pi\end{pmatrix}\)
+% Example: \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\mapsto{} \begin{pmatrix}0.5\pi\\\pi\\2\pi\end{pmatrix}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
 \newcommand\printVecAsPi[2][0]{%
@@ -247,7 +247,7 @@
 % Print the values of the given vector as a multiple of Pi in transposed notation.
 % Equation: \(\trans{\left(\left\{\frac{#2_1}{\pi}\right\}, \ldots, \left\{\frac{#2_n}{\pi}\right\}\right)}\pi\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
-% Example: \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\xrightarrow{} \trans{(0.5\pi,\pi,2\pi)}\)
+% Example: \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\mapsto{} \trans{(0.5\pi,\pi,2\pi)}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector, the vector that should be printed
 \newcommand\printVecAsPiT[2][0]{%
@@ -294,7 +294,7 @@
 % Equation: \(#1 = dim(#2)\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash getVecHeight\{\textbackslash myNewVec\}
-% Example: \textbackslash vecHeightResult \(\xrightarrow{} 3\)
+% Example: \textbackslash vecHeightResult \(\mapsto{} 3\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector, the vector of which to return the height
 \newcommand\getVecHeight[2][vecHeightResult]{%
@@ -305,7 +305,7 @@
 % Equation: \(#2_1 * #3_1 + \ldots + #2_n * #3_n\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
-% Example: \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} 0.5*0.5+1*1+2*2\)
+% Example: \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} 0.5*0.5+1*1+2*2\)
 % Error: When both vectors do not have the same length
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector v, the first vector
@@ -335,7 +335,7 @@
 % Equation: \(\begin{pmatrix} #2_2*#3_3 - #2_3*#3_2\\ #2_3*#3_1-#2_1*#3_3\\ #2_1*#3_2-#3_2*#3_1 \end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{3, 4, 5\}
-% Example: \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}1*5 - 2*4\\ 2*3 - 0.5*5\\ 0.5*4 -1*3\end{pmatrix}\)
+% Example: \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}1*5 - 2*4\\ 2*3 - 0.5*5\\ 0.5*4 -1*3\end{pmatrix}\)
 % Error: When one of both vectors does not have length 3
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 vector v, the first vector
@@ -381,7 +381,7 @@
 % Equation: \(#2 = \begin{pmatrix}\lfloor #3_1\rceil\\\ldots\\\lfloor #3_n\rceil\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash roundVec\{myRoundedVec\}\{\textbackslash myNewVec\}
-% Example: \textbackslash myRoundedVec \(\xrightarrow{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
+% Example: \textbackslash myRoundedVec \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
 % #1 digits, number of digits after comma
 % #2 out, var name to save the result (vector) to
 % #3 vector, the vector that schould be rounded
@@ -400,7 +400,7 @@
 % Equation: \(#1 = \begin{pmatrix}\lceil #2_1\rceil\\\ldots\\\lceil #2_n\rceil\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash ceilVec[ceilVecResult]\{\textbackslash myNewVec\}
-% Example: \textbackslash ceilVecResult \(\xrightarrow{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
+% Example: \textbackslash ceilVecResult \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector that should be ceiled
 \newcommand\ceilVec[2][ceilVecResult]{
@@ -422,7 +422,7 @@
 % Equation: \(#1 = \begin{pmatrix}\lfloor #2_1\rfloor\\\ldots\\\lfloor #2_n\rfloor\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash floorVec[floorVecResult]\{\textbackslash myNewVec\}
-% Example: \textbackslash floorVecResult \(\xrightarrow{} \begin{pmatrix}0\\1\\2\end{pmatrix}\)
+% Example: \textbackslash floorVecResult \(\mapsto{} \begin{pmatrix}0\\1\\2\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector that should be floored
 \newcommand\floorVec[2][floorVecResult]{
@@ -440,7 +440,7 @@
 % Equation: \(#1 = \begin{pmatrix} \frac{#2_1}{#2_4} \\ \frac{#2_2}{#2_4} \\ \frac{#2_3}{#2_4} \end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2, 2\}
 % Example: \textbackslash dehomogenVec[dehomogenVecResult]\{\textbackslash myNewVec\}
-% Example: \textbackslash dehomogenVecResult \(\xrightarrow{} \begin{pmatrix}0.25\\0.5\\1\\1\end{pmatrix}\)
+% Example: \textbackslash dehomogenVecResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector that should be dehomogenized
 \newcommand\dehomogenVec[2][dehomogenVecResult]{
@@ -472,12 +472,12 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash addVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash addVecResult \(\xrightarrow{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
+% Example: \textbackslash addVecResult \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecC\}\{0.5, 1, 2\}
 % Example: \textbackslash addVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB, \textbackslash myNewVecC\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to add to
 % #3 vectors, the list of vectors with which to add
@@ -512,12 +512,12 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash subVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash subVecResult \(\xrightarrow{} \begin{pmatrix}0\\0\\0\end{pmatrix}\)
+% Example: \textbackslash subVecResult \(\mapsto{} \begin{pmatrix}0\\0\\0\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecC\}\{0.5, 1, 2\}
 % Example: \textbackslash subVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB, \textbackslash myNewVecC\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to subtract from
 % #3 vectors, the list of vectors with which to subtract
@@ -566,7 +566,7 @@
 % Equation: \begin{align*}#1 &= #2 \odot #3_1 \odot \ldots \odot #3_m\\ &= \begin{pmatrix}#2_1 * #3_{1,1} * \ldots * #3_{m,1}\\\ldots\\#2_n * #3_{1,n} * \ldots * #3_{m,n}\end{pmatrix}\end{align*}
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
-% Example: \textbackslash mulVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}0.25\\1\\4\end{pmatrix}\)
+% Example: \textbackslash mulVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}0.25\\1\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to multiply
 % #3 vectors, the list of vectors with which to multiply
@@ -599,7 +599,7 @@
 % Equation: \begin{align*}#1 &= #2 \oslash #3_1 \oslash \ldots \oslash #3_m\\ &= \begin{pmatrix}#2_1 / #3_{1,1} / \ldots / #3_{m,1}\\\ldots\\#2_n / #3_{1,n} / \ldots / #3_{m,n}\end{pmatrix}\end{align*}
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
-% Example: \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\xrightarrow{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
+% Example: \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to divide
 % #3 vectors, the list of vectors to divide with
@@ -641,7 +641,7 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash scaleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash scaleVecResult \(\xrightarrow{} \begin{pmatrix}1\\2\\4\end{pmatrix}\)
+% Example: \textbackslash scaleVecResult \(\mapsto{} \begin{pmatrix}1\\2\\4\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to scale
 % #3 scalar, the scalar to scale with
@@ -661,7 +661,7 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash divVecScalar\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash divVecScalarResult \(\xrightarrow{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
+% Example: \textbackslash divVecScalarResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to divide
 % #3 scalar, the scalar to divide with
@@ -685,7 +685,7 @@
 % Equation: \(#1 = \begin{pmatrix}-#2_1\\\ldots\\-#2_n\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash negateVecResult\{\textbackslash myNewVecA\}
-% Example: \textbackslash negateVecResult \(\xrightarrow{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
+% Example: \textbackslash negateVecResult \(\mapsto{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector to negate
 \newcommand\negateVec[2][negateVecResult]{
@@ -705,7 +705,7 @@
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash scaleAndAddVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash scaleAndAddVecResult \(\xrightarrow{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
+% Example: \textbackslash scaleAndAddVecResult \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector v, the vector to add to
 % #3 vector w, the vector that is multiplied and then added
@@ -721,7 +721,7 @@
 % Example: \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
 % Example: \textbackslash lerpVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash lerpVecResult \(\xrightarrow{} \begin{pmatrix}0.75\\1.5\\3\end{pmatrix}\)
+% Example: \textbackslash lerpVecResult \(\mapsto{} \begin{pmatrix}0.75\\1.5\\3\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector v, the start vector
 % #3 vector w, the end vector
@@ -807,9 +807,9 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}
 % Example: \textbackslash dotVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash dotVecResult \(\xrightarrow{} 10.5\)
+% Example: \textbackslash dotVecResult \(\mapsto{} 10.5\)
 % Example: \textbackslash dotVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash resultName \(\xrightarrow{} 10.5\)
+% Example: \textbackslash resultName \(\mapsto{} 10.5\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector v, the first vector
 % #3 vector w, the second vector
@@ -846,7 +846,7 @@
 % Equation: \(#1 = \norm{#2} = \sqrt{#2_1^2 + \ldots + #2_n^2}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash lenVec\{\textbackslash myNewVecA\}
-% Example: \textbackslash lenVecResult \(\xrightarrow{} 2.29\)
+% Example: \textbackslash lenVecResult \(\mapsto{} 2.29\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector, the vector for which to calculate the length
 \newcommand\lenVec[2][lenVecResult] {%
@@ -870,7 +870,7 @@
 % Equation: \(#1 = \norm{#2}^2 = #2_1^2 + \ldots + #2_n^2\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash sqrLenVec\{\textbackslash myNewVecA\}
-% Example: \textbackslash sqrLenVecResult \(\xrightarrow{} 5.25\)
+% Example: \textbackslash sqrLenVecResult \(\mapsto{} 5.25\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector, the vector for which to calculate the squared length
 \newcommand\sqrLenVec[2][sqrLenVecResult] {%
@@ -892,9 +892,9 @@
 % Equation: \(#1 = \begin{pmatrix} \frac{#2_1}{\norm{#2}}\\ \ldots\\ \frac{#2_n}{\norm{#2}}\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash normalizeVec\{\textbackslash myNewVecA\}
-% Example: \textbackslash normalizeVecResult \(\xrightarrow{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)
+% Example: \textbackslash normalizeVecResult \(\mapsto{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)
 % Example: \textbackslash normalizeVec[resultName]\{\textbackslash myNewVecA\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector which to normalize
 \newcommand\normalizeVec[2][normalizeVecResult] {%
@@ -917,7 +917,7 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 0, 2\}
 % Example: \textbackslash crossVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash crossVecResult \(\xrightarrow{} \begin{pmatrix} 2\\ 0\\ -0.5\end{pmatrix}\)
+% Example: \textbackslash crossVecResult \(\mapsto{} \begin{pmatrix} 2\\ 0\\ -0.5\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector v, the first vector
 % #3 vector w, the second vector
@@ -960,7 +960,7 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash angleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash angleVecResult \(\xrightarrow{} TODO scalar\)
+% Example: \textbackslash angleVecResult \(\mapsto{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector v, the first vector
 % #3 vector w, the second vector
@@ -985,7 +985,7 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash distVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash distVecResult \(\xrightarrow{} TODO scalar\)
+% Example: \textbackslash distVecResult \(\mapsto{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector v, the first vector
 % #3 vector w, the second vector
@@ -1001,7 +1001,7 @@
 % Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
 % Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
 % Example: \textbackslash sqrDistVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
-% Example: \textbackslash sqrDistVecResult \(\xrightarrow{} TODO scalar\)
+% Example: \textbackslash sqrDistVecResult \(\mapsto{} TODO scalar\)
 % #1 out, var name to save the result (scalar) to
 % #2 vector v, the first vector
 % #3 vector w, the second vector
@@ -1031,9 +1031,9 @@
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
 % Example: \textbackslash newMat\{myNewMatrix\}\{\{\{0.5, 1, 2\}\{4, 5, 6\}\{7, 8, 9\}\}\}
 % Example: \textbackslash transformVec\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
-% Example: \textbackslash transformVecResult \(\xrightarrow{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% Example: \textbackslash transformVecResult \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
 % Example: \textbackslash transformVec[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}
-% Example: \textbackslash resultName \(\xrightarrow{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% Example: \textbackslash resultName \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 matrix, the matrix to transform the vetor with
 % #3 vector, the vector to transform

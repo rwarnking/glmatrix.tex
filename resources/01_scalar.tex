@@ -144,7 +144,7 @@
 %%%%%%%%%%%%%%%%%%%
 % Create a new scalar and assign the given value.
 % Example: \textbackslash newScalar\{myNewScalar\}\{3\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{}\) 3
+% Example: \textbackslash myNewScalar \(\mapsto{}\) 3
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, scalar value that is assigned to out
 \newcommand\newScalar[2]{%
@@ -153,7 +153,7 @@
 
 % Create a new scalar and assign the given value as a multiple of pi.
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{3\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{}\) 9.42
+% Example: \textbackslash myNewScalar \(\mapsto{}\) 9.42
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, scalar value that is multiplied with pi and assigned to out
 \newcommand\newScalarPi[2]{
@@ -163,7 +163,7 @@
 
 % Create a scalar from a given fraction
 % Example: \textbackslash newScalarFraction\{myScalarFraction\}\{3\}\{10\}
-% Example: \textbackslash myScalarFraction \(\xrightarrow{}\frac{3}{10}\)
+% Example: \textbackslash myScalarFraction \(\mapsto{}\frac{3}{10}\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar n, nominator
 % #3 scalar d, denominator
@@ -176,7 +176,7 @@
 % upper bound. The value is obtained by creating a random value between 0 and 1
 % and then interpolating between lower and upper bound.
 % Example: \textbackslash randomScalar\{myRandomScalar\}\{3\}\{10\}
-% Example: \textbackslash myRandomScalar \(\xrightarrow{}\) 5
+% Example: \textbackslash myRandomScalar \(\mapsto{}\) 5
 % #1 out, var name to save the result (scalar) to
 % #2 lower bound, scalar that limits the possible values at the bottom
 % #3 upper bound, scalar that limits the possible values at the top
@@ -193,7 +193,7 @@
 % Copy the value of one scalar variable to another.
 % Example: \textbackslash newScalar\{myNewScalar\}\{3\}
 % Example: \textbackslash copyScalar\{myCopyScalar\}\{\textbackslash myNewScalar\}
-% Example: \textbackslash myCopyScalar \(\xrightarrow{}\) 3
+% Example: \textbackslash myCopyScalar \(\mapsto{}\) 3
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, scalar which value is assigned to out
 \newcommand\copyScalar[2][scalarCopyResult]{%
@@ -207,7 +207,7 @@
 % Set the value of a given scalar.
 % Example: \textbackslash newScalar\{myNewScalar\}\{3\}
 % Example: \textbackslash setScalar\{myNewScalar\}\{4\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{}\) 4
+% Example: \textbackslash myNewScalar \(\mapsto{}\) 4
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, scalar value that is assigned to out
 \newcommand\setScalar[2]{%
@@ -217,7 +217,7 @@
 % TODO decide whether to use the low level assignments or use the functions like setScalar to set the variable
 % Set or create a scalar with value 0.
 % Example: \textbackslash zeroScalar\{myZeroScalar\}
-% Example: \textbackslash myZeroScalar \(\xrightarrow{}\) 0
+% Example: \textbackslash myZeroScalar \(\mapsto{}\) 0
 % #1 out, var name to save the result (scalar) to
 \newcommand\zeroScalar[1]{%
     \expandafter\edef\csname #1\endcsname{0}%
@@ -228,7 +228,7 @@
 %%%%%%%%%%%%%%%%%%%
 % Print the value of the given scalar.
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
-% Example: \textbackslash printScalar[1]\{\textbackslash myNewScalar\} \(\xrightarrow{} \frac{1}{2}\)
+% Example: \textbackslash printScalar[1]\{\textbackslash myNewScalar\} \(\mapsto{} \frac{1}{2}\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 scalar, the scalar that should be printed
 % TODO ensure math to remove additional whitespace
@@ -244,7 +244,7 @@
 % Print the value of the given scalar as a multiple of Pi.
 % Equation: \(\left\{\frac{#2}{\pi}\right\}\pi\)
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{0.5\}
-% Example: \textbackslash printScalarAsPi[1]\{\textbackslash myNewScalar\} \(\xrightarrow{} \frac{1}{2} \pi\)
+% Example: \textbackslash printScalarAsPi[1]\{\textbackslash myNewScalar\} \(\mapsto{} \frac{1}{2} \pi\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 scalar, the scalar that should be printed
 \newcommand\printScalarAsPi[2][0]{%
@@ -263,7 +263,7 @@
 % A degree sign is automatically added.
 % Equation: \(\left\{\frac{#2*180}{\pi}\right\}^\circ\)
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{0.5\}
-% Example: \textbackslash printPiScalarInDegree[1]\{\textbackslash myNewScalar\} \(\xrightarrow{} 90^\circ\)
+% Example: \textbackslash printPiScalarInDegree[1]\{\textbackslash myNewScalar\} \(\mapsto{} 90^\circ\)
 % #1 fraction, whether or not the value should be printed as a fraction (val=1)
 % #2 scalar, the value that schould be printed
 \newcommand\printPiScalarInDegree[2][0]{%
@@ -281,7 +281,7 @@
 % TODO rename to roundScalar / printScalarRounded
 % Print the rounded value of the given scalar.
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
-% Example: \textbackslash printScalarRounded\{\textbackslash myNewScalar\} \(\xrightarrow{} 1\)
+% Example: \textbackslash printScalarRounded\{\textbackslash myNewScalar\} \(\mapsto{} 1\)
 % #1 digits, number of digits after comma
 % #2 scalar, the value that schould be printed
 \newcommand\printScalarRounded[2][4]{%
@@ -298,7 +298,7 @@
 % Round the value ot the given scalar and save it.
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
 % Example: \textbackslash roundScalar\{\textbackslash myNewScalar\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{} 1\)
+% Example: \textbackslash myNewScalar \(\mapsto{} 1\)
 % #1 digits, number of digits after comma
 % #2 scalar, the value that schould be rounded
 \newcommand\roundScalar[2][4]{%
@@ -310,7 +310,7 @@
 % Ceil the value of the given scalar.
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
 % Example: \textbackslash ceilScalar\{\textbackslash myNewScalar\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{} 1\)
+% Example: \textbackslash myNewScalar \(\mapsto{} 1\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar that schould be ceiled
 \newcommand\ceilScalar[2][scalarCeilResult]{
@@ -327,7 +327,7 @@
 % Floor the value of the given scalar.
 % Example: \textbackslash newScalar\{myNewScalar\}\{0.5\}
 % Example: \textbackslash floorScalar\{\textbackslash myNewScalar\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{} 0\)
+% Example: \textbackslash myNewScalar \(\mapsto{} 0\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar that schould be floored
 \newcommand\floorScalar[2][scalarFloorResult]{
@@ -338,7 +338,7 @@
 % Remove all trailing zeros from the value of the given scalar.
 % Example: \textbackslash newScalar\{myNewScalar\}\{5.0000\}
 % Example: \textbackslash clipScalar\{\textbackslash myNewScalar\}
-% Example: \textbackslash myNewScalar \(\xrightarrow{} 5\)
+% Example: \textbackslash myNewScalar \(\mapsto{} 5\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar from which the zeros should be removed
 \newcommand\clipScalar[2][clipScalarResult]{
@@ -350,7 +350,7 @@
 % TODO newcommand toDegree
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{0.5\}
 % Example: \textbackslash radianToDegree\{\textbackslash myNewScalar\}
-% Example: \textbackslash radianToDegreeResult \(\xrightarrow{} 90\)
+% Example: \textbackslash radianToDegreeResult \(\mapsto{} 90\)
 % Convert the value of the given scalar to degree.
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar which to convert
@@ -364,7 +364,7 @@
 % Convert the value of the given scalar to radian.
 % Example: \textbackslash newScalarPi\{myNewScalar\}\{180\}
 % Example: \textbackslash toRadian\{\textbackslash myNewScalar\}
-% Example: \textbackslash degreeToRadianResult \(\xrightarrow{} 1.5707\)
+% Example: \textbackslash degreeToRadianResult \(\mapsto{} 1.5707\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar which to convert
 \newcommand\toRadian[2][degreeToRadianResult]{
@@ -381,7 +381,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{1\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{2\}
 % Example: \textbackslash addScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash scalarAddResult \(\xrightarrow{} 3\)
+% Example: \textbackslash scalarAddResult \(\mapsto{} 3\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the first scalar of the sum
 % #3 scalar t, the second scalar of the sum
@@ -395,7 +395,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{1\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{2\}
 % Example: \textbackslash subScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash scalarSubResult \(\xrightarrow{} -1\)
+% Example: \textbackslash scalarSubResult \(\mapsto{} -1\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the scalar to subtract from
 % #3 scalar t, the scalar to subtract
@@ -409,7 +409,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash mulScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash scalarMulResult \(\xrightarrow{} 6\)
+% Example: \textbackslash scalarMulResult \(\mapsto{} 6\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the scalar to multiply
 % #3 scalar t, the scalar with which to multply
@@ -424,7 +424,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{6\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash divScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash scalarDivResult \(\xrightarrow{} 2\)
+% Example: \textbackslash scalarDivResult \(\mapsto{} 2\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the scalar to divide
 % #3 scalar t, the scalar to divide with
@@ -442,7 +442,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash powScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash scalarPowResult \(\xrightarrow{} 8\)
+% Example: \textbackslash scalarPowResult \(\mapsto{} 8\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the scalar to raise
 % #3 scalar t, the scalar with which to raise
@@ -456,7 +456,7 @@
 % Equation: \(#1 = -#2\)
 % Example: \textbackslash newScalar\{myNewScalar\}\{2\}
 % Example: \textbackslash negateScalar\{\textbackslash myNewScalar\}
-% Example: \textbackslash scalarNegateResult \(\xrightarrow{} -2\)
+% Example: \textbackslash scalarNegateResult \(\mapsto{} -2\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar to negate
 \newcommand\negateScalar[2][scalarNegateResult]{%
@@ -468,7 +468,7 @@
 % Equation: \(#1 = arccos(#2)\)
 % Example: \textbackslash newScalar\{myNewScalar\}\{TODO\}
 % Example: \textbackslash arccosScalar\{\textbackslash myNewScalar\}
-% Example: \textbackslash scalarArccosResult \(\xrightarrow{} TODO\)
+% Example: \textbackslash scalarArccosResult \(\mapsto{} TODO\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar to calculate the arccos for
 \newcommand\arccosScalar[2][scalarArccosResult]{%
@@ -481,7 +481,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash mulAndAddScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash scalarMulAndAddResult \(\xrightarrow{} 11\)
+% Example: \textbackslash scalarMulAndAddResult \(\mapsto{} 11\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the scalar to add to
 % #3 scalar t, the scalar that is multiplied and then added
@@ -498,7 +498,7 @@
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash newScalar\{myNewScalarT\}\{0.5\}
 % Example: \textbackslash lerpScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}\{\textbackslash myNewScalarT\}
-% Example: \textbackslash lerpScalarResult \(\xrightarrow{} 2.5\)
+% Example: \textbackslash lerpScalarResult \(\mapsto{} 2.5\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar i, the start scalar
 % #3 scalar j, the end scalar
@@ -523,7 +523,7 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash minScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash minScalarResult \(\xrightarrow{} 2\)
+% Example: \textbackslash minScalarResult \(\mapsto{} 2\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, the first scalar
 % #3 scalar t, the second scalar
@@ -541,9 +541,9 @@
 % Example: \textbackslash newScalar\{myNewScalarA\}\{2\}
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash maxScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash maxScalarResult \(\xrightarrow{} 3\)
+% Example: \textbackslash maxScalarResult \(\mapsto{} 3\)
 % Example: \textbackslash maxScalar[resultName]\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}
-% Example: \textbackslash resultName \(\xrightarrow{} 3\)
+% Example: \textbackslash resultName \(\mapsto{} 3\)
 % #1 out, var name to save the result (scalar) to
 % #2 scalar s, first scalar value
 % #3 scalar t, second scalar value
@@ -561,7 +561,7 @@
 % Example: \textbackslash newScalar\{myNewScalarB\}\{3\}
 % Example: \textbackslash newScalar\{myNewScalarC\}\{4\}
 % Example: \textbackslash betweenScalar\{\textbackslash myNewScalarA\}\{\textbackslash myNewScalarB\}\{\textbackslash myNewScalarC\}
-% Example: \textbackslash betweenScalarResult \(\xrightarrow{} 1\)
+% Example: \textbackslash betweenScalarResult \(\mapsto{} 1\)
 % #1 out, var name to save the result (scalar) to (0 or 1)
 % #2 scalar, the scalar to test
 % #3 lower bound, #2 needs to be greater then this for this macro to return 1
