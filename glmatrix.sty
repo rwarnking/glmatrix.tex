@@ -15,7 +15,7 @@
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{glmatrix}[2026/01/22 v0.1 Math library for computer graphics]
+\ProvidesPackage{glmatrix}[2026/02/24 v0.1 Math library for computer graphics]
 
 \RequirePackage{xinttools}
 \RequirePackage{xintfrac}
@@ -24,6 +24,9 @@
 \newcommand{\R}{\ensuremath{\textrm{I\!R}}}
 \newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
 \newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
+
+
+
 
 
 
@@ -208,18 +211,33 @@
 }
 
 \newcommand\ceilScalar[2][scalarCeilResult]{
-    \FPifint{#2}
-        \FPset\tmp{#2}
+    \FPtrunc\tmp{#2}{0}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifpos{#2}
+        \FPadd\tmpSave{\tmp}{1}
     \else
-        \FPadd\tmp{#2}{1}
     \fi
-    \FPtrunc\tmp\tmp{0}
-    \newScalar{#1}{\tmp}
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
 }
 
 \newcommand\floorScalar[2][scalarFloorResult]{
     \FPtrunc\tmp{#2}{0}
-    \newScalar{#1}{\tmp}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifneg{#2}
+        \FPsub\tmpSave{\tmp}{1}
+    \else
+    \fi
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
 }
 
 \newcommand\clipScalar[2][clipScalarResult]{
@@ -274,7 +292,9 @@
 }
 
 \newcommand\arccosScalar[2][scalarArccosResult]{%
-    \FParccos\tmp{#2}
+    \FPround\tmp{#2}{8}
+    \FPclip\tmp\tmp
+    \FParccos\tmp\tmp
     \newScalar{#1}{\tmp}
 }
 
@@ -739,24 +759,20 @@
     }
 }
 
-\newcommand\roundVec[3][4]{%
-    \xintFor* ##1 in #3 \do {%
-        \FPround\tmp{##1}{#1}
+\newcommand\roundVec[3][roundVecResult]{%
+    \xintFor* ##3 in #2 \do {%
+        \FPround\tmp{##3}{#3}
         \xintifForFirst{%
-            \newVec{#2}{\tmp}
+            \newVec{#1}{\tmp}
         }{%
-            \appendToVec{#2}{\csname #2\endcsname}{\tmp}
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
         }
     }
 }
 
 \newcommand\ceilVec[2][ceilVecResult]{
     \xintFor* ##1 in #2 \do {%
-        \FPifint{##1}
-        \else
-            \FPadd\tmp{##1}{1}
-        \fi
-        \FPtrunc\tmp\tmp{0}
+        \ceilScalar[tmp]{##1}
         \xintifForFirst{%
             \newVec{#1}{\tmp}
         }{%
@@ -767,7 +783,7 @@
 
 \newcommand\floorVec[2][floorVecResult]{
     \xintFor* ##1 in #2 \do {%
-        \FPtrunc\tmp{##1}{0}
+        \floorScalar[tmp]{##1}
         \xintifForFirst{%
             \newVec{#1}{\tmp}
         }{%
@@ -777,12 +793,10 @@
 }
 
 \newcommand\dehomogenVec[2][dehomogenVecResult]{
-    % TODO check if 4 long or get last comp
-    \FPset\tmpDiv{\xintNthElt{4}{#2}}
-    % \FPadd\tmpDiv\tmpDiv{1}
-    \edef\numElems{#2}
-    \edef\vecLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
-    \xintFor* ##1 in \vecLength \do {%
+    \getVecHeight{#2}
+    \FPset\tmpDiv{\xintNthElt{\vecHeightResult}{#2}}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \xintFor* ##1 in \sequence \do {%
         \xintifForFirst{%
             \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
             \newVec{tmpVec}{\divResult}
@@ -931,6 +945,14 @@
 }
 
 \newcommand\divVecScalar[3][divVecScalarResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of divVecScalar seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of divVecScalar does not seem to be a command}
+    \fi
     \FPifeq{#3}{0}
         \PackageError{glmatrix package}{In div vector by scalar}{divisor is 0}
     \else
@@ -958,7 +980,7 @@
 
 \newcommand\scaleAndAddVec[4][scaleAndAddVecResult]{
     \scaleVec{#3}{#4}
-    \addVec[#1]{#2, \scaleVecResult}
+    \addVec[#1]{#2}{\scaleVecResult}
 }
 
 \newcommand\lerpVec[4][lerpVecResult]{
@@ -992,7 +1014,7 @@
     \FPdiv\ratioB\ratioB\angleTotal
     \scaleVec[tmpA]{#2}{\ratioA}
     \scaleVec[tmpB]{#3}{\ratioB}
-    \addVec[#1]{\tmpA, \tmpB}
+    \addVec[#1]{\tmpA}{\tmpB}
 }
 
 \newcommand\hermiteVec[6][hermiteVecResult] {%
@@ -1013,7 +1035,7 @@
     \scaleVec[tmpB]{#3}{\factorB}
     \scaleVec[tmpC]{#4}{\factorC}
     \scaleVec[tmpD]{#5}{\factorD}
-    \addVec[#1]{\tmpA, \tmpB, \tmpC, \tmpD}
+    \addVec[#1]{\tmpA}{\tmpB, \tmpC, \tmpD}
 }
 
 \newcommand\dotVec[3][dotVecResult] {%
@@ -1046,6 +1068,14 @@
 }
 
 \newcommand\lenVec[2][lenVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of lenVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of lenVec does not seem to be a command}
+    \fi
     \FPset\normTotal{0}
     \FPset\iterVal{0}
     % Iterate each value, multiply it with itself and sum up
@@ -1122,6 +1152,25 @@
     \FPmul\tmp\ab\ba
     \FPsub\scalarZ\scalarZ\tmp
     \newVec{#1}{\scalarX,\scalarY,\scalarZ}
+}
+
+\newcommand\crossVecTwoD[3][crossVecResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{2}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{2}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
+    \fi
+    \FPset\aa
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPmul\scalarUxVy{\xintNthElt{1}{#2}}{\xintNthElt{2}{#3}}
+    \FPmul\scalarUyVx{\xintNthElt{2}{#2}}{\xintNthElt{1}{#3}}
+    \FPsub\scalarResult{\scalarUxVy}{\scalarUyVx}
+    \newScalar{#1}{\scalarResult}
 }
 
 \newcommand\angleVec[3][angleVecResult] {%
@@ -1223,13 +1272,9 @@
 }
 
 \newcommand\tensorVec[2][tensorVecResult]{%
-    \newMatRow{vecA}{\xintNthElt{1}{#2}}
-    \newMatRow{vecB}{\xintNthElt{2}{#2}}
-    \newMatRow{vecC}{\xintNthElt{3}{#2}}
-    \newMatFromRowVecs{tmpMatA}{\vecA, \vecB, \vecC}
-    \vecToMatRow{row}{#2}
-    \newMat{tmpMatB}{\row}
-    \mulMat[#1]{\tmpMatA}{\tmpMatB}
+    \newMatFromRowVecs{rowMatrix}{#2}
+    \newMatFromColVecs{colMatrix}{#2}
+    \mulMat[#1]{\colMatrix}{\rowMatrix}
 }
 
 \newcommand\minVec[3][minVecResult]{
@@ -1475,6 +1520,50 @@
     \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC}
 }
 
+\newcommand\newRotMat[3][rotMatResult]{%
+    \normalizeVec[normalizedAxis]{#2}
+    \toRadian[angleInRadian]{#3}
+    \FPcos\tmpCos{\angleInRadian}
+    \FPsin\tmpSin{\angleInRadian}
+    \subScalar[tmpCosMOne]{1}{\tmpCos}
+    \mulScalar[xsquared]{\xintNthElt{1}{\normalizedAxis}}{\xintNthElt{1}{\normalizedAxis}}
+    \mulScalar[xy]{\xintNthElt{1}{\normalizedAxis}}{\xintNthElt{2}{\normalizedAxis}}
+    \mulScalar[xz]{\xintNthElt{1}{\normalizedAxis}}{\xintNthElt{2}{\normalizedAxis}}
+    \mulScalar[ysquared]{\xintNthElt{2}{\normalizedAxis}}{\xintNthElt{2}{\normalizedAxis}}
+    \mulScalar[yz]{\xintNthElt{2}{\normalizedAxis}}{\xintNthElt{3}{\normalizedAxis}}
+    \mulScalar[zsquared]{\xintNthElt{3}{\normalizedAxis}}{\xintNthElt{3}{\normalizedAxis}}
+    %
+    \mulScalar[xsin]{\xintNthElt{1}{\normalizedAxis}}{\tmpSin}
+    \mulScalar[ysin]{\xintNthElt{2}{\normalizedAxis}}{\tmpSin}
+    \mulScalar[zsin]{\xintNthElt{3}{\normalizedAxis}}{\tmpSin}
+    %
+    \mulScalar[oneone]{\xsquared}{\tmpCosMOne}
+    \addScalar[oneone]{\oneone}{\tmpCos}
+    \mulScalar[onetwo]{\xy}{\tmpCosMOne}
+    \subScalar[onetwo]{\onetwo}{\zsin}
+    \mulScalar[onethree]{\xz}{\tmpCosMOne}
+    \addScalar[onethree]{\onethree}{\ysin}
+    %
+    \mulScalar[twoone]{\xsquared}{\tmpCosMOne}
+    \addScalar[twoone]{\twoone}{\zsin}
+    \mulScalar[twotwo]{\xy}{\tmpCosMOne}
+    \addScalar[twotwo]{\twotwo}{\tmpCos}
+    \mulScalar[twothree]{\xz}{\tmpCosMOne}
+    \subScalar[twothree]{\twothree}{\xsin}
+    %
+    \mulScalar[threeone]{\xsquared}{\tmpCosMOne}
+    \subScalar[threeone]{\threeone}{\ysin}
+    \mulScalar[threetwo]{\xy}{\tmpCosMOne}
+    \addScalar[threetwo]{\threetwo}{\xsin}
+    \mulScalar[threethree]{\xz}{\tmpCosMOne}
+    \addScalar[threethree]{\threethree}{\tmpCos}
+    %
+    \newVec{rowA}{\oneone, \onetwo, \onethree}
+    \newVec{rowB}{\twoone, \twotwo, \twothree}
+    \newVec{rowC}{\threeone, \threetwo, \threethree}
+    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+}
+
 \newcommand\newLookAtMat[5][lookAtMatResult]{%
     \dotVec[scalarRC]{#2}{#5}
     \mulScalar[scalarRC]{\scalarRC}{-1}
@@ -1501,6 +1590,17 @@
     \newVec{tmpVecB}{0, 1, 0, 0}
     \newVec{tmpVecC}{0, 0, 1, 0}
     \newVec{tmpVecD}{0, 0, -1, 0}
+    \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
+}
+
+\newcommand\newProjMatGen[3]{%
+    \divScalar[glmNxDelta]{\xintNthElt{1}{#2}}{#3}
+    \divScalar[glmNyDelta]{\xintNthElt{2}{#2}}{#3}
+    \divScalar[glmNzDelta]{\xintNthElt{3}{#2}}{#3}
+    \newVec{tmpVecA}{1, 0, 0, 0}
+    \newVec{tmpVecB}{0, 1, 0, 0}
+    \newVec{tmpVecC}{0, 0, 1, 0}
+    \newVec{tmpVecD}{\glmNxDelta, \glmNyDelta, \glmNzDelta, 0}
     \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
@@ -1876,7 +1976,7 @@
     \subScalar[#1]{\tmpAD}{\tmpBC}
 }
 
-%% Copyright (C) 2026/01/22 by
+%% Copyright (C) 2026/02/24 by
 %%   Rene Warnking <TODO>
 %% 
 %% It may be distributed and/or modified under the conditions of
