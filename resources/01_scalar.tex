@@ -314,13 +314,18 @@
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar that schould be ceiled
 \newcommand\ceilScalar[2][scalarCeilResult]{
-    \FPifint{#2}
-        \FPset\tmp{#2}
+    \FPtrunc\tmp{#2}{0}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifpos{#2}
+        \FPadd\tmpSave{\tmp}{1}
     \else
-        \FPadd\tmp{#2}{1}
     \fi
-    \FPtrunc\tmp\tmp{0}
-    \newScalar{#1}{\tmp}
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
 }
 
 % TODO why is it necessary to create a new scalar?
@@ -332,7 +337,17 @@
 % #2 scalar, the scalar that schould be floored
 \newcommand\floorScalar[2][scalarFloorResult]{
     \FPtrunc\tmp{#2}{0}
-    \newScalar{#1}{\tmp}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifneg{#2}
+        \FPsub\tmpSave{\tmp}{1}
+    \else
+    \fi
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
 }
 
 % Remove all trailing zeros from the value of the given scalar.
@@ -472,7 +487,9 @@
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar to calculate the arccos for
 \newcommand\arccosScalar[2][scalarArccosResult]{%
-    \FParccos\tmp{#2}
+    \FPround\tmp{#2}{8}
+    \FPclip\tmp\tmp
+    \FParccos\tmp\tmp
     \newScalar{#1}{\tmp}
 }
 

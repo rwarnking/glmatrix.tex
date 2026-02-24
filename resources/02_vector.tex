@@ -380,18 +380,18 @@
 % Round the values ot the given vector.
 % Equation: \(#2 = \begin{pmatrix}\lfloor #3_1\rceil\\\ldots\\\lfloor #3_n\rceil\end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}
-% Example: \textbackslash roundVec\{myRoundedVec\}\{\textbackslash myNewVec\}
-% Example: \textbackslash myRoundedVec \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
-% #1 digits, number of digits after comma
-% #2 out, var name to save the result (vector) to
-% #3 vector, the vector that schould be rounded
-\newcommand\roundVec[3][4]{%
-    \xintFor* ##1 in #3 \do {%
-        \FPround\tmp{##1}{#1}
+% Example: \textbackslash roundVec[roundVecResult]\{\textbackslash myNewVec\}\{0\}
+% Example: \textbackslash roundVecResult \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
+% #1 out, var name to save the result (vector) to
+% #2 vector, the vector that schould be rounded
+% #3 digits, number of digits after comma
+\newcommand\roundVec[3][roundVecResult]{%
+    \xintFor* ##3 in #2 \do {%
+        \FPround\tmp{##3}{#3}
         \xintifForFirst{%
-            \newVec{#2}{\tmp}
+            \newVec{#1}{\tmp}
         }{%
-            \appendToVec{#2}{\csname #2\endcsname}{\tmp}
+            \appendToVec{#1}{\csname #1\endcsname}{\tmp}
         }
     }
 }
@@ -405,11 +405,7 @@
 % #2 vector, the vector that should be ceiled
 \newcommand\ceilVec[2][ceilVecResult]{
     \xintFor* ##1 in #2 \do {%
-        \FPifint{##1}
-        \else
-            \FPadd\tmp{##1}{1}
-        \fi
-        \FPtrunc\tmp\tmp{0}
+        \ceilScalar[tmp]{##1}
         \xintifForFirst{%
             \newVec{#1}{\tmp}
         }{%
@@ -427,7 +423,7 @@
 % #2 vector, the vector that should be floored
 \newcommand\floorVec[2][floorVecResult]{
     \xintFor* ##1 in #2 \do {%
-        \FPtrunc\tmp{##1}{0}
+        \floorScalar[tmp]{##1}
         \xintifForFirst{%
             \newVec{#1}{\tmp}
         }{%
@@ -436,20 +432,18 @@
     }
 }
 
-% Dehomogenize the values of the given vector. This divides all vector components by the forth component.
-% Equation: \(#1 = \begin{pmatrix} \frac{#2_1}{#2_4} \\ \frac{#2_2}{#2_4} \\ \frac{#2_3}{#2_4} \end{pmatrix}\)
+% Dehomogenize the values of the given vector. This divides all vector components by the last component.
+% Equation: \(#1 = \begin{pmatrix} \frac{#2_1}{#2_n} \\ \ldots \\ \frac{#2_{n-1}}{#2_n} \end{pmatrix}\)
 % Example: \textbackslash newVec\{myNewVec\}\{0.5, 1, 2, 2\}
 % Example: \textbackslash dehomogenVec[dehomogenVecResult]\{\textbackslash myNewVec\}
 % Example: \textbackslash dehomogenVecResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\\1\end{pmatrix}\)
 % #1 out, var name to save the result (vector) to
 % #2 vector, the vector that should be dehomogenized
 \newcommand\dehomogenVec[2][dehomogenVecResult]{
-    % TODO check if 4 long or get last comp
-    \FPset\tmpDiv{\xintNthElt{4}{#2}}
-    % \FPadd\tmpDiv\tmpDiv{1}
-    \edef\numElems{#2}
-    \edef\vecLength{\xintSeq[+1]{+1}{\expandafter\xintLength\expandafter{\numElems}}}%
-    \xintFor* ##1 in \vecLength \do {%
+    \getVecHeight{#2}
+    \FPset\tmpDiv{\xintNthElt{\vecHeightResult}{#2}}
+    \edef\sequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
+    \xintFor* ##1 in \sequence \do {%
         \xintifForFirst{%
             \FPdiv\divResult{\xintNthElt{##1}{#2}}{\tmpDiv}
             \newVec{tmpVec}{\divResult}
@@ -667,6 +661,14 @@
 % #3 scalar, the scalar to divide with
 % TODO adjust function name, for function which divides vec with vec, negative scaling / shrinking
 \newcommand\divVecScalar[3][divVecScalarResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of divVecScalar seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of divVecScalar does not seem to be a command}
+    \fi
     \FPifeq{#3}{0}
         \PackageError{glmatrix package}{In div vector by scalar}{divisor is 0}
     \else
@@ -712,7 +714,7 @@
 % #4 scalar, the scalar that is the muliplier
 \newcommand\scaleAndAddVec[4][scaleAndAddVecResult]{
     \scaleVec{#3}{#4}
-    \addVec[#1]{#2, \scaleVecResult}
+    \addVec[#1]{#2}{\scaleVecResult}
 }
 
 % Lineraly interpolate between the values of two vectors (element-wise interpolation).
@@ -763,7 +765,7 @@
     \FPdiv\ratioB\ratioB\angleTotal
     \scaleVec[tmpA]{#2}{\ratioA}
     \scaleVec[tmpB]{#3}{\ratioB}
-    \addVec[#1]{\tmpA, \tmpB}
+    \addVec[#1]{\tmpA}{\tmpB}
 }
 
 % Perform a hermite interpolation with two control points.
@@ -793,7 +795,7 @@
     \scaleVec[tmpB]{#3}{\factorB}
     \scaleVec[tmpC]{#4}{\factorC}
     \scaleVec[tmpD]{#5}{\factorD}
-    \addVec[#1]{\tmpA, \tmpB, \tmpC, \tmpD}
+    \addVec[#1]{\tmpA}{\tmpB, \tmpC, \tmpD}
 }
 
 % TODO
@@ -850,6 +852,14 @@
 % #1 out, var name to save the result (scalar) to
 % #2 vector, the vector for which to calculate the length
 \newcommand\lenVec[2][lenVecResult] {%
+    \if\noexpand#1\relax
+        \PackageError{glmatrix package}{argument mismatch}{Argument 1 of lenVec seems to be a command but must be a string. If it is not a command you might have used two identical letter at the beginning of the argument, please change that.}
+    \else
+    \fi
+    \if\noexpand#2\relax
+    \else
+        \PackageError{glmatrix package}{argument mismatch}{argument 2 of lenVec does not seem to be a command}
+    \fi
     \FPset\normTotal{0}
     \FPset\iterVal{0}
     % Iterate each value, multiply it with itself and sum up
@@ -953,6 +963,36 @@
     \FPmul\tmp\ab\ba
     \FPsub\scalarZ\scalarZ\tmp
     \newVec{#1}{\scalarX,\scalarY,\scalarZ}
+}
+
+% TODO this only works for 3d vectors currently
+% Calculate crossproduct for the two given vectors.
+% Equation: \(#1 = #2_1*#3_2 - #2_2*#3_1\)
+% Error: When one of both vectors does not have length 3
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 0\}
+% Example: \textbackslash crossVecTwoD\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash crossVecResult \(\mapsto{} -0.5\)
+% #1 out, var name to save the result (vector) to
+% #2 vector v, the first vector
+% #3 vector w, the second vector
+\newcommand\crossVecTwoD[3][crossVecResult] {%
+    \FPifeq{\expandafter\xintLength\expandafter{#2}}{2}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
+    \fi
+    \FPifeq{\expandafter\xintLength\expandafter{#3}}{2}
+    \else
+        \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
+    \fi
+    \FPset\aa
+    \FPset\ab{\xintNthElt{2}{#2}}
+    \FPset\ba{\xintNthElt{1}{#3}}
+    \FPset\bb{\xintNthElt{2}{#3}}
+    \FPmul\scalarUxVy{\xintNthElt{1}{#2}}{\xintNthElt{2}{#3}}
+    \FPmul\scalarUyVx{\xintNthElt{2}{#2}}{\xintNthElt{1}{#3}}
+    \FPsub\scalarResult{\scalarUxVy}{\scalarUyVx}
+    \newScalar{#1}{\scalarResult}
 }
 
 % Get the angle between the given two vectors in radian.
@@ -1139,13 +1179,9 @@
 % #1 out, var name to save the result (matrix) to
 % #2 vector, the vector to multiply with itself
 \newcommand\tensorVec[2][tensorVecResult]{%
-    \newMatRow{vecA}{\xintNthElt{1}{#2}}
-    \newMatRow{vecB}{\xintNthElt{2}{#2}}
-    \newMatRow{vecC}{\xintNthElt{3}{#2}}
-    \newMatFromRowVecs{tmpMatA}{\vecA, \vecB, \vecC}
-    \vecToMatRow{row}{#2}
-    \newMat{tmpMatB}{\row}
-    \mulMat[#1]{\tmpMatA}{\tmpMatB}
+    \newMatFromRowVecs{rowMatrix}{#2}
+    \newMatFromColVecs{colMatrix}{#2}
+    \mulMat[#1]{\colMatrix}{\rowMatrix}
 }
 
 %%%%%%%%%%%%%%%%%%%%%

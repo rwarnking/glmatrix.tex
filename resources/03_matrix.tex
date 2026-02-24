@@ -250,6 +250,61 @@
     \newMatFromRowVecs{#1}{\rowA, \rowB, \rowC}
 }
 
+% TODO extended coordinates
+% TODO degree or radian
+% Create a rotation matrix using the rodrigues’ matrix
+% Equation: \(#1 = \mathbf{R} \in \R^{3\times 3}\)
+% Example: \textbackslash newVec\{rotationAxis\}\{1,1,1\}
+% Example: \textbackslash newScalarPi\{scalarTest\}\{0.5\}
+% Example: \textbackslash newRotMat[myNewMatrix]\{\textbackslash rotationAxis\}\{\textbackslash scalarTest\}
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}0&0&1\\1&0&0\\0&1&0\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
+% #2 vector, the axis to rotate around
+% #3 scalar, the angle in degree to rotate with (counterclockwise)
+\newcommand\newRotMat[3][rotMatResult]{%
+    \normalizeVec[normalizedAxis]{#2}
+    \toRadian[angleInRadian]{#3}
+    \FPcos\tmpCos{\angleInRadian}
+    \FPsin\tmpSin{\angleInRadian}
+    \subScalar[tmpCosMOne]{1}{\tmpCos}
+    \mulScalar[xsquared]{\xintNthElt{1}{\normalizedAxis}}{\xintNthElt{1}{\normalizedAxis}}
+    \mulScalar[xy]{\xintNthElt{1}{\normalizedAxis}}{\xintNthElt{2}{\normalizedAxis}}
+    \mulScalar[xz]{\xintNthElt{1}{\normalizedAxis}}{\xintNthElt{2}{\normalizedAxis}}
+    \mulScalar[ysquared]{\xintNthElt{2}{\normalizedAxis}}{\xintNthElt{2}{\normalizedAxis}}
+    \mulScalar[yz]{\xintNthElt{2}{\normalizedAxis}}{\xintNthElt{3}{\normalizedAxis}}
+    \mulScalar[zsquared]{\xintNthElt{3}{\normalizedAxis}}{\xintNthElt{3}{\normalizedAxis}}
+    %
+    \mulScalar[xsin]{\xintNthElt{1}{\normalizedAxis}}{\tmpSin}
+    \mulScalar[ysin]{\xintNthElt{2}{\normalizedAxis}}{\tmpSin}
+    \mulScalar[zsin]{\xintNthElt{3}{\normalizedAxis}}{\tmpSin}
+    %
+    \mulScalar[oneone]{\xsquared}{\tmpCosMOne}
+    \addScalar[oneone]{\oneone}{\tmpCos}
+    \mulScalar[onetwo]{\xy}{\tmpCosMOne}
+    \subScalar[onetwo]{\onetwo}{\zsin}
+    \mulScalar[onethree]{\xz}{\tmpCosMOne}
+    \addScalar[onethree]{\onethree}{\ysin}
+    %
+    \mulScalar[twoone]{\xsquared}{\tmpCosMOne}
+    \addScalar[twoone]{\twoone}{\zsin}
+    \mulScalar[twotwo]{\xy}{\tmpCosMOne}
+    \addScalar[twotwo]{\twotwo}{\tmpCos}
+    \mulScalar[twothree]{\xz}{\tmpCosMOne}
+    \subScalar[twothree]{\twothree}{\xsin}
+    %
+    \mulScalar[threeone]{\xsquared}{\tmpCosMOne}
+    \subScalar[threeone]{\threeone}{\ysin}
+    \mulScalar[threetwo]{\xy}{\tmpCosMOne}
+    \addScalar[threetwo]{\threetwo}{\xsin}
+    \mulScalar[threethree]{\xz}{\tmpCosMOne}
+    \addScalar[threethree]{\threethree}{\tmpCos}
+    %
+    \newVec{rowA}{\oneone, \onetwo, \onethree}
+    \newVec{rowB}{\twoone, \twotwo, \twothree}
+    \newVec{rowC}{\threeone, \threetwo, \threethree}
+    \newMatFromRowVec{#1}{\rowA, \rowB, \rowC}
+}
+
 % Create a new lookAt matrix.
 % Equation: \(#1 = \mathbf{L} \in \R^{4\times 4} = \begin{bmatrix}\mathbf{r}_x & \mathbf{r}_y & \mathbf{r}_z & -\mathbf{r} \cdot \mathbf{p} \\\mathbf{u}_x & \mathbf{u}_y & \mathbf{u}_z & -\mathbf{u} \cdot \mathbf{p} \\-\mathbf{d}_x & -\mathbf{d}_y & -\mathbf{d}_z & \mathbf{d} \cdot \mathbf{p} \\0 & 0 & 0 & 1\end{bmatrix}\)
 % Example: \textbackslash newVec\{right\}\{5, 2, 3\}
@@ -284,7 +339,8 @@
     \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
-% Create a new projection matrix.
+% TODO
+% Create a new default projection matrix.
 % Equation: \(#1 = \mathbf{P} \in \R^{4\times 4}\)
 % Example: \textbackslash newProjMat\{\textbackslash myNewMatrix\}
 % Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&-1&0\end{pmatrix}\)
@@ -294,6 +350,24 @@
     \newVec{tmpVecB}{0, 1, 0, 0}
     \newVec{tmpVecC}{0, 0, 1, 0}
     \newVec{tmpVecD}{0, 0, -1, 0}
+    \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
+}
+
+% Create a new projection matrix from normal and distance from origin.
+% Equation: \(#1 = \mathbf{P} \in \R^{4\times 4}\)
+% Example: \textbackslash newScalar\{myDelta\}\{5\}
+% Example: \textbackslash newVec\{myNormal\}\{1,1,0\}
+% Example: \textbackslash newProjMatGen\{\textbackslash myNewMatrix\}\{\textbackslash myNormal\}\{\textbackslash myDelta\}
+% Example: \textbackslash myNewMatrix \(\mapsto{} \begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0.2&0.2&0.2&0\end{pmatrix}\)
+% #1 out, var name to save the result (matrix) to
+\newcommand\newProjMatGen[3]{%
+    \divScalar[glmNxDelta]{\xintNthElt{1}{#2}}{#3}
+    \divScalar[glmNyDelta]{\xintNthElt{2}{#2}}{#3}
+    \divScalar[glmNzDelta]{\xintNthElt{3}{#2}}{#3}
+    \newVec{tmpVecA}{1, 0, 0, 0}
+    \newVec{tmpVecB}{0, 1, 0, 0}
+    \newVec{tmpVecC}{0, 0, 1, 0}
+    \newVec{tmpVecD}{\glmNxDelta, \glmNyDelta, \glmNzDelta, 0}
     \newMatFromRowVecs{#1}{\tmpVecA, \tmpVecB, \tmpVecC, \tmpVecD}
 }
 
