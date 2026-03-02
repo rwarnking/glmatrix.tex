@@ -1,0 +1,28 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{arccosScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% scalar 0.25
+\newScalar{scalarA}{0.70710678118}
+\newScalarPi{scalarControl}{0.25}
+\testMacroOnePar{Scalar}{arccosScalar}{\scalarA}{\scalarControl}{scalar 0.25 Pi}
+
+% scalar 0.5
+\newScalar{scalarA}{0}
+\newScalarPi{scalarControl}{0.5}
+\testMacroOnePar{Scalar}{arccosScalar}{\scalarA}{\scalarControl}{scalar 0.5 Pi}
+
+% scalar 1
+\newScalar{scalarA}{-1}
+\newScalarPi{scalarControl}{1}
+\testMacroOnePar{Scalar}{arccosScalar}{\scalarA}{\scalarControl}{scalar 1 Pi}
+
+% scalar 0.75 Pi
+\newScalar{scalarA}{-0.70710678118}
+\newScalarPi{scalarControl}{0.75}
+\testMacroOnePar{Scalar}{arccosScalar}{\scalarA}{\scalarControl}{scalar 0.75 Pi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newScalar{scalarControl}{-0.70710678118}
+\testMacroEquality{Scalar}{\scalarA}{\scalarControl}{immutable input}

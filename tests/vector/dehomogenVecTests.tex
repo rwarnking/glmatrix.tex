@@ -1,0 +1,69 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{dehomogenVec} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1D vector
+\newVec{vecA}{5}
+\newVec{vecControl}{1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{1D vector}
+
+% 2D vector mixed sign
+\newVec{vecA}{5, -2}
+\newVec{vecControl}{-2.5, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{2D vector mixed sign}
+
+% 3D vector mixed sign
+\newVec{vecA}{1, -2, 4}
+\newVec{vecControl}{0.25, -0.5, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{3D vector mixed sign}
+
+% 4D vector mixed sign, mixed type
+\newVec{vecA}{-5.5, 1.25, 5.5, 2}
+\newVec{vecControl}{-2.75, 0.625, 2.75, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{4D vector mixed sign, mixed type}
+
+% 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, 2.5}
+\newVec{vecControl}{0.4, -0.8, 1.2, -1.6, 2.2, -2.5, 3.1, -3.4, 3.65, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3D vector zero vector
+\newVec{vecA}{0.0, 0, 1}
+\newVec{vecControl}{0.0, 0, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{3D vector}
+
+% 4D vector zero vector
+\newVec{vecA}{0.0, 0, 0, 1}
+\newVec{vecControl}{0.0, 0, 0, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{4D vector}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3D vector w = 1
+\newVec{vecA}{-13.375, 48125, 1}
+\newVec{vecControl}{-13.375, 48125, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{3D vector w = 1}
+
+% 4D vector w = 1
+\newVec{vecA}{-5.5, 1.25, 5.5, 1}
+\newVec{vecControl}{-5.5, 1.25, 5.5, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{4D vector w = 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3D vector negative w
+\newVec{vecA}{-5.5, 1.25, -10}
+\newVec{vecControl}{0.55, -0.125, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{3D vector negative w}
+
+% 4D vector negative w
+\newVec{vecA}{-5.5, 1.25, 5.5, -2}
+\newVec{vecControl}{2.75, -0.625, -2.75, 1}
+\testMacroOnePar{Vec}{dehomogenVec}{\vecA}{\vecControl}{4D vector negative w}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{-5.5, 1.25, 5.5, -2}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

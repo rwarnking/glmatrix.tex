@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{toRadian} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% scalar -180
+\newScalar{scalarA}{-180}
+\newScalarPi{scalarControl}{-1}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 0 Pi}
+
+% scalar -0.75 Pi
+\newScalar{scalarA}{-135}
+\newScalarPi{scalarControl}{-0.75}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar -0.75 Pi}
+
+% scalar -0.5 Pi
+\newScalar{scalarA}{-90}
+\newScalarPi{scalarControl}{-0.5}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar -0.5 Pi}
+
+% scalar -0.25 Pi
+\newScalar{scalarA}{-45}
+\newScalarPi{scalarControl}{-0.25}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar -0.25 Pi}
+
+% scalar 0 Pi
+\newScalar{scalarA}{0}
+\newScalarPi{scalarControl}{0}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 0 Pi}
+
+% scalar 0.25 Pi
+\newScalar{scalarA}{45}
+\newScalarPi{scalarControl}{0.25}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 0.25}
+
+% scalar 0.5 Pi
+\newScalar{scalarA}{90}
+\newScalarPi{scalarControl}{0.5}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 0.5 Pi}
+
+% scalar 0.75 Pi
+\newScalar{scalarA}{135}
+\newScalarPi{scalarControl}{0.75}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 0.75 Pi}
+
+% scalar 1 Pi
+\newScalar{scalarA}{180}
+\newScalarPi{scalarControl}{1}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 1 Pi}
+
+% scalar 1.5 Pi
+\newScalar{scalarA}{270}
+\newScalarPi{scalarControl}{1.5}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 1.5 Pi}
+
+% scalar 2 Pi
+\newScalar{scalarA}{360}
+\newScalarPi{scalarControl}{2}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 2 Pi}
+
+% scalar 10
+\newScalar{scalarA}{1800}
+\newScalarPi{scalarControl}{10}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar 10 Pi}
+
+% scalar -10
+\newScalar{scalarA}{-1800}
+\newScalarPi{scalarControl}{-10}
+\testMacroOnePar{Scalar}{toRadian}{\scalarA}{\scalarControl}{scalar -10 Pi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newScalar{scalarControl}{-1800}
+\testMacroEquality{Scalar}{\scalarA}{\scalarControl}{immutable input}

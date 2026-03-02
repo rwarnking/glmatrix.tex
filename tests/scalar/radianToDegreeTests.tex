@@ -1,0 +1,73 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{radianToDegree} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% scalar -1 Pi
+\newScalarPi{scalarA}{-1}
+\newScalar{scalarControl}{-180}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 0 Pi}
+
+% scalar -0.75 Pi
+\newScalarPi{scalarA}{-0.75}
+\newScalar{scalarControl}{-135}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar -0.75 Pi}
+
+% scalar -0.5 Pi
+\newScalarPi{scalarA}{-0.5}
+\newScalar{scalarControl}{-90}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar -0.5 Pi}
+
+% scalar -0.25 Pi
+\newScalarPi{scalarA}{-0.25}
+\newScalar{scalarControl}{-45}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar -0.25 Pi}
+
+% scalar 0 Pi
+\newScalarPi{scalarA}{0}
+\newScalar{scalarControl}{0}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 0 Pi}
+
+% scalar 0.25 Pi
+\newScalarPi{scalarA}{0.25}
+\newScalar{scalarControl}{45}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 0.25}
+
+% scalar 0.5 Pi
+\newScalarPi{scalarA}{0.5}
+\newScalar{scalarControl}{90}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 0.5 Pi}
+
+% scalar 0.75 Pi
+\newScalarPi{scalarA}{0.75}
+\newScalar{scalarControl}{135}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 0.75 Pi}
+
+% scalar 1 Pi
+\newScalarPi{scalarA}{1}
+\newScalar{scalarControl}{180}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 1 Pi}
+
+% scalar 1.5 Pi
+\newScalarPi{scalarA}{1.5}
+\newScalar{scalarControl}{270}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 1.5 Pi}
+
+% scalar 2 Pi
+\newScalarPi{scalarA}{2}
+\newScalar{scalarControl}{360}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 2 Pi}
+
+% scalar 10
+\newScalarPi{scalarA}{10}
+\newScalar{scalarControl}{1800}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar 10 Pi}
+
+% scalar -10
+\newScalarPi{scalarA}{-10}
+\newScalar{scalarControl}{-1800}
+\testMacroOnePar{Scalar}{radianToDegree}{\scalarA}{\scalarControl}{scalar -10 Pi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newScalarPi{scalarControl}{-10}
+\testMacroEquality{Scalar}{\scalarA}{\scalarControl}{immutable input}

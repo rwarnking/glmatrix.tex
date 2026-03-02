@@ -1,0 +1,302 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{lerpVec} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1D vector mixed sign, t = 0
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{5}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 0}
+
+% 2D vector mixed sign, t = 0
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{5, -3}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 0}
+
+% 3D vector mixed sign, t = 0
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{1, -2, 3}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 0}
+
+% 4D vector mixed sign, mixed type, t = 0
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{1, -2, 3.5, -4}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 0}
+
+% 10D vector mixed sign, mixed type, t = 0
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.00, 7.75, -8.5, -1.125, 10.275}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = 0.1
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{4.2}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 0.1}
+
+% 2D vector mixed sign, t = 0.1
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{4.3, -2.3}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 0.1}
+
+% 3D vector mixed sign, t = 0.1
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.5, -1.3, 3.3}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 0.1}
+
+% 4D vector mixed sign, mixed type, t = 0.1
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.4, -1.2, 3.85, -4.425}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 0.1}
+
+% 10D vector mixed sign, mixed type, t = 0.1
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.8, -1.6, 3, -4, 4.4, -4.325, 7.225, 100, 8.1, -4.26}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 0.1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = 0.25
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{3}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 0.25}
+
+% 2D vector mixed sign, t = 0.25
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{3.25, -1.25}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 0.25}
+
+% 3D vector mixed sign, t = 0.25
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{-0.25, -0.25, 3.75}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 0.25}
+
+% 4D vector mixed sign, mixed type, t = 0.25
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{-0.5, 0, 4.375, -5.0625}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 0.25}
+
+% 10D vector mixed sign, mixed type, t = 0.25
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{0.5, -1, 3, -4, 2.75, -1.4375, 6.4375, 85, 6.5625, -1.8375}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 0.25}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = 0.5
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 0.5}
+
+% 2D vector mixed sign, t = 0.5
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{1.5, 0.5}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 0.5}
+
+% 3D vector mixed sign, t = 0.5
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{-1.5, 1.5, 4.5}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 0.5}
+
+% 4D vector mixed sign, mixed type, t = 0.5
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{-2, 2, 5.25, -6.125}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 0.5}
+
+% 10D vector mixed sign, mixed type, t = 0.5
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{0, 0, 3, -4, 0, 3.375, 5.125, 60, 4, 2.2}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 0.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = 0.75
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-1}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 0.75}
+
+% 2D vector mixed sign, t = 0.75
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-0.25, 2.25}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 0.75}
+
+% 3D vector mixed sign, t = 0.75
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-2.75, 3.25, 5.25}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 0.75}
+
+% 4D vector mixed sign, mixed type, t = 0.75
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-3.5, 4, 6.125, -7.1875}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 0.75}
+
+% 10D vector mixed sign, mixed type, t = 0.75
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-0.5, 1, 3, -4, -2.75, 8.1875, 3.8125, 35, 1.4375, 6.2375}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 0.75}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = 1
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-3}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 1}
+
+% 2D vector mixed sign, t = 1
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-2, 4}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 1}
+
+% 3D vector mixed sign, t = 1
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-4, 5, 6}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 1}
+
+% 4D vector mixed sign, mixed type, t = 1
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-5, 6, 7, -8.25}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 1}
+
+% 10D vector mixed sign, mixed type, t = 1
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-1, 2, 3, -4, -5.5, 13.0, 2.5, 10, -1.125, 10.275}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = -1
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{-1}
+\newVec{vecControl}{13}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = -1}
+
+% 2D vector mixed sign, t = -1
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{-1}
+\newVec{vecControl}{12, -10}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = -1}
+
+% 3D vector mixed sign, t = -1
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{-1}
+\newVec{vecControl}{6, -9, 0}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = -1}
+
+% 4D vector mixed sign, mixed type, t = -1
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{-1}
+\newVec{vecControl}{7, -10, 0, 0.25}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = -1}
+
+% 10D vector mixed sign, mixed type, t = -1
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{-1}
+\newVec{vecControl}{3, -6, 3, -4, 16.5, -25.5, 13, 210, 19.375, -22.025}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = -1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector mixed sign, t = 1.5
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalar{scalarT}{1.5}
+\newVec{vecControl}{-7}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{1D vector mixed sign, t = 1.5}
+
+% 2D vector mixed sign, t = 1.5
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarT}{1.5}
+\newVec{vecControl}{-5.5, 7.5}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{2D vector mixed sign, t = 1.5}
+
+% 3D vector mixed sign, t = 1.5
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{1.5}
+\newVec{vecControl}{-6.5, 8.5, 7.5}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{3D vector mixed sign, t = 1.5}
+
+% 4D vector mixed sign, mixed type, t = 1.5
+\newVec{vecA}{1, -2, 3.5, -4}
+\newVec{vecB}{-5, 6, 7, -8.25}
+\newScalar{scalarT}{1.5}
+\newVec{vecControl}{-8, 10, 8.75, -10.375}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{4D vector mixed sign, mixed type, t = 1.5}
+
+% 10D vector mixed sign, mixed type, t = 1.5
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 13.00, 2.5, 10, -1.125, 10.275}
+\newScalar{scalarT}{1.5}
+\newVec{vecControl}{-2, 4, 3, -4, -11, 22.625, -0.125, -40, -6.25, 18.35}
+\testMacroThreePar{Vec}{lerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{10D vector mixed sign, mixed type, t = 1.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{1, -2, 3, -4, 5.5, -6.25, 7.75, 110, 9.125, -5.875}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

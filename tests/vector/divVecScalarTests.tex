@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{divVecScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1D vector mixed sign
+\newVec{vecA}{5}
+\newScalar{scalarB}{-2}
+\newVec{vecControl}{-2.5}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{1D vector mixed sign}
+
+% 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newScalar{scalarB}{-2}
+\newVec{vecControl}{-2.5, 1.5}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{2D vector mixed sign}
+
+% 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newScalar{scalarB}{-4}
+\newVec{vecControl}{-0.25, 0.5, -0.75}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{3D vector mixed sign}
+
+% 4D vector mixed sign, mixed type
+\newVec{vecA}{1, -2.5, 3, -4}
+\newScalar{scalarB}{-0.5}
+\newVec{vecControl}{-2.0, 5, -6, 8}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{4D vector mixed sign, mixed type}
+
+% 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3.0, -4, 5, -6.0, 7, -8.4, 9.0, -10}
+\newScalar{scalarB}{-4}
+\newVec{vecControl}{-0.25, 0.5, -0.75, 1, -1.25, 1.5, -1.75, 2.1, -2.25, 2.5}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{1000000, -1500000}
+\newScalar{scalarB}{3000000}
+\newVec{vecControl}{0.3333333333, -0.5}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{2D vector large integers}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newScalar{scalarB}{3000000}
+\newVec{vecControl}{0.3333333333, 0.6666666666, 1}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector small floats
+\newVec{vecA}{0.000001, -0.000003}
+\newScalar{scalarB}{0.000003}
+\newVec{vecControl}{0.3333333333, -1} 
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{2D vector small floats}
+
+% 3D vector small floats
+\newVec{vecA}{0.000001, -0.000002, -0.000003}
+\newScalar{scalarB}{0.000004}
+\newVec{vecControl}{0.25, -0.5, -0.75}
+\testMacroTwoPar{Vec}{divVecScalar}{\vecA}{\scalarB}{\vecControl}{3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.000001, -0.000002, -0.000003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

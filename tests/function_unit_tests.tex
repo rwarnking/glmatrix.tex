@@ -1,0 +1,242 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[reqno]{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage[english,ngerman]{babel}
+% \RequirePackage[utf8]{inputenc}
+
+\usepackage{makecell}
+\usepackage{vmargin}
+
+\setlength{\unitlength}{1cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setpapersize{A4}
+\setmarginsrb{20mm}{15mm}{20mm}{25mm}{54pt}{15mm}{0pt}{0mm}
+
+\usepackage{glmatrix}
+
+\makeatletter
+% #1 out, var name to save the result (1 or 0) to
+% #2 scalar s, the first scalar
+% #3 scalar t, the second scalar
+\newcommand\equalsScalar[3][equalsScalarResult] {%
+    \newScalar{#1}{1}
+    \FPround{\@tmpValA}{#2}{9}
+    \FPround{\@tmpValB}{#3}{9}
+    \FPifeq{\@tmpValA}{\@tmpValB}
+    \else
+        \newScalar{#1}{0}
+    \fi
+}
+
+% Compare two vectors for equality. Returns 1 if equal, 0 else.
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}
+% Example: \textbackslash equalsVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}
+% Example: \textbackslash equalsVecResult \(\mapsto{} 1\)
+% #1 out, var name to save the result (1 or 0) to
+% #2 vector v, the first vector
+% #3 vector w, the second vector
+\newcommand\equalsVec[3][equalsVecResult] {%
+    \newScalar{#1}{1}
+    \getVecHeight[@vecHeight]{#2}
+    \edef\@sequence{\xintSeq[+1]{+1}{\@vecHeight}}%
+    \xintFor* ##1 in \@sequence \do {%
+        \FPround{\@tmpValA}{\xintNthElt{##1}{#2}}{9}
+        \FPround{\@tmpValB}{\xintNthElt{##1}{#3}}{9}
+        \FPifeq{\@tmpValA}{\@tmpValB}
+        \else
+            \newScalar{#1}{0}
+        \fi
+    }
+}
+
+\makeatother
+
+% Can for example be used for Immutable Input Test
+% #1 type, output type e.g. vec or scalar
+% #2 vector v, the vector to check
+% #3 vector c, the control vector to test against
+% #4 string, context of what is tested
+\newcommand\testMacroEquality[4] {%
+    \csname equals#1\endcsname{#2}{#3}
+    \FPifeq{\csname equals#1Result\endcsname}{1}
+        \textcolor{teal}{$\checkmark$} equality test: #4
+    \else
+        \PackageWarning{glmatrix package tests}{Equality Test: Output does not match expectation}
+        \textcolor{red}{$\times$} equality test: #4\quad
+        result: \csname print#1\endcsname{#2}
+        expected: \csname print#1\endcsname{#3}
+    \fi
+}
+
+% #1 type, output type e.g. vec or scalar
+% #2 macro, the macro to test
+% #3 param 1, the first and only param to pass to the macro
+% #4 vector c, the control vector to test against
+% #5 string, context of what is tested
+\newcommand\testMacroOnePar[5] {%
+    \csname #2\endcsname[calculationResult]{#3}
+    \csname equals#1\endcsname{\calculationResult}{#4}
+    \FPifeq{\csname equals#1Result\endcsname}{1}
+        \textcolor{teal}{$\checkmark$} #2 #5
+    \else
+        \PackageWarning{glmatrix package tests}{In #2: Output does not match expectation}
+        \textcolor{red}{$\times$} #2 #5\quad
+        result: \csname print#1\endcsname{\calculationResult}
+        expected: \csname print#1\endcsname{#4}
+        \calculationResult
+        #4
+    \fi
+}
+
+% #1 type, output type e.g. vec or scalar
+% #2 macro, the macro to test
+% #3 param 1, the first param to pass to the macro
+% #4 param 2, the second param to pass to the macro
+% #5 vector c, the control vector to test against
+% #6 string, context of what is tested
+\newcommand\testMacroTwoPar[6] {%
+    \csname #2\endcsname[calculationResult]{#3}{#4}
+    \csname equals#1\endcsname{\calculationResult}{#5}
+    \FPifeq{\csname equals#1Result\endcsname}{1}
+        \textcolor{teal}{$\checkmark$} #2 #6
+    \else
+        \PackageWarning{glmatrix package tests}{In #2: Output does not match expectation}
+        \textcolor{red}{$\times$} #2 #6\quad
+        result: \csname print#1\endcsname{\calculationResult}
+        expected: \csname print#1\endcsname{#5}
+    \fi
+}
+
+% #1 type, output type e.g. vec or scalar
+% #2 macro, the macro to test
+% #3 param 1, the first param to pass to the macro
+% #4 param 2, the second param to pass to the macro
+% #5 param 3, the third param to pass to the macro
+% #6 vector c, the control vector to test against
+% #7 string, context of what is tested
+\newcommand\testMacroThreePar[7] {%
+    \csname #2\endcsname[calculationResult]{#3}{#4}{#5}
+    \csname equals#1\endcsname{\calculationResult}{#6}
+    \FPifeq{\csname equals#1Result\endcsname}{1}
+        \textcolor{teal}{$\checkmark$} #2 #7
+    \else
+        \PackageWarning{glmatrix package tests}{In #2: Output does not match expectation}
+        \textcolor{red}{$\times$} #2 #7\quad
+        result: \csname print#1\endcsname{\calculationResult}
+        expected: \csname print#1\endcsname{#6}
+    \fi
+}
+
+
+
+\begin{document}
+
+\section*{Tests}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Scalar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{tests/scalar/addScalarTests}
+\input{tests/scalar/arccosScalarTests}
+\input{tests/scalar/copyScalarTests}
+\input{tests/scalar/ceilScalarTests}
+\input{tests/scalar/clipScalarTests}
+\input{tests/scalar/divScalarTests}
+\input{tests/scalar/floorScalarTests}
+\input{tests/scalar/lerpScalarTests}
+\input{tests/scalar/maxScalarTests}
+\input{tests/scalar/minScalarTests}
+\input{tests/scalar/mulScalarTests}
+\input{tests/scalar/mulAndAddScalarTests}
+\input{tests/scalar/newScalarTests}
+\input{tests/scalar/newScalarPiTests}
+\input{tests/scalar/newScalarFractionTests}
+\input{tests/scalar/negativeScalarTests}
+\input{tests/scalar/powScalarTests}
+\input{tests/scalar/printPiScalarInDegreeTests}
+\input{tests/scalar/printScalarAsPiTests}
+\input{tests/scalar/printScalarRoundedTests}
+\input{tests/scalar/printScalarTests}
+\input{tests/scalar/randomScalarTests}
+\input{tests/scalar/roundScalarTests}
+\input{tests/scalar/subScalarTests}
+\input{tests/scalar/setScalarTests}
+\input{tests/scalar/zeroScalarTests}
+
+\input{tests/scalar/radianToDegreeTests}
+\input{tests/scalar/toRadianTests}
+\input{tests/scalar/betweenScalarTests}
+\input{tests/scalar/forEachScalarTests}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Vector}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{tests/vector/addVecTests}
+\input{tests/vector/angleVecTests}
+\input{tests/vector/appendToVecTests}
+\input{tests/vector/ceilVecTests}
+\input{tests/vector/copyVecTests}
+\input{tests/vector/crossVecTests}
+\input{tests/vector/dehomogenVecTests}
+\input{tests/vector/distVec}
+\input{tests/vector/divVecScalarTests}
+\input{tests/vector/divVecTests}
+\input{tests/vector/dotVecTests}
+\input{tests/vector/floorVecTests}
+\input{tests/vector/getVecHeightTests}
+\input{tests/vector/hermiteVecTests}
+\input{tests/vector/lenVecTests}
+\input{tests/vector/lerpVecTests}
+\input{tests/vector/maxVecTests}
+\input{tests/vector/minVecTests}
+\input{tests/vector/mulVecTests}
+\input{tests/vector/negateVecTests}
+\input{tests/vector/newVecTests}
+\input{tests/vector/newVecPiTests}
+\input{tests/vector/normalizeVecTests}
+\input{tests/vector/printCrossPCompTests}
+\input{tests/vector/printScalarPCompTests}
+\input{tests/vector/printVecAsPiTests}
+\input{tests/vector/printVecAsPiTTests}
+\input{tests/vector/printVecAsPointTests}
+\input{tests/vector/printVecContentTests}
+\input{tests/vector/printVecContentXYTests}
+\input{tests/vector/printVecContentXYZTests}
+\input{tests/vector/printVecContentXYZWTests}
+\input{tests/vector/printVecTests}
+\input{tests/vector/printVecTTests}
+\input{tests/vector/randomVecTests}
+\input{tests/vector/roundVecTests}
+\input{tests/vector/scaleAndAddVecTests}
+\input{tests/vector/scaleVecTests}
+\input{tests/vector/slerpVecTests}
+\input{tests/vector/solveVecEQLTests}
+\input{tests/vector/sqrDistVecTests}
+\input{tests/vector/sqrLenVecTests}
+\input{tests/vector/subVecTests}
+\input{tests/vector/tensorVecTests}
+\input{tests/vector/transformVecTests}
+\input{tests/vector/zeroVecTests}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsubsection*{crossVec} %
+% %%%%%%%%%%%%%%%%%%%%%%%%%
+
+% % angle, dist, sqrDist, transform, tensor
+
+% % min, max, solveVecEQL
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Matrix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}

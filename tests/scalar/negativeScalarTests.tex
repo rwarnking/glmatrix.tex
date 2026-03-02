@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{negateScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% scalar -1
+\newScalar{scalarA}{-1}
+\newScalar{scalarControl}{1}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar -1}
+
+% scalar -0.75
+\newScalar{scalarA}{-0.75}
+\newScalar{scalarControl}{0.75}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar -0.75}
+
+% scalar -0.5
+\newScalar{scalarA}{-0.5}
+\newScalar{scalarControl}{0.5}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar -0.5}
+
+% scalar -0.25
+\newScalar{scalarA}{-0.25}
+\newScalar{scalarControl}{0.25}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar -0.25}
+
+% scalar 0
+\newScalar{scalarA}{0}
+\newScalar{scalarControl}{0}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 0}
+
+% scalar 0.25
+\newScalar{scalarA}{0.25}
+\newScalar{scalarControl}{-0.25}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 0.25}
+
+% scalar 0.5
+\newScalar{scalarA}{0.5}
+\newScalar{scalarControl}{-0.5}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 0.5}
+
+% scalar 0.75
+\newScalar{scalarA}{0.75}
+\newScalar{scalarControl}{-0.75}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 0.75}
+
+% scalar 1
+\newScalar{scalarA}{1}
+\newScalar{scalarControl}{-1}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 1}
+
+% scalar 90.8
+\newScalar{scalarA}{90.8}
+\newScalar{scalarControl}{-90.8}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 90.8}
+
+% scalar 123.3
+\newScalar{scalarA}{123.3}
+\newScalar{scalarControl}{-123.3}
+\testMacroOnePar{Scalar}{negateScalar}{\scalarA}{\scalarControl}{scalar 123.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newScalar{scalarControl}{123.3}
+\testMacroEquality{Scalar}{\scalarA}{\scalarControl}{immutable input}

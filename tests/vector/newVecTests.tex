@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{newVec} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2D vector whitespace variation ( 1 ,  -2 )
+\newVec{vecA}{ 1 ,  -2 }
+\newVec{vecControl}{1, -2}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector whitespace variation ( 1 ,  -2 )}
+
+% 2D vector whitespace variation (4, 5 )
+\newVec{vecA}{4, 5 }
+\newVec{vecControl}{4, 5}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector whitespace variation (4, 5 )}
+
+% 3D vector whitespace variation ( 1 ,  -2 ,3 )
+\newVec{vecA}{ 1 ,  -2 ,3 }
+\newVec{vecControl}{1, -2, 3}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector whitespace variation ( 1 ,  -2 ,3 )}
+
+% 3D vector whitespace variation (4, 5 , 6 )
+\newVec{vecA}{4, 5 , 6 }
+\newVec{vecControl}{4, 5, 6}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector whitespace variation (4, 5 , 6 )}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector mixed decimal formats (1., .5)
+\newVec{vecA}{1., .5}
+\newVec{vecControl}{1, 0.5}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector mixed decimal formats (1., .5)}
+
+% 3D vector mixed decimal formats
+\newVec{vecA}{1., 2.0, .5}
+\newVec{vecControl}{1, 2, 0.5}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector mixed decimal formats (1., 2.0, .5)}
+
+% 3D vector mixed decimal formats
+\newVec{vecA}{.5, 3., 4.0}
+\newVec{vecControl}{0.5, 3, 4}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector mixed decimal formats (.5, 3., 4.0)}

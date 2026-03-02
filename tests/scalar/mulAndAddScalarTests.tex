@@ -1,0 +1,153 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{mulAndAddScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% mixed sign integer
+\newScalar{scalarA}{5}
+\newScalar{scalarB}{-3}
+\newScalar{scalarC}{3}
+\newScalar{scalarControl}{-4}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign integer}
+
+% positive integer
+\newScalar{scalarA}{5}
+\newScalar{scalarB}{3}
+\newScalar{scalarC}{3}
+\newScalar{scalarControl}{14}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{positive integer}
+
+% negative integer
+\newScalar{scalarA}{-5}
+\newScalar{scalarB}{-3}
+\newScalar{scalarC}{-3}
+\newScalar{scalarControl}{4}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{negative integer}
+
+% mixed sign floats
+\newScalar{scalarA}{7.625}
+\newScalar{scalarB}{-2.4375}
+\newScalar{scalarC}{3.125}
+\newScalar{scalarControl}{0.0078125}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign floats}
+
+% positive floats
+\newScalar{scalarA}{4.71875}
+\newScalar{scalarB}{3.34375}
+\newScalar{scalarC}{3.125}
+\newScalar{scalarControl}{15.16796875}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{positive floats}
+
+% negative floats
+\newScalar{scalarA}{-6.5625}
+\newScalar{scalarB}{-1.875}
+\newScalar{scalarC}{-3.125}
+\newScalar{scalarControl}{-0.703125}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{negative floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% mixed sign integer, cancellation
+\newScalar{scalarA}{9}
+\newScalar{scalarB}{3}
+\newScalar{scalarC}{-3}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign integer, cancellation}
+
+% mixed sign integer, cancellation
+\newScalar{scalarA}{-15}
+\newScalar{scalarB}{5}
+\newScalar{scalarC}{3}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign integer, cancellation}
+
+% mixed sign floats, cancellation
+\newScalar{scalarA}{5.859375}
+\newScalar{scalarB}{1.875}
+\newScalar{scalarC}{-3.125}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign floats, cancellation}
+
+% mixed sign floats, cancellation
+\newScalar{scalarA}{-14.74609375}
+\newScalar{scalarB}{-4.71875}
+\newScalar{scalarC}{-3.125}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign floats, cancellation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% mixed sign large integers
+\newScalar{scalarA}{5000000}
+\newScalar{scalarB}{-3000000}
+\newScalar{scalarC}{-3000000}
+\newScalar{scalarControl}{9000005000000}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign large integers}
+
+% positive large integers
+\newScalar{scalarA}{5000000}
+\newScalar{scalarB}{3000000}
+\newScalar{scalarC}{3000000}
+\newScalar{scalarControl}{9000005000000}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{positive large integers}
+
+% negative large integers
+\newScalar{scalarA}{-5000000}
+\newScalar{scalarB}{-3000000}
+\newScalar{scalarC}{-3000000}
+\newScalar{scalarControl}{8999995000000}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{negative large integers}
+
+% mixed sign large floats
+\newScalar{scalarA}{500000.875}
+\newScalar{scalarB}{-300000.675}
+\newScalar{scalarC}{-300000.675}
+\newScalar{scalarControl}{90000905001.330625}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{mixed sign large floats}
+
+% positive large floats
+\newScalar{scalarA}{500000.875}
+\newScalar{scalarB}{300000.025}
+\newScalar{scalarC}{300000.675}
+\newScalar{scalarControl}{90000710000.891875}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{positive large floats}
+
+% negative large floats
+\newScalar{scalarA}{-5000000.875}
+\newScalar{scalarB}{-3000000.1}
+\newScalar{scalarC}{-3000000.675}
+\newScalar{scalarControl}{8999997324999.1925}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{negative large floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% mixed sign small floats
+\newScalar{scalarA}{0.0000000001}
+\newScalar{scalarB}{-0.00004}
+\newScalar{scalarC}{-0.00003}
+\newScalar{scalarControl}{0.0000000013}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{scalar mixed sign}
+
+% positive small floats
+\newScalar{scalarA}{0.000000001}
+\newScalar{scalarB}{0.00004}
+\newScalar{scalarC}{0.00003}
+\newScalar{scalarControl}{0.0000000022}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{scalar mixed sign}
+
+% negative small floats
+\newScalar{scalarA}{-0.000003}
+\newScalar{scalarB}{-0.00004}
+\newScalar{scalarC}{-0.00003}
+\newScalar{scalarControl}{-0.0000029988}
+\testMacroThreePar{Scalar}{mulAndAddScalar}{\scalarA}{\scalarB}{\scalarC}{\scalarControl}{scalar mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newScalar{scalarControl}{-0.000003}
+\testMacroEquality{Scalar}{\scalarA}{\scalarControl}{immutable input}
+
+\newScalar{scalarControl}{-0.00004}
+\testMacroEquality{Scalar}{\scalarB}{\scalarControl}{immutable input}
+
+\newScalar{scalarControl}{-0.00003}
+\testMacroEquality{Scalar}{\scalarC}{\scalarControl}{immutable input}

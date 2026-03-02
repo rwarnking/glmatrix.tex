@@ -1,0 +1,192 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{betweenScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% mixed sign integer, inside, below 0
+\newScalar{scalarA}{-1}
+\newScalar{lowerBound}{-3}
+\newScalar{upperBound}{5}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{mixed sign integer, inside, below 0}
+
+% mixed sign integer, inside, alove 0
+\newScalar{scalarA}{1}
+\newScalar{lowerBound}{-3}
+\newScalar{upperBound}{5}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{mixed sign integer, inside, above 0}
+
+% mixed sign integer, outside below
+\newScalar{scalarA}{-4}
+\newScalar{lowerBound}{-3}
+\newScalar{upperBound}{5}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{mixed sign integer, outside below}
+
+% mixed sign integer, outside below
+\newScalar{scalarA}{6}
+\newScalar{lowerBound}{-3}
+\newScalar{upperBound}{5}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{mixed sign integer, outside above}
+
+% mixed sign integer, on upper bound
+\newScalar{scalarA}{5}
+\newScalar{lowerBound}{-3}
+\newScalar{upperBound}{5}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{mixed sign integer, on upper bound}
+
+% mixed sign integer, on lower bound
+\newScalar{scalarA}{-3}
+\newScalar{lowerBound}{-3}
+\newScalar{upperBound}{5}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{mixed sign integer, on lower bound}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% positive sign float, inside
+\newScalar{scalarA}{9.22}
+\newScalar{lowerBound}{3.123}
+\newScalar{upperBound}{15.75}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{positive sign float, inside}
+
+% positive sign float, ouside above
+\newScalar{scalarA}{16.76}
+\newScalar{lowerBound}{3.123}
+\newScalar{upperBound}{15.75}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{positive sign float, outside above}
+
+% positive sign float, ouside below
+\newScalar{scalarA}{3.1111}
+\newScalar{lowerBound}{3.123}
+\newScalar{upperBound}{15.75}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{positive sign float, outside below}
+
+% positive sign float, on upperbound
+\newScalar{scalarA}{15.75}
+\newScalar{lowerBound}{3.123}
+\newScalar{upperBound}{15.75}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{positive sign float, on upperbound}
+
+% positive sign float, on lowerbound
+\newScalar{scalarA}{3.123}
+\newScalar{lowerBound}{3.123}
+\newScalar{upperBound}{15.75}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{positive sign float, on lowerbound}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% negative sign float, inside
+\newScalar{scalarA}{-9.22}
+\newScalar{lowerBound}{-15.75}
+\newScalar{upperBound}{-3.123}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{negative sign float, inside}
+
+% negative sign float, ouside below
+\newScalar{scalarA}{-16.76}
+\newScalar{lowerBound}{-15.75}
+\newScalar{upperBound}{-3.123}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{negative sign float, outside below}
+
+% negative sign float, ouside above
+\newScalar{scalarA}{-3.1111}
+\newScalar{lowerBound}{-15.75}
+\newScalar{upperBound}{-3.123}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{negative sign float, outside above}
+
+% negative sign float, on upperbound
+\newScalar{scalarA}{-3.123}
+\newScalar{lowerBound}{-15.75}
+\newScalar{upperBound}{-3.123}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{negative sign float, on upperbound}
+
+% negative sign float, on lowerbound
+\newScalar{scalarA}{-15.75}
+\newScalar{lowerBound}{-15.75}
+\newScalar{upperBound}{-3.123}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{negative sign float, on lowerbound}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% big float, inside
+\newScalar{scalarA}{90000.22}
+\newScalar{lowerBound}{30000.123}
+\newScalar{upperBound}{150000.75}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{big float, inside}
+
+% big float, ouside below
+\newScalar{scalarA}{30000.12}
+\newScalar{lowerBound}{30000.123}
+\newScalar{upperBound}{150000.75}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{big float, outside below}
+
+% big float, ouside above
+\newScalar{scalarA}{150000.76}
+\newScalar{lowerBound}{30000.123}
+\newScalar{upperBound}{150000.75}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{big float, outside above}
+
+% big float, on upperbound
+\newScalar{scalarA}{150000.75}
+\newScalar{lowerBound}{30000.123}
+\newScalar{upperBound}{150000.75}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{big float, on upperbound}
+
+% big float, on lowerbound
+\newScalar{scalarA}{30000.123}
+\newScalar{lowerBound}{30000.123}
+\newScalar{upperBound}{150000.75}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{big float, on lowerbound}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% small float, inside
+\newScalar{scalarA}{0.09000022}
+\newScalar{lowerBound}{0.03000012}
+\newScalar{upperBound}{0.15000075}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{small float, inside}
+
+% small float, ouside below
+\newScalar{scalarA}{0.0300001}
+\newScalar{lowerBound}{0.03000012}
+\newScalar{upperBound}{0.15000075}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{small float, outside below}
+
+% small float, ouside above
+\newScalar{scalarA}{0.15000076}
+\newScalar{lowerBound}{0.03000012}
+\newScalar{upperBound}{0.15000075}
+\newScalar{scalarControl}{0}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{small float, outside above}
+
+% small float, on upperbound
+\newScalar{scalarA}{0.15000075}
+\newScalar{lowerBound}{0.03000012}
+\newScalar{upperBound}{0.15000075}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{small float, on upperbound}
+
+% small float, on lowerbound
+\newScalar{scalarA}{0.03000012}
+\newScalar{lowerBound}{0.03000012}
+\newScalar{upperBound}{0.15000075}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{betweenScalar}{\scalarA}{\lowerBound}{\upperBound}{\scalarControl}{small float, on lowerbound}

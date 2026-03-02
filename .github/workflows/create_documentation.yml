@@ -9,9 +9,13 @@ name: Create Documentation
 # Start the job on push to main #
 #################################
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Run Unit Tests]
+    types:
+      - completed
+  # push:
+  #   branches:
+  #     - main
 
 # Set the Jobs
 jobs:
@@ -69,6 +73,7 @@ jobs:
 
     permissions:
       contents: write
+      actions: read
 
     ##################
     # Load all steps #
@@ -79,10 +84,17 @@ jobs:
       ##########################
       - name: Set up Git repository
         uses: actions/checkout@v6
-      - name: Download artifact
+      - name: Download artifact (dtx file)
         uses: actions/download-artifact@v4
         with:
           name: shared-dtx-file
+      - name: Download artifact (testing log)
+        uses: actions/download-artifact@v8
+        with:
+          name: unit-tests-file
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
       ####################
       # Run the compiler #
       ####################

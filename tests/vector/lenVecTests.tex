@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{lenVec} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1D vector mixed sign
+\newVec{vecA}{5}
+\newScalar{scalarControl}{5}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{1D vector mixed sign}
+
+% 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newScalar{scalarControl}{5.8309518948}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{2D vector mixed sign}
+
+% 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newScalar{scalarControl}{3.7416573867}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{3D vector mixed sign}
+
+% 4D vector mixed sign, mixed type
+\newVec{vecA}{1, -2.5, 3, -4}
+\newScalar{scalarControl}{5.6789083458}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{4D vector mixed sign, mixed type}
+
+% 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newScalar{scalarControl}{18.6924115619}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector length 0
+\newVec{vecA}{0}
+\newScalar{scalarControl}{0}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{1D vector length 0}
+
+% 2D vector length 0
+\newVec{vecA}{0, 0}
+\newScalar{scalarControl}{0}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{2D vector length 0}
+
+% 3D vector length 0
+\newVec{vecA}{0, 0, 0}
+\newScalar{scalarControl}{0}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{3D vector length 0}
+
+% 4D vector length 0
+\newVec{vecA}{0, 0, 0, 0}
+\newScalar{scalarControl}{0}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{4D vector length 0}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector large integers
+\newVec{vecA}{100000, 200000}
+\newScalar{scalarControl}{223606.7977499789}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{2D vector large integers}
+
+% 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newScalar{scalarControl}{3741657.3867739413}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector small floats
+\newVec{vecA}{0.00001, -0.00002}
+\newScalar{scalarControl}{0.00002236067}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{2D vector small floats}
+
+% 3D vector small floats
+\newVec{vecA}{0.00001, -0.00002, -0.00003}
+\newScalar{scalarControl}{0.00003741657}
+\testMacroOnePar{Scalar}{lenVec}{\vecA}{\scalarControl}{3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.00001, -0.00002, -0.00003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

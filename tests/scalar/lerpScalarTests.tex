@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{lerpScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% mixed sign scalar, t = 0
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{0}
+\newScalar{scalarControl}{5}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 0}
+
+% mixed sign scalar, t = 0.1
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{0.1}
+\newScalar{scalarControl}{4.2}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 0.1}
+
+% mixed sign scalar, t = 0.25
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{0.25}
+\newScalar{scalarControl}{3}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 0.25}
+
+% mixed sign scalar, t = 0.5
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{0.5}
+\newScalar{scalarControl}{1}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 0.5}
+
+% mixed sign scalar, t = 0.75
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{0.75}
+\newScalar{scalarControl}{-1}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 0.75}
+
+% mixed sign scalar, t = 1
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{1}
+\newScalar{scalarControl}{-3}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 1}
+
+% mixed sign scalar, t = -1
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{-1}
+\newScalar{scalarControl}{13}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = -1}
+
+% mixed sign scalar, t = 1.5
+\newScalar{vecA}{5}
+\newScalar{vecB}{-3}
+\newScalar{scalarT}{1.5}
+\newScalar{scalarControl}{-7}
+\testMacroThreePar{Scalar}{lerpScalar}{\vecA}{\vecB}{\scalarT}{\scalarControl}{mixed sign scalar, t = 1.5}
+
+% Immutable input
+\newScalar{scalarControl}{5}
+\testMacroEquality{Scalar}{\vecA}{\scalarControl}{immutable input}
+
+% Immutable input
+\newScalar{scalarControl}{-3}
+\testMacroEquality{Scalar}{\vecB}{\scalarControl}{immutable input}

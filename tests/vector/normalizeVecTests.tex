@@ -1,0 +1,87 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{normalizeVec} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1D vector
+\newVec{vecA}{5}
+\newVec{vecControl}{1}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{1D vector}
+
+\newVec{vecB}{-3}
+\newVec{vecControl}{1}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{1D vector}
+
+% 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecControl}{0.8574929257, -0.5144957554}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{2D vector mixed sign}
+
+% 2D vector mixed sign
+\newVec{vecA}{-2, 4}
+\newVec{vecControl}{-0.4472135954, 0.8944271909}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{2D vector mixed sign}
+
+% 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecControl}{0.2672612419, -0.5345224838, 0.8017837257}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{3D vector mixed sign}
+
+% 4D vector mixed sign
+\newVec{vecA}{1, -2, 3.2, -4.5}
+\newVec{vecControl}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{4D vector mixed sign}
+
+% 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newVec{vecControl}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector large integers
+\newVec{vecA}{1000000, 2000000}
+\newVec{vecControl}{0.4472135954, 0.8944271909}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{2D vector large integers}
+
+% 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecControl}{0.2672612419, 0.5345224838, 0.8017837257}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector small floats
+\newVec{vecA}{0.0001, 0.0002}
+\newVec{vecControl}{0.4472135954, 0.8944271909}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{2D vector small floats}
+
+% 3D vector small floats
+\newVec{vecA}{0.00001, 0.00002, 0.00003}
+\newVec{vecControl}{0.2672612419, 0.5345224838, 0.8017837257}
+\testMacroOnePar{Vec}{normalizeVec}{\vecA}{\vecControl}{3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.00001, 0.00002, 0.00003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Unit length property
+\newVec{vecA}{1, -2, 3.2, -4.5}
+\normalizeVec[calculationResultA]{\vecA}
+\lenVec[calculationResultB]{\calculationResultA}
+\testMacroEquality{Scalar}{\calculationResultB}{1}{unit length property}
+
+% Direction preserved
+\newVec{vecA}{1, -2, 3.2, -4.5}
+\normalizeVec[calculationResultA]{\vecA}
+\angleVec[calculationResultB]{\vecA}{\calculationResultA}
+\testMacroEquality{Scalar}{\calculationResultB}{0}{direction preserved}
+
+% Idempotence
+\newVec{vecA}{1, -2, 3.2, -4.5}
+\normalizeVec[calculationResultA]{\vecA}
+\normalizeVec[calculationResultB]{\vecA}
+\normalizeVec[calculationResultC]{\calculationResultB}
+\testMacroEquality{Vec}{\calculationResultA}{\calculationResultC}{idempotence}

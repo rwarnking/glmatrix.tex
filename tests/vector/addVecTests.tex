@@ -1,0 +1,205 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{addVec} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2x 1D vector mixed sign
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newVec{vecControl}{2}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 1D vector mixed sign}
+
+% 2x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newVec{vecControl}{3, 1}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector mixed sign}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newVec{vecControl}{-3, 3, 9}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector mixed sign}
+
+% 2x 4D vector mixed sign
+\newVec{vecA}{1, -2, 3, -4}
+\newVec{vecB}{-5, 6, 7, -8}
+\newVec{vecControl}{-4, 4, 10, -12}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 4D vector mixed sign}
+
+% 2x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.00, 7.75, -8.5, -1.125, 10.275}
+\newVec{vecControl}{0, 0, 6, -8, 0.0, -0.25, 15.5, -17.0, 8.0, 4.4}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 1D vector cancellation
+\newVec{vecA}{7}
+\newVec{vecB}{-7}
+\newVec{vecControl}{0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 1D vector cancellation}
+
+% 2x 2D vector cancellation
+\newVec{vecA}{3, -4}
+\newVec{vecB}{-3, 4}
+\newVec{vecControl}{0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector cancellation}
+
+% 2x 3D vector cancellation
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-1, 2, -3}
+\newVec{vecControl}{0, 0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector cancellation}
+
+% 2x 4D vector cancellation
+\newVec{vecA}{1, -1, 2, -2}
+\newVec{vecB}{-1, 1, -2, 2}
+\newVec{vecControl}{0, 0, 0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 4D vector cancellation}
+
+% 2x 10D vector cancellation
+\newVec{vecA}{1, -1, 2, -2, 3.5, -3.5, 4.25, -4.25, 5.1, -5.1}
+\newVec{vecB}{-1, 1, -2, 2, -3.5, 3.5, -4.25, 4.25, -5.1, 5.1}
+\newVec{vecControl}{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 10D vector cancellation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{1000000, 2000000}
+\newVec{vecB}{3000000, 4000000}
+\newVec{vecControl}{4000000, 6000000}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector large integers}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\newVec{vecControl}{4000000, 6000000, 8000000}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+\newVec{vecA}{0.000001, 0.000002}
+\newVec{vecB}{0.000003, 0.000004}
+\newVec{vecControl}{0.000004, 0.000006}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector small floats}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.000001, 0.000002, 0.000003}
+\newVec{vecB}{0.000004, 0.000003, 0.000006}
+\newVec{vecControl}{0.000005, 0.000005, 0.000009}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3x 1D vector mixed sign
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newVec{vecC}{2}
+\newVec{vecControl}{4}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 1D vector mixed sign}
+
+% 3x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newVec{vecC}{1, -1}
+\newVec{vecControl}{4, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 2D vector mixed sign}
+
+% 3x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newVec{vecC}{2, -1, 0}
+\newVec{vecControl}{-1, 2, 9}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 3D vector mixed sign}
+
+% 3x 4D vector mixed sign
+\newVec{vecA}{1, -2, 3, -4}
+\newVec{vecB}{-5, 6, 7, -8}
+\newVec{vecC}{2, -1, 0, 3}
+\newVec{vecControl}{-2, 3, 10, -9}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 4D vector mixed sign}
+
+% 3x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.1, -8.75, 9.3, -10.6}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.25, 7.1, -8.75, -9.3, 10.6}
+\newVec{vecC}{2, -1, 0, 1, 4.5, -2.5, 3.3, 2.2, -1.1, 5.5}
+\newVec{vecControl}{2, -1, 6, -7, 4.5, -2.5, 17.5, -15.3, -1.1, 5.5}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3x 1D vector cancellation
+\newVec{vecA}{7}
+\newVec{vecB}{-7}
+\newVec{vecC}{0}
+\newVec{vecControl}{0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 1D vector cancellation}
+
+% 3x 2D vector cancellation
+\newVec{vecA}{3, -4}
+\newVec{vecB}{-3, 4}
+\newVec{vecC}{0, 0}
+\newVec{vecControl}{0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 2D vector cancellation}
+
+% 3x 3D vector cancellation
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-1, 2, -3}
+\newVec{vecC}{0, 0, 0}
+\newVec{vecControl}{0, 0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 3D vector cancellation}
+
+% 3x 4D vector cancellation
+\newVec{vecA}{1, -1, 2, -2}
+\newVec{vecB}{-1, 1, -2, 2}
+\newVec{vecC}{0, 0, 0, 0}
+\newVec{vecControl}{0, 0, 0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 4D vector cancellation}
+
+% 3x 10D vector cancellation
+\newVec{vecA}{1, -1, 2, -2, 3.5, -3.5, 4.25, -4.25, 5.1, -5.1}
+\newVec{vecB}{-1, 1, -2, 2, -3.0, 3.0, -4.3, 4.0, -5.0, 5.0}
+\newVec{vecC}{0, 0, 0, 0, -0.5, 0.5, 0.05, 0.25, -0.1, 0.1}
+\newVec{vecControl}{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 10D vector cancellation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3x 2D vector large integers
+\newVec{vecA}{1000000, 2000000}
+\newVec{vecB}{3000000, 4000000}
+\newVec{vecC}{500000, 1000000}
+\newVec{vecControl}{4500000, 7000000}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 2D vector large integers}
+
+% 3x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\newVec{vecC}{500000, 1000000, 1500000}
+\newVec{vecControl}{4500000, 7000000, 9500000}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3x 2D vector small floats
+\newVec{vecA}{0.000001, 0.000002}
+\newVec{vecB}{0.000003, 0.000004}
+\newVec{vecC}{0.000002, 0.000001}
+\newVec{vecControl}{0.000006, 0.000007}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 2D vector small floats}
+
+% 3x 3D vector small floats
+\newVec{vecA}{0.000001, 0.000002, 0.000003}
+\newVec{vecB}{0.000004, 0.000003, 0.000006}
+\newVec{vecC}{0.000001, 0.000002, 0.000001}
+\newVec{vecControl}{0.000006, 0.000007, 0.000010}
+\testMacroTwoPar{Vec}{addVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.000001, 0.000002, 0.000003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

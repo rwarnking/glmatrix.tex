@@ -1,0 +1,105 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{minScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% mixed sign integer
+\newScalar{scalarA}{5}
+\newScalar{scalarB}{-3}
+\newScalar{scalarControl}{-3}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{mixed sign integer}
+
+% positive integer
+\newScalar{scalarA}{5}
+\newScalar{scalarB}{3}
+\newScalar{scalarControl}{3}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{positive integer}
+
+% negative integer
+\newScalar{scalarA}{-5}
+\newScalar{scalarB}{-3}
+\newScalar{scalarControl}{-5}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{negative integer}
+
+% mixed sign floats
+\newScalar{scalarA}{7.625}
+\newScalar{scalarB}{-2.4375}
+\newScalar{scalarControl}{-2.4375}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{mixed sign floats}
+
+% positive floats
+\newScalar{scalarA}{4.71875}
+\newScalar{scalarB}{3.34375}
+\newScalar{scalarControl}{3.34375}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{positive floats}
+
+% negative floats
+\newScalar{scalarA}{-6.5625}
+\newScalar{scalarB}{-1.875}
+\newScalar{scalarControl}{-6.5625}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{negative floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% mixed sign large integers
+\newScalar{scalarA}{5000000}
+\newScalar{scalarB}{-3000000}
+\newScalar{scalarControl}{-3000000}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{mixed sign large integers}
+
+% positive large integers
+\newScalar{scalarA}{5000000}
+\newScalar{scalarB}{3000000}
+\newScalar{scalarControl}{3000000}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{positive large integers}
+
+% negative large integers
+\newScalar{scalarA}{-5000000}
+\newScalar{scalarB}{-3000000}
+\newScalar{scalarControl}{-5000000}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{negative large integers}
+
+% mixed sign large floats
+\newScalar{scalarA}{5000000.875}
+\newScalar{scalarB}{-3000000.675}
+\newScalar{scalarControl}{-3000000.675}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{mixed sign large floats}
+
+% positive large floats
+\newScalar{scalarA}{5000000.875}
+\newScalar{scalarB}{3000000.025}
+\newScalar{scalarControl}{3000000.025}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{positive large floats}
+
+% negative large floats
+\newScalar{scalarA}{-5000000.875}
+\newScalar{scalarB}{-3000000.1}
+\newScalar{scalarControl}{-5000000.875}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{negative large floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  mixed sign small floats
+\newScalar{scalarA}{0.000003}
+\newScalar{scalarB}{-0.000004}
+\newScalar{scalarControl}{-0.000004}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{scalar mixed sign}
+
+% positive small floats
+\newScalar{scalarA}{0.000003}
+\newScalar{scalarB}{0.000004}
+\newScalar{scalarControl}{0.000003}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{scalar mixed sign}
+
+% negative small floats
+\newScalar{scalarA}{-0.000003}
+\newScalar{scalarB}{-0.000004}
+\newScalar{scalarControl}{-0.000004}
+\testMacroTwoPar{Scalar}{minScalar}{\scalarA}{\scalarB}{\scalarControl}{scalar mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newScalar{scalarControl}{-0.000003}
+\testMacroEquality{Scalar}{\scalarA}{\scalarControl}{immutable input}
+
+\newScalar{scalarControl}{-0.000004}
+\testMacroEquality{Scalar}{\scalarB}{\scalarControl}{immutable input}
