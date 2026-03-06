@@ -5,13 +5,9 @@
 ###################################
 name: Run Unit Tests
 
-#################################
-# Start the job on push to main #
-#################################
+# Allow to call this workflow by other workflows
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
 
 # Set the Jobs
 jobs:

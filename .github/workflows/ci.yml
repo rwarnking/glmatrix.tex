@@ -1,0 +1,31 @@
+########################
+########################
+## CI Pipeline Action ##
+########################
+########################
+name: CI Pipeline
+
+# Start the job on push to main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ###########################
+  # Execute linter workflow #
+  ###########################
+  # linter_workflow:
+  #   uses: ./.github/workflows/linter.yml
+  ##########################
+  # Execute tests workflow #
+  ##########################
+  tests_workflow:
+    # needs: linter_workflow
+    uses: ./.github/workflows/tests.yml
+  ##################################
+  # Execute documentation workflow #
+  ##################################
+  docs_workflow:
+    needs: tests_workflow
+    uses: ./.github/workflows/documentation.yml

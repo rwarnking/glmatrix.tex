@@ -5,14 +5,15 @@
 #########################################
 name: Create Documentation
 
-#################################
-# Start the job on push to main #
-#################################
+# Allow to call this workflow by other workflows
 on:
-  workflow_run:
-    workflows: [Run Unit Tests]
-    types:
-      - completed
+  workflow_call:
+
+# on:
+#   workflow_run:
+#     workflows: [Run Unit Tests]
+#     types:
+#       - completed
   # push:
   #   branches:
   #     - main
@@ -92,9 +93,6 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: unit-tests-file
-          github-token: ${{ github.token }}
-          repository: ${{ github.repository }}
-          run-id: ${{ github.event.workflow_run.id }}
       ####################
       # Run the compiler #
       ####################
