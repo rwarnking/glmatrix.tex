@@ -28,4 +28,7 @@ jobs:
   ##################################
   docs_workflow:
     needs: tests_workflow
+    permissions:
+      contents: write
+      actions: read
     uses: ./.github/workflows/documentation.yml

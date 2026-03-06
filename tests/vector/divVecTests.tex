@@ -1,3 +1,6 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{divVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,8 +43,8 @@
 \testMacroTwoPar{Vec}{divVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector large integers}
 
 % 2x 3D vector large integers
-\newVec{vecA}{1000000, 2000000, 3000000}  
-\newVec{vecB}{3000000, 4000000, 5000000}  
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
 \newVec{vecControl}{0.3333333333, 0.5, 0.6}
 \testMacroTwoPar{Vec}{divVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector large integers}
 
@@ -50,7 +53,7 @@
 % 2x 2D vector small floats
 \newVec{vecA}{0.000001, -0.000002}
 \newVec{vecB}{0.000003, 0.000004}
-\newVec{vecControl}{0.3333333333, -0.5} 
+\newVec{vecControl}{0.3333333333, -0.5}
 \testMacroTwoPar{Vec}{divVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector small floats}
 
 % 2x 3D vector small floats

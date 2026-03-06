@@ -1,3 +1,6 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{mulVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,7 +85,7 @@
 % 2x 2D vector small floats
 \newVec{vecA}{0.000001, -0.000002}
 \newVec{vecB}{0.000003, 0.000004}
-\newVec{vecControl}{0, 0} 
+\newVec{vecControl}{0, 0}
 \testMacroTwoPar{Vec}{mulVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector small floats}
 
 % 2x 3D vector small floats
@@ -123,9 +126,9 @@
 \testMacroTwoPar{Vec}{mulVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 4D vector mixed sign, mixed type}
 
 % 3x 10D vector mixed sign, mixed type
-\newVec{vecA}{0.5, -0.25, 1, -0.875, 1.1, -0.5, 0.75, -0.5, -0.1, -0.5}  
-\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.25, 7.1, -8.75, -9.3, 10.6}  
-\newVec{vecC}{2, -1, 0, 1, 4.5, -2.5, 3.3, 2.2, -1.1, 5.5}  
+\newVec{vecA}{0.5, -0.25, 1, -0.875, 1.1, -0.5, 0.75, -0.5, -0.1, -0.5}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.25, 7.1, -8.75, -9.3, 10.6}
+\newVec{vecC}{2, -1, 0, 1, 4.5, -2.5, 3.3, 2.2, -1.1, 5.5}
 \newVec{vecControl}{-1, 0.5, 0, 3.5, -27.225, 7.8125, 17.5725, 9.625, -1.023, -29.15}
 \testMacroTwoPar{Vec}{mulVec}{\vecA}{\vecB, \vecC}{\vecControl}{3x 10D vector mixed sign, mixed type}
 

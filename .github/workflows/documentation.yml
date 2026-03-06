@@ -9,15 +9,6 @@ name: Create Documentation
 on:
   workflow_call:
 
-# on:
-#   workflow_run:
-#     workflows: [Run Unit Tests]
-#     types:
-#       - completed
-  # push:
-  #   branches:
-  #     - main
-
 # Set the Jobs
 jobs:
   ##############

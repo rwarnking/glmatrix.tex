@@ -1,6 +1,8 @@
 # glmatrix.tex
 
 [<img alt="Linting status of master" src="https://img.shields.io/github/actions/workflow/status/rwarnking/glmatrix.tex/linter.yml?label=Linter&style=for-the-badge" height="23">](https://github.com/marketplace/actions/super-linter)
+[<img alt="Unit tests" src="https://img.shields.io/github/actions/workflow/status/rwarnking/glmatrix.tex/tests.yml?label=Linter&style=for-the-badge" height="23">](https://github.com/rwarnking/glmatrix.tex/function_unit_tests.pdf)
+[<img alt="Documentation" src="https://img.shields.io/github/actions/workflow/status/rwarnking/glmatrix.tex/documentation.yml?label=Linter&style=for-the-badge" height="23">](https://github.com/rwarnking/glmatrix.tex/documentation.pdf)
 [<img alt="Version" src="https://img.shields.io/github/v/release/rwarnking/glmatrix.tex?style=for-the-badge" height="23">](https://github.com/rwarnking/glmatrix.tex/releases/latest)
 [<img alt="Licence" src="https://img.shields.io/github/license/rwarnking/glmatrix.tex?style=for-the-badge" height="23">](https://github.com/rwarnking/glmatrix.tex/blob/main/LICENSE)
 
