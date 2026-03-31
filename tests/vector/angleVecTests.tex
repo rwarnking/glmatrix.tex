@@ -4,6 +4,131 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{angleVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 2x 1D vector mixed sign
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newScalarPi{scalarControl}{1}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 1D vector mixed sign}
 
-\PackageWarning{glmatrix package tests}{In angleVec:\ test not implemented}
+% 2x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarControl}{2.574863436066287}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 2D vector mixed sign}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarControl}{1.448663944800604}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 3D vector mixed sign}
+
+% 2x 4D vector mixed sign, mixed type
+\newVec{vecA}{1, -2.5, 3, -4}
+\newVec{vecB}{-5, 6, 7.25, -8}
+\newScalar{scalarControl}{1.108506896742926}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 4D vector mixed sign, mixed type}
+
+% 2x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.00, 7.75, -8.5, -1.125, 10.275}
+\newScalar{scalarControl}{1.530090110279428}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 1D vector same direction
+\newVec{vecA}{7}
+\newVec{vecB}{3}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 1D vector same direction}
+
+% 2x 2D vector same direction
+\newVec{vecA}{3, 0}
+\newVec{vecB}{2, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 2D vector same direction}
+
+% 2x 3D vector same direction
+\newVec{vecA}{1, -2, 0}
+\newVec{vecB}{2, -4, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 3D vector same direction}
+
+% 2x 4D vector same direction
+\newVec{vecA}{1, 0, 3, -4.4}
+\newVec{vecB}{2, 0, 6, -8.8}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 4D vector same direction}
+
+% 2x 10D vector same direction
+\newVec{vecA}{0, -1, 0, 0, 0, -3.25, 0, -4.9, 0, 0}
+\newVec{vecB}{0, -3, 0, 0, 0, -9.75, 0, -14.7, 0, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 10D vector same direction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector Pi/2 radian
+\newVec{vecA}{3, 0}
+\newVec{vecB}{0, 1}
+\newScalarPi{scalarControl}{0.5}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 2D vector Pi/2 radian}
+
+% 2x 3D vector Pi/2 radian
+\newVec{vecA}{1, -2, 0}
+\newVec{vecB}{0, 0, 1}
+\newScalarPi{scalarControl}{0.5}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 3D vector Pi/2 radian}
+
+% 2x 4D vector Pi/2 radian
+\newVec{vecA}{1, 0, 3, -4.4}
+\newVec{vecB}{0, 5, 0, 0}
+\newScalarPi{scalarControl}{0.5}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 4D vector Pi/2 radian}
+
+% 2x 10D vector Pi/2 radian
+\newVec{vecA}{0, -1, 0, 0, 0, -3.25, 0, -4.9, 0, 0}
+\newVec{vecB}{1, 0, 2, 3, 4, 0, 5, 0, 6, 7}
+\newScalarPi{scalarControl}{0.5}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 10D vector Pi/2 radian}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{100000, 200000}
+\newVec{vecB}{300000, 400000}
+\newScalar{scalarControl}{0.179853499792478}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 2D vector large integers}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\newScalar{scalarControl}{0.18623876586485}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+\newVec{vecA}{0.00001, -0.00002}
+\newVec{vecB}{0.00003, 0.00004}
+\newScalar{scalarControl}{2.0344439365795703}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 2D vector small floats}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.00001, -0.00002, -0.00003}
+\newVec{vecB}{0.00004, 0.00003, -0.00006}
+\newScalar{scalarControl}{0.991412139406405}
+\testMacroTwoPar{Scalar}{angleVec}{\vecA}{\vecB}{\scalarControl}{2x 3D vector small floats}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.00001, -0.00002, -0.00003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}
+
+% Commutativity
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, -6}
+\angleVec[calculationResultA]{\vecA}{\vecB}
+\angleVec[calculationResultB]{\vecB}{\vecA}
+\testMacroEquality{Scalar}{\calculationResultA}{\calculationResultB}{commutativity}

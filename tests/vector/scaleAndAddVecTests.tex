@@ -4,16 +4,75 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{scaleAndAddVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 1D vector mixed sign
+\newVec{vecA}{5}
+\newVec{vecB}{4}
+\newScalar{scalarB}{-2}
+\newVec{vecControl}{-3}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{1D vector mixed sign}
 
-\PackageWarning{glmatrix package tests}{In scaleAndAddVec:\ test not implemented}
+% 2D vector mixed sign
+\newVec{vecA}{5, 4}
+\newVec{vecB}{4, 5}
+\newScalar{scalarB}{-2}
+\newVec{vecControl}{-3, -6}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{2D vector mixed sign}
 
-% \newVec{vecControl}{-1, 0.5, -4}
-% \scaleAndAddVec[calculationResult]{\vecE}{\vecA}{2}
-% \equalsVec{\calculationResult}{\vecControl}
-% \testResult{\equalsVecResult}{scaleAndAddVec}
+% 3D vector mixed sign
+\newVec{vecA}{5, -4, 1}
+\newVec{vecB}{-4, 5, 3}
+\newScalar{scalarB}{2}
+\newVec{vecControl}{-3, 6, 7}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{3D vector mixed sign}
 
-% \newVec{vecControl}{8.5, 16, 43}
-% \scaleAndAddVec[calculationResult]{\vecA}{\vecE}{-4}
-% \equalsVec{\calculationResult}{\vecControl}
-% \testResult{\equalsVecResult}{scaleAndAddVec}
+% 4D vector mixed sign, mixed type
+\newVec{vecA}{1, -2.5, 3, -4}
+\newVec{vecB}{-4, 5, 3, -1}
+\newScalar{scalarB}{-0.5}
+\newVec{vecControl}{3, -5, 1.5, -3.5}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{4D vector mixed sign, mixed type}
+
+% 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3.0, -4, 5, -6.0, 7, -8.4, 9.0, -10}
+\newVec{vecB}{-4, 5, 3, -1, 1, -2, 3.0, -4, 5, -6.0}
+\newScalar{scalarB}{10}
+\newVec{vecControl}{-39, 48, 33, -14, 15, -26, 37, -48.4, 59, -70}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector large integers
+\newVec{vecA}{5000000, -4000000}
+\newVec{vecB}{4000000, 5000000}
+\newScalar{scalarB}{0.1}
+\newVec{vecControl}{5400000, -3500000}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{2D vector large integers}
+
+% 3D vector large integers
+\newVec{vecA}{5000000, -4000000, 1000000}
+\newVec{vecB}{-4000000, 5000000, 3000000}
+\newScalar{scalarB}{2}
+\newVec{vecControl}{-3000000, 6000000, 7000000}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector small floats
+\newVec{vecA}{0.00005, -0.00004}
+\newVec{vecB}{0.00004, 0.00005}
+\newScalar{scalarB}{3}
+\newVec{vecControl}{0.00017, 0.00011}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{2D vector small floats}
+
+% 3D vector small floats
+\newVec{vecA}{0.00005, -0.00004, 0.00001}
+\newVec{vecB}{-0.00004, 0.00005, 0.00003}
+\newScalar{scalarB}{1}
+\newVec{vecControl}{0.00001, 0.00001, 0.00004}
+\testMacroThreePar{Vec}{scaleAndAddVec}{\vecA}{\vecB}{\scalarB}{\vecControl}{3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.00005, -0.00004, 0.00001}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

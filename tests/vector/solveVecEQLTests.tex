@@ -4,6 +4,105 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{solveVecEQL} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 2x 1D vector mixed sign
+\newVec{vecA}{6}
+\newVec{vecB}{-4}
+\newScalar{scalarControl}{0.6666666666}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 1D vector mixed sign}
 
-\PackageWarning{glmatrix package tests}{In solveVecEQL:\ test not implemented}
+% 2x 2D vector mixed sign
+\newVec{vecA}{3.3, -0.25}
+\newVec{vecB}{-66, 5}
+\newScalar{scalarControl}{20}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 2D vector mixed sign}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, 2, -3, 0.5}
+\newVec{vecB}{-1.5, -3, 4.5, -0.75}
+\newScalar{scalarControl}{1.5}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 3D vector mixed sign}
+
+% 2x 4D vector mixed sign, mixed type
+\newVec{vecA}{1, 2, -3, 0.5}
+\newVec{vecB}{-4, -8, 12, -2.0}
+\newScalar{scalarControl}{4}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 4D vector mixed sign, mixed type}
+
+% 2x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, 2, -3, 0.5, 1.25, -0.8, 2.5, -1.7, 3.3, -0.25}
+\newVec{vecB}{-2, -4, 6, -1.0, -2.5, 1.6, -5.0, 3.4, -6.6, 0.5}
+\newScalar{scalarControl}{2}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 1D vector cancellation
+\newVec{vecA}{7}
+\newVec{vecB}{0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 1D vector cancellation}
+
+% 2x 2D vector cancellation
+\newVec{vecA}{3, -4}
+\newVec{vecB}{0, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 2D vector cancellation}
+
+% 2x 3D vector cancellation
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{0, 0, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 3D vector cancellation}
+
+% 2x 4D vector cancellation
+\newVec{vecA}{1, -2, 3, -4.4}
+\newVec{vecB}{0, 0, 0, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 4D vector cancellation}
+
+% 2x 10D vector cancellation
+\newVec{vecA}{-1, -1, -2, 3, -3.5, -3.25, -4.75, -4.9, -5.1, 5}
+\newVec{vecB}{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 10D vector cancellation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{600000, 1200000}
+\newVec{vecB}{400000, 800000}
+\newScalar{scalarControl}{-0.6666666666}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 2D vector large integers}
+
+% 2x 3D vector large integers
+\newVec{vecA}{6000000, 1200000, 3000000}
+\newVec{vecB}{4000000, 800000, 2000000}
+\newScalar{scalarControl}{-0.6666666666}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+\newVec{vecA}{0.00006, -0.00012}
+\newVec{vecB}{-0.00004, 0.00008}
+\newScalar{scalarControl}{0.6666666666}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 2D vector small floats}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.00006, -0.00012, -0.00003}
+\newVec{vecB}{0.00004, -0.00008, -0.00002}
+\newScalar{scalarControl}{-0.6666666666}
+\testMacroTwoPar{Scalar}{solveVecEQL}{\vecA}{\vecB}{\scalarControl}{2x 3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.00006, -0.00012, -0.00003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}
+
+% Commutativity
+\newVec{vecA}{1, 2, -3, 0.5}
+\newVec{vecB}{-1.5, -3, 4.5, -0.75}
+\solveVecEQL[calculationResultA]{\vecA}{\vecB}
+\solveVecEQL[calculationResultB]{\vecB}{\vecA}
+\testMacroEquality{Scalar}{\calculationResultA}{\calculationResultB}{commutativity}

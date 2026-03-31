@@ -1,0 +1,51 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{getMatTranslation} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1x1 matrix mixed sign
+\newMat{matA}{{{5}}}
+\newVec{vecControl}{5}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{1x1 matrix mixed sign}
+
+% 2x2 matrix mixed sign
+\newMat{matA}{{{0.5,2}{4,5}}}
+\newVec{vecControl}{2}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{2x2 matrix mixed sign}
+
+% 2x3 matrix mixed sign
+\newMat{matA}{{{0.5,2,7}{4,5,8}}}
+\newVec{vecControl}{7}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{2x3 matrix mixed sign}
+
+% 3x2 matrix mixed sign
+\newMat{matA}{{{0.5,2}{4,5}{7,8}}}
+\newVec{vecControl}{2,5}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{3x2 matrix mixed sign}
+
+% 3x3 matrix mixed sign
+\newMat{matA}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+\newVec{vecControl}{3,6}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{3x3 matrix mixed sign}
+
+% 3x4 matrix mixed sign
+\newMat{matA}{{{0.5,2,3,1}{4,5,6,2}{7,8,9,3}}}
+\newVec{vecControl}{1,2}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{3x4 matrix mixed sign}
+
+% 4x3 matrix mixed sign
+\newMat{matA}{{{0.5,2,3}{4,5,6}{7,8,9}{7,8,9}}}
+\newVec{vecControl}{3,6,9}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{4x3 matrix mixed sign}
+
+% 4x4 matrix mixed sign
+\newMat{matA}{{{0.5,2,3,1}{4,5,6,2}{7,8,9,3}{7,8,9,3}}}
+\newVec{vecControl}{1,2,3}
+\testMacroOnePar{Vec}{getMatTranslation}{\matA}{\vecControl}{4x4 matrix mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newMat{matControl}{{{0.5,2,3,1}{4,5,6,2}{7,8,9,3}{7,8,9,3}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{immutable input}

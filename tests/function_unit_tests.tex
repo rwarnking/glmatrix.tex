@@ -43,8 +43,14 @@
 % #3 vector w, the second vector
 \newcommand\equalsVec[3][equalsVecResult] {%
     \newScalar{#1}{1}
-    \getVecHeight[@vecHeight]{#2}
-    \edef\@sequence{\xintSeq[+1]{+1}{\@vecHeight}}%
+    \getVecHeight[@vecHeightA]{#2}
+    \getVecHeight[@vecHeightB]{#3}
+    % Check that both vectors can be compared
+    \FPifeq{\@vecHeightA}{\@vecHeightB}
+    \else
+        \setScalar{#1}{0}
+    \fi
+    \edef\@sequence{\xintSeq[+1]{+1}{\@vecHeightA}}%
     \xintFor* ##1 in \@sequence \do {%
         \FPround{\@tmpValA}{\xintNthElt{##1}{#2}}{9}
         \FPround{\@tmpValB}{\xintNthElt{##1}{#3}}{9}
@@ -56,6 +62,33 @@
 }
 
 \makeatother
+
+% #1 command
+% #2 varcontent as text
+% #3 varcontent
+% #4 expected
+\newcommand\testPrintOutput[4] {%
+    \textbackslash #1\{...\} with value #2\\
+    \begin{align*}
+        output&: \csname#1\endcsname{#3}\\
+        expected&: #4
+    \end{align*}
+}
+
+% #1 command
+% #2 varcontent as text
+% #3 varcontent 1
+% #4 varcontent 2
+% #5 expected
+% TODO #2 does only print the var name but not its content
+% structure could be improved
+\newcommand\testPrintOutputTwoPar[5] {%
+    \textbackslash #1\{...\} with value #2\\
+    \begin{align*}
+        output&: \csname#1\endcsname{#3}{#4}\\
+        expected&: #5
+    \end{align*}
+}
 
 % Can for example be used for Immutable Input Test
 % #1 type, output type e.g. vec or scalar
@@ -229,6 +262,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Matrix}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\input{glmatrix-tests/matrix/addMatTests}
+\input{glmatrix-tests/matrix/appendRowToMatTests}
+\input{glmatrix-tests/matrix/detMatTests}
+\input{glmatrix-tests/matrix/getMatHeightTests}
+\input{glmatrix-tests/matrix/getMatTranslationTests}
+\input{glmatrix-tests/matrix/getMatWidthTests}
+\input{glmatrix-tests/matrix/mulMatScalarTests}
+\input{glmatrix-tests/matrix/mulMatTests}
+\input{glmatrix-tests/matrix/mulMatVecTests}
+\input{glmatrix-tests/matrix/newDiagMatTests}
+\input{glmatrix-tests/matrix/newEmptyMatTests}
+\input{glmatrix-tests/matrix/newFrustumMatTests}
+\input{glmatrix-tests/matrix/newLookAtMatTests}
+\input{glmatrix-tests/matrix/newMatFromColVecsTests}
+\input{glmatrix-tests/matrix/newMatFromRowTests}
+\input{glmatrix-tests/matrix/newMatFromRowVecsTests}
+\input{glmatrix-tests/matrix/newMatTests}
+\input{glmatrix-tests/matrix/newProjMatGenTests}
+\input{glmatrix-tests/matrix/newProjMatTests}
+\input{glmatrix-tests/matrix/newRotMatTests}
+\input{glmatrix-tests/matrix/newRotMatTwoDTests}
+\input{glmatrix-tests/matrix/newScaleMatTests}
+\input{glmatrix-tests/matrix/newTransMatTests}
+\input{glmatrix-tests/matrix/printMatDiagTests}
+\input{glmatrix-tests/matrix/printMatTests}
+\input{glmatrix-tests/matrix/subMatTests}
+\input{glmatrix-tests/matrix/transposeMatTests}
 
 \end{document}

@@ -4,6 +4,83 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{crossVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
 
-\PackageWarning{glmatrix package tests}{In crossVec:\ test not implemented}
+% 2x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newScalar{scalarControl}{14}
+\testMacroTwoPar{Scalar}{crossVecTwoD}{\vecA}{\vecB}{\scalarControl}{2x 2D vector mixed sign}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newVec{vecControl}{-27, -18, -3}
+\testMacroTwoPar{Vec}{crossVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector cancellation
+\newVec{vecA}{3, 4}
+\newVec{vecB}{-3, -4}
+\newScalar{scalarControl}{0}
+\testMacroTwoPar{Scalar}{crossVecTwoD}{\vecA}{\vecB}{\scalarControl}{2x 2D vector cancellation}
+
+% 2x 3D vector cancellation
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{2, -4, 6}
+\newVec{vecControl}{0, 0, 0}
+\testMacroTwoPar{Vec}{crossVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector cancellation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{100000, 200000}
+\newVec{vecB}{300000, 400000}
+\newScalar{scalarControl}{-20000000000}
+\testMacroTwoPar{Scalar}{crossVecTwoD}{\vecA}{\vecB}{\scalarControl}{2x 2D vector large integers}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\newVec{vecControl}{-2000000000000, 4000000000000, -2000000000000}
+\testMacroTwoPar{Vec}{crossVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+\newVec{vecA}{0.0001, -0.0002}
+\newVec{vecB}{0.0003, 0.0004}
+\newScalar{scalarControl}{0.0000001}
+\testMacroTwoPar{Scalar}{crossVecTwoD}{\vecA}{\vecB}{\scalarControl}{2x 2D vector small floats}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.0001, -0.0002, -0.0003}
+\newVec{vecB}{0.0004, 0.0003, -0.0006}
+\newVec{vecControl}{0.00000021, -0.00000006, 0.00000011}
+\testMacroTwoPar{Vec}{crossVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.0001, -0.0002, -0.0003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}
+
+% Inverse direction when checking commutativity
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, -6}
+\crossVec[calculationResultA]{\vecA}{\vecB}
+\crossVec[calculationResultB]{\vecB}{\vecA}
+\negateVec[calculationResultB]{\calculationResultB}
+\testMacroEquality{Vec}{\calculationResultA}{\calculationResultB}{inverse direction when checking commutativity}
+
+% Self-cross gives zero vec
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{1, -2, 3}
+\newVec{vecControl}{0, 0, 0}
+\testMacroTwoPar{Vec}{crossVec}{\vecA}{\vecB}{\vecControl}{2D vector self-cross gives zero vec}
+
+% Orthogonal vectors
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newVec{vecControl}{0, 0, 1}
+\testMacroTwoPar{Vec}{crossVec}{\vecA}{\vecB}{\vecControl}{3D vector orthogonal vectors}

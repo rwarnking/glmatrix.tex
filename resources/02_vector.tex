@@ -96,11 +96,11 @@
 % Create or override a vector with all its components being 0.
 % Obacht: It is not necessary to call this to create a new vector.
 % This is just for convenience when requiring a vector with initialized with zero.
-% Example: \textbackslash zeroVec[zeroVecResult]\{3\}
+% Example: \textbackslash zeroVec[3]\{zeroVecResult\}
 % Example: \textbackslash zeroVecResult \(\mapsto{} \begin{pmatrix}0\\ 0\\ 0\end{pmatrix}\)
-% #1 out, var name to save the result (vector) to
-% #2 dims, number of dimensions (rows)
-\newcommand\zeroVec[2][zeroVecResult]{%
+% #1 dims, number of dimensions (rows)
+% #2 out, var name to save the result (vector) to
+\newcommand\zeroVec[2][3]{%
     \edef\sequence{\xintSeq[+1]{+1}{#1}}%
     \xintFor* ##1 in \sequence \do {%
         \xintifForFirst{%
@@ -748,6 +748,7 @@
 }
 
 % Performs a spherical linear interpolation between two vectors.
+% This expects #2 and #3 to be normalized.
 % Equation: TODO
 % #1 out, var name to save the result (vector) to
 % #2 vector v, the start vector
@@ -985,7 +986,7 @@
     \else
         \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
     \fi
-    \FPset\aa
+    \FPset\aa{\xintNthElt{1}{#2}}
     \FPset\ab{\xintNthElt{2}{#2}}
     \FPset\ba{\xintNthElt{1}{#3}}
     \FPset\bb{\xintNthElt{2}{#3}}
@@ -1256,22 +1257,20 @@
 % \newcommand\forEach{
 % }
 
-% TODO
-% #1 a, a
-% #2 b, b
-% #3 c, c
+% Solve the equation \(#2*x+#3=0\) for \(x\).
+% The command expects the input to be two vectors of the same length.
+% The command iterates both vectors componentwise and solves the equation per component.
+% If the the result does not match across all components the equation can not be solved.
+% Equation: \(#1 = \frac{-#3_1}{#2_1} = \ldots = \frac{-#3_n}{#2_n}\)
+% #1 out, var name to save the result (scalar) to
+% #2 vector v, the first vector
+% #3 vector w, the second vector
 \newcommand\solveVecEQL[3][solveVecEQLResult]{
     \getVecHeight{#3}%
     \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
     \xintFor* ##1 in \vecHeightSequence \do {%
         \FPneg\tmpVar{\xintNthElt{##1}{#3}}
         \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\tmpVar}
-        % \maxScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
-        % \xintifForFirst{%
-        %     \newVec{#1}{\maxScalarResult}
-        % }{%
-        %     \appendToVec{#1}{\csname #1\endcsname}{\maxScalarResult}
-        % }
         \xintifForFirst{%
             \setScalar{#1}{\glCurSol}
         }{%

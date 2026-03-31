@@ -1,0 +1,137 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{mulMat} %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2x 1x1 matrix mixed sign
+\newMat{matA}{{{5}}}
+\newMat{matB}{{{-3}}}
+\newMat{matControl}{{{-15}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 1x1 matrix mixed sign}
+
+% 2x 2x2 matrix mixed sign
+\newMat{matA}{{{1,2.0}{3,4}}}
+\newMat{matB}{{{2,1}{0.5,2}}}
+\newMat{matControl}{{{3,5}{8,11}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 2x2 matrix mixed sign}
+
+% 2x3, 3x2 matrix mixed sign
+\newMat{matA}{{{1,2,3}{4,5,6}}}
+\newMat{matB}{{{1,0}{0.5,1}{2,1}}}
+\newMat{matControl}{{{8,5}{18.5,11}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x3, 3x2 matrix mixed sign}
+
+% 3x2, 2x3 matrix mixed sign
+\newMat{matA}{{{1,2}{3,4}{5,6}}}
+\newMat{matB}{{{1,0,2}{0.5,1,1}}}
+\newMat{matControl}{{{2,2,4}{5,4,10}{8,6,16}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{3x2, 2x3 matrix mixed sign}
+
+% 2x 3x3 matrix mixed sign
+\newMat{matA}{{{1,2,3}{0,1,4}{5,6,0}}}
+\newMat{matB}{{{-1,0,1}{2,1,0}{3,4,5}}}
+\newMat{matControl}{{{12,14,16}{14,17,20}{7,6,5}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 3x3 matrix mixed sign}
+
+% 3x4, 4x3 matrix mixed sign
+\newMat{matA}{{{1,2,0,1}{3,1,2,0}{0,1,1,2}}}
+\newMat{matB}{{{1,0,2}{0.5,1,1}{2,1,0}{1,0,1}}}
+\newMat{matControl}{{{3,2,5}{7.5,3,7}{4.5,2,3}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{3x4, 4x3 matrix mixed sign}
+
+% 4x3, 3x4 matrix mixed sign
+\newMat{matA}{{{1,2,0}{3,1,2}{0,1,1}{2,0,1}}}
+\newMat{matB}{{{1,0,2,1}{0.5,1,1,0}{2,1,0,1}}}
+\newMat{matControl}{{{2,2,4,1}{7.5,3,7,5}{2.5,2,1,1}{4,1,4,3}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{4x3, 3x4 matrix mixed sign}
+
+% 2x 4x4 matrix mixed sign
+\newMat{matA}{{{1,-2,0,1}{3,1,-2,0}{0,1,1,-2}{-2,0,1,1}}}
+\newMat{matB}{{{1,-2,0,1}{3,1,-2,0}{0,1,1,-2}{-2,0,1,1}}}
+\newMat{matControl}{{{-7,-4,5,2}{6,-7,-4,7}{7,2,-3,-4}{-4,5,2,-3}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 4x4 matrix mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 1x1 matrix cancellation
+\newMat{matA}{{{5}}}
+\newMat{matB}{{{0}}}
+\newMat{matControl}{{{0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 1x1 matrix cancellation}
+
+% 2x 2x2 matrix cancellation
+\newMat{matA}{{{1,2}{2,4}}}
+\newMat{matB}{{{2,1}{-1,-0.5}}}
+\newMat{matControl}{{{0,0}{0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 2x2 matrix cancellation}
+
+% 2x3, 3x2 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}}}
+\newMat{matB}{{{-2,-3}{1,0}{0,1}}}
+\newMat{matControl}{{{0,0}{0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x3, 3x2 matrix cancellation}
+
+% 3x2, 2x3 matrix cancellation
+\newMat{matA}{{{1,2}{2,4}{-1,-2}}}
+\newMat{matB}{{{2,1,3}{-1,-0.5,-1.5}}}
+\newMat{matControl}{{{0,0,0}{0,0,0}{0,0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{3x2, 2x3 matrix cancellation}
+
+% 3x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}{-1,-2,-3}}}
+\newMat{matB}{{{-2,-3,-5}{1,0,1}{0,1,1}}}
+\newMat{matControl}{{{0,0,0}{0,0,0}{0,0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{3x3 matrix cancellation}
+
+% 3x4, 4x3 matrix cancellation
+\newMat{matA}{{{1,2,3,4}{2,4,6,8}{-1,-2,-3,-4}}}
+\newMat{matB}{{{-2,-3,-4}{1,0,0}{0,1,0}{0,0,1}}}
+\newMat{matControl}{{{0,0,0}{0,0,0}{0,0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{3x4, 4x3 matrix cancellation}
+
+% 4x3, 3x4 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}{-1,-2,-3}{0.5,1,1.5}}}
+\newMat{matB}{{{-2,-3,-5,-4}{1,0,1,2}{0,1,1,0}}}
+\newMat{matControl}{{{0,0,0,0}{0,0,0,0}{0,0,0,0}{0,0,0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{4x3, 3x4 matrix cancellation}
+
+% 4x4 matrix cancellation
+\newMat{matA}{{{1,2,3,4}{2,4,6,8}{-1,-2,-3,-4}{0.5,1,1.5,2}}}
+\newMat{matB}{{{-2,-3,-4,-9}{1,0,0,1}{0,1,0,1}{0,0,1,1}}}
+\newMat{matControl}{{{0,0,0,0}{0,0,0,0}{0,0,0,0}{0,0,0,0}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{4x4 matrix cancellation}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2x2 matrix large integers
+\newMat{matA}{{{1000000, 2000000}{5000000, 6000000}}}
+\newMat{matB}{{{3000000, 4000000}{7000000, 8000000}}}
+\newMat{matControl}{{{17000000000000,20000000000000}{57000000000000,68000000000000}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 2x2 matrix large integers}
+
+% 2x 3x3 matrix large integers
+\newMat{matA}{{{1000000, 2000000, 3000000}{6000000, 7000000, 8000000}{2000000, 2000000, 2000000}}}
+\newMat{matB}{{{3000000, 4000000, 5000000}{8000000, 7000000, 6000000}{5000000, 3000000, 1000000}}}
+\newMat{matControl}{{{34000000000000, 27000000000000, 20000000000000}{114000000000000, 97000000000000, 80000000000000}{32000000000000, 28000000000000, 24000000000000}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 3x3 matrix large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2x2 matrix small floats
+\newMat{matA}{{{0.0001, 0.0002}{0.0005, 0.0006}}}
+\newMat{matB}{{{0.0003, 0.0004}{0.0007, 0.0008}}}
+\newMat{matControl}{{{0.00000017,0.0000002}{0.00000057,0.00000068}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 2x2 matrix small floats}
+
+% 2x 3x3 matrix small floats
+\newMat{matA}{{{0.0001, 0.0002, 0.0003}{0.0005, 0.0007, 0.0008}{0.0009, 0.0001, 0.0001}}}
+\newMat{matB}{{{0.0004, 0.0003, 0.0006}{0.0004, 0.0002, 0.0005}{0.0007, 0.0007, 0.0005}}}
+\newMat{matControl}{{{0.00000033,0.00000028,0.00000031}{0.00000104,0.00000085,0.00000105}{0.00000047,0.00000036,0.00000064}}}
+\testMacroTwoPar{Mat}{mulMat}{\matA}{\matB}{\matControl}{2x 3x3 matrix small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newMat{matControl}{{{0.0001, 0.0002, 0.0003}{0.0005, 0.0007, 0.0008}{0.0009, 0.0001, 0.0001}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{immutable input}

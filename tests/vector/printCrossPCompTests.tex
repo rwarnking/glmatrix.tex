@@ -4,6 +4,50 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{printCrossPComp} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% TODO add 2D versions
 
-\PackageWarning{glmatrix package tests}{In printCrossPComp:\ test not implemented}
+% 2x 2D vector mixed sign
+% \newVec{vecA}{5, -3}
+% \newVec{vecB}{-2, 4}
+% \testPrintOutputTwoPar{printCrossPComp}{vecA = (5, -3), vecB = (-2, 4)}{\vecA}{\vecB}{\begin{pmatrix}\end{pmatrix}}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\testPrintOutputTwoPar{printCrossPComp}{vecA = (1, -2, 3), vecB = (-4, 5, 6)}{\vecA}{\vecB}{\begin{pmatrix}2*6-3*5\\3*-4-1*6\\1*5--2*-4\end{pmatrix}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector cancellation
+% \newVec{vecA}{3, 4}
+% \newVec{vecB}{-3, -4}
+% \testPrintOutputTwoPar{printCrossPComp}{vecA = (3, 4), vecB = (-3, -4)}{\vecA}{\vecB}{\begin{pmatrix}\end{pmatrix}}
+
+% 2x 3D vector cancellation
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{2, -4, 6}
+\testPrintOutputTwoPar{printCrossPComp}{vecA = (1, -2, 3), vecB = (2, -4, 6)}{\vecA}{\vecB}{\begin{pmatrix}2*6-3*-4\\3*2-1*6\\1*-4--2*2\end{pmatrix}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+% \newVec{vecA}{100000, 200000}
+% \newVec{vecB}{300000, 400000}
+% \testPrintOutputTwoPar{printCrossPComp}{vecA = (1000000, 2000000), vecB = (3000000, 4000000)}{\vecA}{\vecB}{\begin{pmatrix}\end{pmatrix}}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\testPrintOutputTwoPar{printCrossPComp}{vecA = (1000000, 2000000, 3000000), vecB = (3000000, 4000000, 5000000)}{\vecA}{\vecB}{\begin{pmatrix}2000000*5000000-3000000*4000000\\3000000*3000000-1000000*5000000\\1000000*4000000-2000000*3000000\end{pmatrix}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+% \newVec{vecA}{0.0001, -0.0002}
+% \newVec{vecB}{0.0003, 0.0004}
+% \testPrintOutputTwoPar{printCrossPComp}{vecA = (0.0001, -0.0002), vecB = (0.0003, 0.0004)}{\vecA}{\vecB}{\begin{pmatrix}\end{pmatrix}}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.0001, -0.0002, -0.0003}
+\newVec{vecB}{0.0004, 0.0003, -0.0006}
+\testPrintOutputTwoPar{printCrossPComp}{vecA = (0.0001, -0.0002, -0.0003), vecB = (0.0004, 0.0003, -0.0006)}{\vecA}{\vecB}{\begin{pmatrix}-0.0002*-0.0006--0.0003*0.0003\\-0.0003*0.0004-0.0001*-0.0006\\0.0001*0.0003--0.0002*0.0004\end{pmatrix}}

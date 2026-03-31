@@ -4,6 +4,109 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{newVecPi} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 1D vector -1 Pi
+\newVecPi{vecA}{-1}
+\newVec{vecControl}{-3.14159265359}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector -1 Pi}
 
-\PackageWarning{glmatrix package tests}{In newVecPi:\ test not implemented}
+% 1D vector -0.75 Pi
+\newVecPi{vecA}{-0.75}
+\newVec{vecControl}{-2.35619449019}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector -0.75 Pi}
+
+% 1D vector -0.5 Pi
+\newVecPi{vecA}{-0.5}
+\newVec{vecControl}{-1.57079632679}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector -0.5 Pi}
+
+% 1D vector -0.25 Pi
+\newVecPi{vecA}{-0.25}
+\newVec{vecControl}{-0.78539816339}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector -0.25 Pi}
+
+% 1D vector 0 Pi
+\newVecPi{vecA}{0}
+\newVec{vecControl}{0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector 0 Pi}
+
+% 1D vector 0.25 Pi
+\newVecPi{vecA}{0.25}
+\newVec{vecControl}{0.78539816339}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector 0.25 Pi}
+
+% 1D vector 0.5 Pi
+\newVecPi{vecA}{0.5}
+\newVec{vecControl}{1.57079632679}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector 0.5 Pi}
+
+% 1D vector 0.75 Pi
+\newVecPi{vecA}{0.75}
+\newVec{vecControl}{2.35619449019}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector 0.75 Pi}
+
+% 1D vector 1 Pi
+\newVecPi{vecA}{1}
+\newVec{vecControl}{3.14159265359}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector 1 Pi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector -10, 10 Pi
+\newVecPi{vecA}{-10, 10}
+\newVec{vecControl}{-31.4159265359, 31.4159265359}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector -10, 10 Pi}
+
+% 2D vector -7.75, 7.75 Pi
+\newVecPi{vecA}{-7.75, 7.75}
+\newVec{vecControl}{-24.3473430653, 24.3473430653}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector -7.75, 7.75 Pi}
+
+% 2D vector -5.5, 5.5 Pi
+\newVecPi{vecA}{-5.5, 5.5}
+\newVec{vecControl}{-17.2787595947, 17.2787595947}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector -5.5, 5.5 Pi}
+
+% 2D vector -2.25, 2.25 Pi
+\newVecPi{vecA}{-2.25, 2.25}
+\newVec{vecControl}{-7.06858347058, 7.06858347058}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector -2.25, 2.25 Pi}
+
+% 2D vector 0, 0 Pi
+\newVecPi{vecA}{0, 0}
+\newVec{vecControl}{0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector 0, 0 Pi}
+
+% 3D vector -10, 0, 10 Pi
+\newVecPi{vecA}{-10, 0, 10}
+\newVec{vecControl}{-31.4159265359, 0, 31.4159265359}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector -10, 0, 10 Pi}
+
+% 3D vector -7.75, 0.0, 7.75 Pi
+\newVecPi{vecA}{-7.75, 0.0, 7.75}
+\newVec{vecControl}{-24.3473430653, 0.0, 24.3473430653}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector -7.75, 0.0, 7.75 Pi}
+
+% 3D vector -5.5, 1.25, 5.5 Pi
+\newVecPi{vecA}{-5.5, 1.25, 5.5}
+\newVec{vecControl}{-17.2787595947, 3.92699081699, 17.2787595947}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector -5.5, 1.25, 5.5 Pi}
+
+% 3D vector -2.25, 2.25, 3.99 Pi
+\newVecPi{vecA}{-2.25, 2.25, 3.99}
+\newVec{vecControl}{-7.06858347058, 7.06858347058, 12.5349546878}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector -2.25, 2.25, 3.99 Pi}
+
+% 3D vector 0.0, 0.5, -0.5 Pi
+\newVecPi{vecA}{0.0, 0.5, -0.5}
+\newVec{vecControl}{0.0, 1.57079632679, -1.57079632679}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector 0.0, 0.5, -0.5 Pi}
+
+% 3D vector 1.1, -1.1, 2.9 Pi
+\newVecPi{vecA}{1.1, -1.1, 2.9}
+\newVec{vecControl}{3.45575191895, -3.45575191895,  9.11061869541}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector 1.1, -1.1, 2.9 Pi}
+
+% 10D vector Pi
+\newVecPi{vecA}{-9.8, -5.5, -0.1, 0.0, 0.2, 1.5, 2.9, 5.5, 7.75, 9.99}
+\newVec{vecControl}{-30.7876080052, -17.2787595947,  -0.31415926535, 0.0, 0.62831853071, 4.71238898038, 9.11061869541, 17.2787595947, 24.3473430653, 31.3845106094}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{10D vector Pi}

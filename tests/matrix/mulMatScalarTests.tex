@@ -1,0 +1,137 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{mulMatScalar} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1x1 matrix mixed sign
+\newMat{matA}{{{5}}}
+\newScalar{scalarB}{2}
+\newMat{matControl}{{{10}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{1x1 matrix mixed sign}
+
+% 2x2 matrix mixed sign
+\newMat{matA}{{{1,2.0}{3,4}}}
+\newScalar{scalarB}{3}
+\newMat{matControl}{{{3,6}{9,12}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{2x2 matrix mixed sign}
+
+% 2x3 matrix mixed sign
+\newMat{matA}{{{1,2,3}{4,5,6}}}
+\newScalar{scalarB}{0.5}
+\newMat{matControl}{{{0.5,1,1.5}{2,2.5,3}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{2x3 matrix mixed sign}
+
+% 3x2 matrix mixed sign
+\newMat{matA}{{{1,2}{3,4}{5,6}}}
+\newScalar{scalarB}{1.7}
+\newMat{matControl}{{{1.7,3.4}{5.1,6.8}{8.5,10.2}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x2 matrix mixed sign}
+
+% 3x3 matrix mixed sign
+\newMat{matA}{{{1,2,3}{0,1,4}{5,6,0}}}
+\newScalar{scalarB}{4.5}
+\newMat{matControl}{{{4.5,9,13.5}{0,4.5,18}{22.5,27,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x3 matrix mixed sign}
+
+% 3x4 matrix mixed sign
+\newMat{matA}{{{1,2,0,1}{3,1,2,0}{0,1,1,2}}}
+\newScalar{scalarB}{7}
+\newMat{matControl}{{{7,14,0,7}{21,7,14,0}{0,7,7,14}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x4 matrix mixed sign}
+
+% 4x3 matrix mixed sign
+\newMat{matA}{{{1,2,0}{3,1,2}{0,1,1}{2,0,1}}}
+\newScalar{scalarB}{11}
+\newMat{matControl}{{{11,22,0}{33,11,22}{0,11,11}{22,0,11}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{4x3 matrix mixed sign}
+
+% 4x4 matrix mixed sign
+\newMat{matA}{{{1,-2,0,1}{3,1,-2,0}{0,1,1,-2}{-2,0,1,1}}}
+\newScalar{scalarB}{12.3}
+\newMat{matControl}{{{12.3,-24.6,0,12.3}{36.9,12.3,-24.6,0}{0,12.3,12.3,-24.6}{-24.6,0,12.3,12.3}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{4x4 matrix mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1x1 matrix cancellation
+\newMat{matA}{{{5}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{1x1 matrix cancellation}
+
+% 2x2 matrix cancellation
+\newMat{matA}{{{1,2}{2,4}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0}{0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{2x2 matrix cancellation}
+
+% 2x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0}{0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{2x3 matrix cancellation}
+
+% 3x2 matrix cancellation
+\newMat{matA}{{{1,2}{2,4}{-1,-2}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0,0}{0,0,0}{0,0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x2 matrix cancellation}
+
+% 3x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}{-1,-2,-3}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0,0}{0,0,0}{0,0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x3 matrix cancellation}
+
+% 3x4 matrix cancellation
+\newMat{matA}{{{1,2,3,4}{2,4,6,8}{-1,-2,-3,-4}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0,0}{0,0,0}{0,0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x4 matrix cancellation}
+
+% 4x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}{-1,-2,-3}{0.5,1,1.5}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0,0,0}{0,0,0,0}{0,0,0,0}{0,0,0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{4x3 matrix cancellation}
+
+% 4x4 matrix cancellation
+\newMat{matA}{{{1,2,3,4}{2,4,6,8}{-1,-2,-3,-4}{0.5,1,1.5,2}}}
+\newScalar{scalarB}{0}
+\newMat{matControl}{{{0,0,0,0}{0,0,0,0}{0,0,0,0}{0,0,0,0}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{4x4 matrix cancellation}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x2 matrix large integers
+\newMat{matA}{{{1000000, 2000000}{5000000, 6000000}}}
+\newScalar{scalarB}{0.5}
+\newMat{matControl}{{{500000,1000000}{2500000,3000000}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{2x2 matrix large integers}
+
+% 3x3 matrix large integers
+\newMat{matA}{{{1000000, 2000000, 3000000}{6000000, 7000000, 8000000}{2000000, 2000000, 2000000}}}
+\newScalar{scalarB}{2}
+\newMat{matControl}{{{2000000, 4000000, 6000000}{12000000, 14000000, 16000000}{4000000, 4000000, 4000000}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x3 matrix large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x2 matrix small floats
+\newMat{matA}{{{0.000001, 0.000002}{0.000005, 0.000006}}}
+\newScalar{scalarB}{2}
+\newMat{matControl}{{{0.000002, 0.000004}{0.00001, 0.000012}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{2x2 matrix small floats}
+
+% 3x3 matrix small floats
+\newMat{matA}{{{0.000001, 0.000002, 0.000003}{0.000005, 0.000007, 0.000008}{0.000009, 0.000001, 0.000001}}}
+\newScalar{scalarB}{1.5}
+\newMat{matControl}{{{0.0000015, 0.000003, 0.0000045}{0.0000075, 0.0000105, 0.000012}{0.0000135, 0.0000015, 0.0000015}}}
+\testMacroTwoPar{Mat}{mulMatScalar}{\matA}{\scalarB}{\matControl}{3x3 matrix small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newMat{matControl}{{{0.000001, 0.000002, 0.000003}{0.000005, 0.000007, 0.000008}{0.000009, 0.000001, 0.000001}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{immutable input}

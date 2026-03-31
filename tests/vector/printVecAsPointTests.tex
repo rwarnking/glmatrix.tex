@@ -4,6 +4,88 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{printVecAsPoint} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 1D vector -1 Pi
+\newVec{vecA}{-1}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-1 \end{bmatrix}}
 
-\PackageWarning{glmatrix package tests}{In printVecAsPoint:\ test not implemented}
+% 1D vector -0.75 Pi
+\newVec{vecA}{-0.75}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-0.75 \end{bmatrix}}
+
+% 1D vector -0.5 Pi
+\newVec{vecA}{-0.5}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-0.5 \end{bmatrix}}
+
+% 1D vector -0.25 Pi
+\newVec{vecA}{-0.25}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-0.25 \end{bmatrix}}
+
+% 1D vector 0 Pi
+\newVec{vecA}{0}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}0 \end{bmatrix}}
+
+% 1D vector 0.25 Pi
+\newVec{vecA}{0.25}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}0.25 \end{bmatrix}}
+
+% 1D vector 0.5 Pi
+\newVec{vecA}{0.5}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}0.5 \end{bmatrix}}
+
+% 1D vector 0.75 Pi
+\newVec{vecA}{0.75}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}0.75 \end{bmatrix}}
+
+% 1D vector 1 Pi
+\newVec{vecA}{1}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}1 \end{bmatrix}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector -10, 10 Pi
+\newVec{vecA}{-10, 10}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-10 \\ 10\end{bmatrix}}
+
+% 2D vector -7.75, 7.75 Pi
+\newVec{vecA}{-7.75, 7.75}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-7.75 \\ 7.75\end{bmatrix}}
+
+% 2D vector -5.5, 5.5 Pi
+\newVec{vecA}{-5.5, 5.5}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-5.5 \\ 5.5\end{bmatrix}}
+
+% 2D vector -2.25, 2.25 Pi
+\newVec{vecA}{-2.25, 2.25}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-2.25 \\ 2.25\end{bmatrix}}
+
+% 2D vector 0, 0 Pi
+\newVec{vecA}{0, 0}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}0 \\ 0\end{bmatrix}}
+
+% 3D vector -10, 0, 10 Pi
+\newVec{vecA}{-10, 0, 10}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-10 \\ 0\\ 10\end{bmatrix}}
+
+% 3D vector -7.75, 0.0, 7.75 Pi
+\newVec{vecA}{-7.75, 0.0, 7.75}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-7.75 \\ 0\\ 7.75\end{bmatrix}}
+
+% 3D vector -5.5, 1.25, 5.5 Pi
+\newVec{vecA}{-5.5, 1.25, 5.5}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-5.5 \\ 1.25\\ 5.5\end{bmatrix}}
+
+% 3D vector -2.25, 2.25, 3.99 Pi
+\newVec{vecA}{-2.25, 2.25, 3.99}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-2.25 \\ 2.25\\ 3.99\end{bmatrix}}
+
+% 3D vector 0.0, 0.5, -0.5 Pi
+\newVec{vecA}{0.0, 0.5, -0.5}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}0 \\ 0.5\\ -0.5\end{bmatrix}}
+
+% 3D vector 1.1, -1.1, 2.9 Pi
+\newVec{vecA}{1.1, -1.1, 2.9}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}1.1 \\ -1.1\\ 2.9\end{bmatrix}}
+
+% 10D vector Pi
+\newVec{vecA}{-9.8, -5.5, -0.1, 0.0, 0.2, 1.5, 2.9, 5.5, 7.75, 9.99}
+\testPrintOutput{printVecAsPoint}{vecA}{\vecA}{\begin{bmatrix}-9.8 \\ -5.5\\ -0.1\\ 0\\ 0.2\\ 1.5\\ 2.9\\ 5.5\\ 7.75\\ 9.99\end{bmatrix}}

@@ -4,6 +4,105 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{minVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 2x 1D vector mixed sign
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\newVec{vecControl}{-3}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 1D vector mixed sign}
 
-\PackageWarning{glmatrix package tests}{In minVec:\ test not implemented}
+% 2x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\newVec{vecControl}{-2, -3}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector mixed sign}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newVec{vecControl}{-4, -2, 3}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector mixed sign}
+
+% 2x 4D vector mixed sign
+\newVec{vecA}{1, -2, 3, -4}
+\newVec{vecB}{-5, 6, 7, -8}
+\newVec{vecControl}{-5, -2, 3, -8}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 4D vector mixed sign}
+
+% 2x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.00, 7.75, -8.5, -1.125, 10.275}
+\newVec{vecControl}{-1, -2, 3, -4, -5.5, -6.25, 7.75, -8.5, -1.125, -5.875}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 10D vector mixed sign, mixed type}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 1D vector identical vectors
+\newVec{vecA}{7}
+\newVec{vecB}{7}
+\newVec{vecControl}{7}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 1D vector identical vectors}
+
+% 2x 2D vector identical vectors
+\newVec{vecA}{3, 4}
+\newVec{vecB}{3, 4}
+\newVec{vecControl}{3, 4}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector identical vectors}
+
+% 2x 3D vector identical vectors
+\newVec{vecA}{-1, 2, -3}
+\newVec{vecB}{-1, 2, -3}
+\newVec{vecControl}{-1, 2, -3}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector identical vectors}
+
+% 2x 4D vector identical vectors
+\newVec{vecA}{1, -1, 2, -2}
+\newVec{vecB}{1, -1, 2, -2}
+\newVec{vecControl}{1, -1, 2, -2}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 4D vector identical vectors}
+
+% 2x 10D vector identical vectors
+\newVec{vecA}{1, -1, 2, -2, 3.5, -3.5, 4.25, -4.25, 5.1, -5.1}
+\newVec{vecB}{1, -1, 2, -2, 3.5, -3.5, 4.25, -4.25, 5.1, -5.1}
+\newVec{vecControl}{1, -1, 2, -2, 3.5, -3.5, 4.25, -4.25, 5.1, -5.1}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 10D vector identical vectors}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{1000000, 2000000}
+\newVec{vecB}{3000000, 4000000}
+\newVec{vecControl}{1000000, 2000000}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector large integers}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\newVec{vecControl}{1000000, 2000000, 3000000}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+\newVec{vecA}{0.000001, 0.000002}
+\newVec{vecB}{0.000003, 0.000004}
+\newVec{vecControl}{0.000001, 0.000002}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 2D vector small floats}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.000001, 0.000002, 0.000003}
+\newVec{vecB}{0.000004, 0.000003, 0.000006}
+\newVec{vecControl}{0.000001, 0.000002, 0.000003}
+\testMacroTwoPar{Vec}{minVec}{\vecA}{\vecB}{\vecControl}{2x 3D vector small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{0.000001, 0.000002, 0.000003}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}
+
+% Commutativity
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, -6}
+\minVec[calculationResultA]{\vecA}{\vecB}
+\minVec[calculationResultB]{\vecB}{\vecA}
+\testMacroEquality{Vec}{\calculationResultA}{\calculationResultB}{commutativity}

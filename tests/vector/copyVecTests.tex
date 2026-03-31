@@ -4,6 +4,60 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{copyVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 1D vector -1
+\newVec{vecA}{-1}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{1D vector -1}
 
-\PackageWarning{glmatrix package tests}{In copyVec:\ test not implemented}
+% 1D vector -0.25
+\newVec{vecA}{-0.25}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{1D vector -0.25}
+
+% 1D vector 0
+\newVec{vecA}{0}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{1D vector 0}
+
+% 1D vector 0.25
+\newVec{vecA}{0.25}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{1D vector 0.25}
+
+% 1D vector 1
+\newVec{vecA}{1}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{1D vector 1}
+
+% 2D vector -10, 10
+\newVec{vecA}{-10, 10}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{2D vector -10, 10}
+
+% 2D vector -7.75, 7.75
+\newVec{vecA}{-7.75, 7.75}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{2D vector -7.75, 7.75}
+
+% 2D vector 0, 0
+\newVec{vecA}{0, 0}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{2D vector 0, 0}
+
+% 3D vector -10, 0, 10
+\newVec{vecA}{-10, 0, 10}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{3D vector -10, 0, 10}
+
+% 3D vector -5.5, 1.25, 5.5
+\newVec{vecA}{-5.5, 1.25, 5.5}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{3D vector -5.5, 1.25, 5.5}
+
+% 3D vector -2.25, 2.25, 3.99
+\newVec{vecA}{-2.25, 2.25, 3.99}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{3D vector -2.25, 2.25, 3.99}
+
+% 3D vector 0.0, 0.5, -0.5
+\newVec{vecA}{0.0, 0.5, -0.5}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{3D vector 0.0, 0.5, -0.5}
+
+% 10D vector
+\newVec{vecA}{-9.8, -5.5, -0.1, 0.0, 0.2, 1.5, 2.9, 5.5, 7.75, 9.99}
+\testMacroOnePar{Vec}{copyVec}{\vecA}{\vecA}{10D vector}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{-9.8, -5.5, -0.1, 0.0, 0.2, 1.5, 2.9, 5.5, 7.75, 9.99}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

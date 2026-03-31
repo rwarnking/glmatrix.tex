@@ -4,21 +4,299 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{slerpVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% normalized 1D vector mixed sign, t = 0
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
 
-\PackageWarning{glmatrix package tests}{In slerpVec:\ test not implemented}
+% normalized 2D vector mixed sign, t = 0
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{0.8574929257, -0.5144957554}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
 
-% \newVec{vecControl}{0.5, 2, 3}
-% \slerpVec[calculationResult]{\vecA}{\vecE}{0}
-% \equalsVec{\calculationResult}{\vecControl}
-% \testResult{\equalsVecResult}{slerpVec}
+% normalized 3D vector mixed sign, t = 0
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{1, 0, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
 
-% \newVec{vecControl}{0.5, 2, 3}
-% \slerpVec[calculationResult]{\vecA}{\vecE}{0.5}
-% \equalsVec{\calculationResult}{\vecControl}
-% \testResult{\equalsVecResult}{slerpVec}
+% normalized 4D vector mixed sign, t = 0
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, t = \scalarT}
 
-% \newVec{vecControl}{-2, -3.5, -10}
-% \slerpVec[calculationResult]{\vecA}{\vecE}{1}
-% \equalsVec{\calculationResult}{\vecControl}
-% \testResult{\equalsVecResult}{slerpVec}
+% normalized 10D vector mixed sign, t = 0
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{0}
+\newVec{vecControl}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% normalized 1D vector mixed sign, t = 0.1
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
+
+% normalized 2D vector mixed sign, t = 0.1
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.9602407107771267, -0.279173381991827}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
+
+% normalized 3D vector mixed sign, t = 0.1
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.9876883405951378, 0.15643446504023087, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
+
+% normalized 4D vector mixed sign, t = 0.1
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.1117773589, -0.2591992868, 0.5626438195, -0.7770157383}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, t = \scalarT}
+
+% normalized 10D vector mixed sign, t = 0.1
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.0442114644, -0.0884228984, 0.1826088765, -0.2434785020, 0.2431630469, -0.2784038296, 0.4717395596, -0.5173917406, 0.4700621907, -0.2230944020}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% normalized 1D vector mixed sign, t = 0.25
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
+
+% normalized 2D vector mixed sign, t = 0.25
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{0.9946696730608622, 0.10311275869889025}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
+
+% normalized 3D vector mixed sign, t = 0.25
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{0.9238795325, 0.3826834323, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
+
+% normalized 4D vector mixed sign, mixed type, t = 0.25
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{0.02571338128, -0.1397500757, 0.5901418710, -0.7946956860}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, mixed type, t = \scalarT}
+
+% normalized 10D vector mixed sign, mixed type, t = 0.25
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{0.25}
+\newVec{vecControl}{0.0284197826, -0.0568394904, 0.2076479163, -0.2768638885, 0.1563087856,
+-0.1827229361, 0.5364236906, -0.5883355763, 0.4225151109, -0.0772146123}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, mixed type, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% normalized 1D vector mixed sign, t = 0.5
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
+
+% normalized 2D vector mixed sign, t = 0.5
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{0.7337221882, 0.6794495936}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
+
+% normalized 3D vector mixed sign, t = 0.5
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{0.70710678118, 0.70710678118, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
+
+% normalized 4D vector mixed sign, mixed type, t = 0.5
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{-0.1180521779, 0.0650189448, 0.6059741440, -0.7839842966}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, mixed type, t = \scalarT}
+
+% normalized 10D vector mixed sign, mixed type, t = 0.5
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{-0.0007661003, 0.0015323394, 0.2247878228, -0.2997170971, -0.0042135868,
+-0.0046733698, 0.5807017023, -0.6368984847, 0.2957905293, 0.17103065195}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, mixed type, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% normalized 1D vector mixed sign, t = 0.75
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
+
+% normalized 2D vector mixed sign, t = 0.75
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{0.1790967204, 0.9838314715}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
+
+% normalized 3D vector mixed sign, t = 0.75
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{0.3826834323650898, 0.9238795325112867, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
+
+% normalized 4D vector mixed sign, mixed type, t = 0.75
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-0.2543846648, 0.2656940933, 0.5836516809, -0.7239098869}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, mixed type, t = \scalarT}
+
+% normalized 10D vector mixed sign, mixed type, t = 0.75
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{0.75}
+\newVec{vecControl}{-0.029841245172978261, 0.059682672850657764, 0.209435116779361388, -0.279246822372481852, -0.164126894077555744,
+0.174051722405999355, 0.541040490215807049, -0.593399041279770846, 0.126310041631934296, 0.394553791107503140}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, mixed type, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% normalized 1D vector mixed sign, t = 1
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
+
+% normalized 2D vector mixed sign, t = 1
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-0.4472135954, 0.8944271909}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
+
+% normalized 3D vector mixed sign, t = 1
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{0, 1, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
+
+% normalized 4D vector mixed sign, mixed type, t = 1
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-0.3747, 0.44964, 0.52458, -0.618255}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, mixed type, t = \scalarT}
+
+% normalized 10D vector mixed sign, mixed type, t = 1
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, mixed type, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% normalized 1D vector mixed sign, t = 2
+\newVec{vecA}{1}
+\newVec{vecB}{1}
+\newScalar{scalarT}{2}
+\newVec{vecControl}{1}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 1D vector mixed sign, t = \scalarT}
+
+% normalized 2D vector mixed sign, t = 2
+\newVec{vecA}{0.8574929257, -0.5144957554}
+\newVec{vecB}{-0.4472135954, 0.8944271909}
+\newScalar{scalarT}{2}
+\newVec{vecControl}{-0.1028991512, -0.9946917936}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 2D vector mixed sign, t = \scalarT}
+
+% normalized 3D vector mixed sign, t = 2
+\newVec{vecA}{1, 0, 0}
+\newVec{vecB}{0, 1, 0}
+\newScalar{scalarT}{2}
+\newVec{vecControl}{-1, 0, 0}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 3D vector mixed sign, t = \scalarT}
+
+% normalized 4D vector mixed sign, mixed type, t = 2
+\newVec{vecA}{0.167859915566148, -0.335719831132296, 0.5371517298116736, -0.755369620047666}
+\newVec{vecB}{-0.3747, 0.44964, 0.52458, -0.618255}
+\newScalar{scalarT}{2}
+\newVec{vecControl}{-0.5687439662, 0.8167806919, 0.0240859411, 0.0939109364}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 4D vector mixed sign, mixed type, t = \scalarT}
+
+% normalized 10D vector mixed sign, mixed type, t = 2
+\newVec{vecA}{0.05349764511056867, -0.10699529022113734, 0.160492935331706, -0.21399058044227467, 0.2942370481081277, -0.33436028194105416, 0.4146067496069072, -0.4547299834398337, 0.4881660116339391, -0.3142986650245909}
+\newVec{vecB}{-0.0546029, 0.109206, 0.163809, -0.218412, -0.300316, 0.327618, 0.423173, -0.464125, -0.0614283, 0.561045}
+\newScalar{scalarT}{2}
+\newVec{vecControl}{-0.0579417895, 0.1158835954, -0.1471604775, 0.1962139700, -0.3186798467,
+0.3610251975, -0.3801645872, 0.4169547269, -0.4931656772, 0.3599622659}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{normalized 10D vector mixed sign, mixed type, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Non-normalized input 3D vector mixed sign, t = 0
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.0}
+\newVec{vecControl}{1, -2, 3}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{Non-normalized input 3D vector mixed sign, t = \scalarT}
+
+% Non-normalized input 3D vector mixed sign, t = 0.1
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.1}
+\newVec{vecControl}{0.3900314783, -1.2163938135, 3.7880795762}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{Non-normalized input 3D vector mixed sign, t = \scalarT}
+
+% Non-normalized input 3D vector mixed sign, t = 0.5
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{0.5}
+\newVec{vecControl}{-2.0028246564, 2.0028246564, 6.0084739694}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{Non-normalized input 3D vector mixed sign, t = 0.5}
+
+% Non-normalized input 3D vector mixed sign, t = 1
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\newScalar{scalarT}{1}
+\newVec{vecControl}{-4, 5, 6}
+\testMacroThreePar{Vec}{slerpVec}{\vecA}{\vecB}{\scalarT}{\vecControl}{Non-normalized input 3D vector mixed sign, t = \scalarT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newVec{vecControl}{1, -2, 3}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{immutable input}

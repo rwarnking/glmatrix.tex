@@ -1,9 +1,91 @@
 % chktex-file 26
 % chktex-file 29
 % chktex-file 37
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{printVecT} %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{printVecTT} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1D vector -1 Pi
+\newVec{vecA}{-1}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-1\right)}}
 
-\PackageWarning{glmatrix package tests}{In printVecT:\ test not implemented}
+% 1D vector -0.75 Pi
+\newVec{vecA}{-0.75}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-0.75\right)}}
+
+% 1D vector -0.5 Pi
+\newVec{vecA}{-0.5}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-0.5\right)}}
+
+% 1D vector -0.25 Pi
+\newVec{vecA}{-0.25}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-0.25\right)}}
+
+% 1D vector 0 Pi
+\newVec{vecA}{0}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(0\right)}}
+
+% 1D vector 0.25 Pi
+\newVec{vecA}{0.25}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(0.25\right)}}
+
+% 1D vector 0.5 Pi
+\newVec{vecA}{0.5}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(0.5\right)}}
+
+% 1D vector 0.75 Pi
+\newVec{vecA}{0.75}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(0.75\right)}}
+
+% 1D vector 1 Pi
+\newVec{vecA}{1}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(1\right)}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2D vector -10, 10 Pi
+\newVec{vecA}{-10, 10}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-10, 10\right)}}
+
+% 2D vector -7.75, 7.75 Pi
+\newVec{vecA}{-7.75, 7.75}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-7.75, 7.75\right)}}
+
+% 2D vector -5.5, 5.5 Pi
+\newVec{vecA}{-5.5, 5.5}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-5.5, 5.5\right)}}
+
+% 2D vector -2.25, 2.25 Pi
+\newVec{vecA}{-2.25, 2.25}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-2.25, 2.25\right)}}
+
+% 2D vector 0, 0 Pi
+\newVec{vecA}{0, 0}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(0, 0\right)}}
+
+% 3D vector -10, 0, 10 Pi
+\newVec{vecA}{-10, 0, 10}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-10, 0, 10\right)}}
+
+% 3D vector -7.75, 0.0, 7.75 Pi
+\newVec{vecA}{-7.75, 0.0, 7.75}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-7.75, 0, 7.75\right)}}
+
+% 3D vector -5.5, 1.25, 5.5 Pi
+\newVec{vecA}{-5.5, 1.25, 5.5}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-5.5, 1.25, 5.5\right)}}
+
+% 3D vector -2.25, 2.25, 3.99 Pi
+\newVec{vecA}{-2.25, 2.25, 3.99}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-2.25, 2.25, 3.99\right)}}
+
+% 3D vector 0.0, 0.5, -0.5 Pi
+\newVec{vecA}{0.0, 0.5, -0.5}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(0, 0.5, -0.5\right)}}
+
+% 3D vector 1.1, -1.1, 2.9 Pi
+\newVec{vecA}{1.1, -1.1, 2.9}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(1.1, -1.1, 2.9\right)}}
+
+% 10D vector Pi
+\newVec{vecA}{-9.8, -5.5, -0.1, 0.0, 0.2, 1.5, 2.9, 5.5, 7.75, 9.99}
+\testPrintOutput{printVecT}{vecA}{\vecA}{\trans{\left(-9.8, -5.5, -0.1, 0, 0.2, 1.5, 2.9, 5.5, 7.75, 9.99\right)}}

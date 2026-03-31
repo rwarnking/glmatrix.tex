@@ -1,0 +1,49 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{newDiagMat} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1x1 diagonal matrix mixed sign
+\newDiagMat{matA}{5}
+\newMat{matControl}{{{5}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{1x1 diagonal matrix mixed sign}
+
+% 2x2 diagonal matrix mixed sign
+\newDiagMat{matA}{0.5,2}
+\newMat{matControl}{{{0.5,0}{0,2}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{2x2 diagonal matrix mixed sign}
+
+% 3x3 diagonal matrix mixed sign
+\newDiagMat{matA}{4,5,6}
+\newMat{matControl}{{{4,0,0}{0,5,0}{0,0,6}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{3x3 diagonal matrix mixed sign}
+
+% 4x4 diagonal matrix mixed sign
+\newDiagMat{matA}{0.5,2,3,1}
+\newMat{matControl}{{{0.5,0,0,0}{0,2,0,0}{0,0,3,0}{0,0,0,1}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{4x4 diagonal matrix mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x2 diagonal matrix large integers
+\newDiagMat{matA}{3000000, 4000000}
+\newMat{matControl}{{{3000000,0}{0,4000000}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{2x2 diagonal matrix large integers}
+
+% 3x3 diagonal matrix large integers
+\newDiagMat{matA}{3000000, 4000000, 1000000}
+\newMat{matControl}{{{3000000,0,0}{0,4000000,0}{0,0,1000000}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{3x3 diagonal matrix large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x2 diagonal matrix small floats
+\newDiagMat{matA}{0.000001, 0.000002}
+\newMat{matControl}{{{0.000001,0}{0,0.000002}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{2x2 diagonal matrix small floats}
+
+% 3x3 diagonal matrix small floats
+\newDiagMat{matA}{0.000004, 0.000003, 0.000006}
+\newMat{matControl}{{{0.000004,0,0}{0,0.000003,0}{0,0,0.000006}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{3x3 diagonal matrix small floats}

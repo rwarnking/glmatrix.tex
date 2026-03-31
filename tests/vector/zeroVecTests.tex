@@ -4,6 +4,59 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{zeroVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 1D zero vector
+\zeroVec[1]{vecA}
+\newVec{vecControl}{0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D zero vector}
 
-\PackageWarning{glmatrix package tests}{In zeroVec:\ test not implemented}
+% 2D zero vector
+\zeroVec[2]{vecA}
+\newVec{vecControl}{0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D zero vector}
+
+% 3D zero vector
+\zeroVec[3]{vecA}
+\newVec{vecControl}{0, 0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D zero vector}
+
+% 4D zero vector
+\zeroVec[4]{vecA}
+\newVec{vecControl}{0, 0, 0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{4D zero vector}
+
+% 10D zero vector
+\zeroVec[10]{vecA}
+\newVec{vecControl}{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{10D zero vector}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1D vector override previously set vector
+\newVec{vecA}{7}
+\zeroVec[1]{vecA}
+\newVec{vecControl}{0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{1D vector override previously set vector}
+
+% 2D vector override previously set vector
+\newVec{vecA}{1, 2}
+\zeroVec[2]{vecA}
+\newVec{vecControl}{0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{2D vector override previously set vector}
+
+% 3D vector override previously set vector
+\newVec{vecA}{1, 2, 3}
+\zeroVec[3]{vecA}
+\newVec{vecControl}{0, 0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{3D vector override previously set vector}
+
+% 4D vector override previously set vector
+\newVec{vecA}{1, -2, 3, 10.25}
+\zeroVec[4]{vecA}
+\newVec{vecControl}{0, 0, 0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{4D vector override previously set vector}
+
+% 10D vector override previously set vector with 8D
+\newVec{vecA}{1, -2, 3, 10.25, 0.1, -13, -100.5, 10}
+\zeroVec[10]{vecA}
+\newVec{vecControl}{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+\testMacroEquality{Vec}{\vecA}{\vecControl}{10D vector override previously set vector with 8D}

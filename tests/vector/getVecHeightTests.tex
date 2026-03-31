@@ -4,6 +4,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{getVecHeight} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 2x 1D vector mixed sign
+\newVec{vecA}{5}
+\newScalar{scalarControl}{1}
+\testMacroOnePar{Scalar}{getVecHeight}{\vecA}{\scalarControl}{2x 1D vector mixed sign}
 
-\PackageWarning{glmatrix package tests}{In getVecHeight:\ test not implemented}
+% 2x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newScalar{scalarControl}{2}
+\testMacroOnePar{Scalar}{getVecHeight}{\vecA}{\scalarControl}{2x 2D vector mixed sign}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newScalar{scalarControl}{3}
+\testMacroOnePar{Scalar}{getVecHeight}{\vecA}{\scalarControl}{2x 3D vector mixed sign}
+
+% 2x 4D vector mixed sign, mixed type
+\newVec{vecA}{1, -2.5, 3, -4}
+\newScalar{scalarControl}{4}
+\testMacroOnePar{Scalar}{getVecHeight}{\vecA}{\scalarControl}{2x 4D vector mixed sign, mixed type}
+
+% 2x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newScalar{scalarControl}{10}
+\testMacroOnePar{Scalar}{getVecHeight}{\vecA}{\scalarControl}{2x 10D vector mixed sign, mixed type}

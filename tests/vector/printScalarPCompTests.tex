@@ -4,6 +4,78 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{printScalarPComp} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 2x 1D vector mixed sign
+\newVec{vecA}{5}
+\newVec{vecB}{-3}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (5), vecB = (-3)}{\vecA}{\vecB}{5*-3}
 
-\PackageWarning{glmatrix package tests}{In printScalarPComp:\ test not implemented}
+% 2x 2D vector mixed sign
+\newVec{vecA}{5, -3}
+\newVec{vecB}{-2, 4}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (5, -3), vecB = (-2, 4)}{\vecA}{\vecB}{5*-2+-3*4}
+
+% 2x 3D vector mixed sign
+\newVec{vecA}{1, -2, 3}
+\newVec{vecB}{-4, 5, 6}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (1, -2, 3), vecB = (-4, 5, 6)}{\vecA}{\vecB}{1*-4+-2*5+3*6}
+
+% 2x 4D vector mixed sign, mixed type
+\newVec{vecA}{1, -2.5, 3, -4}
+\newVec{vecB}{-5, 6, 7.25, -8}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (1, -2.5, 3, -4), vecB = (-5, 6, 7.25, -8)}{\vecA}{\vecB}{1*-5+-2.5*6+3*7.25+-4*-8}
+
+% 2x 10D vector mixed sign, mixed type
+\newVec{vecA}{1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875}
+\newVec{vecB}{-1, 2, 3, -4, -5.5, 6.00, 7.75, -8.5, -1.125, 10.275}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (1, -2, 3, -4, 5.5, -6.25, 7.75, -8.5, 9.125, -5.875), vecB = (-1, 2, 3, -4, -5.5, 6.00, 7.75, -8.5, -1.125, 10.275)}{\vecA}{\vecB}{1*-1+-2*2+3*3+-4*-4+5.5*-5.5+-6.25*6+7.75*7.75+-8.5*-8.5+9.125*-1.125+-5.875*10.275}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 1D vector cancellation
+\newVec{vecA}{7}
+\newVec{vecB}{0}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (7), vecB = (0)}{\vecA}{\vecB}{7*0}
+
+% 2x 2D vector cancellation
+\newVec{vecA}{3, 0}
+\newVec{vecB}{0, -4}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (3, 0), vecB = (0, -4)}{\vecA}{\vecB}{3*0+0*-4}
+
+% 2x 3D vector cancellation
+\newVec{vecA}{1, -2, 0}
+\newVec{vecB}{0, 0, 3}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (1, -2, 0), vecB = (0, 0, 3)}{\vecA}{\vecB}{1*0+-2*0+0*3}
+
+% 2x 4D vector cancellation
+\newVec{vecA}{1, 0, 3, -4.4}
+\newVec{vecB}{0, -2, 0, 0}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (1, 0, 3, -4.4), vecB = (0, -2, 0, 0)}{\vecA}{\vecB}{1*0+0*-2+3*0+-4.4*0}
+
+% 2x 10D vector cancellation
+\newVec{vecA}{0, -1, 0, 0, 0, -3.25, 0, -4.9, 0, 0}
+\newVec{vecB}{-1, 0, -2, 2, -3.5, 0, -4.75, 0, -5.1, 5}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (0, -1, 0, 0, 0, -3.25, 0, -4.9, 0, 0), vecB = (-1, 0, -2, 2, -3.5, 0, -4.75, 0, -5.1, 5)}{\vecA}{\vecB}{0*-1+-1*0+0*-2+0*2+0*-3.5+-3.25*0+0*-4.75+-4.9*0+0*-5.1+0*5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector large integers
+\newVec{vecA}{100000, 200000}
+\newVec{vecB}{300000, 400000}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (100000, 200000), vecB = (300000, 400000)}{\vecA}{\vecB}{100000*300000+200000*400000}
+
+% 2x 3D vector large integers
+\newVec{vecA}{1000000, 2000000, 3000000}
+\newVec{vecB}{3000000, 4000000, 5000000}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (1000000, 2000000, 3000000), vecB = (3000000, 4000000, 5000000)}{\vecA}{\vecB}{1000000*3000000+2000000*4000000+3000000*5000000}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x 2D vector small floats
+\newVec{vecA}{0.0001, -0.0002}
+\newVec{vecB}{0.0003, 0.0004}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (0.00001, -0.00002), vecB = (0.00003, 0.00004)}{\vecA}{\vecB}{0.0001*0.0003+-0.0002*0.0004}
+
+% 2x 3D vector small floats
+\newVec{vecA}{0.0001, -0.0002, -0.0003}
+\newVec{vecB}{0.0004, 0.0003, -0.0006}
+\testPrintOutputTwoPar{printScalarPComp}{vecA = (0.00001, -0.00002, -0.00003), vecB = (0.00004, 0.00003, -0.00006)}{\vecA}{\vecB}{0.0001*0.0004+-0.0002*0.0003+-0.0003*-0.0006}

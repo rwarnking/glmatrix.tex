@@ -871,10 +871,6 @@
 % #1 out, var name to save the result (vector) to
 % #2 matrix, the matrix to extract the translation from
 \newcommand\getMatTranslation[2][matTranslationResult]{%
-    \FPifeq{\expectedheight}{\actualheight}
-    \else
-        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
-    \fi
     \getMatWidth{#2}
     \getMatHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\matHeightResult}}

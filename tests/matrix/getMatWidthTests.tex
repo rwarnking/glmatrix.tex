@@ -1,0 +1,51 @@
+% chktex-file 26
+% chktex-file 29
+% chktex-file 37
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{getMatWidth} %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1x1 matrix mixed sign
+\newMat{matA}{{{5}}}
+\newScalar{scalarControl}{1}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{1x1 matrix mixed sign}
+
+% 2x2 matrix mixed sign
+\newMat{matA}{{{0.5,2}{4,5}}}
+\newScalar{scalarControl}{2}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{2x2 matrix mixed sign}
+
+% 2x3 matrix mixed sign
+\newMat{matA}{{{0.5,2,7}{4,5,8}}}
+\newScalar{scalarControl}{3}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{2x3 matrix mixed sign}
+
+% 3x2 matrix mixed sign
+\newMat{matA}{{{0.5,2}{4,5}{7,8}}}
+\newScalar{scalarControl}{2}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{3x2 matrix mixed sign}
+
+% 3x3 matrix mixed sign
+\newMat{matA}{{{0.5,2,3}{4,5,6}{7,8,9}}}
+\newScalar{scalarControl}{3}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{3x3 matrix mixed sign}
+
+% 3x4 matrix mixed sign
+\newMat{matA}{{{0.5,2,3,1}{4,5,6,2}{7,8,9,3}}}
+\newScalar{scalarControl}{4}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{3x4 matrix mixed sign}
+
+% 4x3 matrix mixed sign
+\newMat{matA}{{{0.5,2,3}{4,5,6}{7,8,9}{7,8,9}}}
+\newScalar{scalarControl}{3}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{4x3 matrix mixed sign}
+
+% 4x4 matrix mixed sign
+\newMat{matA}{{{0.5,2,3,1}{4,5,6,2}{7,8,9,3}{7,8,9,3}}}
+\newScalar{scalarControl}{4}
+\testMacroOnePar{Scalar}{getMatWidth}{\matA}{\scalarControl}{4x4 matrix mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newMat{matControl}{{{0.5,2,3,1}{4,5,6,2}{7,8,9,3}{7,8,9,3}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{immutable input}
