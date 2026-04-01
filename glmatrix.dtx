@@ -35,7 +35,7 @@ See http://www.latex-project.org/lppl.txt
 ---------------------------------------------------------------
 \endpreamble
 \postamble
-Copyright (C) 2026/03/02 by
+Copyright (C) 2026/04/01 by
   Rene Warnking <TODO>
 
 It may be distributed and/or modified under the conditions of
@@ -77,7 +77,7 @@ This work consists of the file  glmatrix.dtx
 
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{glmatrix}[2026/03/02 v0.1 Math library for computer graphics]
+\ProvidesPackage{glmatrix}[2026/04/01 v0.1 Math library for computer graphics]
 
 \RequirePackage{xinttools}
 \RequirePackage{xintfrac}
@@ -232,7 +232,7 @@ This work consists of the file  glmatrix.dtx
 \begin{document}
     \title{The \textsf{glmatrix} Package}
     \author{Rene Warnking}
-    \date{2026/03/02}
+    \date{2026/04/01}
     \maketitle
 
     \tableofcontents
@@ -819,876 +819,6 @@ This work consists of the file  glmatrix.dtx
 %   \textbackslash detMat[detMatResult]\{\textbackslash myNewMatrix\}\\
 %   \textbackslash detMatResult \(\mapsto{} 1.5\)
 % \end{examplebox}
-% \subsection{vector}
-% \label{subsec:vector}
-% \begin{center}
-% \begin{tabularx}{\textwidth}{l p{8cm}} \hline
-% \textbf{Command} & \textbf{Arguments} \\ \hline
-% \ref{macro:newVec} & \makecell[t{p{8cm}}]{\marg{out}, \marg{values}} \\
-% \ref{macro:newVecPi} & \makecell[t{p{8cm}}]{\marg{out}, \marg{values}} \\
-% \ref{macro:randomVec} & \makecell[t{p{8cm}}]{\marg{out}, \marg{dimensions}, \marg{lower bound}, \marg{upper bound}} \\
-% \ref{macro:copyVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: copyVecResult} \\
-% \ref{macro:zeroVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{dims}\\Default Argument: zeroVecResult} \\
-% \ref{macro:appendToVec} & \makecell[t{p{8cm}}]{\marg{out}, \marg{vector}, \marg{scalar}} \\
-% \ref{macro:printVec} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
-% \ref{macro:printVecT} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
-% \ref{macro:printVecAsPoint} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
-% \ref{macro:printVecAsPi} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
-% \ref{macro:printVecAsPiT} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
-% \ref{macro:printVecContent} & \makecell[t{p{8cm}}]{\marg{vector}} \\
-% \ref{macro:printVecContentXY} & \makecell[t{p{8cm}}]{\marg{vector}} \\
-% \ref{macro:printVecContentXYZ} & \makecell[t{p{8cm}}]{\marg{vector}} \\
-% \ref{macro:printVecContentXYZW} & \makecell[t{p{8cm}}]{\marg{vector}} \\
-% \ref{macro:getVecHeight} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: vecHeightResult} \\
-% \ref{macro:printScalarPComp} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector v}, \marg{vector w}\\Default Argument: 0} \\
-% \ref{macro:printCrossPComp} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector v}, \marg{vector w}\\Default Argument: 0} \\
-% \ref{macro:roundVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{digits}\\Default Argument: roundVecResult} \\
-% \ref{macro:ceilVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: ceilVecResult} \\
-% \ref{macro:floorVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: floorVecResult} \\
-% \ref{macro:dehomogenVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: dehomogenVecResult} \\
-% \ref{macro:addVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: addVecResult} \\
-% \ref{macro:subVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: subVecResult} \\
-% \ref{macro:mulVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: mulVecResult} \\
-% \ref{macro:divVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: divVecResult} \\
-% \ref{macro:scaleVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{scalar}\\Default Argument: scaleVecResult} \\
-% \ref{macro:divVecScalar} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{scalar}\\Default Argument: divVecScalarResult} \\
-% \ref{macro:negateVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: negateVecResult} \\
-% \ref{macro:scaleAndAddVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar}\\Default Argument: scaleAndAddVecResult} \\
-% \ref{macro:lerpVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar t}\\Default Argument: lerpVecResult} \\
-% \ref{macro:slerpVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar t}\\Default Argument: slerpVecResult} \\
-% \ref{macro:hermiteVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{control ca}, \marg{control cb}, \marg{vector w}, \marg{scalar t}\\Default Argument: hermiteVecResult} \\
-% \ref{macro:dotVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: dotVecResult} \\
-% \ref{macro:lenVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: lenVecResult} \\
-% \ref{macro:sqrLenVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: sqrLenVecResult} \\
-% \ref{macro:normalizeVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: normalizeVecResult} \\
-% \ref{macro:crossVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: crossVecResult} \\
-% \ref{macro:crossVecTwoD} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: crossVecResult} \\
-% \ref{macro:angleVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: angleVecResult} \\
-% \ref{macro:distVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: distVecResult} \\
-% \ref{macro:sqrDistVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: sqrDistVecResult} \\
-% \ref{macro:transformVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{matrix}, \marg{vector}\\Default Argument: transformVecResult} \\
-% \ref{macro:tensorVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: tensorVecResult} \\
-% \ref{macro:minVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: minVecResult} \\
-% \ref{macro:maxVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: maxVecResult} \\
-% \ref{macro:solveVecEQL} & \makecell[t{p{8cm}}]{\oarg{a}, \marg{b}, \marg{c}\\Default Argument: solveVecEQLResult} \\
-% \end{tabularx}
-% \end{center}
-
-% \setlabel{\textbackslash newVec}{macro:newVec}
-% \DescribeMacro{newVec}
-% \marg{out}\marg{values}\\[1mm]
-% \marg{out}: var name to save the result (vector) to\\
-% \marg{values}: values that are assigned to out
-% \begin{descriptionbox}
-% Create a new vector and assign the given values.
-% \end{descriptionbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{2, 3, 4\}\\
-%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}2\\3\\4\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash newVecPi}{macro:newVecPi}
-% \DescribeMacro{newVecPi}
-% \marg{out}\marg{values}\\[1mm]
-% \marg{out}: var name to save the result (vector) to\\
-% \marg{values}: values that are multiplied with pi and assigned to out
-% \begin{descriptionbox}
-% Create a new vector and assign the given values as a multiple of pi.
-% \end{descriptionbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}\frac{1}{2}\pi\\\pi\\2\pi\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash randomVec}{macro:randomVec}
-% \DescribeMacro{randomVec}
-% \marg{out}\marg{dimensions}\marg{lower bound}\marg{upper bound}\\[1mm]
-% \marg{out}: var name to save the result (vector) to\\
-% \marg{dimensions}: scalar that defines the number of dimensions out should have\\
-% \marg{lower bound}: scalar that limits the possible values at the bottom\\
-% \marg{upper bound}: scalar that limits the possible values at the top
-% \begin{descriptionbox}
-% Create a new vector and assign random values between lower and
-% upper bound to its components.
-% The value is obtained by creating a random value between 0 and 1
-% and then interpolating between lower and upper bound.
-% \end{descriptionbox}
-% \begin{examplebox}
-%   \textbackslash randomVec\{myNewVec\}\{4\}\{3\}\{10\}\\
-%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}5, 4, 8, 4\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash copyVec}{macro:copyVec}
-% \DescribeMacro{copyVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: copyVecResult\\
-% \marg{vector}: vector which values are assigned to out
-% \begin{descriptionbox}
-% Copy values from one vector variable to another.
-% \end{descriptionbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash copyVec[copyVecResult]\{\textbackslash myNewVec\}\\
-%   \textbackslash copyVecResult \(\mapsto{} \begin{pmatrix}0.5\\ 1\\ 2\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash zeroVec}{macro:zeroVec}
-% \DescribeMacro{zeroVec}
-% \oarg{out}\marg{dims}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: zeroVecResult\\
-% \marg{dims}: number of dimensions (rows)
-% \begin{descriptionbox}
-% Create or override a vector with all its components being 0.
-% Obacht: It is not necessary to call this to create a new vector.
-% This is just for convenience when requiring a vector with initialized with zero.
-% \end{descriptionbox}
-% \begin{examplebox}
-%   \textbackslash zeroVec[zeroVecResult]\{3\}\\
-%   \textbackslash zeroVecResult \(\mapsto{} \begin{pmatrix}0\\ 0\\ 0\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash appendToVec}{macro:appendToVec}
-% \DescribeMacro{appendToVec}
-% \marg{out}\marg{vector}\marg{scalar}\\[1mm]
-% \marg{out}: var name to save the result (vector) to\\
-% \marg{vector}: the currently present values\\
-% \marg{scalar}: the scalar to add to vector
-% \begin{descriptionbox}
-% Append a dimension with the given value to an already defined vector.
-% \end{descriptionbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1\}\\
-%   \textbackslash appendToVec\{myNewVec\}\{\textbackslash myNewVec\}\{-10\}\\
-%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}0.5\\ 1\\ -10\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printVec}{macro:printVec}
-% \DescribeMacro{printVec}
-% \oarg{fraction}\marg{vector}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector}: the vector that should be printed
-% \begin{descriptionbox}
-% Print the values of the given vector in vector notation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\begin{pmatrix} \mathbf{v}_1\\ \ldots\\ \mathbf{v}_n \end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{1, 2, 3\}\\
-%   \textbackslash printVec\{\textbackslash myNewVec\} \(\mapsto{} \begin{pmatrix}1\\2\\3\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printVecT}{macro:printVecT}
-% \DescribeMacro{printVecT}
-% \oarg{fraction}\marg{vector}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector}: the vector that should be printed
-% \begin{descriptionbox}
-% Print the values of the given vector in transposed notation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\trans{(\mathbf{v}_1, \ldots, \mathbf{v}_n)}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{1, 2, 3\}\\
-%   \textbackslash printVecT\{\textbackslash myNewVec\} \(\mapsto{} \trans{(1, 2, 3)}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printVecAsPoint}{macro:printVecAsPoint}
-% \DescribeMacro{printVecAsPoint}
-% \oarg{fraction}\marg{vector}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector}: the vector that should be printed
-% \begin{descriptionbox}
-% Print the values of the given vector in point notation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\begin{bmatrix}\mathbf{v}_1\\ \ldots\\ \mathbf{v}_n\end{bmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{1, 2, 3\}\\
-%   \textbackslash printVecAsPoint\{\textbackslash myNewVec\} \(\mapsto{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printVecAsPi}{macro:printVecAsPi}
-% \DescribeMacro{printVecAsPi}
-% \oarg{fraction}\marg{vector}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector}: the vector that should be printed
-% \begin{descriptionbox}
-% Print the values of the given vector as a multiple of \(\pi\) in vector notation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\begin{pmatrix}\left\{\frac{\mathbf{v}_1}{\pi}\right\}\\ \ldots\\ \left\{\frac{\mathbf{v}_n}{\pi}\right\}\end{pmatrix}\pi\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\mapsto{} \begin{pmatrix}0.5\pi\\\pi\\2\pi\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printVecAsPiT}{macro:printVecAsPiT}
-% \DescribeMacro{printVecAsPiT}
-% \oarg{fraction}\marg{vector}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector}: the vector that should be printed
-% \begin{descriptionbox}
-% Print the values of the given vector as a multiple of Pi in transposed notation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\trans{\left(\left\{\frac{\mathbf{v}_1}{\pi}\right\}, \ldots, \left\{\frac{\mathbf{v}_n}{\pi}\right\}\right)}\pi\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\mapsto{} \trans{(0.5\pi,\pi,2\pi)}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printVecContent}{macro:printVecContent}
-% \DescribeMacro{printVecContent}
-% \marg{vector}\\[1mm]
-% \marg{vector}: the vector which values should be printed
-% \begin{descriptionbox}
-% Print the values of the given vector comma separated.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\mathbf{v}_1, \ldots, \mathbf{v}_n\)
-% \end{equationbox}
-
-% \setlabel{\textbackslash printVecContentXY}{macro:printVecContentXY}
-% \DescribeMacro{printVecContentXY}
-% \marg{vector}\\[1mm]
-% \marg{vector}: the vector which values should be printed
-% \begin{descriptionbox}
-% Returns the x and y component of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\mathbf{v}_1, \mathbf{v}_2\)
-% \end{equationbox}
-
-% \setlabel{\textbackslash printVecContentXYZ}{macro:printVecContentXYZ}
-% \DescribeMacro{printVecContentXYZ}
-% \marg{vector}\\[1mm]
-% \marg{vector}: the vector which values should be printed
-% \begin{descriptionbox}
-% Returns the x, y and z component of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\)
-% \end{equationbox}
-
-% \setlabel{\textbackslash printVecContentXYZW}{macro:printVecContentXYZW}
-% \DescribeMacro{printVecContentXYZW}
-% \marg{vector}\\[1mm]
-% \marg{vector}: the vector which values should be printed
-% \begin{descriptionbox}
-% Returns the x, y, z and w component of the given vector
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3, \mathbf{v}_4\)
-% \end{equationbox}
-
-% \setlabel{\textbackslash getVecHeight}{macro:getVecHeight}
-% \DescribeMacro{getVecHeight}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: vecHeightResult\\
-% \marg{vector}: the vector of which to return the height
-% \begin{descriptionbox}
-% Returns the number of components that given vector has (number of dimensions).
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = dim(\mathbf{v})\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash getVecHeight\{\textbackslash myNewVec\}\\
-%   \textbackslash vecHeightResult \(\mapsto{} 3\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash printScalarPComp}{macro:printScalarPComp}
-% \DescribeMacro{printScalarPComp}
-% \oarg{fraction}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Print the intermediate components of the scalarproduct calculation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\mathbf{v}_1 * \mathbf{w}_1 + \ldots + \mathbf{v}_n * \mathbf{w}_n\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} 0.5*0.5+1*1+2*2\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When both vectors do not have the same length
-% \end{warningbox}
-
-% \setlabel{\textbackslash printCrossPComp}{macro:printCrossPComp}
-% \DescribeMacro{printCrossPComp}
-% \oarg{fraction}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Print the intermediate components of the crossproduct calculation.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\begin{pmatrix} \mathbf{v}_2*\mathbf{w}_3 - \mathbf{v}_3*\mathbf{w}_2\\ \mathbf{v}_3*\mathbf{w}_1-\mathbf{v}_1*\mathbf{w}_3\\ \mathbf{v}_1*\mathbf{w}_2-\mathbf{w}_2*\mathbf{w}_1 \end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{3, 4, 5\}\\
-%   \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}1*5 - 2*4\\ 2*3 - 0.5*5\\ 0.5*4 -1*3\end{pmatrix}\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When one of both vectors does not have length 3
-% \end{warningbox}
-
-% \setlabel{\textbackslash roundVec}{macro:roundVec}
-% \DescribeMacro{roundVec}
-% \oarg{out}\marg{vector}\marg{digits}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: roundVecResult\\
-% \marg{vector}: the vector that schould be rounded\\
-% \marg{digits}: number of digits after comma
-% \begin{descriptionbox}
-% Round the values ot the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(\mathbf{v} = \begin{pmatrix}\lfloor d_1\rceil\\\ldots\\\lfloor d_n\rceil\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash roundVec[roundVecResult]\{\textbackslash myNewVec\}\{0\}\\
-%   \textbackslash roundVecResult \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash ceilVec}{macro:ceilVec}
-% \DescribeMacro{ceilVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: ceilVecResult\\
-% \marg{vector}: the vector that should be ceiled
-% \begin{descriptionbox}
-% Ceil the values of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}\lceil \mathbf{v}_1\rceil\\\ldots\\\lceil \mathbf{v}_n\rceil\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash ceilVec[ceilVecResult]\{\textbackslash myNewVec\}\\
-%   \textbackslash ceilVecResult \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash floorVec}{macro:floorVec}
-% \DescribeMacro{floorVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: floorVecResult\\
-% \marg{vector}: the vector that should be floored
-% \begin{descriptionbox}
-% Floor the values of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}\lfloor \mathbf{v}_1\rfloor\\\ldots\\\lfloor \mathbf{v}_n\rfloor\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash floorVec[floorVecResult]\{\textbackslash myNewVec\}\\
-%   \textbackslash floorVecResult \(\mapsto{} \begin{pmatrix}0\\1\\2\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash dehomogenVec}{macro:dehomogenVec}
-% \DescribeMacro{dehomogenVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: dehomogenVecResult\\
-% \marg{vector}: the vector that should be dehomogenized
-% \begin{descriptionbox}
-% Dehomogenize the values of the given vector. This divides all vector components by the last component.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix} \frac{\mathbf{v}_1}{\mathbf{v}_n} \\ \ldots \\ \frac{\mathbf{v}_{n-1}}{\mathbf{v}_n} \end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2, 2\}\\
-%   \textbackslash dehomogenVec[dehomogenVecResult]\{\textbackslash myNewVec\}\\
-%   \textbackslash dehomogenVecResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\\1\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash addVec}{macro:addVec}
-% \DescribeMacro{addVec}
-% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: addVecResult\\
-% \marg{vector}: the vector to add to\\
-% \marg{vectors}: the list of vectors with which to add
-% \begin{descriptionbox}
-% Add the values of \(1\) to \(m\) vectors to the values of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}\mathbf{v}_1 + \mathbf{vs}_{1,1} + \ldots + \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n + \mathbf{vs}_{1,n} + \ldots + \mathbf{vs}_{m,n}\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash addVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash addVecResult \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)\\
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecC\}\{0.5, 1, 2\}\\
-%   \textbackslash addVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB, \textbackslash myNewVecC\}\\
-%   \textbackslash resultName \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash subVec}{macro:subVec}
-% \DescribeMacro{subVec}
-% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: subVecResult\\
-% \marg{vector}: the vector to subtract from\\
-% \marg{vectors}: the list of vectors with which to subtract
-% \begin{descriptionbox}
-% Subract the values of \(1\) to \(m\) vectors from the values of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}\mathbf{v}_1 - \mathbf{vs}_{1,1} - \ldots - \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n - \mathbf{vs}_{1,n} - \ldots - \mathbf{vs}_{m,n}\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash subVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash subVecResult \(\mapsto{} \begin{pmatrix}0\\0\\0\end{pmatrix}\)\\
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecC\}\{0.5, 1, 2\}\\
-%   \textbackslash subVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB, \textbackslash myNewVecC\}\\
-%   \textbackslash resultName \(\mapsto{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash mulVec}{macro:mulVec}
-% \DescribeMacro{mulVec}
-% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: mulVecResult\\
-% \marg{vector}: the vector to multiply\\
-% \marg{vectors}: the list of vectors with which to multiply
-% \begin{descriptionbox}
-% Multiply the values of \(1\) to \(m\) vectors with the values of the given vector.
-% See Hadamard product (element-wise product) for more information.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \begin{align*}o &= \mathbf{v} \odot \mathbf{vs}_1 \odot \ldots \odot \mathbf{vs}_m\\ &= \begin{pmatrix}\mathbf{v}_1 * \mathbf{vs}_{1,1} * \ldots * \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n * \mathbf{vs}_{1,n} * \ldots * \mathbf{vs}_{m,n}\end{pmatrix}\end{align*}
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash mulVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}0.25\\1\\4\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash divVec}{macro:divVec}
-% \DescribeMacro{divVec}
-% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: divVecResult\\
-% \marg{vector}: the vector to divide\\
-% \marg{vectors}: the list of vectors to divide with
-% \begin{descriptionbox}
-% Divide the values of the given vector by the values of \(1\) to \(m\) vectors (element-wise division).
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \begin{align*}o &= \mathbf{v} \oslash \mathbf{vs}_1 \oslash \ldots \oslash \mathbf{vs}_m\\ &= \begin{pmatrix}\mathbf{v}_1 / \mathbf{vs}_{1,1} / \ldots / \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n / \mathbf{vs}_{1,n} / \ldots / \mathbf{vs}_{m,n}\end{pmatrix}\end{align*}
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash scaleVec}{macro:scaleVec}
-% \DescribeMacro{scaleVec}
-% \oarg{out}\marg{vector}\marg{scalar}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: scaleVecResult\\
-% \marg{vector}: the vector to scale\\
-% \marg{scalar}: the scalar to scale with
-% \begin{descriptionbox}
-% Multiply the values of the given vector by a scalar.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}\mathbf{v}_1 * s\\\ldots\\\mathbf{v}_n * s\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newScalar\{myNewScalar\}\{2\}\\
-%   \textbackslash scaleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}\\
-%   \textbackslash scaleVecResult \(\mapsto{} \begin{pmatrix}1\\2\\4\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash divVecScalar}{macro:divVecScalar}
-% \DescribeMacro{divVecScalar}
-% \oarg{out}\marg{vector}\marg{scalar}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: divVecScalarResult\\
-% \marg{vector}: the vector to divide\\
-% \marg{scalar}: the scalar to divide with
-% \begin{descriptionbox}
-% Divide the values of the given vector by a scalar.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}\frac{\mathbf{v}_1}{s}\\\ldots\\\frac{\mathbf{v}_n}{s}\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newScalar\{myNewScalar\}\{2\}\\
-%   \textbackslash divVecScalar\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}\\
-%   \textbackslash divVecScalarResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash negateVec}{macro:negateVec}
-% \DescribeMacro{negateVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: negateVecResult\\
-% \marg{vector}: the vector to negate
-% \begin{descriptionbox}
-% Negate the values of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix}-\mathbf{v}_1\\\ldots\\-\mathbf{v}_n\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash negateVecResult\{\textbackslash myNewVecA\}\\
-%   \textbackslash negateVecResult \(\mapsto{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash scaleAndAddVec}{macro:scaleAndAddVec}
-% \DescribeMacro{scaleAndAddVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\marg{scalar}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: scaleAndAddVecResult\\
-% \marg{vector v}: the vector to add to\\
-% \marg{vector w}: the vector that is multiplied and then added\\
-% \marg{scalar}: the scalar that is the muliplier
-% \begin{descriptionbox}
-% Adds two vectors after multiplying the second one by a scalar.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \mathbf{v} + \mathbf{w} * s = \begin{pmatrix}\mathbf{v}_1 + \mathbf{w}_1 * s\\\ldots\\\mathbf{v}_n + \mathbf{w}_n * s\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash newScalar\{myNewScalar\}\{2\}\\
-%   \textbackslash scaleAndAddVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}\\
-%   \textbackslash scaleAndAddVecResult \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash lerpVec}{macro:lerpVec}
-% \DescribeMacro{lerpVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\marg{scalar t}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: lerpVecResult\\
-% \marg{vector v}: the start vector\\
-% \marg{vector w}: the end vector\\
-% \marg{scalar t}: interpolation amount range [0-1]
-% \begin{descriptionbox}
-% Lineraly interpolate between the values of two vectors (element-wise interpolation).
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = (1-t) * \mathbf{v} + t * \mathbf{w} = \begin{pmatrix}(1-t) \mathbf{v}_1 + t *\mathbf{w}_1\\\ldots\\(1-t) \mathbf{v}_n + t *\mathbf{w}_n\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}\\
-%   \textbackslash newScalar\{myNewScalar\}\{0.5\}\\
-%   \textbackslash lerpVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}\\
-%   \textbackslash lerpVecResult \(\mapsto{} \begin{pmatrix}0.75\\1.5\\3\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash slerpVec}{macro:slerpVec}
-% \DescribeMacro{slerpVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\marg{scalar t}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: slerpVecResult\\
-% \marg{vector v}: the start vector\\
-% \marg{vector w}: the end vector\\
-% \marg{scalar t}: interpolation amount range [0-1]
-% \begin{descriptionbox}
-% Performs a spherical linear interpolation between two vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   TODO
-% \end{equationbox}
-
-% \setlabel{\textbackslash hermiteVec}{macro:hermiteVec}
-% \DescribeMacro{hermiteVec}
-% \oarg{out}\marg{vector v}\marg{control ca}\marg{control cb}\marg{vector w}\marg{scalar t}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: hermiteVecResult\\
-% \marg{vector v}: the start vector\\
-% \marg{control ca}: the first control point\\
-% \marg{control cb}: the second control point\\
-% \marg{vector w}: the end vector\\
-% \marg{scalar t}: interpolation amount range [0-1]
-% \begin{descriptionbox}
-% Perform a hermite interpolation with two control points.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   TODO
-% \end{equationbox}
-
-% \setlabel{\textbackslash dotVec}{macro:dotVec}
-% \DescribeMacro{dotVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: dotVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Calculate the dotproduct of the given two vectors.
-% Other names for this operation are inner product and scalarproduct.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \mathbf{v}_1 * \mathbf{w}_1 + \ldots + \mathbf{v}_n * \mathbf{w}_n\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}\\
-%   \textbackslash dotVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash dotVecResult \(\mapsto{} 10.5\)\\
-%   \textbackslash dotVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash resultName \(\mapsto{} 10.5\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When both vectors do not have the same length
-% \end{warningbox}
-
-% \setlabel{\textbackslash lenVec}{macro:lenVec}
-% \DescribeMacro{lenVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: lenVecResult\\
-% \marg{vector}: the vector for which to calculate the length
-% \begin{descriptionbox}
-% Calculate the length of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \norm{\mathbf{v}} = \sqrt{\mathbf{v}_1^2 + \ldots + \mathbf{v}_n^2}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash lenVec\{\textbackslash myNewVecA\}\\
-%   \textbackslash lenVecResult \(\mapsto{} 2.29\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash sqrLenVec}{macro:sqrLenVec}
-% \DescribeMacro{sqrLenVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: sqrLenVecResult\\
-% \marg{vector}: the vector for which to calculate the squared length
-% \begin{descriptionbox}
-% Calculate the squared length of the given vector.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \norm{\mathbf{v}}^2 = \mathbf{v}_1^2 + \ldots + \mathbf{v}_n^2\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash sqrLenVec\{\textbackslash myNewVecA\}\\
-%   \textbackslash sqrLenVecResult \(\mapsto{} 5.25\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash normalizeVec}{macro:normalizeVec}
-% \DescribeMacro{normalizeVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: normalizeVecResult\\
-% \marg{vector}: the vector which to normalize
-% \begin{descriptionbox}
-% Divide all components of the vector by its length.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix} \frac{\mathbf{v}_1}{\norm{\mathbf{v}}}\\ \ldots\\ \frac{\mathbf{v}_n}{\norm{\mathbf{v}}}\end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash normalizeVec\{\textbackslash myNewVecA\}\\
-%   \textbackslash normalizeVecResult \(\mapsto{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)\\
-%   \textbackslash normalizeVec[resultName]\{\textbackslash myNewVecA\}\\
-%   \textbackslash resultName \(\mapsto{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash crossVec}{macro:crossVec}
-% \DescribeMacro{crossVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: crossVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Calculate crossproduct for the two given vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix} \mathbf{v}_2*\mathbf{w}_3 - \mathbf{v}_3*\mathbf{w}_2\\ \mathbf{v}_3*\mathbf{w}_1-\mathbf{v}_1*\mathbf{w}_3\\ \mathbf{v}_1*\mathbf{w}_2-\mathbf{w}_2*\mathbf{w}_1 \end{pmatrix}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 0, 2\}\\
-%   \textbackslash crossVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash crossVecResult \(\mapsto{} \begin{pmatrix} 2\\ 0\\ -0.5\end{pmatrix}\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When one of both vectors does not have length 3
-% \end{warningbox}
-
-% \setlabel{\textbackslash crossVecTwoD}{macro:crossVecTwoD}
-% \DescribeMacro{crossVecTwoD}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: crossVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Calculate crossproduct for the two given vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \mathbf{v}_1*\mathbf{w}_2 - \mathbf{v}_2*\mathbf{w}_1\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 0\}\\
-%   \textbackslash crossVecTwoD\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash crossVecResult \(\mapsto{} -0.5\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When one of both vectors does not have length 3
-% \end{warningbox}
-
-% \setlabel{\textbackslash angleVec}{macro:angleVec}
-% \DescribeMacro{angleVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: angleVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Get the angle between the given two vectors in radian.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \angle(\mathbf{v}, \mathbf{w})\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash angleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash angleVecResult \(\mapsto{} TODO scalar\)
-% \end{examplebox}
-
-% \setlabel{\textbackslash distVec}{macro:distVec}
-% \DescribeMacro{distVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: distVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Calculates the euclidian distance between the given two vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \norm{\mathbf{v} - \mathbf{w}}\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash distVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash distVecResult \(\mapsto{} TODO scalar\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When vector v and vector w do not have the same length
-% \end{warningbox}
-
-% \setlabel{\textbackslash sqrDistVec}{macro:sqrDistVec}
-% \DescribeMacro{sqrDistVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (scalar) to, default: sqrDistVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Calculates the squared euclidian distance between two vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \norm{\mathbf{v} - \mathbf{w}}^2\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
-%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
-%   \textbackslash sqrDistVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
-%   \textbackslash sqrDistVecResult \(\mapsto{} TODO scalar\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When vector v and vector w do not have the same length
-% \end{warningbox}
-
-% \setlabel{\textbackslash transformVec}{macro:transformVec}
-% \DescribeMacro{transformVec}
-% \oarg{out}\marg{matrix}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: transformVecResult\\
-% \marg{matrix}: the matrix to transform the vetor with\\
-% \marg{vector}: the vector to transform
-% \begin{descriptionbox}
-% Multiply the given vector with a matrix (for transformation).
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \mathbf{M} \cdot \mathbf{v}\ \vert\ \mathbf{M} \in \R^{m\times n}, \mathbf{v} \in \R^n\)
-% \end{equationbox}
-% \begin{examplebox}
-%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
-%   \textbackslash newMat\{myNewMatrix\}\{\{\{0.5, 1, 2\}\{4, 5, 6\}\{7, 8, 9\}\}\}\\
-%   \textbackslash transformVec\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}\\
-%   \textbackslash transformVecResult \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)\\
-%   \textbackslash transformVec[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}\\
-%   \textbackslash resultName \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
-% \end{examplebox}
-% \begin{warningbox}
-%   When matrix and vector have a dimension mismatch
-% \end{warningbox}
-
-% \setlabel{\textbackslash tensorVec}{macro:tensorVec}
-% \DescribeMacro{tensorVec}
-% \oarg{out}\marg{vector}\\[1mm]
-% \oarg{out}: var name to save the result (matrix) to, default: tensorVecResult\\
-% \marg{vector}: the vector to multiply with itself
-% \begin{descriptionbox}
-% Outer product: Multiply a vector (column) with itself (row) resulting in a matrix. (Dyadic product, Tensor product)
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \mathbf{v} \trans{\mathbf{v}} = \mathbf{v} \otimes \mathbf{v}\)
-% \end{equationbox}
-% \begin{warningbox}
-%   When matrix and vector have a dimension mismatch
-% \end{warningbox}
-
-% \setlabel{\textbackslash minVec}{macro:minVec}
-% \DescribeMacro{minVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: minVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Return the componentwise minimum of the given two vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix} \min(\mathbf{v}_1, \mathbf{w}_1)\\ \ldots\\ \min(\mathbf{v}_n, \mathbf{w}_n)\end{pmatrix}\)
-% \end{equationbox}
-% \begin{warningbox}
-%   When vector v and vector w do not have the same length
-% \end{warningbox}
-
-% \setlabel{\textbackslash maxVec}{macro:maxVec}
-% \DescribeMacro{maxVec}
-% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
-% \oarg{out}: var name to save the result (vector) to, default: maxVecResult\\
-% \marg{vector v}: the first vector\\
-% \marg{vector w}: the second vector
-% \begin{descriptionbox}
-% Return the componentwise maximum of the given two vectors.
-% \end{descriptionbox}
-% \begin{equationbox}
-%   \(o = \begin{pmatrix} \max(\mathbf{v}_1, \mathbf{w}_1)\\ \ldots\\ \max(\mathbf{v}_n, \mathbf{w}_n)\end{pmatrix}\)
-% \end{equationbox}
-% \begin{warningbox}
-%   When vector v and vector w do not have the same length
-% \end{warningbox}
-
-% \setlabel{\textbackslash solveVecEQL}{macro:solveVecEQL}
-% \DescribeMacro{solveVecEQL}
-% \oarg{a}\marg{b}\marg{c}\\[1mm]
-% \oarg{a}: a, default: solveVecEQLResult\\
-% \marg{b}: b\\
-% \marg{c}: c
-
 % \subsection{scalar}
 % \label{subsec:scalar}
 % \begin{center}
@@ -2207,6 +1337,868 @@ This work consists of the file  glmatrix.dtx
 % \begin{descriptionbox}
 % Apply the given function to a list of variables.
 % \end{descriptionbox}
+% \subsection{vector}
+% \label{subsec:vector}
+% \begin{center}
+% \begin{tabularx}{\textwidth}{l p{8cm}} \hline
+% \textbf{Command} & \textbf{Arguments} \\ \hline
+% \ref{macro:newVec} & \makecell[t{p{8cm}}]{\marg{out}, \marg{values}} \\
+% \ref{macro:newVecPi} & \makecell[t{p{8cm}}]{\marg{out}, \marg{values}} \\
+% \ref{macro:randomVec} & \makecell[t{p{8cm}}]{\marg{out}, \marg{dimensions}, \marg{lower bound}, \marg{upper bound}} \\
+% \ref{macro:copyVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: copyVecResult} \\
+% \ref{macro:zeroVec} & \makecell[t{p{8cm}}]{\oarg{dims}, \marg{out}\\Default Argument: 3} \\
+% \ref{macro:appendToVec} & \makecell[t{p{8cm}}]{\marg{out}, \marg{vector}, \marg{scalar}} \\
+% \ref{macro:printVec} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
+% \ref{macro:printVecT} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
+% \ref{macro:printVecAsPoint} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
+% \ref{macro:printVecAsPi} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
+% \ref{macro:printVecAsPiT} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\Default Argument: 0} \\
+% \ref{macro:printVecContent} & \makecell[t{p{8cm}}]{\marg{vector}} \\
+% \ref{macro:printVecContentXY} & \makecell[t{p{8cm}}]{\marg{vector}} \\
+% \ref{macro:printVecContentXYZ} & \makecell[t{p{8cm}}]{\marg{vector}} \\
+% \ref{macro:printVecContentXYZW} & \makecell[t{p{8cm}}]{\marg{vector}} \\
+% \ref{macro:getVecHeight} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: vecHeightResult} \\
+% \ref{macro:printScalarPComp} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector v}, \marg{vector w}\\Default Argument: 0} \\
+% \ref{macro:printCrossPComp} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector v}, \marg{vector w}\\Default Argument: 0} \\
+% \ref{macro:roundVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{digits}\\Default Argument: roundVecResult} \\
+% \ref{macro:ceilVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: ceilVecResult} \\
+% \ref{macro:floorVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: floorVecResult} \\
+% \ref{macro:dehomogenVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: dehomogenVecResult} \\
+% \ref{macro:addVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: addVecResult} \\
+% \ref{macro:subVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: subVecResult} \\
+% \ref{macro:mulVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: mulVecResult} \\
+% \ref{macro:divVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{vectors}\\Default Argument: divVecResult} \\
+% \ref{macro:scaleVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{scalar}\\Default Argument: scaleVecResult} \\
+% \ref{macro:divVecScalar} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}, \marg{scalar}\\Default Argument: divVecScalarResult} \\
+% \ref{macro:negateVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: negateVecResult} \\
+% \ref{macro:scaleAndAddVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar}\\Default Argument: scaleAndAddVecResult} \\
+% \ref{macro:lerpVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar t}\\Default Argument: lerpVecResult} \\
+% \ref{macro:slerpVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar t}\\Default Argument: slerpVecResult} \\
+% \ref{macro:dotVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: dotVecResult} \\
+% \ref{macro:lenVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: lenVecResult} \\
+% \ref{macro:sqrLenVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: sqrLenVecResult} \\
+% \ref{macro:normalizeVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: normalizeVecResult} \\
+% \ref{macro:crossVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: crossVecResult} \\
+% \ref{macro:crossVecTwoD} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: crossVecResult} \\
+% \ref{macro:angleVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: angleVecResult} \\
+% \ref{macro:distVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: distVecResult} \\
+% \ref{macro:sqrDistVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: sqrDistVecResult} \\
+% \ref{macro:transformVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{matrix}, \marg{vector}\\Default Argument: transformVecResult} \\
+% \ref{macro:tensorVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\Default Argument: tensorVecResult} \\
+% \ref{macro:minVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: minVecResult} \\
+% \ref{macro:maxVec} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: maxVecResult} \\
+% \ref{macro:solveVecEQL} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\Default Argument: solveVecEQLResult} \\
+% \end{tabularx}
+% \end{center}
+
+% \setlabel{\textbackslash newVec}{macro:newVec}
+% \DescribeMacro{newVec}
+% \marg{out}\marg{values}\\[1mm]
+% \marg{out}: var name to save the result (vector) to\\
+% \marg{values}: values that are assigned to out
+% \begin{descriptionbox}
+% Create a new vector and assign the given values.
+% \end{descriptionbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{2, 3, 4\}\\
+%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}2\\3\\4\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash newVecPi}{macro:newVecPi}
+% \DescribeMacro{newVecPi}
+% \marg{out}\marg{values}\\[1mm]
+% \marg{out}: var name to save the result (vector) to\\
+% \marg{values}: values that are multiplied with pi and assigned to out
+% \begin{descriptionbox}
+% Create a new vector and assign the given values as a multiple of pi.
+% \end{descriptionbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}\frac{1}{2}\pi\\\pi\\2\pi\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash randomVec}{macro:randomVec}
+% \DescribeMacro{randomVec}
+% \marg{out}\marg{dimensions}\marg{lower bound}\marg{upper bound}\\[1mm]
+% \marg{out}: var name to save the result (vector) to\\
+% \marg{dimensions}: scalar that defines the number of dimensions out should have\\
+% \marg{lower bound}: scalar that limits the possible values at the bottom\\
+% \marg{upper bound}: scalar that limits the possible values at the top
+% \begin{descriptionbox}
+% Create a new vector and assign random values between lower and
+% upper bound to its components.
+% The value is obtained by creating a random value between 0 and 1
+% and then interpolating between lower and upper bound.
+% \end{descriptionbox}
+% \begin{examplebox}
+%   \textbackslash randomVec\{myNewVec\}\{4\}\{3\}\{10\}\\
+%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}5, 4, 8, 4\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash copyVec}{macro:copyVec}
+% \DescribeMacro{copyVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: copyVecResult\\
+% \marg{vector}: vector which values are assigned to out
+% \begin{descriptionbox}
+% Copy values from one vector variable to another.
+% \end{descriptionbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash copyVec[copyVecResult]\{\textbackslash myNewVec\}\\
+%   \textbackslash copyVecResult \(\mapsto{} \begin{pmatrix}0.5\\ 1\\ 2\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash zeroVec}{macro:zeroVec}
+% \DescribeMacro{zeroVec}
+% \oarg{dims}\marg{out}\\[1mm]
+% \oarg{dims}: number of dimensions (rows), default: 3\\
+% \marg{out}: var name to save the result (vector) to
+% \begin{descriptionbox}
+% Create or override a vector with all its components being 0.
+% Obacht: It is not necessary to call this to create a new vector.
+% This is just for convenience when requiring a vector with initialized with zero.
+% \end{descriptionbox}
+% \begin{examplebox}
+%   \textbackslash zeroVec[3]\{zeroVecResult\}\\
+%   \textbackslash zeroVecResult \(\mapsto{} \begin{pmatrix}0\\ 0\\ 0\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash appendToVec}{macro:appendToVec}
+% \DescribeMacro{appendToVec}
+% \marg{out}\marg{vector}\marg{scalar}\\[1mm]
+% \marg{out}: var name to save the result (vector) to\\
+% \marg{vector}: the currently present values\\
+% \marg{scalar}: the scalar to add to vector
+% \begin{descriptionbox}
+% Append a dimension with the given value to an already defined vector.
+% \end{descriptionbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1\}\\
+%   \textbackslash appendToVec\{myNewVec\}\{\textbackslash myNewVec\}\{-10\}\\
+%   \textbackslash myNewVec \(\mapsto{} \begin{pmatrix}0.5\\ 1\\ -10\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printVec}{macro:printVec}
+% \DescribeMacro{printVec}
+% \oarg{fraction}\marg{vector}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector}: the vector that should be printed
+% \begin{descriptionbox}
+% Print the values of the given vector in vector notation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\begin{pmatrix} \mathbf{v}_1\\ \ldots\\ \mathbf{v}_n \end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{1, 2, 3\}\\
+%   \textbackslash printVec\{\textbackslash myNewVec\} \(\mapsto{} \begin{pmatrix}1\\2\\3\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printVecT}{macro:printVecT}
+% \DescribeMacro{printVecT}
+% \oarg{fraction}\marg{vector}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector}: the vector that should be printed
+% \begin{descriptionbox}
+% Print the values of the given vector in transposed notation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\trans{(\mathbf{v}_1, \ldots, \mathbf{v}_n)}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{1, 2, 3\}\\
+%   \textbackslash printVecT\{\textbackslash myNewVec\} \(\mapsto{} \trans{(1, 2, 3)}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printVecAsPoint}{macro:printVecAsPoint}
+% \DescribeMacro{printVecAsPoint}
+% \oarg{fraction}\marg{vector}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector}: the vector that should be printed
+% \begin{descriptionbox}
+% Print the values of the given vector in point notation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\begin{bmatrix}\mathbf{v}_1\\ \ldots\\ \mathbf{v}_n\end{bmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{1, 2, 3\}\\
+%   \textbackslash printVecAsPoint\{\textbackslash myNewVec\} \(\mapsto{} \begin{bmatrix}1\\2\\3\end{bmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printVecAsPi}{macro:printVecAsPi}
+% \DescribeMacro{printVecAsPi}
+% \oarg{fraction}\marg{vector}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector}: the vector that should be printed
+% \begin{descriptionbox}
+% Print the values of the given vector as a multiple of \(\pi\) in vector notation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\begin{pmatrix}\left\{\frac{\mathbf{v}_1}{\pi}\right\}\\ \ldots\\ \left\{\frac{\mathbf{v}_n}{\pi}\right\}\end{pmatrix}\pi\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\mapsto{} \begin{pmatrix}0.5\pi\\\pi\\2\pi\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printVecAsPiT}{macro:printVecAsPiT}
+% \DescribeMacro{printVecAsPiT}
+% \oarg{fraction}\marg{vector}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector}: the vector that should be printed
+% \begin{descriptionbox}
+% Print the values of the given vector as a multiple of Pi in transposed notation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\trans{\left(\left\{\frac{\mathbf{v}_1}{\pi}\right\}, \ldots, \left\{\frac{\mathbf{v}_n}{\pi}\right\}\right)}\pi\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash printVecAsPi\{\textbackslash myNewVec\} \(\mapsto{} \trans{(0.5\pi,\pi,2\pi)}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printVecContent}{macro:printVecContent}
+% \DescribeMacro{printVecContent}
+% \marg{vector}\\[1mm]
+% \marg{vector}: the vector which values should be printed
+% \begin{descriptionbox}
+% Print the values of the given vector comma separated.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\mathbf{v}_1, \ldots, \mathbf{v}_n\)
+% \end{equationbox}
+
+% \setlabel{\textbackslash printVecContentXY}{macro:printVecContentXY}
+% \DescribeMacro{printVecContentXY}
+% \marg{vector}\\[1mm]
+% \marg{vector}: the vector which values should be printed
+% \begin{descriptionbox}
+% Returns the x and y component of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\mathbf{v}_1, \mathbf{v}_2\)
+% \end{equationbox}
+
+% \setlabel{\textbackslash printVecContentXYZ}{macro:printVecContentXYZ}
+% \DescribeMacro{printVecContentXYZ}
+% \marg{vector}\\[1mm]
+% \marg{vector}: the vector which values should be printed
+% \begin{descriptionbox}
+% Returns the x, y and z component of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\)
+% \end{equationbox}
+
+% \setlabel{\textbackslash printVecContentXYZW}{macro:printVecContentXYZW}
+% \DescribeMacro{printVecContentXYZW}
+% \marg{vector}\\[1mm]
+% \marg{vector}: the vector which values should be printed
+% \begin{descriptionbox}
+% Returns the x, y, z and w component of the given vector
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3, \mathbf{v}_4\)
+% \end{equationbox}
+
+% \setlabel{\textbackslash getVecHeight}{macro:getVecHeight}
+% \DescribeMacro{getVecHeight}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: vecHeightResult\\
+% \marg{vector}: the vector of which to return the height
+% \begin{descriptionbox}
+% Returns the number of components that given vector has (number of dimensions).
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = dim(\mathbf{v})\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash getVecHeight\{\textbackslash myNewVec\}\\
+%   \textbackslash vecHeightResult \(\mapsto{} 3\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash printScalarPComp}{macro:printScalarPComp}
+% \DescribeMacro{printScalarPComp}
+% \oarg{fraction}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Print the intermediate components of the scalarproduct calculation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\mathbf{v}_1 * \mathbf{w}_1 + \ldots + \mathbf{v}_n * \mathbf{w}_n\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} 0.5*0.5+1*1+2*2\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When both vectors do not have the same length
+% \end{warningbox}
+
+% \setlabel{\textbackslash printCrossPComp}{macro:printCrossPComp}
+% \DescribeMacro{printCrossPComp}
+% \oarg{fraction}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{fraction}: whether or not the value should be printed as a fraction (val=1), default: 0\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Print the intermediate components of the crossproduct calculation.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\begin{pmatrix} \mathbf{v}_2*\mathbf{w}_3 - \mathbf{v}_3*\mathbf{w}_2\\ \mathbf{v}_3*\mathbf{w}_1-\mathbf{v}_1*\mathbf{w}_3\\ \mathbf{v}_1*\mathbf{w}_2-\mathbf{w}_2*\mathbf{w}_1 \end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{3, 4, 5\}\\
+%   \textbackslash printScalarPComp\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}1*5 - 2*4\\ 2*3 - 0.5*5\\ 0.5*4 -1*3\end{pmatrix}\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When one of both vectors does not have length 3
+% \end{warningbox}
+
+% \setlabel{\textbackslash roundVec}{macro:roundVec}
+% \DescribeMacro{roundVec}
+% \oarg{out}\marg{vector}\marg{digits}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: roundVecResult\\
+% \marg{vector}: the vector that schould be rounded\\
+% \marg{digits}: number of digits after comma
+% \begin{descriptionbox}
+% Round the values ot the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(\mathbf{v} = \begin{pmatrix}\lfloor d_1\rceil\\\ldots\\\lfloor d_n\rceil\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash roundVec[roundVecResult]\{\textbackslash myNewVec\}\{0\}\\
+%   \textbackslash roundVecResult \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash ceilVec}{macro:ceilVec}
+% \DescribeMacro{ceilVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: ceilVecResult\\
+% \marg{vector}: the vector that should be ceiled
+% \begin{descriptionbox}
+% Ceil the values of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}\lceil \mathbf{v}_1\rceil\\\ldots\\\lceil \mathbf{v}_n\rceil\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash ceilVec[ceilVecResult]\{\textbackslash myNewVec\}\\
+%   \textbackslash ceilVecResult \(\mapsto{} \begin{pmatrix}1\\1\\2\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash floorVec}{macro:floorVec}
+% \DescribeMacro{floorVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: floorVecResult\\
+% \marg{vector}: the vector that should be floored
+% \begin{descriptionbox}
+% Floor the values of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}\lfloor \mathbf{v}_1\rfloor\\\ldots\\\lfloor \mathbf{v}_n\rfloor\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash floorVec[floorVecResult]\{\textbackslash myNewVec\}\\
+%   \textbackslash floorVecResult \(\mapsto{} \begin{pmatrix}0\\1\\2\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash dehomogenVec}{macro:dehomogenVec}
+% \DescribeMacro{dehomogenVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: dehomogenVecResult\\
+% \marg{vector}: the vector that should be dehomogenized
+% \begin{descriptionbox}
+% Dehomogenize the values of the given vector. This divides all vector components by the last component.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix} \frac{\mathbf{v}_1}{\mathbf{v}_n} \\ \ldots \\ \frac{\mathbf{v}_{n-1}}{\mathbf{v}_n} \end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2, 2\}\\
+%   \textbackslash dehomogenVec[dehomogenVecResult]\{\textbackslash myNewVec\}\\
+%   \textbackslash dehomogenVecResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\\1\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash addVec}{macro:addVec}
+% \DescribeMacro{addVec}
+% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: addVecResult\\
+% \marg{vector}: the vector to add to\\
+% \marg{vectors}: the list of vectors with which to add
+% \begin{descriptionbox}
+% Add the values of \(1\) to \(m\) vectors to the values of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}\mathbf{v}_1 + \mathbf{vs}_{1,1} + \ldots + \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n + \mathbf{vs}_{1,n} + \ldots + \mathbf{vs}_{m,n}\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash addVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash addVecResult \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)\\
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecC\}\{0.5, 1, 2\}\\
+%   \textbackslash addVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB, \textbackslash myNewVecC\}\\
+%   \textbackslash resultName \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash subVec}{macro:subVec}
+% \DescribeMacro{subVec}
+% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: subVecResult\\
+% \marg{vector}: the vector to subtract from\\
+% \marg{vectors}: the list of vectors with which to subtract
+% \begin{descriptionbox}
+% Subract the values of \(1\) to \(m\) vectors from the values of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}\mathbf{v}_1 - \mathbf{vs}_{1,1} - \ldots - \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n - \mathbf{vs}_{1,n} - \ldots - \mathbf{vs}_{m,n}\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash subVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash subVecResult \(\mapsto{} \begin{pmatrix}0\\0\\0\end{pmatrix}\)\\
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecC\}\{0.5, 1, 2\}\\
+%   \textbackslash subVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB, \textbackslash myNewVecC\}\\
+%   \textbackslash resultName \(\mapsto{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash mulVec}{macro:mulVec}
+% \DescribeMacro{mulVec}
+% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: mulVecResult\\
+% \marg{vector}: the vector to multiply\\
+% \marg{vectors}: the list of vectors with which to multiply
+% \begin{descriptionbox}
+% Multiply the values of \(1\) to \(m\) vectors with the values of the given vector.
+% See Hadamard product (element-wise product) for more information.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \begin{align*}o &= \mathbf{v} \odot \mathbf{vs}_1 \odot \ldots \odot \mathbf{vs}_m\\ &= \begin{pmatrix}\mathbf{v}_1 * \mathbf{vs}_{1,1} * \ldots * \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n * \mathbf{vs}_{1,n} * \ldots * \mathbf{vs}_{m,n}\end{pmatrix}\end{align*}
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash mulVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}0.25\\1\\4\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash divVec}{macro:divVec}
+% \DescribeMacro{divVec}
+% \oarg{out}\marg{vector}\marg{vectors}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: divVecResult\\
+% \marg{vector}: the vector to divide\\
+% \marg{vectors}: the list of vectors to divide with
+% \begin{descriptionbox}
+% Divide the values of the given vector by the values of \(1\) to \(m\) vectors (element-wise division).
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \begin{align*}o &= \mathbf{v} \oslash \mathbf{vs}_1 \oslash \ldots \oslash \mathbf{vs}_m\\ &= \begin{pmatrix}\mathbf{v}_1 / \mathbf{vs}_{1,1} / \ldots / \mathbf{vs}_{m,1}\\\ldots\\\mathbf{v}_n / \mathbf{vs}_{1,n} / \ldots / \mathbf{vs}_{m,n}\end{pmatrix}\end{align*}
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash divVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\} \(\mapsto{} \begin{pmatrix}1\\1\\1\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash scaleVec}{macro:scaleVec}
+% \DescribeMacro{scaleVec}
+% \oarg{out}\marg{vector}\marg{scalar}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: scaleVecResult\\
+% \marg{vector}: the vector to scale\\
+% \marg{scalar}: the scalar to scale with
+% \begin{descriptionbox}
+% Multiply the values of the given vector by a scalar.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}\mathbf{v}_1 * s\\\ldots\\\mathbf{v}_n * s\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newScalar\{myNewScalar\}\{2\}\\
+%   \textbackslash scaleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}\\
+%   \textbackslash scaleVecResult \(\mapsto{} \begin{pmatrix}1\\2\\4\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash divVecScalar}{macro:divVecScalar}
+% \DescribeMacro{divVecScalar}
+% \oarg{out}\marg{vector}\marg{scalar}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: divVecScalarResult\\
+% \marg{vector}: the vector to divide\\
+% \marg{scalar}: the scalar to divide with
+% \begin{descriptionbox}
+% Divide the values of the given vector by a scalar.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}\frac{\mathbf{v}_1}{s}\\\ldots\\\frac{\mathbf{v}_n}{s}\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newScalar\{myNewScalar\}\{2\}\\
+%   \textbackslash divVecScalar\{\textbackslash myNewVecA\}\{\textbackslash myNewScalar\}\\
+%   \textbackslash divVecScalarResult \(\mapsto{} \begin{pmatrix}0.25\\0.5\\1\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash negateVec}{macro:negateVec}
+% \DescribeMacro{negateVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: negateVecResult\\
+% \marg{vector}: the vector to negate
+% \begin{descriptionbox}
+% Negate the values of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix}-\mathbf{v}_1\\\ldots\\-\mathbf{v}_n\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash negateVecResult\{\textbackslash myNewVecA\}\\
+%   \textbackslash negateVecResult \(\mapsto{} \begin{pmatrix}-0.5\\-1\\-2\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash scaleAndAddVec}{macro:scaleAndAddVec}
+% \DescribeMacro{scaleAndAddVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\marg{scalar}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: scaleAndAddVecResult\\
+% \marg{vector v}: the vector to add to\\
+% \marg{vector w}: the vector that is multiplied and then added\\
+% \marg{scalar}: the scalar that is the muliplier
+% \begin{descriptionbox}
+% Adds two vectors after multiplying the second one by a scalar.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \mathbf{v} + \mathbf{w} * s = \begin{pmatrix}\mathbf{v}_1 + \mathbf{w}_1 * s\\\ldots\\\mathbf{v}_n + \mathbf{w}_n * s\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash newScalar\{myNewScalar\}\{2\}\\
+%   \textbackslash scaleAndAddVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}\\
+%   \textbackslash scaleAndAddVecResult \(\mapsto{} \begin{pmatrix}1.5\\3\\6\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash lerpVec}{macro:lerpVec}
+% \DescribeMacro{lerpVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\marg{scalar t}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: lerpVecResult\\
+% \marg{vector v}: the start vector\\
+% \marg{vector w}: the end vector\\
+% \marg{scalar t}: interpolation amount range [0-1]
+% \begin{descriptionbox}
+% Lineraly interpolate between the values of two vectors (element-wise interpolation).
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = (1-t) * \mathbf{v} + t * \mathbf{w} = \begin{pmatrix}(1-t) \mathbf{v}_1 + t *\mathbf{w}_1\\\ldots\\(1-t) \mathbf{v}_n + t *\mathbf{w}_n\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}\\
+%   \textbackslash newScalar\{myNewScalar\}\{0.5\}\\
+%   \textbackslash lerpVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\{\textbackslash myNewScalar\}\\
+%   \textbackslash lerpVecResult \(\mapsto{} \begin{pmatrix}0.75\\1.5\\3\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash slerpVec}{macro:slerpVec}
+% \DescribeMacro{slerpVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\marg{scalar t}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: slerpVecResult\\
+% \marg{vector v}: the start vector\\
+% \marg{vector w}: the end vector\\
+% \marg{scalar t}: interpolation amount range [0-1]
+% \begin{descriptionbox}
+% Performs a spherical linear interpolation between two vectors.
+% This expects vector v and vector w to be normalized.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   TODO
+% \end{equationbox}
+
+% \setlabel{\textbackslash dotVec}{macro:dotVec}
+% \DescribeMacro{dotVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: dotVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Calculate the dotproduct of the given two vectors.
+% Other names for this operation are inner product and scalarproduct.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \mathbf{v}_1 * \mathbf{w}_1 + \ldots + \mathbf{v}_n * \mathbf{w}_n\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{1, 2, 4\}\\
+%   \textbackslash dotVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash dotVecResult \(\mapsto{} 10.5\)\\
+%   \textbackslash dotVec[resultName]\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash resultName \(\mapsto{} 10.5\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When both vectors do not have the same length
+% \end{warningbox}
+
+% \setlabel{\textbackslash lenVec}{macro:lenVec}
+% \DescribeMacro{lenVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: lenVecResult\\
+% \marg{vector}: the vector for which to calculate the length
+% \begin{descriptionbox}
+% Calculate the length of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \norm{\mathbf{v}} = \sqrt{\mathbf{v}_1^2 + \ldots + \mathbf{v}_n^2}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash lenVec\{\textbackslash myNewVecA\}\\
+%   \textbackslash lenVecResult \(\mapsto{} 2.29\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash sqrLenVec}{macro:sqrLenVec}
+% \DescribeMacro{sqrLenVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: sqrLenVecResult\\
+% \marg{vector}: the vector for which to calculate the squared length
+% \begin{descriptionbox}
+% Calculate the squared length of the given vector.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \norm{\mathbf{v}}^2 = \mathbf{v}_1^2 + \ldots + \mathbf{v}_n^2\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash sqrLenVec\{\textbackslash myNewVecA\}\\
+%   \textbackslash sqrLenVecResult \(\mapsto{} 5.25\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash normalizeVec}{macro:normalizeVec}
+% \DescribeMacro{normalizeVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: normalizeVecResult\\
+% \marg{vector}: the vector which to normalize
+% \begin{descriptionbox}
+% Divide all components of the vector by its length.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix} \frac{\mathbf{v}_1}{\norm{\mathbf{v}}}\\ \ldots\\ \frac{\mathbf{v}_n}{\norm{\mathbf{v}}}\end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash normalizeVec\{\textbackslash myNewVecA\}\\
+%   \textbackslash normalizeVecResult \(\mapsto{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)\\
+%   \textbackslash normalizeVec[resultName]\{\textbackslash myNewVecA\}\\
+%   \textbackslash resultName \(\mapsto{} \begin{pmatrix} 0.12\\ 0.24\\ 0.96\end{pmatrix}\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash crossVec}{macro:crossVec}
+% \DescribeMacro{crossVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: crossVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Calculate crossproduct for the two given vectors.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix} \mathbf{v}_2*\mathbf{w}_3 - \mathbf{v}_3*\mathbf{w}_2\\ \mathbf{v}_3*\mathbf{w}_1-\mathbf{v}_1*\mathbf{w}_3\\ \mathbf{v}_1*\mathbf{w}_2-\mathbf{w}_2*\mathbf{w}_1 \end{pmatrix}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 0, 2\}\\
+%   \textbackslash crossVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash crossVecResult \(\mapsto{} \begin{pmatrix} 2\\ 0\\ -0.5\end{pmatrix}\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When one of both vectors does not have length 3
+% \end{warningbox}
+
+% \setlabel{\textbackslash crossVecTwoD}{macro:crossVecTwoD}
+% \DescribeMacro{crossVecTwoD}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: crossVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Calculate crossproduct for the two given vectors.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \mathbf{v}_1*\mathbf{w}_2 - \mathbf{v}_2*\mathbf{w}_1\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 0\}\\
+%   \textbackslash crossVecTwoD\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash crossVecResult \(\mapsto{} -0.5\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When one of both vectors does not have length 3
+% \end{warningbox}
+
+% \setlabel{\textbackslash angleVec}{macro:angleVec}
+% \DescribeMacro{angleVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: angleVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Get the angle between the given two vectors in radian.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \angle(\mathbf{v}, \mathbf{w})\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash angleVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash angleVecResult \(\mapsto{} TODO scalar\)
+% \end{examplebox}
+
+% \setlabel{\textbackslash distVec}{macro:distVec}
+% \DescribeMacro{distVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: distVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Calculates the euclidian distance between the given two vectors.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \norm{\mathbf{v} - \mathbf{w}}\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash distVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash distVecResult \(\mapsto{} TODO scalar\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When vector v and vector w do not have the same length
+% \end{warningbox}
+
+% \setlabel{\textbackslash sqrDistVec}{macro:sqrDistVec}
+% \DescribeMacro{sqrDistVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: sqrDistVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Calculates the squared euclidian distance between two vectors.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \norm{\mathbf{v} - \mathbf{w}}^2\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}\\
+%   \textbackslash newVec\{myNewVecB\}\{0.5, 1, 2\}\\
+%   \textbackslash sqrDistVec\{\textbackslash myNewVecA\}\{\textbackslash myNewVecB\}\\
+%   \textbackslash sqrDistVecResult \(\mapsto{} TODO scalar\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When vector v and vector w do not have the same length
+% \end{warningbox}
+
+% \setlabel{\textbackslash transformVec}{macro:transformVec}
+% \DescribeMacro{transformVec}
+% \oarg{out}\marg{matrix}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: transformVecResult\\
+% \marg{matrix}: the matrix to transform the vetor with\\
+% \marg{vector}: the vector to transform
+% \begin{descriptionbox}
+% Multiply the given vector with a matrix (for transformation).
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \mathbf{M} \cdot \mathbf{v}\ \vert\ \mathbf{M} \in \R^{m\times n}, \mathbf{v} \in \R^n\)
+% \end{equationbox}
+% \begin{examplebox}
+%   \textbackslash newVec\{myNewVec\}\{0.5, 1, 2\}\\
+%   \textbackslash newMat\{myNewMatrix\}\{\{\{0.5, 1, 2\}\{4, 5, 6\}\{7, 8, 9\}\}\}\\
+%   \textbackslash transformVec\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}\\
+%   \textbackslash transformVecResult \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)\\
+%   \textbackslash transformVec[resultName]\{\textbackslash myNewMatrix\}\{\textbackslash myNewVec\}\\
+%   \textbackslash resultName \(\mapsto{} \begin{pmatrix} 5.25\\ 19\\ 29.5\end{pmatrix}\)
+% \end{examplebox}
+% \begin{warningbox}
+%   When matrix and vector have a dimension mismatch
+% \end{warningbox}
+
+% \setlabel{\textbackslash tensorVec}{macro:tensorVec}
+% \DescribeMacro{tensorVec}
+% \oarg{out}\marg{vector}\\[1mm]
+% \oarg{out}: var name to save the result (matrix) to, default: tensorVecResult\\
+% \marg{vector}: the vector to multiply with itself
+% \begin{descriptionbox}
+% Outer product: Multiply a vector (column) with itself (row) resulting in a matrix. (Dyadic product, Tensor product)
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \mathbf{v} \trans{\mathbf{v}} = \mathbf{v} \otimes \mathbf{v}\)
+% \end{equationbox}
+% \begin{warningbox}
+%   When matrix and vector have a dimension mismatch
+% \end{warningbox}
+
+% \setlabel{\textbackslash minVec}{macro:minVec}
+% \DescribeMacro{minVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: minVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Return the componentwise minimum of the given two vectors.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix} \min(\mathbf{v}_1, \mathbf{w}_1)\\ \ldots\\ \min(\mathbf{v}_n, \mathbf{w}_n)\end{pmatrix}\)
+% \end{equationbox}
+% \begin{warningbox}
+%   When vector v and vector w do not have the same length
+% \end{warningbox}
+
+% \setlabel{\textbackslash maxVec}{macro:maxVec}
+% \DescribeMacro{maxVec}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (vector) to, default: maxVecResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Return the componentwise maximum of the given two vectors.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \begin{pmatrix} \max(\mathbf{v}_1, \mathbf{w}_1)\\ \ldots\\ \max(\mathbf{v}_n, \mathbf{w}_n)\end{pmatrix}\)
+% \end{equationbox}
+% \begin{warningbox}
+%   When vector v and vector w do not have the same length
+% \end{warningbox}
+
+% \setlabel{\textbackslash solveVecEQL}{macro:solveVecEQL}
+% \DescribeMacro{solveVecEQL}
+% \oarg{out}\marg{vector v}\marg{vector w}\\[1mm]
+% \oarg{out}: var name to save the result (scalar) to, default: solveVecEQLResult\\
+% \marg{vector v}: the first vector\\
+% \marg{vector w}: the second vector
+% \begin{descriptionbox}
+% Solve the equation \(vector v*x+vector w=0\) for \(x\).
+% The command expects the input to be two vectors of the same length.
+% The command iterates both vectors componentwise and solves the equation per component.
+% If the the result does not match across all components the equation can not be solved.
+% \end{descriptionbox}
+% \begin{equationbox}
+%   \(o = \frac{-\mathbf{w}_1}{\mathbf{v}_1} = \ldots = \frac{-\mathbf{w}_n}{\mathbf{v}_n}\)
+% \end{equationbox}
 
 % \section{Implementation}
 
@@ -3116,10 +3108,6 @@ This work consists of the file  glmatrix.dtx
 % \#2 - matrix: the matrix to extract the translation from
 %    \begin{macrocode}
 \newcommand\getMatTranslation[2][matTranslationResult]{%
-    \FPifeq{\expectedheight}{\actualheight}
-    \else
-        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
-    \fi
     \getMatWidth{#2}
     \getMatHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\matHeightResult}}
@@ -3164,6 +3152,783 @@ This work consists of the file  glmatrix.dtx
 %    \end{macrocode}
 % \end{macro}
 
+% \subsection{scalar}
+% \begin{center}
+% \begin{tabularx}{\textwidth}{l p{8cm}} \hline
+% \textbf{Command} & \textbf{Arguments} \\ \hline
+% \ref{macro:newScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar}} \\
+% \ref{macro:newScalarPi_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar}} \\
+% \ref{macro:newScalarFraction_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar n}, \marg{scalar d}} \\
+% \ref{macro:randomScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{lower bound}, \marg{upper bound}} \\
+% \ref{macro:copyScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarCopyResult} \\
+% \ref{macro:setScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar}} \\
+% \ref{macro:zeroScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}} \\
+% \ref{macro:printScalar_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{scalar}\\0} \\
+% \ref{macro:printScalarAsPi_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{scalar}\\0} \\
+% \ref{macro:printPiScalarInDegree_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{scalar}\\0} \\
+% \ref{macro:printScalarRounded_impl} & \makecell[t{p{8cm}}]{\oarg{digits}, \marg{scalar}\\4} \\
+% \ref{macro:roundScalar_impl} & \makecell[t{p{8cm}}]{\oarg{digits}, \marg{scalar}\\4} \\
+% \ref{macro:ceilScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarCeilResult} \\
+% \ref{macro:floorScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarFloorResult} \\
+% \ref{macro:clipScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\clipScalarResult} \\
+% \ref{macro:radianToDegree_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\radianToDegreeResult} \\
+% \ref{macro:toRadian_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\degreeToRadianResult} \\
+% \ref{macro:addScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarAddResult} \\
+% \ref{macro:subScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarSubResult} \\
+% \ref{macro:mulScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarMulResult} \\
+% \ref{macro:divScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarDivResult} \\
+% \ref{macro:powScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarPowResult} \\
+% \ref{macro:negateScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarNegateResult} \\
+% \ref{macro:arccosScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarArccosResult} \\
+% \ref{macro:mulAndAddScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}, \marg{scalar u}\\scalarMulAndAddResult} \\
+% \ref{macro:lerpScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar i}, \marg{scalar j}, \marg{scalar t}\\lerpScalarResult} \\
+% \ref{macro:minScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\minScalarResult} \\
+% \ref{macro:maxScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\maxScalarResult} \\
+% \ref{macro:betweenScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}, \marg{lower bound}, \marg{upper bound}\\betweenScalarResult} \\
+% \ref{macro:forEachScalar_impl} & \makecell[t{p{8cm}}]{\marg{input}, \marg{macro}, \marg{args}} \\
+% \end{tabularx}
+% \end{center}
+
+
+% \setlabel{\textbackslash newScalar}{macro:newScalar_impl}
+% \begin{macro}{\newScalar}
+% Create a new scalar and assign the given value.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: scalar value that is assigned to out
+%    \begin{macrocode}
+\newcommand\newScalar[2]{%
+    \expandafter\edef\csname #1\endcsname{#2}%
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash newScalarPi}{macro:newScalarPi_impl}
+% \begin{macro}{\newScalarPi}
+% Create a new scalar and assign the given value as a multiple of pi.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: scalar value that is multiplied with pi and assigned to out
+%    \begin{macrocode}
+\newcommand\newScalarPi[2]{
+    \FPmul\divNumRes{\FPpi}{#2}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash newScalarFraction}{macro:newScalarFraction_impl}
+% \begin{macro}{\newScalarFraction}
+% Create a scalar from a given fraction
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar n: nominator\\
+% \#3 - scalar d: denominator
+%    \begin{macrocode}
+\newcommand\newScalarFraction[3]{
+    \FPdiv\divNumRes{#2}{#3}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash randomScalar}{macro:randomScalar_impl}
+% \begin{macro}{\randomScalar}
+% Create a new scalar variable with a random value between lower and
+% upper bound. The value is obtained by creating a random value between 0 and 1
+% and then interpolating between lower and upper bound.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - lower bound: scalar that limits the possible values at the bottom\\
+% \#3 - upper bound: scalar that limits the possible values at the top
+%    \begin{macrocode}
+\newcommand\randomScalar[3]{%
+    \FPrandom\tmp
+    \lerpScalar[#1]{#2}{#3}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash copyScalar}{macro:copyScalar_impl}
+% \begin{macro}{\copyScalar}
+% Copy the value of one scalar variable to another.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: scalar which value is assigned to out
+%    \begin{macrocode}
+\newcommand\copyScalar[2][scalarCopyResult]{%
+    \setScalar{#1}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash setScalar}{macro:setScalar_impl}
+% \begin{macro}{\setScalar}
+% Set the value of a given scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: scalar value that is assigned to out
+%    \begin{macrocode}
+\newcommand\setScalar[2]{%
+    \newScalar{#1}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash zeroScalar}{macro:zeroScalar_impl}
+% \begin{macro}{\zeroScalar}
+% Set or create a scalar with value 0.
+% 
+% \#1 - out: var name to save the result (scalar) to
+%    \begin{macrocode}
+\newcommand\zeroScalar[1]{%
+    \expandafter\edef\csname #1\endcsname{0}%
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash printScalar}{macro:printScalar_impl}
+% \begin{macro}{\printScalar}
+% Print the value of the given scalar.
+% 
+% \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
+% \#2 - scalar: the scalar that should be printed
+%    \begin{macrocode}
+\newcommand\printScalar[2][0]{%
+    \FPifeq{#1}{0}%
+        \roundScalar{#2}%
+        \scalarRoundResult%
+    \else%
+        \numToFractionA{#2}%
+    \fi%
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash printScalarAsPi}{macro:printScalarAsPi_impl}
+% \begin{macro}{\printScalarAsPi}
+% Print the value of the given scalar as a multiple of Pi.
+% 
+% \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
+% \#2 - scalar: the scalar that should be printed
+%    \begin{macrocode}
+\newcommand\printScalarAsPi[2][0]{%
+    \FPdiv\divNumRes{#2}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    \pi
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash printPiScalarInDegree}{macro:printPiScalarInDegree_impl}
+% \begin{macro}{\printPiScalarInDegree}
+% Print the value of the given scalar in degree.
+% This macro does do a conversion and therefore expects the input to be in radian.
+% A degree sign is automatically added.
+% 
+% \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
+% \#2 - scalar: the value that schould be printed
+%    \begin{macrocode}
+\newcommand\printPiScalarInDegree[2][0]{%
+    \FPmul\tmp{#2}{180}
+    \FPdiv\divNumRes{\tmp}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    ^\circ
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash printScalarRounded}{macro:printScalarRounded_impl}
+% \begin{macro}{\printScalarRounded}
+% Print the rounded value of the given scalar.
+% 
+% \#1 - digits: number of digits after comma\\
+% \#2 - scalar: the value that schould be printed
+%    \begin{macrocode}
+\newcommand\printScalarRounded[2][4]{%
+    \FPround\tmp{#2}{#1}
+    \FPclip\tmp\tmp
+    \tmp
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash roundScalar}{macro:roundScalar_impl}
+% \begin{macro}{\roundScalar}
+% Round the value ot the given scalar and save it.
+% 
+% \#1 - digits: number of digits after comma\\
+% \#2 - scalar: the value that schould be rounded
+%    \begin{macrocode}
+\newcommand\roundScalar[2][4]{%
+    \FPround\tmp{#2}{#1}%
+    \FPclip\tmp\tmp%
+    \newScalar{scalarRoundResult}{\tmp}%
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash ceilScalar}{macro:ceilScalar_impl}
+% \begin{macro}{\ceilScalar}
+% Ceil the value of the given scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar that schould be ceiled
+%    \begin{macrocode}
+\newcommand\ceilScalar[2][scalarCeilResult]{
+    \FPtrunc\tmp{#2}{0}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifpos{#2}
+        \FPadd\tmpSave{\tmp}{1}
+    \else
+    \fi
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash floorScalar}{macro:floorScalar_impl}
+% \begin{macro}{\floorScalar}
+% Floor the value of the given scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar that schould be floored
+%    \begin{macrocode}
+\newcommand\floorScalar[2][scalarFloorResult]{
+    \FPtrunc\tmp{#2}{0}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifneg{#2}
+        \FPsub\tmpSave{\tmp}{1}
+    \else
+    \fi
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash clipScalar}{macro:clipScalar_impl}
+% \begin{macro}{\clipScalar}
+% Remove all trailing zeros from the value of the given scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar from which the zeros should be removed
+%    \begin{macrocode}
+\newcommand\clipScalar[2][clipScalarResult]{
+    \FPclip\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash radianToDegree}{macro:radianToDegree_impl}
+% \begin{macro}{\radianToDegree}
+% Convert the value of the given scalar to degree.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar which to convert
+%    \begin{macrocode}
+\newcommand\radianToDegree[2][radianToDegreeResult]{
+    \FPmul\tmp{#2}{180}
+    \FPdiv\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash toRadian}{macro:toRadian_impl}
+% \begin{macro}{\toRadian}
+% Convert the value of the given scalar to radian.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar which to convert
+%    \begin{macrocode}
+\newcommand\toRadian[2][degreeToRadianResult]{
+    \FPdiv\tmp{#2}{180}
+    \FPmul\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash addScalar}{macro:addScalar_impl}
+% \begin{macro}{\addScalar}
+% Add the values of two scalars.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the first scalar of the sum\\
+% \#3 - scalar t: the second scalar of the sum
+%    \begin{macrocode}
+\newcommand\addScalar[3][scalarAddResult]{%
+    \FPadd\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash subScalar}{macro:subScalar_impl}
+% \begin{macro}{\subScalar}
+% Subtract the values of two scalars.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the scalar to subtract from\\
+% \#3 - scalar t: the scalar to subtract
+%    \begin{macrocode}
+\newcommand\subScalar[3][scalarSubResult]{%
+    \FPsub\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash mulScalar}{macro:mulScalar_impl}
+% \begin{macro}{\mulScalar}
+% Multiply the values of two scalars.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the scalar to multiply\\
+% \#3 - scalar t: the scalar with which to multply
+%    \begin{macrocode}
+\newcommand\mulScalar[3][scalarMulResult]{
+    \FPmul\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash divScalar}{macro:divScalar_impl}
+% \begin{macro}{\divScalar}
+% Divide the values of two scalars.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the scalar to divide\\
+% \#3 - scalar t: the scalar to divide with
+%    \begin{macrocode}
+\newcommand\divScalar[3][scalarDivResult]{%
+    \FPifeq{#3}{0}
+        \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
+    \else
+    \fi
+    \FPdiv\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash powScalar}{macro:powScalar_impl}
+% \begin{macro}{\powScalar}
+% Raise the values of one scalar by another.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the scalar to raise\\
+% \#3 - scalar t: the scalar with which to raise
+%    \begin{macrocode}
+\newcommand\powScalar[3][scalarPowResult]{%
+    \FPpow\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash negateScalar}{macro:negateScalar_impl}
+% \begin{macro}{\negateScalar}
+% Negate the value of the given scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar to negate
+%    \begin{macrocode}
+\newcommand\negateScalar[2][scalarNegateResult]{%
+    \FPneg\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash arccosScalar}{macro:arccosScalar_impl}
+% \begin{macro}{\arccosScalar}
+% Get the arccos of the value of the given scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar: the scalar to calculate the arccos for
+%    \begin{macrocode}
+\newcommand\arccosScalar[2][scalarArccosResult]{%
+    \FPround\tmp{#2}{10}
+    \FPclip\tmp\tmp
+    \FParccos\tmp\tmp
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash mulAndAddScalar}{macro:mulAndAddScalar_impl}
+% \begin{macro}{\mulAndAddScalar}
+% Adds two scalars after multiplying the second one by a scalar.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the scalar to add to\\
+% \#3 - scalar t: the scalar that is multiplied and then added\\
+% \#4 - scalar u: the scalar that is the muliplier
+%    \begin{macrocode}
+\newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{%
+    \FPmul\tmp{#3}{#4}
+    \FPadd\tmp{#2}{\tmp}
+    \newScalar{#1}{\tmp}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash lerpScalar}{macro:lerpScalar_impl}
+% \begin{macro}{\lerpScalar}
+% Lineraly interpolate between values of two scalars.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar i: the start scalar\\
+% \#3 - scalar j: the end scalar\\
+% \#4 - scalar t: interpolation amount range [0-1]
+%    \begin{macrocode}
+\newcommand\lerpScalar[4][lerpScalarResult]{%
+    \FPsub\tmpA{1}{#4}
+    \FPmul\tmpA{#2}\tmpA
+    \FPmul\tmpB{#3}{#4}
+    \FPadd\tmpA\tmpA\tmpB
+    \newScalar{#1}{\tmpA}
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash minScalar}{macro:minScalar_impl}
+% \begin{macro}{\minScalar}
+% Return the minimum of two scalar values.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: the first scalar\\
+% \#3 - scalar t: the second scalar
+%    \begin{macrocode}
+\newcommand\minScalar[3][minScalarResult]{%
+    % TODO use \FPmin#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \fi
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash maxScalar}{macro:maxScalar_impl}
+% \begin{macro}{\maxScalar}
+% Return the maximum of two scalar values.
+% 
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - scalar s: first scalar value\\
+% \#3 - scalar t: second scalar value
+%    \begin{macrocode}
+\newcommand\maxScalar[3][maxScalarResult]{%
+    % TODO use \FPmax#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \fi
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash betweenScalar}{macro:betweenScalar_impl}
+% \begin{macro}{\betweenScalar}
+% Return whether a scalar lies between two other values.
+% 
+% \#1 - out: var name to save the result (scalar) to (0 or 1)\\
+% \#2 - scalar: the scalar to test\\
+% \#3 - lower bound: \#2 needs to be greater then this for this macro to return 1\\
+% \#4 - upper bound: \#2 needs to be smaller than this for this macro to return 1
+%    \begin{macrocode}
+\newcommand\betweenScalar[4][betweenScalarResult]{%
+    \FPset\betweenScalarResult{0}
+    \FPiflt{#2}{#3}
+    \else
+        \FPadd\betweenScalarResult\betweenScalarResult{1}
+    \fi
+    \FPifgt{#2}{#4}
+    \else
+        \FPadd\betweenScalarResult\betweenScalarResult{1}
+    \fi
+    % TODO
+    \FPifeq{\betweenScalarResult}{2}
+        % \FPset\betweenScalarResult{1}
+        \expandafter\edef\csname #1\endcsname{1}%
+    \else
+        % \FPset\betweenScalarResult{0}
+        \expandafter\edef\csname #1\endcsname{0}%
+    \fi
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash forEachScalar}{macro:forEachScalar_impl}
+% \begin{macro}{\forEachScalar}
+% Apply the given function to a list of variables.
+% 
+% \#1 - input: list of commands (var names) that should be altered\\
+% \#2 - macro: the chosen function\\
+% \#3 - args: params for function
+%    \begin{macrocode}
+\newcommand\forEachScalar[3]{
+    \FPiflt{#2}{10}
+    \else
+        \PackageError{glmatrix package}{In forEach scalar}{selection function that is not implemented (chose between 1 to 9 for parameter 2)}
+    \fi
+    %
+    \def\varList{\xintCSVtoList{#1}}
+    \def\paramList{\xintCSVtoList{#3}}
+    \xintFor* ##1 in \varList \do {%
+        \FPifeq{#2}{1}
+            \addScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{2}
+            \subScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{3}
+            \mulScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{4}
+            \divScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{5}
+            \powScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{6}
+            \negateScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+        \FPifeq{#2}{7}
+            \lerpScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{8}
+            \mulAndAddScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{9}
+            \arccosScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+    }
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash fractionToNum}{macro:fractionToNum_impl}
+% \begin{macro}{\fractionToNum}
+% Convert a fraction with root to a decimal number
+% 
+%    \begin{macrocode}
+\newcommand\fractionToNum[3]{%
+    \FProot\tmpA{#3}{2}
+    \FPmul\tmpA\tmpA{#2}
+    \FPdiv\tmpB{#1}\tmpA
+    \FPset\fractionNumRes{\tmpB}
+    \ensuremath{
+        \tmpB
+    }
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash solutionC}{macro:solutionC_impl}
+% \begin{macro}{\solutionC}
+% Convert a decimal number to a fraction with root
+% 
+%    \begin{macrocode}
+\newcommand\solutionC{%
+    \FPset\finalmul{1}
+    \FPset\tmptmptmptmp\tmptmptmp
+    %
+    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPtrunc\floored\tmptmptmptmp{0}
+        \FPsub\remainder\tmptmptmptmp\floored
+        \FPifgt{\remainder}{0.00001}
+            \FPdiv\mulmul{1}{\remainder}
+            \FPmul\finalmul\finalmul\mulmul
+        \else
+            \xintBreakFor
+        \fi
+        \FPset\tmptmptmptmp\mulmul
+    }
+    \FPround\finalmul\finalmul{8}
+    \FPclip\finalmul\finalmul
+    \FPset\finalmultmp\finalmul
+    % The result will be a multiplicator that is able to round
+    % the number to a whole number, but the result might not be a
+    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
+    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
+    % that the searched for number must be a multiple of 32, in this case 64
+    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
+    \xintFor* ##1 in \innersequence \do {%
+        \FProot\finalmulsqrt\finalmultmp{2}
+        \FPround\finalmulsqrt\finalmulsqrt{4}
+        \FPclip\finalmulsqrt\finalmulsqrt
+        \FPifint{\finalmulsqrt}
+            \xintBreakFor
+        \else
+            \FPadd\finalmultmp\finalmultmp\finalmul
+        \fi
+    }
+    \FPset\finalmul\finalmultmp
+    \FProot\finalmulsqrt\finalmul{2}
+    \FPround\finalmulsqrt\finalmulsqrt{4}
+    \FPclip\finalmulsqrt\finalmulsqrt
+    \FPmul\divisor\divisor\finalmul
+    \FPmul\dividend\dividend\finalmulsqrt
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash numToFraction}{macro:numToFraction_impl}
+% \begin{macro}{\numToFraction}
+% 
+%    \begin{macrocode}
+\newcommand\numToFraction[1]{%
+    \FPset\dividend{1}
+    \FPset\divisor{#1}
+    \FPset\minusSign{1}
+    \FPiflt{\divisor}{0}
+        \FPset\minusSign{-1}
+    \else
+    \fi
+    \ensuremath{
+        % reverse fraction
+        \FPdiv\divisor{1}{#1}
+        % Reverse root
+        % Use FPmul instead of FPpow to allow for neg values
+        \FPmul\divisor\divisor\divisor
+        \FPset\tmptmptmp\divisor
+        \FPround\divisor\divisor{10}
+        \FPclip\divisor\divisor
+        \FPifint{\divisor}
+        \else
+            \solutionC
+        \fi
+        %
+        \FPround\divisor\divisor{4}
+        \FPclip\divisor\divisor
+        \FPmul\dividend\dividend\minusSign
+        \FPround\dividend\dividend{4}
+        \FPclip\dividend\dividend
+        % TODO this should not be necessary
+        \FPset\outputVar{#1}
+        % Create fraction from dividend and divisor
+        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
+        % If the sqrt can be resolved
+        \FPset\tmpDivisor{\divisor}
+        \FProot\tmpDivisor\tmpDivisor{2}
+        \FPround\tmpDivisor\tmpDivisor{8}
+        \FPclip\tmpDivisor\tmpDivisor
+        \FPifint{\tmpDivisor}
+            \FPset\outputVar{\frac{\dividend}{\tmpDivisor}}
+        \else
+        \fi
+        %
+        \FPset\inputVar{#1}
+        \FPmul\inputVar\inputVar\inputVar
+        \FPmul\inputVar\inputVar\minusSign
+        \FPround\inputVar\inputVar{8}
+        \FPclip\inputVar\inputVar
+        \FPifint{\inputVar}
+            \FPset\outputVar{\,\sqrt{\inputVar}}
+        \else
+        \fi
+        % If #1 was an int all along
+        \FPset\inputVarA{#1}
+        \FPround\inputVarA\inputVarA{10}
+        \FPclip\inputVarA\inputVarA
+        \FPifint{\inputVarA}
+            \FPset\outputVar{\inputVarA}
+        \else
+        \fi
+        \outputVar
+    }
+}
+%    \end{macrocode}
+% \end{macro}
+
+
+% \setlabel{\textbackslash numToFractionA}{macro:numToFractionA_impl}
+% \begin{macro}{\numToFractionA}
+% 
+%    \begin{macrocode}
+\newcommand\numToFractionA[1]{%
+    \FPset\inputVarA{#1}
+    \FPround\inputVarA\inputVarA{10}
+    \FPclip\inputVarA\inputVarA
+    % Prevent division by 0
+    \FPifint{\inputVarA}
+        \FPset\outputVar{\inputVarA}
+        \outputVar
+    \else
+        \numToFraction{#1}
+    \fi
+}
+%    \end{macrocode}
+% \end{macro}
+
 % \subsection{vector}
 % \begin{center}
 % \begin{tabularx}{\textwidth}{l p{8cm}} \hline
@@ -3172,7 +3937,7 @@ This work consists of the file  glmatrix.dtx
 % \ref{macro:newVecPi_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{values}} \\
 % \ref{macro:randomVec_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{dimensions}, \marg{lower bound}, \marg{upper bound}} \\
 % \ref{macro:copyVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\copyVecResult} \\
-% \ref{macro:zeroVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{dims}\\zeroVecResult} \\
+% \ref{macro:zeroVec_impl} & \makecell[t{p{8cm}}]{\oarg{dims}, \marg{out}\\3} \\
 % \ref{macro:appendToVec_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{vector}, \marg{scalar}} \\
 % \ref{macro:printVec_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\0} \\
 % \ref{macro:printVecT_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{vector}\\0} \\
@@ -3200,7 +3965,6 @@ This work consists of the file  glmatrix.dtx
 % \ref{macro:scaleAndAddVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar}\\scaleAndAddVecResult} \\
 % \ref{macro:lerpVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar t}\\lerpVecResult} \\
 % \ref{macro:slerpVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}, \marg{scalar t}\\slerpVecResult} \\
-% \ref{macro:hermiteVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{control ca}, \marg{control cb}, \marg{vector w}, \marg{scalar t}\\hermiteVecResult} \\
 % \ref{macro:dotVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\dotVecResult} \\
 % \ref{macro:lenVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\lenVecResult} \\
 % \ref{macro:sqrLenVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\sqrLenVecResult} \\
@@ -3214,7 +3978,7 @@ This work consists of the file  glmatrix.dtx
 % \ref{macro:tensorVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector}\\tensorVecResult} \\
 % \ref{macro:minVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\minVecResult} \\
 % \ref{macro:maxVec_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\maxVecResult} \\
-% \ref{macro:solveVecEQL_impl} & \makecell[t{p{8cm}}]{\oarg{a}, \marg{b}, \marg{c}\\solveVecEQLResult} \\
+% \ref{macro:solveVecEQL_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{vector v}, \marg{vector w}\\solveVecEQLResult} \\
 % \end{tabularx}
 % \end{center}
 
@@ -3313,10 +4077,10 @@ This work consists of the file  glmatrix.dtx
 % Obacht: It is not necessary to call this to create a new vector.
 % This is just for convenience when requiring a vector with initialized with zero.
 % 
-% \#1 - out: var name to save the result (vector) to\\
-% \#2 - dims: number of dimensions (rows)
+% \#1 - dims: number of dimensions (rows)\\
+% \#2 - out: var name to save the result (vector) to
 %    \begin{macrocode}
-\newcommand\zeroVec[2][zeroVecResult]{%
+\newcommand\zeroVec[2][3]{%
     \edef\sequence{\xintSeq[+1]{+1}{#1}}%
     \xintFor* ##1 in \sequence \do {%
         \xintifForFirst{%
@@ -4028,6 +4792,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash slerpVec}{macro:slerpVec_impl}
 % \begin{macro}{\slerpVec}
 % Performs a spherical linear interpolation between two vectors.
+% This expects vector v and vector w to be normalized.
 % 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the start vector\\
@@ -4036,52 +4801,21 @@ This work consists of the file  glmatrix.dtx
 %    \begin{macrocode}
 \newcommand\slerpVec[4][slerpVecResult] {%
     \angleVec{#2}{#3}
-    \FPsin\angleTotal{\angleVecResult}
-    \FPsub\ratioA{1}{#4}
-    \FPmul\ratioA\ratioA{\angleVecResult}
-    \FPsin\ratioA\ratioA
-    \FPdiv\ratioA\ratioA\angleTotal
-    \FPmul\ratioB{#4}{\angleVecResult}
-    \FPsin\ratioB\ratioB
-    \FPdiv\ratioB\ratioB\angleTotal
-    \scaleVec[tmpA]{#2}{\ratioA}
-    \scaleVec[tmpB]{#3}{\ratioB}
-    \addVec[#1]{\tmpA}{\tmpB}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash hermiteVec}{macro:hermiteVec_impl}
-% \begin{macro}{\hermiteVec}
-% Perform a hermite interpolation with two control points.
-% 
-% \#1 - out: var name to save the result (vector) to\\
-% \#2 - vector v: the start vector\\
-% \#3 - control ca: the first control point\\
-% \#4 - control cb: the second control point\\
-% \#5 - vector w: the end vector\\
-% \#6 - scalar t: interpolation amount range [0-1]
-%    \begin{macrocode}
-\newcommand\hermiteVec[6][hermiteVecResult] {%
-    \FPmul\tQuad{#6}{#6}
-    \FPmul\factorA{#6}{2}
-    \FPsub\factorA\factorA{3}
-    \FPmul\factorA\factorA\tQuad
-    \FPadd\factorA\factorA{1}
-    \FPsub\factorB{#6}{2}
-    \FPmul\factorB\factorB\tQuad
-    \FPadd\factorB\factorB{#6}
-    \FPsub\factorC{#6}{1}
-    \FPmul\factorC\factorC\tQuad
-    \FPmul\factorD{#6}{2}
-    \FPsub\factorD{3}\factorD
-    \FPmul\factorD\factorD\tQuad
-    \scaleVec[tmpA]{#2}{\factorA}
-    \scaleVec[tmpB]{#3}{\factorB}
-    \scaleVec[tmpC]{#4}{\factorC}
-    \scaleVec[tmpD]{#5}{\factorD}
-    \addVec[#1]{\tmpA}{\tmpB, \tmpC, \tmpD}
+    \FPifeq{\angleVecResult}{0}
+        \lerpVec[#1]{#2}{#3}{#4}
+    \else
+        \FPsin\angleTotal{\angleVecResult}
+        \FPsub\ratioA{1}{#4}
+        \FPmul\ratioA\ratioA{\angleVecResult}
+        \FPsin\ratioA\ratioA
+        \FPdiv\ratioA\ratioA\angleTotal
+        \FPmul\ratioB{#4}{\angleVecResult}
+        \FPsin\ratioB\ratioB
+        \FPdiv\ratioB\ratioB\angleTotal
+        \scaleVec[tmpA]{#2}{\ratioA}
+        \scaleVec[tmpB]{#3}{\ratioB}
+        \addVec[#1]{\tmpA}{\tmpB}
+    \fi
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4273,7 +5007,7 @@ This work consists of the file  glmatrix.dtx
     \else
         \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
     \fi
-    \FPset\aa
+    \FPset\aa{\xintNthElt{1}{#2}}
     \FPset\ab{\xintNthElt{2}{#2}}
     \FPset\ba{\xintNthElt{1}{#3}}
     \FPset\bb{\xintNthElt{2}{#3}}
@@ -4508,23 +5242,21 @@ This work consists of the file  glmatrix.dtx
 
 % \setlabel{\textbackslash solveVecEQL}{macro:solveVecEQL_impl}
 % \begin{macro}{\solveVecEQL}
+% Solve the equation \(vector v*x+vector w=0\) for \(x\).
+% The command expects the input to be two vectors of the same length.
+% The command iterates both vectors componentwise and solves the equation per component.
+% If the the result does not match across all components the equation can not be solved.
 % 
-% \#1 - a: a\\
-% \#2 - b: b\\
-% \#3 - c: c
+% \#1 - out: var name to save the result (scalar) to\\
+% \#2 - vector v: the first vector\\
+% \#3 - vector w: the second vector
 %    \begin{macrocode}
 \newcommand\solveVecEQL[3][solveVecEQLResult]{
     \getVecHeight{#3}%
     \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
     \xintFor* ##1 in \vecHeightSequence \do {%
-        \FPneg\tmpVar{\xintNthElt{##1}{#3}}
-        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\tmpVar}
-        % \maxScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
-        % \xintifForFirst{%
-        %     \newVec{#1}{\maxScalarResult}
-        % }{%
-        %     \appendToVec{#1}{\csname #1\endcsname}{\maxScalarResult}
-        % }
+        % \FPneg\tmpVar{\xintNthElt{##1}{#3}}
+        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
         \xintifForFirst{%
             \setScalar{#1}{\glCurSol}
         }{%
@@ -4535,780 +5267,6 @@ This work consists of the file  glmatrix.dtx
         }
     }
 }%    \end{macrocode}
-% \end{macro}
-
-% \subsection{scalar}
-% \begin{center}
-% \begin{tabularx}{\textwidth}{l p{8cm}} \hline
-% \textbf{Command} & \textbf{Arguments} \\ \hline
-% \ref{macro:newScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar}} \\
-% \ref{macro:newScalarPi_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar}} \\
-% \ref{macro:newScalarFraction_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar n}, \marg{scalar d}} \\
-% \ref{macro:randomScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{lower bound}, \marg{upper bound}} \\
-% \ref{macro:copyScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarCopyResult} \\
-% \ref{macro:setScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}, \marg{scalar}} \\
-% \ref{macro:zeroScalar_impl} & \makecell[t{p{8cm}}]{\marg{out}} \\
-% \ref{macro:printScalar_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{scalar}\\0} \\
-% \ref{macro:printScalarAsPi_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{scalar}\\0} \\
-% \ref{macro:printPiScalarInDegree_impl} & \makecell[t{p{8cm}}]{\oarg{fraction}, \marg{scalar}\\0} \\
-% \ref{macro:printScalarRounded_impl} & \makecell[t{p{8cm}}]{\oarg{digits}, \marg{scalar}\\4} \\
-% \ref{macro:roundScalar_impl} & \makecell[t{p{8cm}}]{\oarg{digits}, \marg{scalar}\\4} \\
-% \ref{macro:ceilScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarCeilResult} \\
-% \ref{macro:floorScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarFloorResult} \\
-% \ref{macro:clipScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\clipScalarResult} \\
-% \ref{macro:radianToDegree_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\radianToDegreeResult} \\
-% \ref{macro:toRadian_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\degreeToRadianResult} \\
-% \ref{macro:addScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarAddResult} \\
-% \ref{macro:subScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarSubResult} \\
-% \ref{macro:mulScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarMulResult} \\
-% \ref{macro:divScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarDivResult} \\
-% \ref{macro:powScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\scalarPowResult} \\
-% \ref{macro:negateScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarNegateResult} \\
-% \ref{macro:arccosScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}\\scalarArccosResult} \\
-% \ref{macro:mulAndAddScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}, \marg{scalar u}\\scalarMulAndAddResult} \\
-% \ref{macro:lerpScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar i}, \marg{scalar j}, \marg{scalar t}\\lerpScalarResult} \\
-% \ref{macro:minScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\minScalarResult} \\
-% \ref{macro:maxScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar s}, \marg{scalar t}\\maxScalarResult} \\
-% \ref{macro:betweenScalar_impl} & \makecell[t{p{8cm}}]{\oarg{out}, \marg{scalar}, \marg{lower bound}, \marg{upper bound}\\betweenScalarResult} \\
-% \ref{macro:forEachScalar_impl} & \makecell[t{p{8cm}}]{\marg{input}, \marg{macro}, \marg{args}} \\
-% \end{tabularx}
-% \end{center}
-
-
-% \setlabel{\textbackslash newScalar}{macro:newScalar_impl}
-% \begin{macro}{\newScalar}
-% Create a new scalar and assign the given value.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: scalar value that is assigned to out
-%    \begin{macrocode}
-\newcommand\newScalar[2]{%
-    \expandafter\edef\csname #1\endcsname{#2}%
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash newScalarPi}{macro:newScalarPi_impl}
-% \begin{macro}{\newScalarPi}
-% Create a new scalar and assign the given value as a multiple of pi.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: scalar value that is multiplied with pi and assigned to out
-%    \begin{macrocode}
-\newcommand\newScalarPi[2]{
-    \FPmul\divNumRes{\FPpi}{#2}
-    \expandafter\edef\csname #1\endcsname{\divNumRes}%
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash newScalarFraction}{macro:newScalarFraction_impl}
-% \begin{macro}{\newScalarFraction}
-% Create a scalar from a given fraction
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar n: nominator\\
-% \#3 - scalar d: denominator
-%    \begin{macrocode}
-\newcommand\newScalarFraction[3]{
-    \FPdiv\divNumRes{#2}{#3}
-    \expandafter\edef\csname #1\endcsname{\divNumRes}%
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash randomScalar}{macro:randomScalar_impl}
-% \begin{macro}{\randomScalar}
-% Create a new scalar variable with a random value between lower and
-% upper bound. The value is obtained by creating a random value between 0 and 1
-% and then interpolating between lower and upper bound.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - lower bound: scalar that limits the possible values at the bottom\\
-% \#3 - upper bound: scalar that limits the possible values at the top
-%    \begin{macrocode}
-\newcommand\randomScalar[3]{%
-    \FPrandom\tmp
-    \lerpScalar[#1]{#2}{#3}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash copyScalar}{macro:copyScalar_impl}
-% \begin{macro}{\copyScalar}
-% Copy the value of one scalar variable to another.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: scalar which value is assigned to out
-%    \begin{macrocode}
-\newcommand\copyScalar[2][scalarCopyResult]{%
-    \setScalar{#1}{#2}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash setScalar}{macro:setScalar_impl}
-% \begin{macro}{\setScalar}
-% Set the value of a given scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: scalar value that is assigned to out
-%    \begin{macrocode}
-\newcommand\setScalar[2]{%
-    \newScalar{#1}{#2}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash zeroScalar}{macro:zeroScalar_impl}
-% \begin{macro}{\zeroScalar}
-% Set or create a scalar with value 0.
-% 
-% \#1 - out: var name to save the result (scalar) to
-%    \begin{macrocode}
-\newcommand\zeroScalar[1]{%
-    \expandafter\edef\csname #1\endcsname{0}%
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash printScalar}{macro:printScalar_impl}
-% \begin{macro}{\printScalar}
-% Print the value of the given scalar.
-% 
-% \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
-% \#2 - scalar: the scalar that should be printed
-%    \begin{macrocode}
-\newcommand\printScalar[2][0]{%
-    \FPifeq{#1}{0}%
-        \roundScalar{#2}%
-        \scalarRoundResult%
-    \else%
-        \numToFractionA{#2}%
-    \fi%
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash printScalarAsPi}{macro:printScalarAsPi_impl}
-% \begin{macro}{\printScalarAsPi}
-% Print the value of the given scalar as a multiple of Pi.
-% 
-% \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
-% \#2 - scalar: the scalar that should be printed
-%    \begin{macrocode}
-\newcommand\printScalarAsPi[2][0]{%
-    \FPdiv\divNumRes{#2}{\FPpi}
-    \FPifeq{#1}{0}
-        \roundScalar{\divNumRes}
-        \scalarRoundResult
-    \else
-        \numToFractionA{\divNumRes}
-    \fi
-    \pi
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash printPiScalarInDegree}{macro:printPiScalarInDegree_impl}
-% \begin{macro}{\printPiScalarInDegree}
-% Print the value of the given scalar in degree.
-% This macro does do a conversion and therefore expects the input to be in radian.
-% A degree sign is automatically added.
-% 
-% \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
-% \#2 - scalar: the value that schould be printed
-%    \begin{macrocode}
-\newcommand\printPiScalarInDegree[2][0]{%
-    \FPmul\tmp{#2}{180}
-    \FPdiv\divNumRes{\tmp}{\FPpi}
-    \FPifeq{#1}{0}
-        \roundScalar{\divNumRes}
-        \scalarRoundResult
-    \else
-        \numToFractionA{\divNumRes}
-    \fi
-    ^\circ
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash printScalarRounded}{macro:printScalarRounded_impl}
-% \begin{macro}{\printScalarRounded}
-% Print the rounded value of the given scalar.
-% 
-% \#1 - digits: number of digits after comma\\
-% \#2 - scalar: the value that schould be printed
-%    \begin{macrocode}
-\newcommand\printScalarRounded[2][4]{%
-    \FPround\tmp{#2}{#1}
-    \FPclip\tmp\tmp
-    \tmp
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash roundScalar}{macro:roundScalar_impl}
-% \begin{macro}{\roundScalar}
-% Round the value ot the given scalar and save it.
-% 
-% \#1 - digits: number of digits after comma\\
-% \#2 - scalar: the value that schould be rounded
-%    \begin{macrocode}
-\newcommand\roundScalar[2][4]{%
-    \FPround\tmp{#2}{#1}%
-    \FPclip\tmp\tmp%
-    \newScalar{scalarRoundResult}{\tmp}%
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash ceilScalar}{macro:ceilScalar_impl}
-% \begin{macro}{\ceilScalar}
-% Ceil the value of the given scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar that schould be ceiled
-%    \begin{macrocode}
-\newcommand\ceilScalar[2][scalarCeilResult]{
-    \FPtrunc\tmp{#2}{0}
-    \FPset\tmpSave{\tmp}
-    %
-    \FPifpos{#2}
-        \FPadd\tmpSave{\tmp}{1}
-    \else
-    \fi
-    \FPifint{#2}
-        \FPset\tmpSave{\tmp}
-    \else
-    \fi
-    \newScalar{#1}{\tmpSave}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash floorScalar}{macro:floorScalar_impl}
-% \begin{macro}{\floorScalar}
-% Floor the value of the given scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar that schould be floored
-%    \begin{macrocode}
-\newcommand\floorScalar[2][scalarFloorResult]{
-    \FPtrunc\tmp{#2}{0}
-    \FPset\tmpSave{\tmp}
-    %
-    \FPifneg{#2}
-        \FPsub\tmpSave{\tmp}{1}
-    \else
-    \fi
-    \FPifint{#2}
-        \FPset\tmpSave{\tmp}
-    \else
-    \fi
-    \newScalar{#1}{\tmpSave}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash clipScalar}{macro:clipScalar_impl}
-% \begin{macro}{\clipScalar}
-% Remove all trailing zeros from the value of the given scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar from which the zeros should be removed
-%    \begin{macrocode}
-\newcommand\clipScalar[2][clipScalarResult]{
-    \FPclip\tmp{#2}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash radianToDegree}{macro:radianToDegree_impl}
-% \begin{macro}{\radianToDegree}
-% Convert the value of the given scalar to degree.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar which to convert
-%    \begin{macrocode}
-\newcommand\radianToDegree[2][radianToDegreeResult]{
-    \FPmul\tmp{#2}{180}
-    \FPdiv\tmp{\tmp}{\FPpi}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash toRadian}{macro:toRadian_impl}
-% \begin{macro}{\toRadian}
-% Convert the value of the given scalar to radian.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar which to convert
-%    \begin{macrocode}
-\newcommand\toRadian[2][degreeToRadianResult]{
-    \FPdiv\tmp{#2}{180}
-    \FPmul\tmp{\tmp}{\FPpi}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash addScalar}{macro:addScalar_impl}
-% \begin{macro}{\addScalar}
-% Add the values of two scalars.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the first scalar of the sum\\
-% \#3 - scalar t: the second scalar of the sum
-%    \begin{macrocode}
-\newcommand\addScalar[3][scalarAddResult]{%
-    \FPadd\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash subScalar}{macro:subScalar_impl}
-% \begin{macro}{\subScalar}
-% Subtract the values of two scalars.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the scalar to subtract from\\
-% \#3 - scalar t: the scalar to subtract
-%    \begin{macrocode}
-\newcommand\subScalar[3][scalarSubResult]{%
-    \FPsub\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash mulScalar}{macro:mulScalar_impl}
-% \begin{macro}{\mulScalar}
-% Multiply the values of two scalars.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the scalar to multiply\\
-% \#3 - scalar t: the scalar with which to multply
-%    \begin{macrocode}
-\newcommand\mulScalar[3][scalarMulResult]{
-    \FPmul\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash divScalar}{macro:divScalar_impl}
-% \begin{macro}{\divScalar}
-% Divide the values of two scalars.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the scalar to divide\\
-% \#3 - scalar t: the scalar to divide with
-%    \begin{macrocode}
-\newcommand\divScalar[3][scalarDivResult]{%
-    \FPifeq{#3}{0}
-        \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
-    \else
-    \fi
-    \FPdiv\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash powScalar}{macro:powScalar_impl}
-% \begin{macro}{\powScalar}
-% Raise the values of one scalar by another.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the scalar to raise\\
-% \#3 - scalar t: the scalar with which to raise
-%    \begin{macrocode}
-\newcommand\powScalar[3][scalarPowResult]{%
-    \FPpow\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash negateScalar}{macro:negateScalar_impl}
-% \begin{macro}{\negateScalar}
-% Negate the value of the given scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar to negate
-%    \begin{macrocode}
-\newcommand\negateScalar[2][scalarNegateResult]{%
-    \FPneg\tmp{#2}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash arccosScalar}{macro:arccosScalar_impl}
-% \begin{macro}{\arccosScalar}
-% Get the arccos of the value of the given scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar: the scalar to calculate the arccos for
-%    \begin{macrocode}
-\newcommand\arccosScalar[2][scalarArccosResult]{%
-    \FPround\tmp{#2}{8}
-    \FPclip\tmp\tmp
-    \FParccos\tmp\tmp
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash mulAndAddScalar}{macro:mulAndAddScalar_impl}
-% \begin{macro}{\mulAndAddScalar}
-% Adds two scalars after multiplying the second one by a scalar.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the scalar to add to\\
-% \#3 - scalar t: the scalar that is multiplied and then added\\
-% \#4 - scalar u: the scalar that is the muliplier
-%    \begin{macrocode}
-\newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{%
-    \FPmul\tmp{#3}{#4}
-    \FPadd\tmp{#2}{\tmp}
-    \newScalar{#1}{\tmp}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash lerpScalar}{macro:lerpScalar_impl}
-% \begin{macro}{\lerpScalar}
-% Lineraly interpolate between values of two scalars.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar i: the start scalar\\
-% \#3 - scalar j: the end scalar\\
-% \#4 - scalar t: interpolation amount range [0-1]
-%    \begin{macrocode}
-\newcommand\lerpScalar[4][lerpScalarResult]{%
-    \FPsub\tmpA{1}{#4}
-    \FPmul\tmpA{#2}\tmpA
-    \FPmul\tmpB{#3}{#4}
-    \FPadd\tmpA\tmpA\tmpB
-    \newScalar{#1}{\tmpA}
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash minScalar}{macro:minScalar_impl}
-% \begin{macro}{\minScalar}
-% Return the minimum of two scalar values.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: the first scalar\\
-% \#3 - scalar t: the second scalar
-%    \begin{macrocode}
-\newcommand\minScalar[3][minScalarResult]{%
-    % TODO use \FPmin#1#2#3
-    \FPiflt{#2}{#3}
-        \expandafter\edef\csname #1\endcsname{#2}%
-    \else
-        \expandafter\edef\csname #1\endcsname{#3}%
-    \fi
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash maxScalar}{macro:maxScalar_impl}
-% \begin{macro}{\maxScalar}
-% Return the maximum of two scalar values.
-% 
-% \#1 - out: var name to save the result (scalar) to\\
-% \#2 - scalar s: first scalar value\\
-% \#3 - scalar t: second scalar value
-%    \begin{macrocode}
-\newcommand\maxScalar[3][maxScalarResult]{%
-    % TODO use \FPmax#1#2#3
-    \FPiflt{#2}{#3}
-        \expandafter\edef\csname #1\endcsname{#3}%
-    \else
-        \expandafter\edef\csname #1\endcsname{#2}%
-    \fi
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash betweenScalar}{macro:betweenScalar_impl}
-% \begin{macro}{\betweenScalar}
-% Return whether a scalar lies between two other values.
-% 
-% \#1 - out: var name to save the result (scalar) to (0 or 1)\\
-% \#2 - scalar: the scalar to test\\
-% \#3 - lower bound: \#2 needs to be greater then this for this macro to return 1\\
-% \#4 - upper bound: \#2 needs to be smaller than this for this macro to return 1
-%    \begin{macrocode}
-\newcommand\betweenScalar[4][betweenScalarResult]{%
-    \FPset\betweenScalarResult{0}
-    \FPiflt{#2}{#3}
-    \else
-        \FPadd\betweenScalarResult\betweenScalarResult{1}
-    \fi
-    \FPifgt{#2}{#4}
-    \else
-        \FPadd\betweenScalarResult\betweenScalarResult{1}
-    \fi
-    \FPifeq{\betweenScalarResult}{2}
-        \FPset\betweenScalarResult{1}
-    \else
-        \FPset\betweenScalarResult{0}
-    \fi
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash forEachScalar}{macro:forEachScalar_impl}
-% \begin{macro}{\forEachScalar}
-% Apply the given function to a list of variables.
-% 
-% \#1 - input: list of commands (var names) that should be altered\\
-% \#2 - macro: the chosen function\\
-% \#3 - args: params for function
-%    \begin{macrocode}
-\newcommand\forEachScalar[3]{
-    \FPiflt{#2}{10}
-    \else
-        \PackageError{glmatrix package}{In forEach scalar}{selection function that is not implemented (chose between 1 to 9 for parameter 2)}
-    \fi
-    %
-    \def\varList{\xintCSVtoList{#1}}
-    \def\paramList{\xintCSVtoList{#3}}
-    \xintFor* ##1 in \varList \do {%
-        \FPifeq{#2}{1}
-            \addScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{2}
-            \subScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{3}
-            \mulScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{4}
-            \divScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{5}
-            \powScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{6}
-            \negateScalar[##1]{\csname ##1\endcsname}
-        \else
-        \fi
-        \FPifeq{#2}{7}
-            \lerpScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{8}
-            \mulAndAddScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{9}
-            \arccosScalar[##1]{\csname ##1\endcsname}
-        \else
-        \fi
-    }
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash fractionToNum}{macro:fractionToNum_impl}
-% \begin{macro}{\fractionToNum}
-% Convert a fraction with root to a decimal number
-% 
-%    \begin{macrocode}
-\newcommand\fractionToNum[3]{%
-    \FProot\tmpA{#3}{2}
-    \FPmul\tmpA\tmpA{#2}
-    \FPdiv\tmpB{#1}\tmpA
-    \FPset\fractionNumRes{\tmpB}
-    \ensuremath{
-        \tmpB
-    }
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash solutionC}{macro:solutionC_impl}
-% \begin{macro}{\solutionC}
-% Convert a decimal number to a fraction with root
-% 
-%    \begin{macrocode}
-\newcommand\solutionC{%
-    \FPset\finalmul{1}
-    \FPset\tmptmptmptmp\tmptmptmp
-    %
-    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
-    \xintFor* ##1 in \innersequence \do {%
-        \FPtrunc\floored\tmptmptmptmp{0}
-        \FPsub\remainder\tmptmptmptmp\floored
-        \FPifgt{\remainder}{0.00001}
-            \FPdiv\mulmul{1}{\remainder}
-            \FPmul\finalmul\finalmul\mulmul
-        \else
-            \xintBreakFor
-        \fi
-        \FPset\tmptmptmptmp\mulmul
-    }
-    \FPround\finalmul\finalmul{8}
-    \FPclip\finalmul\finalmul
-    \FPset\finalmultmp\finalmul
-    % The result will be a multiplicator that is able to round
-    % the number to a whole number, but the result might not be a
-    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
-    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
-    % that the searched for number must be a multiple of 32, in this case 64
-    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
-    \xintFor* ##1 in \innersequence \do {%
-        \FProot\finalmulsqrt\finalmultmp{2}
-        \FPround\finalmulsqrt\finalmulsqrt{4}
-        \FPclip\finalmulsqrt\finalmulsqrt
-        \FPifint{\finalmulsqrt}
-            \xintBreakFor
-        \else
-            \FPadd\finalmultmp\finalmultmp\finalmul
-        \fi
-    }
-    \FPset\finalmul\finalmultmp
-    \FProot\finalmulsqrt\finalmul{2}
-    \FPround\finalmulsqrt\finalmulsqrt{4}
-    \FPclip\finalmulsqrt\finalmulsqrt
-    \FPmul\divisor\divisor\finalmul
-    \FPmul\dividend\dividend\finalmulsqrt
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash numToFraction}{macro:numToFraction_impl}
-% \begin{macro}{\numToFraction}
-% 
-%    \begin{macrocode}
-\newcommand\numToFraction[1]{%
-    \FPset\dividend{1}
-    \FPset\divisor{#1}
-    \FPset\minusSign{1}
-    \FPiflt{\divisor}{0}
-        \FPset\minusSign{-1}
-    \else
-    \fi
-    \ensuremath{
-        % reverse fraction
-        \FPdiv\divisor{1}{#1}
-        % Reverse root
-        % Use FPmul instead of FPpow to allow for neg values
-        \FPmul\divisor\divisor\divisor
-        \FPset\tmptmptmp\divisor
-        \FPround\divisor\divisor{10}
-        \FPclip\divisor\divisor
-        \FPifint{\divisor}
-        \else
-            \solutionC
-        \fi
-        %
-        \FPround\divisor\divisor{4}
-        \FPclip\divisor\divisor
-        \FPmul\dividend\dividend\minusSign
-        \FPround\dividend\dividend{4}
-        \FPclip\dividend\dividend
-        % TODO this should not be necessary
-        \FPset\outputVar{#1}
-        % Create fraction from dividend and divisor
-        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
-        % If the sqrt can be resolved
-        \FPset\tmpDivisor{\divisor}
-        \FProot\tmpDivisor\tmpDivisor{2}
-        \FPround\tmpDivisor\tmpDivisor{8}
-        \FPclip\tmpDivisor\tmpDivisor
-        \FPifint{\tmpDivisor}
-            \FPset\outputVar{\frac{\dividend}{\tmpDivisor}}
-        \else
-        \fi
-        %
-        \FPset\inputVar{#1}
-        \FPmul\inputVar\inputVar\inputVar
-        \FPmul\inputVar\inputVar\minusSign
-        \FPround\inputVar\inputVar{8}
-        \FPclip\inputVar\inputVar
-        \FPifint{\inputVar}
-            \FPset\outputVar{\,\sqrt{\inputVar}}
-        \else
-        \fi
-        % If #1 was an int all along
-        \FPset\inputVarA{#1}
-        \FPround\inputVarA\inputVarA{10}
-        \FPclip\inputVarA\inputVarA
-        \FPifint{\inputVarA}
-            \FPset\outputVar{\inputVarA}
-        \else
-        \fi
-        \outputVar
-    }
-}
-%    \end{macrocode}
-% \end{macro}
-
-
-% \setlabel{\textbackslash numToFractionA}{macro:numToFractionA_impl}
-% \begin{macro}{\numToFractionA}
-% 
-%    \begin{macrocode}
-\newcommand\numToFractionA[1]{%
-    \FPset\inputVarA{#1}
-    \FPround\inputVarA\inputVarA{10}
-    \FPclip\inputVarA\inputVarA
-    % Prevent division by 0
-    \FPifint{\inputVarA}
-        \FPset\outputVar{\inputVarA}
-        \outputVar
-    \else
-        \numToFraction{#1}
-    \fi
-}
-%    \end{macrocode}
 % \end{macro}
 
 % \iffalse

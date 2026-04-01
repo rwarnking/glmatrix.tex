@@ -15,7 +15,7 @@
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{glmatrix}[2026/03/02 v0.1 Math library for computer graphics]
+\ProvidesPackage{glmatrix}[2026/04/01 v0.1 Math library for computer graphics]
 
 \RequirePackage{xinttools}
 \RequirePackage{xintfrac}
@@ -24,8 +24,6 @@
 \newcommand{\R}{\ensuremath{\textrm{I\!R}}}
 \newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
 \newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
-
-
 
 
 
@@ -734,10 +732,6 @@
 }
 
 \newcommand\getMatTranslation[2][matTranslationResult]{%
-    \FPifeq{\expectedheight}{\actualheight}
-    \else
-        \PackageError{glmatrix package}{Matrix height does not match expectation}{height seems to be incorrect}
-    \fi
     \getMatWidth{#2}
     \getMatHeight{#2}
     \edef\sequence{\xintSeq[+1]{+1}{\matHeightResult}}
@@ -768,6 +762,398 @@
     \mulScalar[tmpAD]{\xintNthElt{1}{\xintNthElt{1}{#2}}}{\xintNthElt{2}{\xintNthElt{2}{#2}}}
     \mulScalar[tmpBC]{\xintNthElt{1}{\xintNthElt{2}{#2}}}{\xintNthElt{2}{\xintNthElt{1}{#2}}}
     \subScalar[#1]{\tmpAD}{\tmpBC}
+}
+
+
+\newcommand\newScalar[2]{%
+    \expandafter\edef\csname #1\endcsname{#2}%
+}
+
+\newcommand\newScalarPi[2]{
+    \FPmul\divNumRes{\FPpi}{#2}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
+\newcommand\newScalarFraction[3]{
+    \FPdiv\divNumRes{#2}{#3}
+    \expandafter\edef\csname #1\endcsname{\divNumRes}%
+}
+
+\newcommand\randomScalar[3]{%
+    \FPrandom\tmp
+    \lerpScalar[#1]{#2}{#3}{\tmp}
+}
+
+\newcommand\copyScalar[2][scalarCopyResult]{%
+    \setScalar{#1}{#2}
+}
+
+\newcommand\setScalar[2]{%
+    \newScalar{#1}{#2}
+}
+
+\newcommand\zeroScalar[1]{%
+    \expandafter\edef\csname #1\endcsname{0}%
+}
+
+\newcommand\printScalar[2][0]{%
+    \FPifeq{#1}{0}%
+        \roundScalar{#2}%
+        \scalarRoundResult%
+    \else%
+        \numToFractionA{#2}%
+    \fi%
+}
+
+\newcommand\printScalarAsPi[2][0]{%
+    \FPdiv\divNumRes{#2}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    \pi
+}
+
+\newcommand\printPiScalarInDegree[2][0]{%
+    \FPmul\tmp{#2}{180}
+    \FPdiv\divNumRes{\tmp}{\FPpi}
+    \FPifeq{#1}{0}
+        \roundScalar{\divNumRes}
+        \scalarRoundResult
+    \else
+        \numToFractionA{\divNumRes}
+    \fi
+    ^\circ
+}
+
+\newcommand\printScalarRounded[2][4]{%
+    \FPround\tmp{#2}{#1}
+    \FPclip\tmp\tmp
+    \tmp
+}
+
+\newcommand\roundScalar[2][4]{%
+    \FPround\tmp{#2}{#1}%
+    \FPclip\tmp\tmp%
+    \newScalar{scalarRoundResult}{\tmp}%
+}
+
+\newcommand\ceilScalar[2][scalarCeilResult]{
+    \FPtrunc\tmp{#2}{0}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifpos{#2}
+        \FPadd\tmpSave{\tmp}{1}
+    \else
+    \fi
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
+}
+
+\newcommand\floorScalar[2][scalarFloorResult]{
+    \FPtrunc\tmp{#2}{0}
+    \FPset\tmpSave{\tmp}
+    %
+    \FPifneg{#2}
+        \FPsub\tmpSave{\tmp}{1}
+    \else
+    \fi
+    \FPifint{#2}
+        \FPset\tmpSave{\tmp}
+    \else
+    \fi
+    \newScalar{#1}{\tmpSave}
+}
+
+\newcommand\clipScalar[2][clipScalarResult]{
+    \FPclip\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\radianToDegree[2][radianToDegreeResult]{
+    \FPmul\tmp{#2}{180}
+    \FPdiv\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\toRadian[2][degreeToRadianResult]{
+    \FPdiv\tmp{#2}{180}
+    \FPmul\tmp{\tmp}{\FPpi}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\addScalar[3][scalarAddResult]{%
+    \FPadd\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\subScalar[3][scalarSubResult]{%
+    \FPsub\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\mulScalar[3][scalarMulResult]{
+    \FPmul\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\divScalar[3][scalarDivResult]{%
+    \FPifeq{#3}{0}
+        \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
+    \else
+    \fi
+    \FPdiv\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\powScalar[3][scalarPowResult]{%
+    \FPpow\tmp{#2}{#3}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\negateScalar[2][scalarNegateResult]{%
+    \FPneg\tmp{#2}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\arccosScalar[2][scalarArccosResult]{%
+    \FPround\tmp{#2}{10}
+    \FPclip\tmp\tmp
+    \FParccos\tmp\tmp
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{%
+    \FPmul\tmp{#3}{#4}
+    \FPadd\tmp{#2}{\tmp}
+    \newScalar{#1}{\tmp}
+}
+
+\newcommand\lerpScalar[4][lerpScalarResult]{%
+    \FPsub\tmpA{1}{#4}
+    \FPmul\tmpA{#2}\tmpA
+    \FPmul\tmpB{#3}{#4}
+    \FPadd\tmpA\tmpA\tmpB
+    \newScalar{#1}{\tmpA}
+}
+
+\newcommand\minScalar[3][minScalarResult]{%
+    % TODO use \FPmin#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \fi
+}
+
+\newcommand\maxScalar[3][maxScalarResult]{%
+    % TODO use \FPmax#1#2#3
+    \FPiflt{#2}{#3}
+        \expandafter\edef\csname #1\endcsname{#3}%
+    \else
+        \expandafter\edef\csname #1\endcsname{#2}%
+    \fi
+}
+
+\newcommand\betweenScalar[4][betweenScalarResult]{%
+    \FPset\betweenScalarResult{0}
+    \FPiflt{#2}{#3}
+    \else
+        \FPadd\betweenScalarResult\betweenScalarResult{1}
+    \fi
+    \FPifgt{#2}{#4}
+    \else
+        \FPadd\betweenScalarResult\betweenScalarResult{1}
+    \fi
+    % TODO
+    \FPifeq{\betweenScalarResult}{2}
+        % \FPset\betweenScalarResult{1}
+        \expandafter\edef\csname #1\endcsname{1}%
+    \else
+        % \FPset\betweenScalarResult{0}
+        \expandafter\edef\csname #1\endcsname{0}%
+    \fi
+}
+
+\newcommand\forEachScalar[3]{
+    \FPiflt{#2}{10}
+    \else
+        \PackageError{glmatrix package}{In forEach scalar}{selection function that is not implemented (chose between 1 to 9 for parameter 2)}
+    \fi
+    %
+    \def\varList{\xintCSVtoList{#1}}
+    \def\paramList{\xintCSVtoList{#3}}
+    \xintFor* ##1 in \varList \do {%
+        \FPifeq{#2}{1}
+            \addScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{2}
+            \subScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{3}
+            \mulScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{4}
+            \divScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{5}
+            \powScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{6}
+            \negateScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+        \FPifeq{#2}{7}
+            \lerpScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{8}
+            \mulAndAddScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
+        \else
+        \fi
+        \FPifeq{#2}{9}
+            \arccosScalar[##1]{\csname ##1\endcsname}
+        \else
+        \fi
+    }
+}
+
+\newcommand\fractionToNum[3]{%
+    \FProot\tmpA{#3}{2}
+    \FPmul\tmpA\tmpA{#2}
+    \FPdiv\tmpB{#1}\tmpA
+    \FPset\fractionNumRes{\tmpB}
+    \ensuremath{
+        \tmpB
+    }
+}
+
+\newcommand\solutionC{%
+    \FPset\finalmul{1}
+    \FPset\tmptmptmptmp\tmptmptmp
+    %
+    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
+    \xintFor* ##1 in \innersequence \do {%
+        \FPtrunc\floored\tmptmptmptmp{0}
+        \FPsub\remainder\tmptmptmptmp\floored
+        \FPifgt{\remainder}{0.00001}
+            \FPdiv\mulmul{1}{\remainder}
+            \FPmul\finalmul\finalmul\mulmul
+        \else
+            \xintBreakFor
+        \fi
+        \FPset\tmptmptmptmp\mulmul
+    }
+    \FPround\finalmul\finalmul{8}
+    \FPclip\finalmul\finalmul
+    \FPset\finalmultmp\finalmul
+    % The result will be a multiplicator that is able to round
+    % the number to a whole number, but the result might not be a
+    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
+    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
+    % that the searched for number must be a multiple of 32, in this case 64
+    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
+    \xintFor* ##1 in \innersequence \do {%
+        \FProot\finalmulsqrt\finalmultmp{2}
+        \FPround\finalmulsqrt\finalmulsqrt{4}
+        \FPclip\finalmulsqrt\finalmulsqrt
+        \FPifint{\finalmulsqrt}
+            \xintBreakFor
+        \else
+            \FPadd\finalmultmp\finalmultmp\finalmul
+        \fi
+    }
+    \FPset\finalmul\finalmultmp
+    \FProot\finalmulsqrt\finalmul{2}
+    \FPround\finalmulsqrt\finalmulsqrt{4}
+    \FPclip\finalmulsqrt\finalmulsqrt
+    \FPmul\divisor\divisor\finalmul
+    \FPmul\dividend\dividend\finalmulsqrt
+}
+
+\newcommand\numToFraction[1]{%
+    \FPset\dividend{1}
+    \FPset\divisor{#1}
+    \FPset\minusSign{1}
+    \FPiflt{\divisor}{0}
+        \FPset\minusSign{-1}
+    \else
+    \fi
+    \ensuremath{
+        % reverse fraction
+        \FPdiv\divisor{1}{#1}
+        % Reverse root
+        % Use FPmul instead of FPpow to allow for neg values
+        \FPmul\divisor\divisor\divisor
+        \FPset\tmptmptmp\divisor
+        \FPround\divisor\divisor{10}
+        \FPclip\divisor\divisor
+        \FPifint{\divisor}
+        \else
+            \solutionC
+        \fi
+        %
+        \FPround\divisor\divisor{4}
+        \FPclip\divisor\divisor
+        \FPmul\dividend\dividend\minusSign
+        \FPround\dividend\dividend{4}
+        \FPclip\dividend\dividend
+        % TODO this should not be necessary
+        \FPset\outputVar{#1}
+        % Create fraction from dividend and divisor
+        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
+        % If the sqrt can be resolved
+        \FPset\tmpDivisor{\divisor}
+        \FProot\tmpDivisor\tmpDivisor{2}
+        \FPround\tmpDivisor\tmpDivisor{8}
+        \FPclip\tmpDivisor\tmpDivisor
+        \FPifint{\tmpDivisor}
+            \FPset\outputVar{\frac{\dividend}{\tmpDivisor}}
+        \else
+        \fi
+        %
+        \FPset\inputVar{#1}
+        \FPmul\inputVar\inputVar\inputVar
+        \FPmul\inputVar\inputVar\minusSign
+        \FPround\inputVar\inputVar{8}
+        \FPclip\inputVar\inputVar
+        \FPifint{\inputVar}
+            \FPset\outputVar{\,\sqrt{\inputVar}}
+        \else
+        \fi
+        % If #1 was an int all along
+        \FPset\inputVarA{#1}
+        \FPround\inputVarA\inputVarA{10}
+        \FPclip\inputVarA\inputVarA
+        \FPifint{\inputVarA}
+            \FPset\outputVar{\inputVarA}
+        \else
+        \fi
+        \outputVar
+    }
+}
+
+\newcommand\numToFractionA[1]{%
+    \FPset\inputVarA{#1}
+    \FPround\inputVarA\inputVarA{10}
+    \FPclip\inputVarA\inputVarA
+    % Prevent division by 0
+    \FPifint{\inputVarA}
+        \FPset\outputVar{\inputVarA}
+        \outputVar
+    \else
+        \numToFraction{#1}
+    \fi
 }
 
 
@@ -814,7 +1200,7 @@
     }
 }
 
-\newcommand\zeroVec[2][zeroVecResult]{%
+\newcommand\zeroVec[2][3]{%
     \edef\sequence{\xintSeq[+1]{+1}{#1}}%
     \xintFor* ##1 in \sequence \do {%
         \xintifForFirst{%
@@ -1251,38 +1637,21 @@
 
 \newcommand\slerpVec[4][slerpVecResult] {%
     \angleVec{#2}{#3}
-    \FPsin\angleTotal{\angleVecResult}
-    \FPsub\ratioA{1}{#4}
-    \FPmul\ratioA\ratioA{\angleVecResult}
-    \FPsin\ratioA\ratioA
-    \FPdiv\ratioA\ratioA\angleTotal
-    \FPmul\ratioB{#4}{\angleVecResult}
-    \FPsin\ratioB\ratioB
-    \FPdiv\ratioB\ratioB\angleTotal
-    \scaleVec[tmpA]{#2}{\ratioA}
-    \scaleVec[tmpB]{#3}{\ratioB}
-    \addVec[#1]{\tmpA}{\tmpB}
-}
-
-\newcommand\hermiteVec[6][hermiteVecResult] {%
-    \FPmul\tQuad{#6}{#6}
-    \FPmul\factorA{#6}{2}
-    \FPsub\factorA\factorA{3}
-    \FPmul\factorA\factorA\tQuad
-    \FPadd\factorA\factorA{1}
-    \FPsub\factorB{#6}{2}
-    \FPmul\factorB\factorB\tQuad
-    \FPadd\factorB\factorB{#6}
-    \FPsub\factorC{#6}{1}
-    \FPmul\factorC\factorC\tQuad
-    \FPmul\factorD{#6}{2}
-    \FPsub\factorD{3}\factorD
-    \FPmul\factorD\factorD\tQuad
-    \scaleVec[tmpA]{#2}{\factorA}
-    \scaleVec[tmpB]{#3}{\factorB}
-    \scaleVec[tmpC]{#4}{\factorC}
-    \scaleVec[tmpD]{#5}{\factorD}
-    \addVec[#1]{\tmpA}{\tmpB, \tmpC, \tmpD}
+    \FPifeq{\angleVecResult}{0}
+        \lerpVec[#1]{#2}{#3}{#4}
+    \else
+        \FPsin\angleTotal{\angleVecResult}
+        \FPsub\ratioA{1}{#4}
+        \FPmul\ratioA\ratioA{\angleVecResult}
+        \FPsin\ratioA\ratioA
+        \FPdiv\ratioA\ratioA\angleTotal
+        \FPmul\ratioB{#4}{\angleVecResult}
+        \FPsin\ratioB\ratioB
+        \FPdiv\ratioB\ratioB\angleTotal
+        \scaleVec[tmpA]{#2}{\ratioA}
+        \scaleVec[tmpB]{#3}{\ratioB}
+        \addVec[#1]{\tmpA}{\tmpB}
+    \fi
 }
 
 \newcommand\dotVec[3][dotVecResult] {%
@@ -1410,7 +1779,7 @@
     \else
         \PackageError{glmatrix package}{In cross product}{vector A is not of length 2}
     \fi
-    \FPset\aa
+    \FPset\aa{\xintNthElt{1}{#2}}
     \FPset\ab{\xintNthElt{2}{#2}}
     \FPset\ba{\xintNthElt{1}{#3}}
     \FPset\bb{\xintNthElt{2}{#3}}
@@ -1568,14 +1937,8 @@
     \getVecHeight{#3}%
     \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
     \xintFor* ##1 in \vecHeightSequence \do {%
-        \FPneg\tmpVar{\xintNthElt{##1}{#3}}
-        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\tmpVar}
-        % \maxScalar{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
-        % \xintifForFirst{%
-        %     \newVec{#1}{\maxScalarResult}
-        % }{%
-        %     \appendToVec{#1}{\csname #1\endcsname}{\maxScalarResult}
-        % }
+        % \FPneg\tmpVar{\xintNthElt{##1}{#3}}
+        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
         \xintifForFirst{%
             \setScalar{#1}{\glCurSol}
         }{%
@@ -1587,396 +1950,7 @@
     }
 }%    \end{macrocode}
 
-
-\newcommand\newScalar[2]{%
-    \expandafter\edef\csname #1\endcsname{#2}%
-}
-
-\newcommand\newScalarPi[2]{
-    \FPmul\divNumRes{\FPpi}{#2}
-    \expandafter\edef\csname #1\endcsname{\divNumRes}%
-}
-
-\newcommand\newScalarFraction[3]{
-    \FPdiv\divNumRes{#2}{#3}
-    \expandafter\edef\csname #1\endcsname{\divNumRes}%
-}
-
-\newcommand\randomScalar[3]{%
-    \FPrandom\tmp
-    \lerpScalar[#1]{#2}{#3}{\tmp}
-}
-
-\newcommand\copyScalar[2][scalarCopyResult]{%
-    \setScalar{#1}{#2}
-}
-
-\newcommand\setScalar[2]{%
-    \newScalar{#1}{#2}
-}
-
-\newcommand\zeroScalar[1]{%
-    \expandafter\edef\csname #1\endcsname{0}%
-}
-
-\newcommand\printScalar[2][0]{%
-    \FPifeq{#1}{0}%
-        \roundScalar{#2}%
-        \scalarRoundResult%
-    \else%
-        \numToFractionA{#2}%
-    \fi%
-}
-
-\newcommand\printScalarAsPi[2][0]{%
-    \FPdiv\divNumRes{#2}{\FPpi}
-    \FPifeq{#1}{0}
-        \roundScalar{\divNumRes}
-        \scalarRoundResult
-    \else
-        \numToFractionA{\divNumRes}
-    \fi
-    \pi
-}
-
-\newcommand\printPiScalarInDegree[2][0]{%
-    \FPmul\tmp{#2}{180}
-    \FPdiv\divNumRes{\tmp}{\FPpi}
-    \FPifeq{#1}{0}
-        \roundScalar{\divNumRes}
-        \scalarRoundResult
-    \else
-        \numToFractionA{\divNumRes}
-    \fi
-    ^\circ
-}
-
-\newcommand\printScalarRounded[2][4]{%
-    \FPround\tmp{#2}{#1}
-    \FPclip\tmp\tmp
-    \tmp
-}
-
-\newcommand\roundScalar[2][4]{%
-    \FPround\tmp{#2}{#1}%
-    \FPclip\tmp\tmp%
-    \newScalar{scalarRoundResult}{\tmp}%
-}
-
-\newcommand\ceilScalar[2][scalarCeilResult]{
-    \FPtrunc\tmp{#2}{0}
-    \FPset\tmpSave{\tmp}
-    %
-    \FPifpos{#2}
-        \FPadd\tmpSave{\tmp}{1}
-    \else
-    \fi
-    \FPifint{#2}
-        \FPset\tmpSave{\tmp}
-    \else
-    \fi
-    \newScalar{#1}{\tmpSave}
-}
-
-\newcommand\floorScalar[2][scalarFloorResult]{
-    \FPtrunc\tmp{#2}{0}
-    \FPset\tmpSave{\tmp}
-    %
-    \FPifneg{#2}
-        \FPsub\tmpSave{\tmp}{1}
-    \else
-    \fi
-    \FPifint{#2}
-        \FPset\tmpSave{\tmp}
-    \else
-    \fi
-    \newScalar{#1}{\tmpSave}
-}
-
-\newcommand\clipScalar[2][clipScalarResult]{
-    \FPclip\tmp{#2}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\radianToDegree[2][radianToDegreeResult]{
-    \FPmul\tmp{#2}{180}
-    \FPdiv\tmp{\tmp}{\FPpi}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\toRadian[2][degreeToRadianResult]{
-    \FPdiv\tmp{#2}{180}
-    \FPmul\tmp{\tmp}{\FPpi}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\addScalar[3][scalarAddResult]{%
-    \FPadd\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\subScalar[3][scalarSubResult]{%
-    \FPsub\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\mulScalar[3][scalarMulResult]{
-    \FPmul\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\divScalar[3][scalarDivResult]{%
-    \FPifeq{#3}{0}
-        \PackageError{glmatrix package}{In divScalar function: division by zero}{parameter 3 is zero therefore you are trying to divide by 0}
-    \else
-    \fi
-    \FPdiv\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\powScalar[3][scalarPowResult]{%
-    \FPpow\tmp{#2}{#3}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\negateScalar[2][scalarNegateResult]{%
-    \FPneg\tmp{#2}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\arccosScalar[2][scalarArccosResult]{%
-    \FPround\tmp{#2}{8}
-    \FPclip\tmp\tmp
-    \FParccos\tmp\tmp
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\mulAndAddScalar[4][scalarMulAndAddResult]{%
-    \FPmul\tmp{#3}{#4}
-    \FPadd\tmp{#2}{\tmp}
-    \newScalar{#1}{\tmp}
-}
-
-\newcommand\lerpScalar[4][lerpScalarResult]{%
-    \FPsub\tmpA{1}{#4}
-    \FPmul\tmpA{#2}\tmpA
-    \FPmul\tmpB{#3}{#4}
-    \FPadd\tmpA\tmpA\tmpB
-    \newScalar{#1}{\tmpA}
-}
-
-\newcommand\minScalar[3][minScalarResult]{%
-    % TODO use \FPmin#1#2#3
-    \FPiflt{#2}{#3}
-        \expandafter\edef\csname #1\endcsname{#2}%
-    \else
-        \expandafter\edef\csname #1\endcsname{#3}%
-    \fi
-}
-
-\newcommand\maxScalar[3][maxScalarResult]{%
-    % TODO use \FPmax#1#2#3
-    \FPiflt{#2}{#3}
-        \expandafter\edef\csname #1\endcsname{#3}%
-    \else
-        \expandafter\edef\csname #1\endcsname{#2}%
-    \fi
-}
-
-\newcommand\betweenScalar[4][betweenScalarResult]{%
-    \FPset\betweenScalarResult{0}
-    \FPiflt{#2}{#3}
-    \else
-        \FPadd\betweenScalarResult\betweenScalarResult{1}
-    \fi
-    \FPifgt{#2}{#4}
-    \else
-        \FPadd\betweenScalarResult\betweenScalarResult{1}
-    \fi
-    \FPifeq{\betweenScalarResult}{2}
-        \FPset\betweenScalarResult{1}
-    \else
-        \FPset\betweenScalarResult{0}
-    \fi
-}
-
-\newcommand\forEachScalar[3]{
-    \FPiflt{#2}{10}
-    \else
-        \PackageError{glmatrix package}{In forEach scalar}{selection function that is not implemented (chose between 1 to 9 for parameter 2)}
-    \fi
-    %
-    \def\varList{\xintCSVtoList{#1}}
-    \def\paramList{\xintCSVtoList{#3}}
-    \xintFor* ##1 in \varList \do {%
-        \FPifeq{#2}{1}
-            \addScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{2}
-            \subScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{3}
-            \mulScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{4}
-            \divScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{5}
-            \powScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{6}
-            \negateScalar[##1]{\csname ##1\endcsname}
-        \else
-        \fi
-        \FPifeq{#2}{7}
-            \lerpScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{8}
-            \mulAndAddScalar[##1]{\csname ##1\endcsname}{\xintNthElt{1}{\paramList}}{\xintNthElt{2}{\paramList}}
-        \else
-        \fi
-        \FPifeq{#2}{9}
-            \arccosScalar[##1]{\csname ##1\endcsname}
-        \else
-        \fi
-    }
-}
-
-\newcommand\fractionToNum[3]{%
-    \FProot\tmpA{#3}{2}
-    \FPmul\tmpA\tmpA{#2}
-    \FPdiv\tmpB{#1}\tmpA
-    \FPset\fractionNumRes{\tmpB}
-    \ensuremath{
-        \tmpB
-    }
-}
-
-\newcommand\solutionC{%
-    \FPset\finalmul{1}
-    \FPset\tmptmptmptmp\tmptmptmp
-    %
-    \edef\innersequence{\xintSeq[+1]{+1}{+10}}%
-    \xintFor* ##1 in \innersequence \do {%
-        \FPtrunc\floored\tmptmptmptmp{0}
-        \FPsub\remainder\tmptmptmptmp\floored
-        \FPifgt{\remainder}{0.00001}
-            \FPdiv\mulmul{1}{\remainder}
-            \FPmul\finalmul\finalmul\mulmul
-        \else
-            \xintBreakFor
-        \fi
-        \FPset\tmptmptmptmp\mulmul
-    }
-    \FPround\finalmul\finalmul{8}
-    \FPclip\finalmul\finalmul
-    \FPset\finalmultmp\finalmul
-    % The result will be a multiplicator that is able to round
-    % the number to a whole number, but the result might not be a
-    % nice number to root e.g. 8/sqrt(6), 0.09375 will result in 32
-    % 0.09375 * 32 = 3, but sqrt(32) = 5,65.. but given this we know
-    % that the searched for number must be a multiple of 32, in this case 64
-    % Note: rounding to 6 & 36 does not work since 0.09375 * 36 = 3.375
-    \xintFor* ##1 in \innersequence \do {%
-        \FProot\finalmulsqrt\finalmultmp{2}
-        \FPround\finalmulsqrt\finalmulsqrt{4}
-        \FPclip\finalmulsqrt\finalmulsqrt
-        \FPifint{\finalmulsqrt}
-            \xintBreakFor
-        \else
-            \FPadd\finalmultmp\finalmultmp\finalmul
-        \fi
-    }
-    \FPset\finalmul\finalmultmp
-    \FProot\finalmulsqrt\finalmul{2}
-    \FPround\finalmulsqrt\finalmulsqrt{4}
-    \FPclip\finalmulsqrt\finalmulsqrt
-    \FPmul\divisor\divisor\finalmul
-    \FPmul\dividend\dividend\finalmulsqrt
-}
-
-\newcommand\numToFraction[1]{%
-    \FPset\dividend{1}
-    \FPset\divisor{#1}
-    \FPset\minusSign{1}
-    \FPiflt{\divisor}{0}
-        \FPset\minusSign{-1}
-    \else
-    \fi
-    \ensuremath{
-        % reverse fraction
-        \FPdiv\divisor{1}{#1}
-        % Reverse root
-        % Use FPmul instead of FPpow to allow for neg values
-        \FPmul\divisor\divisor\divisor
-        \FPset\tmptmptmp\divisor
-        \FPround\divisor\divisor{10}
-        \FPclip\divisor\divisor
-        \FPifint{\divisor}
-        \else
-            \solutionC
-        \fi
-        %
-        \FPround\divisor\divisor{4}
-        \FPclip\divisor\divisor
-        \FPmul\dividend\dividend\minusSign
-        \FPround\dividend\dividend{4}
-        \FPclip\dividend\dividend
-        % TODO this should not be necessary
-        \FPset\outputVar{#1}
-        % Create fraction from dividend and divisor
-        \FPset\outputVar{\frac{\dividend}{\sqrt{\divisor}}}
-        % If the sqrt can be resolved
-        \FPset\tmpDivisor{\divisor}
-        \FProot\tmpDivisor\tmpDivisor{2}
-        \FPround\tmpDivisor\tmpDivisor{8}
-        \FPclip\tmpDivisor\tmpDivisor
-        \FPifint{\tmpDivisor}
-            \FPset\outputVar{\frac{\dividend}{\tmpDivisor}}
-        \else
-        \fi
-        %
-        \FPset\inputVar{#1}
-        \FPmul\inputVar\inputVar\inputVar
-        \FPmul\inputVar\inputVar\minusSign
-        \FPround\inputVar\inputVar{8}
-        \FPclip\inputVar\inputVar
-        \FPifint{\inputVar}
-            \FPset\outputVar{\,\sqrt{\inputVar}}
-        \else
-        \fi
-        % If #1 was an int all along
-        \FPset\inputVarA{#1}
-        \FPround\inputVarA\inputVarA{10}
-        \FPclip\inputVarA\inputVarA
-        \FPifint{\inputVarA}
-            \FPset\outputVar{\inputVarA}
-        \else
-        \fi
-        \outputVar
-    }
-}
-
-\newcommand\numToFractionA[1]{%
-    \FPset\inputVarA{#1}
-    \FPround\inputVarA\inputVarA{10}
-    \FPclip\inputVarA\inputVarA
-    % Prevent division by 0
-    \FPifint{\inputVarA}
-        \FPset\outputVar{\inputVarA}
-        \outputVar
-    \else
-        \numToFraction{#1}
-    \fi
-}
-
-%% Copyright (C) 2026/03/02 by
+%% Copyright (C) 2026/04/01 by
 %%   Rene Warnking <TODO>
 %% 
 %% It may be distributed and/or modified under the conditions of
