@@ -756,17 +756,21 @@
 % #4 scalar t, interpolation amount range [0-1]
 \newcommand\slerpVec[4][slerpVecResult] {%
     \angleVec{#2}{#3}
-    \FPsin\angleTotal{\angleVecResult}
-    \FPsub\ratioA{1}{#4}
-    \FPmul\ratioA\ratioA{\angleVecResult}
-    \FPsin\ratioA\ratioA
-    \FPdiv\ratioA\ratioA\angleTotal
-    \FPmul\ratioB{#4}{\angleVecResult}
-    \FPsin\ratioB\ratioB
-    \FPdiv\ratioB\ratioB\angleTotal
-    \scaleVec[tmpA]{#2}{\ratioA}
-    \scaleVec[tmpB]{#3}{\ratioB}
-    \addVec[#1]{\tmpA}{\tmpB}
+    \FPifeq{\angleVecResult}{0}
+        \lerpVec[#1]{#2}{#3}{#4}
+    \else
+        \FPsin\angleTotal{\angleVecResult}
+        \FPsub\ratioA{1}{#4}
+        \FPmul\ratioA\ratioA{\angleVecResult}
+        \FPsin\ratioA\ratioA
+        \FPdiv\ratioA\ratioA\angleTotal
+        \FPmul\ratioB{#4}{\angleVecResult}
+        \FPsin\ratioB\ratioB
+        \FPdiv\ratioB\ratioB\angleTotal
+        \scaleVec[tmpA]{#2}{\ratioA}
+        \scaleVec[tmpB]{#3}{\ratioB}
+        \addVec[#1]{\tmpA}{\tmpB}
+    \fi
 }
 
 % Perform a hermite interpolation with two control points.
@@ -778,26 +782,26 @@
 % #5 vector w, the end vector
 % #6 scalar t, interpolation amount range [0-1]
 % TODO no idea if this works as intended
-\newcommand\hermiteVec[6][hermiteVecResult] {%
-    \FPmul\tQuad{#6}{#6}
-    \FPmul\factorA{#6}{2}
-    \FPsub\factorA\factorA{3}
-    \FPmul\factorA\factorA\tQuad
-    \FPadd\factorA\factorA{1}
-    \FPsub\factorB{#6}{2}
-    \FPmul\factorB\factorB\tQuad
-    \FPadd\factorB\factorB{#6}
-    \FPsub\factorC{#6}{1}
-    \FPmul\factorC\factorC\tQuad
-    \FPmul\factorD{#6}{2}
-    \FPsub\factorD{3}\factorD
-    \FPmul\factorD\factorD\tQuad
-    \scaleVec[tmpA]{#2}{\factorA}
-    \scaleVec[tmpB]{#3}{\factorB}
-    \scaleVec[tmpC]{#4}{\factorC}
-    \scaleVec[tmpD]{#5}{\factorD}
-    \addVec[#1]{\tmpA}{\tmpB, \tmpC, \tmpD}
-}
+% \newcommand\hermiteVec[6][hermiteVecResult] {%
+%     \FPmul\tQuad{#6}{#6}
+%     \FPmul\factorA{#6}{2}
+%     \FPsub\factorA\factorA{3}
+%     \FPmul\factorA\factorA\tQuad
+%     \FPadd\factorA\factorA{1}
+%     \FPsub\factorB{#6}{2}
+%     \FPmul\factorB\factorB\tQuad
+%     \FPadd\factorB\factorB{#6}
+%     \FPsub\factorC{#6}{1}
+%     \FPmul\factorC\factorC\tQuad
+%     \FPmul\factorD{#6}{2}
+%     \FPsub\factorD{3}\factorD
+%     \FPmul\factorD\factorD\tQuad
+%     \scaleVec[tmpA]{#2}{\factorA}
+%     \scaleVec[tmpB]{#3}{\factorB}
+%     \scaleVec[tmpC]{#4}{\factorC}
+%     \scaleVec[tmpD]{#5}{\factorD}
+%     \addVec[#1]{\tmpA}{\tmpB, \tmpC, \tmpD}
+% }
 
 % TODO
 % \newcommand\bezier[3][distVecResult] {%
@@ -1269,8 +1273,8 @@
     \getVecHeight{#3}%
     \edef\vecHeightSequence{\xintSeq[+1]{+1}{\vecHeightResult}}%
     \xintFor* ##1 in \vecHeightSequence \do {%
-        \FPneg\tmpVar{\xintNthElt{##1}{#3}}
-        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\tmpVar}
+        % \FPneg\tmpVar{\xintNthElt{##1}{#3}}
+        \FPlsolve\glCurSol{\xintNthElt{##1}{#2}}{\xintNthElt{##1}{#3}}
         \xintifForFirst{%
             \setScalar{#1}{\glCurSol}
         }{%

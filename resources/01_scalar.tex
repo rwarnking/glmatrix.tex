@@ -487,7 +487,7 @@
 % #1 out, var name to save the result (scalar) to
 % #2 scalar, the scalar to calculate the arccos for
 \newcommand\arccosScalar[2][scalarArccosResult]{%
-    \FPround\tmp{#2}{8}
+    \FPround\tmp{#2}{10}
     \FPclip\tmp\tmp
     \FParccos\tmp\tmp
     \newScalar{#1}{\tmp}
@@ -593,10 +593,13 @@
     \else
         \FPadd\betweenScalarResult\betweenScalarResult{1}
     \fi
+    % TODO
     \FPifeq{\betweenScalarResult}{2}
-        \FPset\betweenScalarResult{1}
+        % \FPset\betweenScalarResult{1}
+        \expandafter\edef\csname #1\endcsname{1}%
     \else
-        \FPset\betweenScalarResult{0}
+        % \FPset\betweenScalarResult{0}
+        \expandafter\edef\csname #1\endcsname{0}%
     \fi
 }
 

@@ -15,14 +15,22 @@ jobs:
   ###########################
   # Execute linter workflow #
   ###########################
-  # linter_workflow:
-  #   uses: ./.github/workflows/linter.yml
+  linter_workflow:
+    uses: ./.github/workflows/linter.yml
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
   ##########################
   # Execute tests workflow #
   ##########################
   tests_workflow:
-    # needs: linter_workflow
+    needs: linter_workflow
     uses: ./.github/workflows/tests.yml
+    permissions:
+      contents: read
+      packages: read
   ##################################
   # Execute documentation workflow #
   ##################################

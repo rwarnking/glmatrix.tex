@@ -1,3 +1,4 @@
+% chktex-file 8
 % chktex-file 26
 % chktex-file 29
 % chktex-file 37
@@ -14,7 +15,7 @@
 % 2x 3D vector mixed sign
 \newVec{vecA}{1, -2, 3}
 \newVec{vecB}{-4, 5, 6}
-\testPrintOutputTwoPar{printCrossPComp}{vecA = (1, -2, 3), vecB = (-4, 5, 6)}{\vecA}{\vecB}{\begin{pmatrix}2*6-3*5\\3*-4-1*6\\1*5--2*-4\end{pmatrix}}
+\testPrintOutputTwoPar{printCrossPComp}{vecA = (1, -2, 3), vecB = (-4, 5, 6)}{\vecA}{\vecB}{\begin{pmatrix}-2*6-3*5\\3*-4-1*6\\1*5--2*-4\end{pmatrix}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -26,7 +27,7 @@
 % 2x 3D vector cancellation
 \newVec{vecA}{1, -2, 3}
 \newVec{vecB}{2, -4, 6}
-\testPrintOutputTwoPar{printCrossPComp}{vecA = (1, -2, 3), vecB = (2, -4, 6)}{\vecA}{\vecB}{\begin{pmatrix}2*6-3*-4\\3*2-1*6\\1*-4--2*2\end{pmatrix}}
+\testPrintOutputTwoPar{printCrossPComp}{vecA = (1, -2, 3), vecB = (2, -4, 6)}{\vecA}{\vecB}{\begin{pmatrix}-2*6-3*-4\\3*2-1*6\\1*-4--2*2\end{pmatrix}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

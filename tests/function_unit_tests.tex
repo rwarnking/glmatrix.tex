@@ -17,7 +17,21 @@
 \setpapersize{A4}
 \setmarginsrb{20mm}{15mm}{20mm}{25mm}{54pt}{15mm}{0pt}{0mm}
 
-\usepackage{glmatrix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This does not work, since the package (sty) is not yet updated when testing it
+% \usepackage{glmatrix}
+\usepackage{xinttools}
+\usepackage{xintfrac}
+\usepackage{fp}
+
+\newcommand{\R}{\ensuremath{\textrm{I\!R}}}
+\newcommand{\trans}[1]{\ensuremath{{#1}\mkern-1mu^{\mathsf{T}}}}
+\newcommand{\norm}[1]{\ensuremath{\left\Vert #1 \right\Vert}}
+
+\input{resources/01_scalar.tex}
+\input{resources/02_vector.tex}
+\input{resources/03_matrix.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 % #1 out, var name to save the result (1 or 0) to
@@ -61,6 +75,46 @@
     }
 }
 
+% Compare two matrices for equality. Returns 1 if equal, 0 else.
+% Example: \textbackslash newVec\{myNewVecA\}\{0.5, 1, 2\}
+% Example: \textbackslash newMat\{myNewMatA\}\{\{\{0.5,2\}\{4,5\}\{7,8\}\}\}
+% Example: \textbackslash newMat\{myNewMatA\}\{\{\{0.5,2\}\{4,5\}\{7,8\}\}\}
+% Example: \textbackslash equalsVec\{\textbackslash myNewMatA\}\{\textbackslash myNewMatA\}
+% Example: \textbackslash equalsMatResult \(\mapsto{} 1\)
+% #1 out, var name to save the result (1 or 0) to
+% #2 matrix m, the first matrix
+% #3 matrix n, the second matrix
+\newcommand\equalsMat[3][equalsMatResult] {%
+    \newScalar{#1}{1}
+    \getMatWidth[@matWidthA]{#2}
+    \getMatHeight[@matHeightA]{#2}
+    \getMatWidth[@matWidthB]{#2}
+    \getMatHeight[@matHeightB]{#2}
+    % Check that both matrices can be compared
+    \FPifeq{\@matWidthA}{\@matWidthB}
+    \else
+        \setScalar{#1}{0}
+    \fi
+    \FPifeq{\@matHeightA}{\@matHeightB}
+    \else
+        \setScalar{#1}{0}
+    \fi
+    % Create iterator sequences from height of vector and matrix
+    \edef\@widthSequence{\xintSeq[+1]{+1}{\@matWidthA}}%
+    \edef\@heightSequence{\xintSeq[+1]{+1}{\@matHeightB}}%
+    %
+    \xintFor* ##1 in \@heightSequence \do {%
+        \xintFor* ##2 in \@widthSequence \do {%
+            \FPround{\@tmpValA}{\xintNthElt{##2}{\xintNthElt{##1}{#2}}}{9}
+            \FPround{\@tmpValB}{\xintNthElt{##2}{\xintNthElt{##1}{#3}}}{9}
+            \FPifeq{\@tmpValA}{\@tmpValB}
+            \else
+                \setScalar{#1}{0}
+            \fi
+        }
+    }
+}
+
 \makeatother
 
 % #1 command
@@ -68,7 +122,7 @@
 % #3 varcontent
 % #4 expected
 \newcommand\testPrintOutput[4] {%
-    \textbackslash #1\{...\} with value #2\\
+    \textbackslash #1\{\ldots\} with value #2\\
     \begin{align*}
         output&: \csname#1\endcsname{#3}\\
         expected&: #4
@@ -83,7 +137,7 @@
 % TODO #2 does only print the var name but not its content
 % structure could be improved
 \newcommand\testPrintOutputTwoPar[5] {%
-    \textbackslash #1\{...\} with value #2\\
+    \textbackslash #1\{\ldots\} with value #2\\
     \begin{align*}
         output&: \csname#1\endcsname{#3}{#4}\\
         expected&: #5
@@ -262,32 +316,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Matrix}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{glmatrix-tests/matrix/addMatTests}
-\input{glmatrix-tests/matrix/appendRowToMatTests}
-\input{glmatrix-tests/matrix/detMatTests}
-\input{glmatrix-tests/matrix/getMatHeightTests}
-\input{glmatrix-tests/matrix/getMatTranslationTests}
-\input{glmatrix-tests/matrix/getMatWidthTests}
-\input{glmatrix-tests/matrix/mulMatScalarTests}
-\input{glmatrix-tests/matrix/mulMatTests}
-\input{glmatrix-tests/matrix/mulMatVecTests}
-\input{glmatrix-tests/matrix/newDiagMatTests}
-\input{glmatrix-tests/matrix/newEmptyMatTests}
-\input{glmatrix-tests/matrix/newFrustumMatTests}
-\input{glmatrix-tests/matrix/newLookAtMatTests}
-\input{glmatrix-tests/matrix/newMatFromColVecsTests}
-\input{glmatrix-tests/matrix/newMatFromRowTests}
-\input{glmatrix-tests/matrix/newMatFromRowVecsTests}
-\input{glmatrix-tests/matrix/newMatTests}
-\input{glmatrix-tests/matrix/newProjMatGenTests}
-\input{glmatrix-tests/matrix/newProjMatTests}
-\input{glmatrix-tests/matrix/newRotMatTests}
-\input{glmatrix-tests/matrix/newRotMatTwoDTests}
-\input{glmatrix-tests/matrix/newScaleMatTests}
-\input{glmatrix-tests/matrix/newTransMatTests}
-\input{glmatrix-tests/matrix/printMatDiagTests}
-\input{glmatrix-tests/matrix/printMatTests}
-\input{glmatrix-tests/matrix/subMatTests}
-\input{glmatrix-tests/matrix/transposeMatTests}
+\input{tests/matrix/addMatTests}
+\input{tests/matrix/appendRowToMatTests}
+\input{tests/matrix/detMatTests}
+\input{tests/matrix/getMatHeightTests}
+\input{tests/matrix/getMatTranslationTests}
+\input{tests/matrix/getMatWidthTests}
+\input{tests/matrix/mulMatScalarTests}
+\input{tests/matrix/mulMatTests}
+\input{tests/matrix/mulMatVecTests}
+\input{tests/matrix/newDiagMatTests}
+\input{tests/matrix/newEmptyMatTests}
+\input{tests/matrix/newFrustumMatTests}
+\input{tests/matrix/newLookAtMatTests}
+\input{tests/matrix/newMatFromColVecsTests}
+\input{tests/matrix/newMatFromRowTests}
+\input{tests/matrix/newMatFromRowVecsTests}
+\input{tests/matrix/newMatTests}
+\input{tests/matrix/newProjMatGenTests}
+\input{tests/matrix/newProjMatTests}
+\input{tests/matrix/newRotMatTests}
+\input{tests/matrix/newRotMatTwoDTests}
+\input{tests/matrix/newScaleMatTests}
+\input{tests/matrix/newTransMatTests}
+\input{tests/matrix/printMatDiagTests}
+\input{tests/matrix/printMatTests}
+\input{tests/matrix/subMatTests}
+\input{tests/matrix/transposeMatTests}
 
 \end{document}
