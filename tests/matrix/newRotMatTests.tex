@@ -1,9 +1,29 @@
 % chktex-file 26
 % chktex-file 29
 % chktex-file 37
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{newRotMat} %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{rotationAxis}{1,1,1}
+\newScalar{rotAngle}{45}
+\newRotMat[matA]{\rotationAxis}{\rotAngle}
+\newMat{matControl}{{{0.8047378541,-0.3106172175,0.5058793634}{0.5058793634,0.8047378541,-0.3106172175}{-0.3106172175,0.5058793634,0.8047378541}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newRotMat \rotAngle}
 
-\PackageWarning{glmatrix package tests}{In newRotMat:\ test not implemented}
+\newVec{rotationAxis}{1,1,1}
+\newScalar{rotAngle}{90}
+\newRotMat[matA]{\rotationAxis}{\rotAngle}
+\newMat{matControl}{{{0.3333333333,-0.2440169358,0.9106836025}{0.9106836025,0.3333333333,-0.2440169358}{-0.2440169358,0.9106836025,0.3333333333}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newRotMat \rotAngle}
+
+\newVec{rotationAxis}{1,1,1}
+\newScalar{rotAngle}{120}
+\newRotMat[matA]{\rotationAxis}{\rotAngle}
+\newMat{matControl}{{{0,0,1}{1,0,0}{0,1,0}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newRotMat \rotAngle}
+
+\newVec{rotationAxis}{1,1,1}
+\newScalar{rotAngle}{180}
+\newRotMat[matA]{\rotationAxis}{\rotAngle}
+\newMat{matControl}{{{-0.3333333333,0.6666666666,0.6666666666}{0.6666666666,-0.3333333333,0.6666666666}{0.6666666666,0.6666666666,-0.3333333333}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newRotMat \rotAngle}

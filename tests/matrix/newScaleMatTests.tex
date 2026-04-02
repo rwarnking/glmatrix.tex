@@ -4,6 +4,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{newScaleMat} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+\newVec{vecA}{5}
+\newScaleMat{matA}{\vecA}
+\newMat{matControl}{{{5,0}{0,1}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newScaleMat v1}
 
-\PackageWarning{glmatrix package tests}{In newScaleMat:\ test not implemented}
+\newVec{vecA}{5, 2}
+\newScaleMat{matA}{\vecA}
+\newMat{matControl}{{{5,0,0}{0,2,0}{0,0,1}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newScaleMat v2}
+
+\newVec{vecA}{5, 2, 3}
+\newScaleMat{matA}{\vecA}
+\newMat{matControl}{{{5,0,0,0}{0,2,0,0}{0,0,3,0}{0,0,0,1}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newScaleMat v3}
+
+\newVec{vecA}{5, 2, 3, 9}
+\newScaleMat{matA}{\vecA}
+\newMat{matControl}{{{5,0,0,0,0}{0,2,0,0,0}{0,0,3,0,0}{0,0,0,9,0}{0,0,0,0,1}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{newScaleMat v4}

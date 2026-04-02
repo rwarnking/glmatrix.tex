@@ -4,6 +4,134 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection*{transformVec} %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{$\times$} test not implemented
+% 1x1 matrix mixed sign
+\newMat{matA}{{{5}}}
+\newVec{vecB}{2}
+\newVec{vecControl}{10}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{1x1 matrix mixed sign}
 
-\PackageWarning{glmatrix package tests}{In transformVec:\ test not implemented}
+% 2x2 matrix mixed sign
+\newMat{matA}{{{1,2.0}{3,4}}}
+\newVec{vecB}{1,3}
+\newVec{vecControl}{7,15}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{2x2 matrix mixed sign}
+
+% 2x3 matrix mixed sign
+\newMat{matA}{{{1,2,3}{4,5,6}}}
+\newVec{vecB}{1,0.5,5}
+\newVec{vecControl}{17,36.5}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{2x3 matrix mixed sign}
+
+% 3x2 matrix mixed sign
+\newMat{matA}{{{1,2}{3,4}{5,6}}}
+\newVec{vecB}{1,0.5}
+\newVec{vecControl}{2,5,8}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x2 matrix mixed sign}
+
+% 3x3 matrix mixed sign
+\newMat{matA}{{{1,2,3}{0,1,4}{5,6,0}}}
+\newVec{vecB}{1,0.5,7}
+\newVec{vecControl}{23,28.5,8}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x3 matrix mixed sign}
+
+% 3x4 matrix mixed sign
+\newMat{matA}{{{1,2,0,1}{3,1,2,0}{0,1,1,2}}}
+\newVec{vecB}{1,0.5,7,0.5}
+\newVec{vecControl}{2.5,17.5,8.5}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x4 matrix mixed sign}
+
+% 4x3 matrix mixed sign
+\newMat{matA}{{{1,2,0}{3,1,2}{0,1,1}{2,0,1}}}
+\newVec{vecB}{1,0.5,7}
+\newVec{vecControl}{2,17.5,7.5,9}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{4x3 matrix mixed sign}
+
+% 4x4 matrix mixed sign
+\newMat{matA}{{{1,-2,0,1}{3,1,-2,0}{0,1,1,-2}{-2,0,1,1}}}
+\newVec{vecB}{1,0.5,7,3.75}
+\newVec{vecControl}{3.75,-10.5,0,8.75}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{4x4 matrix mixed sign}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1x1 matrix cancellation
+\newMat{matA}{{{5}}}
+\newVec{vecB}{0}
+\newVec{vecControl}{0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{1x1 matrix cancellation}
+
+% 2x2 matrix cancellation
+\newMat{matA}{{{1,2}{2,4}}}
+\newVec{vecB}{0,0}
+\newVec{vecControl}{0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{2x2 matrix cancellation}
+
+% 2x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}}}
+\newVec{vecB}{0,0,0}
+\newVec{vecControl}{0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{2x3 matrix cancellation}
+
+% 3x2 matrix cancellation
+\newMat{matA}{{{1,0}{2,0}{-1,0}}}
+\newVec{vecB}{0,2}
+\newVec{vecControl}{0,0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x2 matrix cancellation}
+
+% 3x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}{-1,-2,-3}}}
+\newVec{vecB}{0,0,0}
+\newVec{vecControl}{0,0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x3 matrix cancellation}
+
+% 3x4 matrix cancellation
+\newMat{matA}{{{1,2,3,4}{2,4,6,8}{-1,-2,-3,-4}}}
+\newVec{vecB}{0,0,0,0}
+\newVec{vecControl}{0,0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x4 matrix cancellation}
+
+% 4x3 matrix cancellation
+\newMat{matA}{{{1,2,3}{2,4,6}{-1,-2,-3}{0.5,1,1.5}}}
+\newVec{vecB}{0,0,0}
+\newVec{vecControl}{0,0,0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{4x3 matrix cancellation}
+
+% 4x4 matrix cancellation
+\newMat{matA}{{{1,2,3,4}{2,4,6,8}{-1,-2,-3,-4}{0.5,1,1.5,2}}}
+\newVec{vecB}{0,0,0,0}
+\newVec{vecControl}{0,0,0,0}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{4x4 matrix cancellation}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x2 matrix large integers
+\newMat{matA}{{{1000000, 2000000}{5000000, 6000000}}}
+\newVec{vecB}{1,5}
+\newVec{vecControl}{11000000,35000000}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{2x2 matrix large integers}
+
+% 3x3 matrix large integers
+\newMat{matA}{{{1000000, 2000000, 3000000}{6000000, 7000000, 8000000}{2000000, 2000000, 2000000}}}
+\newVec{vecB}{1,5,2.5}
+\newVec{vecControl}{18500000,61000000,17000000}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x3 matrix large integers}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 2x2 matrix small floats
+\newMat{matA}{{{0.000001, 0.000002}{0.000005, 0.000006}}}
+\newVec{vecB}{1,5}
+\newVec{vecControl}{0.000011,0.000035}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{2x2 matrix small floats}
+
+% 3x3 matrix small floats
+\newMat{matA}{{{0.000001, 0.000002, 0.000003}{0.000005, 0.000007, 0.000008}{0.000009, 0.000001, 0.000001}}}
+\newVec{vecB}{1,5,2.5}
+\newVec{vecControl}{0.0000185,0.00006,0.0000165}
+\testMacroTwoPar{Vec}{transformVec}{\matA}{\vecB}{\vecControl}{3x3 matrix small floats}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Immutable input
+\newMat{matControl}{{{0.000001, 0.000002, 0.000003}{0.000005, 0.000007, 0.000008}{0.000009, 0.000001, 0.000001}}}
+\testMacroEquality{Mat}{\matA}{\matControl}{immutable input}
