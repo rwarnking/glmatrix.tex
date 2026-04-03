@@ -1,8 +1,8 @@
 pkg_name=glmatrix
-pkg_description=This package provides macros for linear algebra calculations.
+pkg_description=This package provides macros for linear algebra calculations with scalars, vectors, and matrices. Its structure is based on the JavaScript library glmatrix.js, and it similarly provides several convenience functions often used in computer graphics contexts, like creating a translation matrix.
 pkg_author=Rene Warnking
 pkg_author_email=rwarnking@gmail.com
 pkg_date=today
 pkg_version=1.0.0
-pkg_info_text=Macros for linear algebra calculations
+pkg_info_text=Macros for linear algebra calculations common in computer graphics
 pkg_license_name=BSD 3-Clause License
