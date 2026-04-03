@@ -5,15 +5,13 @@
 %</internal>
 %<*readme>
 ----------------------------------------------------------------
-glmatrix --- macros for linear algebra calculations
-E-mail: rwarnking@gmail.com
-Released under the 3-clause BSD License
-See https://opensource.org/license/bsd-3-clause
+test --- description text
+E-mail: you@your.domain
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
 ----------------------------------------------------------------
 
-A set of macros to define and perform linear algebra calculations
-with scalars, vectors, and matrices. In structure and design this
-package is based on the glmatrix.js library for JavaScript.
+Some text about the package: probably the same as the abstract.
 %</readme>
 
 %<*internal>
@@ -29,21 +27,22 @@ package is based on the glmatrix.js library for JavaScript.
 \askforoverwritefalse
 \preamble
 ---------------------------------------------------------------
-glmatrix --- macros for linear algebra calculations
+glmatrix --- TODO
 Maintained by Rene Warnking
-E-mail: rwarnking@gmail.com
-Released under the 3-clause BSD License
-See https://opensource.org/license/bsd-3-clause
+E-mail: TODO
+Released under the LaTeX Project Public License v1.3c or later
+See http://www.latex-project.org/lppl.txt
 ---------------------------------------------------------------
 \endpreamble
 \postamble
 Copyright (C) 2026/04/03 by
-  Rene Warnking <rwarnking@gmail.com>
+  Rene Warnking <TODO>
 
 It may be distributed and/or modified under the conditions of
-the 3-clause BSD license. The latest version of this license is
-in the file:
-   https://opensource.org/license/bsd-3-clause
+the LaTeX Project Public License (LPPL), either version 1.3c of
+this license or (at your option) any later version.  The latest
+version of this license is in the file:
+   http://www.latex-project.org/lppl.txt
 This work is maintained (as per LPPL maintenance status) by
   Rene Warnking.
 
@@ -78,7 +77,7 @@ This work consists of the file  glmatrix.dtx
 
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{glmatrix}[2026/04/01 v1.0.0 Macros for linear algebra calculations]
+\ProvidesPackage{glmatrix}[2026/04/03 v0.1 Math library for computer graphics]
 
 \RequirePackage{xinttools}
 \RequirePackage{xintfrac}
@@ -233,31 +232,31 @@ This work consists of the file  glmatrix.dtx
 \begin{document}
     \title{The \textsf{glmatrix} Package}
     \author{Rene Warnking}
-    \date{Version 1.0.0\newline 2026/04/03}
+    \date{2026/04/03}
     \maketitle
 
     \tableofcontents
 
     \section{Introduction}
-
+    
     The \texttt{glmatrix} package provides a small set of macros that allow you to
     do basic vector and matrix arithmetics in \LaTeX. It is inspired by the javascript
     library with the same name (https://glmatrix.net/) and provides the same functions and more.
     Using this package, you can easily do vector calculations like dot and cross
     product as well as more complex calculations, like vector matrix multiplication.
-
+    
     The package is specifically targeting use cases in computer graphics.
     Consequently, it provides macros for vector transformations using matrices and
     the creation of commonly used matrices in computer graphics, like the lookAt matrix.
     In combination, these macros allow you to do many calculations that regularly occurr in computer graphics.
-
+    
     \clearpage
 
     \section{Example}
-
+    
     Given the following equation:
     \[A B (\vec{v} + \vec{w})\ \vert\ v, w \in \R^3, A, B \in \R^{3\times3}\]
-
+    
     The code below recreates the equation with exemplary values and directly calculates the results.
     Then, the results are used to print a step-by-step solution with the chosen values.\\
     Note:
@@ -266,22 +265,22 @@ This work consists of the file  glmatrix.dtx
     \item While creating a new vector or matrix is done by providing its name as a simple string, accessing its content after creation is done as a command (with backslash)
     \item This package mainly provides macros for mathematical calculations. These macros assign the calculated result automatically to a variable using the optional parameter (for example \textbackslash addVec). If you wish to specify the name of the variable yourself, you may pass a string for the optional argument.
     \end{itemize}
-
+    
     \lstset{style=latexStyle}
     \begin{lstlisting}[gobble=4]
     % Initialize two vectors and add them together
     \newVec{myVecV}{1,2,3}
     \newVec{myVecW}{7,8,9}
     \addVec[addVecResult]{\myVecV}{\myVecW}
-
+    
     % Initialize two matrices and multiply them with each other
     \newMat{myMatA}{{{0.5,2,3}{4,5,6}{7,8,9}}}
     \newDiagMat{myMatB}{2, 3, 4}
     \mulMat[mulMatResult]{\myMatA}{\myMatB}
-
+    
     % Transform the result vector with the created matrix
     \transformVec{\mulMatResult}{\addVecResult}
-
+    
     % Print a step-by-step solution
     \begin{align}
         \printMat{\myMatA} \printMat{\myMatB}
@@ -294,7 +293,7 @@ This work consists of the file  glmatrix.dtx
     \end{align}
     \end{lstlisting}
     \vspace{5mm}
-
+    
     When compiling the above \LaTeX{} code, the following output is created.
     \begin{align*}
         \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}
@@ -307,13 +306,12 @@ This work consists of the file  glmatrix.dtx
         \begin{pmatrix}8\\10\\12\end{pmatrix}
         = \begin{pmatrix}212\\502\\784\end{pmatrix}
     \end{align*}
-
+    
     All three classes provide various macros to print the content of a variable for all kinds of use cases.
     For example, you can print a vector inside a line of text using the \textbackslash printVecT, which prints a transposed version of the vector's contents.
-
+    
     \clearpage
     \DocInput{glmatrix.dtx}
-
 \end{document}
 %</driver>
 % \fi
@@ -2245,7 +2243,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newMat}{macro:newMat_impl}
 % \begin{macro}{\newMat}
 % Create a new matrix from the given values.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - scalars: matrix values that are assigned to \#1
 %    \begin{macrocode}
@@ -2266,7 +2264,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newMatFromRow}{macro:newMatFromRow_impl}
 % \begin{macro}{\newMatFromRow}
 % Create a new matrix from the given row.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - row: matrix row that is assigned to \#1
 %    \begin{macrocode}
@@ -2285,7 +2283,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newMatFromRowVecs}{macro:newMatFromRowVecs_impl}
 % \begin{macro}{\newMatFromRowVecs}
 % Create a new matrix from the given row vectors.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - rows: the rows that are used to construct the matrix
 %    \begin{macrocode}
@@ -2310,7 +2308,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newMatFromColVecs}{macro:newMatFromColVecs_impl}
 % \begin{macro}{\newMatFromColVecs}
 % Create a new matrix from the given column vectors.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - columns: the columns that are used to construct the matrix
 %    \begin{macrocode}
@@ -2342,7 +2340,7 @@ This work consists of the file  glmatrix.dtx
 % \begin{macro}{\newEmptyMat}
 % Create a new empty matrix.
 % Obacht: It is not necessary to call this to create a new matrix before using any of the arithmetic commands.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to
 %    \begin{macrocode}
 \newcommand\newEmptyMat[1]{
@@ -2355,7 +2353,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newDiagMat}{macro:newDiagMat_impl}
 % \begin{macro}{\newDiagMat}
 % Create a new diagonal matrix from the given vector.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - scalars: the values that define the diagonal of the matrix
 %    \begin{macrocode}
@@ -2377,7 +2375,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash appendRowToMat}{macro:appendRowToMat_impl}
 % \begin{macro}{\appendRowToMat}
 % Append the given row to the given matrix.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - matrix: the matrix to append the vector to\\
 % \#3 - vector r: the row vector that should be appended to the matrix
@@ -2397,7 +2395,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newTransMat}{macro:newTransMat_impl}
 % \begin{macro}{\newTransMat}
 % Create translation matrix from the given vector.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - vector t: the translation vector to construct the matrix from
 %    \begin{macrocode}
@@ -2451,7 +2449,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newScaleMat}{macro:newScaleMat_impl}
 % \begin{macro}{\newScaleMat}
 % Create scaling matrix from the given vector.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - vector s: the scaling vector to construct the matrix from
 %    \begin{macrocode}
@@ -2505,7 +2503,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newRotMatTwoD}{macro:newRotMatTwoD_impl}
 % \begin{macro}{\newRotMatTwoD}
 % Create rotation matrix from the given scalar (2D).
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - scalar: the rotation value
 %    \begin{macrocode}
@@ -2525,7 +2523,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newRotMat}{macro:newRotMat_impl}
 % \begin{macro}{\newRotMat}
 % Create a rotation matrix using the rodrigues’ matrix
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - vector: the axis to rotate around\\
 % \#3 - scalar: the angle in degree to rotate with (counterclockwise)
@@ -2580,7 +2578,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newLookAtMat}{macro:newLookAtMat_impl}
 % \begin{macro}{\newLookAtMat}
 % Create a new lookAt matrix.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - right: the right vector\\
 % \#3 - up: the up vector\\
@@ -2614,7 +2612,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newProjMat}{macro:newProjMat_impl}
 % \begin{macro}{\newProjMat}
 % Create a new default projection matrix.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to
 %    \begin{macrocode}
 \newcommand\newProjMat[1]{%
@@ -2631,7 +2629,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newProjMatGen}{macro:newProjMatGen_impl}
 % \begin{macro}{\newProjMatGen}
 % Create a new projection matrix from normal and distance from origin.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to
 %    \begin{macrocode}
 \newcommand\newProjMatGen[3]{%
@@ -2651,7 +2649,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newFrustumMat}{macro:newFrustumMat_impl}
 % \begin{macro}{\newFrustumMat}
 % Create a new frustum matrix.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - fovx: the fovx scalar\\
 % \#3 - fovy: the fovy scalar\\
@@ -2699,7 +2697,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printMat}{macro:printMat_impl}
 % \begin{macro}{\printMat}
 % Print the values of this matrix variable.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - matrix: the matrix that should be printed
 %    \begin{macrocode}
@@ -2738,7 +2736,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printMatDiag}{macro:printMatDiag_impl}
 % \begin{macro}{\printMatDiag}
 % Print only the diagonal values of this matrix variable.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - matrix: the matrix that should be printed
 %    \begin{macrocode}
@@ -2758,7 +2756,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash getMatHeight}{macro:getMatHeight_impl}
 % \begin{macro}{\getMatHeight}
 % Get the height of the given matrix.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - matrix: the matrix from which to get the height
 %    \begin{macrocode}
@@ -2772,7 +2770,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash getMatWidth}{macro:getMatWidth_impl}
 % \begin{macro}{\getMatWidth}
 % Get the width of the given matrix.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - matrix: the matrix from which to get the width
 %    \begin{macrocode}
@@ -2788,7 +2786,7 @@ This work consists of the file  glmatrix.dtx
 % \begin{macro}{\transposeMat}
 % Transpose a given Matrix. The parameter can also be a vector,
 % but the result will be a matrix.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - matrix: the matrix to transpose
 %    \begin{macrocode}
@@ -2817,7 +2815,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash addMat}{macro:addMat_impl}
 % \begin{macro}{\addMat}
 % Add two or more matrices.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - matrix: the matrix to add to\\
 % \#3 - matrices: the matrizes to add
@@ -2871,7 +2869,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash subMat}{macro:subMat_impl}
 % \begin{macro}{\subMat}
 % Subtract two or more matrices.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - matrix: the matrix to subtract from\\
 % \#3 - matrices: the matrizes to subtract
@@ -2914,7 +2912,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash mulMatScalar}{macro:mulMatScalar_impl}
 % \begin{macro}{\mulMatScalar}
 % Multiply the given matrix with a scalar.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - matrix: the matrix to multiply\\
 % \#3 - scalar: the scalar to multiply with
@@ -2952,7 +2950,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash mulMatVec}{macro:mulMatVec_impl}
 % \begin{macro}{\mulMatVec}
 % Multiply the given matrix with a vector (for transformation).
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - matrix: the matrix to transform the vetor with\\
 % \#3 - vector: the vector to transform
@@ -3026,7 +3024,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash mulMat}{macro:mulMat_impl}
 % \begin{macro}{\mulMat}
 % Multiply the given matrix with another matrix.
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - matrix M: the matrix to multiply\\
 % \#3 - matrix N: the matrix to multiply with
@@ -3105,7 +3103,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash getMatTranslation}{macro:getMatTranslation_impl}
 % \begin{macro}{\getMatTranslation}
 % Get the translation component from the given matrix.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - matrix: the matrix to extract the translation from
 %    \begin{macrocode}
@@ -3131,7 +3129,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash detMat}{macro:detMat_impl}
 % \begin{macro}{\detMat}
 % Get the determinate of the given matrix.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - matrix: the matrix to calculate the determinate for
 %    \begin{macrocode}
@@ -3195,7 +3193,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newScalar}{macro:newScalar_impl}
 % \begin{macro}{\newScalar}
 % Create a new scalar and assign the given value.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: scalar value that is assigned to out
 %    \begin{macrocode}
@@ -3209,7 +3207,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newScalarPi}{macro:newScalarPi_impl}
 % \begin{macro}{\newScalarPi}
 % Create a new scalar and assign the given value as a multiple of pi.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: scalar value that is multiplied with pi and assigned to out
 %    \begin{macrocode}
@@ -3224,7 +3222,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newScalarFraction}{macro:newScalarFraction_impl}
 % \begin{macro}{\newScalarFraction}
 % Create a scalar from a given fraction
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar n: nominator\\
 % \#3 - scalar d: denominator
@@ -3242,7 +3240,7 @@ This work consists of the file  glmatrix.dtx
 % Create a new scalar variable with a random value between lower and
 % upper bound. The value is obtained by creating a random value between 0 and 1
 % and then interpolating between lower and upper bound.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - lower bound: scalar that limits the possible values at the bottom\\
 % \#3 - upper bound: scalar that limits the possible values at the top
@@ -3258,7 +3256,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash copyScalar}{macro:copyScalar_impl}
 % \begin{macro}{\copyScalar}
 % Copy the value of one scalar variable to another.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: scalar which value is assigned to out
 %    \begin{macrocode}
@@ -3272,7 +3270,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash setScalar}{macro:setScalar_impl}
 % \begin{macro}{\setScalar}
 % Set the value of a given scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: scalar value that is assigned to out
 %    \begin{macrocode}
@@ -3286,7 +3284,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash zeroScalar}{macro:zeroScalar_impl}
 % \begin{macro}{\zeroScalar}
 % Set or create a scalar with value 0.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to
 %    \begin{macrocode}
 \newcommand\zeroScalar[1]{%
@@ -3299,7 +3297,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printScalar}{macro:printScalar_impl}
 % \begin{macro}{\printScalar}
 % Print the value of the given scalar.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - scalar: the scalar that should be printed
 %    \begin{macrocode}
@@ -3318,7 +3316,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printScalarAsPi}{macro:printScalarAsPi_impl}
 % \begin{macro}{\printScalarAsPi}
 % Print the value of the given scalar as a multiple of Pi.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - scalar: the scalar that should be printed
 %    \begin{macrocode}
@@ -3341,7 +3339,7 @@ This work consists of the file  glmatrix.dtx
 % Print the value of the given scalar in degree.
 % This macro does do a conversion and therefore expects the input to be in radian.
 % A degree sign is automatically added.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - scalar: the value that schould be printed
 %    \begin{macrocode}
@@ -3363,7 +3361,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printScalarRounded}{macro:printScalarRounded_impl}
 % \begin{macro}{\printScalarRounded}
 % Print the rounded value of the given scalar.
-%
+% 
 % \#1 - digits: number of digits after comma\\
 % \#2 - scalar: the value that schould be printed
 %    \begin{macrocode}
@@ -3379,7 +3377,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash roundScalar}{macro:roundScalar_impl}
 % \begin{macro}{\roundScalar}
 % Round the value ot the given scalar and save it.
-%
+% 
 % \#1 - digits: number of digits after comma\\
 % \#2 - scalar: the value that schould be rounded
 %    \begin{macrocode}
@@ -3395,7 +3393,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash ceilScalar}{macro:ceilScalar_impl}
 % \begin{macro}{\ceilScalar}
 % Ceil the value of the given scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar that schould be ceiled
 %    \begin{macrocode}
@@ -3420,7 +3418,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash floorScalar}{macro:floorScalar_impl}
 % \begin{macro}{\floorScalar}
 % Floor the value of the given scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar that schould be floored
 %    \begin{macrocode}
@@ -3445,7 +3443,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash clipScalar}{macro:clipScalar_impl}
 % \begin{macro}{\clipScalar}
 % Remove all trailing zeros from the value of the given scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar from which the zeros should be removed
 %    \begin{macrocode}
@@ -3460,7 +3458,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash radianToDegree}{macro:radianToDegree_impl}
 % \begin{macro}{\radianToDegree}
 % Convert the value of the given scalar to degree.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar which to convert
 %    \begin{macrocode}
@@ -3476,7 +3474,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash toRadian}{macro:toRadian_impl}
 % \begin{macro}{\toRadian}
 % Convert the value of the given scalar to radian.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar which to convert
 %    \begin{macrocode}
@@ -3492,7 +3490,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash addScalar}{macro:addScalar_impl}
 % \begin{macro}{\addScalar}
 % Add the values of two scalars.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the first scalar of the sum\\
 % \#3 - scalar t: the second scalar of the sum
@@ -3508,7 +3506,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash subScalar}{macro:subScalar_impl}
 % \begin{macro}{\subScalar}
 % Subtract the values of two scalars.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the scalar to subtract from\\
 % \#3 - scalar t: the scalar to subtract
@@ -3524,7 +3522,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash mulScalar}{macro:mulScalar_impl}
 % \begin{macro}{\mulScalar}
 % Multiply the values of two scalars.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the scalar to multiply\\
 % \#3 - scalar t: the scalar with which to multply
@@ -3540,7 +3538,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash divScalar}{macro:divScalar_impl}
 % \begin{macro}{\divScalar}
 % Divide the values of two scalars.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the scalar to divide\\
 % \#3 - scalar t: the scalar to divide with
@@ -3560,7 +3558,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash powScalar}{macro:powScalar_impl}
 % \begin{macro}{\powScalar}
 % Raise the values of one scalar by another.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the scalar to raise\\
 % \#3 - scalar t: the scalar with which to raise
@@ -3576,7 +3574,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash negateScalar}{macro:negateScalar_impl}
 % \begin{macro}{\negateScalar}
 % Negate the value of the given scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar to negate
 %    \begin{macrocode}
@@ -3591,7 +3589,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash arccosScalar}{macro:arccosScalar_impl}
 % \begin{macro}{\arccosScalar}
 % Get the arccos of the value of the given scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar: the scalar to calculate the arccos for
 %    \begin{macrocode}
@@ -3608,7 +3606,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash mulAndAddScalar}{macro:mulAndAddScalar_impl}
 % \begin{macro}{\mulAndAddScalar}
 % Adds two scalars after multiplying the second one by a scalar.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the scalar to add to\\
 % \#3 - scalar t: the scalar that is multiplied and then added\\
@@ -3626,7 +3624,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash lerpScalar}{macro:lerpScalar_impl}
 % \begin{macro}{\lerpScalar}
 % Lineraly interpolate between values of two scalars.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar i: the start scalar\\
 % \#3 - scalar j: the end scalar\\
@@ -3646,7 +3644,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash minScalar}{macro:minScalar_impl}
 % \begin{macro}{\minScalar}
 % Return the minimum of two scalar values.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: the first scalar\\
 % \#3 - scalar t: the second scalar
@@ -3666,7 +3664,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash maxScalar}{macro:maxScalar_impl}
 % \begin{macro}{\maxScalar}
 % Return the maximum of two scalar values.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - scalar s: first scalar value\\
 % \#3 - scalar t: second scalar value
@@ -3686,7 +3684,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash betweenScalar}{macro:betweenScalar_impl}
 % \begin{macro}{\betweenScalar}
 % Return whether a scalar lies between two other values.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to (0 or 1)\\
 % \#2 - scalar: the scalar to test\\
 % \#3 - lower bound: \#2 needs to be greater then this for this macro to return 1\\
@@ -3718,7 +3716,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash forEachScalar}{macro:forEachScalar_impl}
 % \begin{macro}{\forEachScalar}
 % Apply the given function to a list of variables.
-%
+% 
 % \#1 - input: list of commands (var names) that should be altered\\
 % \#2 - macro: the chosen function\\
 % \#3 - args: params for function
@@ -3777,7 +3775,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash fractionToNum}{macro:fractionToNum_impl}
 % \begin{macro}{\fractionToNum}
 % Convert a fraction with root to a decimal number
-%
+% 
 %    \begin{macrocode}
 \newcommand\fractionToNum[3]{%
     \FProot\tmpA{#3}{2}
@@ -3795,7 +3793,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash solutionC}{macro:solutionC_impl}
 % \begin{macro}{\solutionC}
 % Convert a decimal number to a fraction with root
-%
+% 
 %    \begin{macrocode}
 \newcommand\solutionC{%
     \FPset\finalmul{1}
@@ -3845,7 +3843,7 @@ This work consists of the file  glmatrix.dtx
 
 % \setlabel{\textbackslash numToFraction}{macro:numToFraction_impl}
 % \begin{macro}{\numToFraction}
-%
+% 
 %    \begin{macrocode}
 \newcommand\numToFraction[1]{%
     \FPset\dividend{1}
@@ -3914,7 +3912,7 @@ This work consists of the file  glmatrix.dtx
 
 % \setlabel{\textbackslash numToFractionA}{macro:numToFractionA_impl}
 % \begin{macro}{\numToFractionA}
-%
+% 
 %    \begin{macrocode}
 \newcommand\numToFractionA[1]{%
     \FPset\inputVarA{#1}
@@ -3988,7 +3986,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newVec}{macro:newVec_impl}
 % \begin{macro}{\newVec}
 % Create a new vector and assign the given values.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - values: values that are assigned to \#1
 %    \begin{macrocode}
@@ -4006,7 +4004,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash newVecPi}{macro:newVecPi_impl}
 % \begin{macro}{\newVecPi}
 % Create a new vector and assign the given values as a multiple of pi.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - values: values that are multiplied with pi and assigned to \#1
 %    \begin{macrocode}
@@ -4031,7 +4029,7 @@ This work consists of the file  glmatrix.dtx
 % upper bound to its components.
 % The value is obtained by creating a random value between 0 and 1
 % and then interpolating between lower and upper bound.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - dimensions: scalar that defines the number of dimensions \#1 should have\\
 % \#3 - lower bound: scalar that limits the possible values at the bottom\\
@@ -4056,7 +4054,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash copyVec}{macro:copyVec_impl}
 % \begin{macro}{\copyVec}
 % Copy values from one vector variable to another.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: vector which values are assigned to \#1
 %    \begin{macrocode}
@@ -4078,7 +4076,7 @@ This work consists of the file  glmatrix.dtx
 % Create or override a vector with all its components being 0.
 % Obacht: It is not necessary to call this to create a new vector.
 % This is just for convenience when requiring a vector with initialized with zero.
-%
+% 
 % \#1 - dims: number of dimensions (rows)\\
 % \#2 - out: var name to save the result (vector) to
 %    \begin{macrocode}
@@ -4099,7 +4097,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash appendToVec}{macro:appendToVec_impl}
 % \begin{macro}{\appendToVec}
 % Append a dimension with the given value to an already defined vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the currently present values\\
 % \#3 - scalar: the scalar to add to \#2
@@ -4114,7 +4112,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVec}{macro:printVec_impl}
 % \begin{macro}{\printVec}
 % Print the values of the given vector in vector notation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector: the vector that should be printed
 %    \begin{macrocode}
@@ -4153,7 +4151,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecT}{macro:printVecT_impl}
 % \begin{macro}{\printVecT}
 % Print the values of the given vector in transposed notation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector: the vector that should be printed
 %    \begin{macrocode}
@@ -4190,7 +4188,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecAsPoint}{macro:printVecAsPoint_impl}
 % \begin{macro}{\printVecAsPoint}
 % Print the values of the given vector in point notation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector: the vector that should be printed
 %    \begin{macrocode}
@@ -4218,7 +4216,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecAsPi}{macro:printVecAsPi_impl}
 % \begin{macro}{\printVecAsPi}
 % Print the values of the given vector as a multiple of \(\pi\) in vector notation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector: the vector that should be printed
 %    \begin{macrocode}
@@ -4247,7 +4245,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecAsPiT}{macro:printVecAsPiT_impl}
 % \begin{macro}{\printVecAsPiT}
 % Print the values of the given vector as a multiple of Pi in transposed notation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector: the vector that should be printed
 %    \begin{macrocode}
@@ -4268,7 +4266,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecContent}{macro:printVecContent_impl}
 % \begin{macro}{\printVecContent}
 % Print the values of the given vector comma separated.
-%
+% 
 % \#1 - vector: the vector which values should be printed
 %    \begin{macrocode}
 \newcommand\printVecContent[1]{%
@@ -4281,7 +4279,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecContentXY}{macro:printVecContentXY_impl}
 % \begin{macro}{\printVecContentXY}
 % Returns the x and y component of the given vector.
-%
+% 
 % \#1 - vector: the vector which values should be printed
 %    \begin{macrocode}
 \newcommand\printVecContentXY[1]{%
@@ -4294,7 +4292,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecContentXYZ}{macro:printVecContentXYZ_impl}
 % \begin{macro}{\printVecContentXYZ}
 % Returns the x, y and z component of the given vector.
-%
+% 
 % \#1 - vector: the vector which values should be printed
 %    \begin{macrocode}
 \newcommand\printVecContentXYZ[1]{%
@@ -4307,7 +4305,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printVecContentXYZW}{macro:printVecContentXYZW_impl}
 % \begin{macro}{\printVecContentXYZW}
 % Returns the x, y, z and w component of the given vector
-%
+% 
 % \#1 - vector: the vector which values should be printed
 %    \begin{macrocode}
 \newcommand\printVecContentXYZW[1]{%
@@ -4320,7 +4318,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash getVecHeight}{macro:getVecHeight_impl}
 % \begin{macro}{\getVecHeight}
 % Returns the number of components that given vector has (number of dimensions).
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector: the vector of which to return the height
 %    \begin{macrocode}
@@ -4334,7 +4332,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printScalarPComp}{macro:printScalarPComp_impl}
 % \begin{macro}{\printScalarPComp}
 % Print the intermediate components of the scalarproduct calculation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -4365,7 +4363,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash printCrossPComp}{macro:printCrossPComp_impl}
 % \begin{macro}{\printCrossPComp}
 % Print the intermediate components of the crossproduct calculation.
-%
+% 
 % \#1 - fraction: whether or not the value should be printed as a fraction (val=1)\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -4409,7 +4407,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash roundVec}{macro:roundVec_impl}
 % \begin{macro}{\roundVec}
 % Round the values ot the given vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector that schould be rounded\\
 % \#3 - digits: number of digits after comma
@@ -4431,7 +4429,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash ceilVec}{macro:ceilVec_impl}
 % \begin{macro}{\ceilVec}
 % Ceil the values of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector that should be ceiled
 %    \begin{macrocode}
@@ -4452,7 +4450,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash floorVec}{macro:floorVec_impl}
 % \begin{macro}{\floorVec}
 % Floor the values of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector that should be floored
 %    \begin{macrocode}
@@ -4473,7 +4471,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash dehomogenVec}{macro:dehomogenVec_impl}
 % \begin{macro}{\dehomogenVec}
 % Dehomogenize the values of the given vector. This divides all vector components by the last component.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector that should be dehomogenized
 %    \begin{macrocode}
@@ -4502,7 +4500,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash addVec}{macro:addVec_impl}
 % \begin{macro}{\addVec}
 % Add the values of \(1\) to \(m\) vectors to the values of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to add to\\
 % \#3 - vectors: the list of vectors with which to add
@@ -4538,7 +4536,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash subVec}{macro:subVec_impl}
 % \begin{macro}{\subVec}
 % Subract the values of \(1\) to \(m\) vectors from the values of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to subtract from\\
 % \#3 - vectors: the list of vectors with which to subtract
@@ -4589,7 +4587,7 @@ This work consists of the file  glmatrix.dtx
 % \begin{macro}{\mulVec}
 % Multiply the values of \(1\) to \(m\) vectors with the values of the given vector.
 % See Hadamard product (element-wise product) for more information.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to multiply\\
 % \#3 - vectors: the list of vectors with which to multiply
@@ -4625,7 +4623,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash divVec}{macro:divVec_impl}
 % \begin{macro}{\divVec}
 % Divide the values of the given vector by the values of \(1\) to \(m\) vectors (element-wise division).
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to divide\\
 % \#3 - vectors: the list of vectors to divide with
@@ -4669,7 +4667,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash scaleVec}{macro:scaleVec_impl}
 % \begin{macro}{\scaleVec}
 % Multiply the values of the given vector by a scalar.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to scale\\
 % \#3 - scalar: the scalar to scale with
@@ -4691,7 +4689,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash divVecScalar}{macro:divVecScalar_impl}
 % \begin{macro}{\divVecScalar}
 % Divide the values of the given vector by a scalar.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to divide\\
 % \#3 - scalar: the scalar to divide with
@@ -4725,7 +4723,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash negateVec}{macro:negateVec_impl}
 % \begin{macro}{\negateVec}
 % Negate the values of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector to negate
 %    \begin{macrocode}
@@ -4746,7 +4744,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash scaleAndAddVec}{macro:scaleAndAddVec_impl}
 % \begin{macro}{\scaleAndAddVec}
 % Adds two vectors after multiplying the second one by a scalar.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the vector to add to\\
 % \#3 - vector w: the vector that is multiplied and then added\\
@@ -4763,7 +4761,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash lerpVec}{macro:lerpVec_impl}
 % \begin{macro}{\lerpVec}
 % Lineraly interpolate between the values of two vectors (element-wise interpolation).
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the start vector\\
 % \#3 - vector w: the end vector\\
@@ -4795,7 +4793,7 @@ This work consists of the file  glmatrix.dtx
 % \begin{macro}{\slerpVec}
 % Performs a spherical linear interpolation between two vectors.
 % This expects vector v and vector w to be normalized.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the start vector\\
 % \#3 - vector w: the end vector\\
@@ -4827,7 +4825,7 @@ This work consists of the file  glmatrix.dtx
 % \begin{macro}{\dotVec}
 % Calculate the dotproduct of the given two vectors.
 % Other names for this operation are inner product and scalarproduct.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -4867,7 +4865,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash lenVec}{macro:lenVec_impl}
 % \begin{macro}{\lenVec}
 % Calculate the length of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector: the vector for which to calculate the length
 %    \begin{macrocode}
@@ -4902,7 +4900,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash sqrLenVec}{macro:sqrLenVec_impl}
 % \begin{macro}{\sqrLenVec}
 % Calculate the squared length of the given vector.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector: the vector for which to calculate the squared length
 %    \begin{macrocode}
@@ -4927,7 +4925,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash normalizeVec}{macro:normalizeVec_impl}
 % \begin{macro}{\normalizeVec}
 % Divide all components of the vector by its length.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector: the vector which to normalize
 %    \begin{macrocode}
@@ -4950,7 +4948,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash crossVec}{macro:crossVec_impl}
 % \begin{macro}{\crossVec}
 % Calculate crossproduct for the two given vectors.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -4995,7 +4993,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash crossVecTwoD}{macro:crossVecTwoD_impl}
 % \begin{macro}{\crossVecTwoD}
 % Calculate crossproduct for the two given vectors.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -5025,7 +5023,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash angleVec}{macro:angleVec_impl}
 % \begin{macro}{\angleVec}
 % Get the angle between the given two vectors in radian.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -5045,7 +5043,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash distVec}{macro:distVec_impl}
 % \begin{macro}{\distVec}
 % Calculates the euclidian distance between the given two vectors.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -5062,7 +5060,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash sqrDistVec}{macro:sqrDistVec_impl}
 % \begin{macro}{\sqrDistVec}
 % Calculates the squared euclidian distance between two vectors.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -5093,7 +5091,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash transformVec}{macro:transformVec_impl}
 % \begin{macro}{\transformVec}
 % Multiply the given vector with a matrix (for transformation).
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - matrix: the matrix to transform the vetor with\\
 % \#3 - vector: the vector to transform
@@ -5167,7 +5165,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash tensorVec}{macro:tensorVec_impl}
 % \begin{macro}{\tensorVec}
 % Outer product: Multiply a vector (column) with itself (row) resulting in a matrix. (Dyadic product, Tensor product)
-%
+% 
 % \#1 - out: var name to save the result (matrix) to\\
 % \#2 - vector: the vector to multiply with itself
 %    \begin{macrocode}
@@ -5183,7 +5181,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash minVec}{macro:minVec_impl}
 % \begin{macro}{\minVec}
 % Return the componentwise minimum of the given two vectors.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -5214,7 +5212,7 @@ This work consists of the file  glmatrix.dtx
 % \setlabel{\textbackslash maxVec}{macro:maxVec_impl}
 % \begin{macro}{\maxVec}
 % Return the componentwise maximum of the given two vectors.
-%
+% 
 % \#1 - out: var name to save the result (vector) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
@@ -5248,7 +5246,7 @@ This work consists of the file  glmatrix.dtx
 % The command expects the input to be two vectors of the same length.
 % The command iterates both vectors componentwise and solves the equation per component.
 % If the the result does not match across all components the equation can not be solved.
-%
+% 
 % \#1 - out: var name to save the result (scalar) to\\
 % \#2 - vector v: the first vector\\
 % \#3 - vector w: the second vector
