@@ -1,0 +1,450 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[reqno]{amsmath}
+\usepackage{amssymb}
+\usepackage{csquotes}
+
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage[english,ngerman]{babel}
+% \RequirePackage[utf8]{inputenc}
+
+\usepackage{makecell}
+\usepackage{vmargin}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+\usepackage{glmatrix}
+
+\setlength{\unitlength}{1cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\setpapersize{A4}
+\setmarginsrb{20mm}{15mm}{20mm}{30mm}{0pt}{15mm}{10pt}{0mm}
+
+\begin{document}
+
+% Params %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{vecA}{0,0,0}
+\newVec{vecB}{0,1,0}
+\newVec{vecC}{-1,0,1}
+
+Given a triangle defined by the following 3 points: $A=\printVecT{\vecA}$, $B=\printVecT{\vecB}$, and $C=\printVecT{\vecC}$\\
+
+\section{Normal Calculation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Calculate the surface normal of the triangle. Assume that the points $A,B,C$ are given in counter-clockwise order (right-hand rule). Don't forget to normalize the surface normal.
+
+\subVec[vecAB]{\vecB}{\vecA}
+\subVec[vecAC]{\vecC}{\vecA}
+\crossVec[vecN]{\vecAB}{\vecAC}
+\lenVec[vecNormScalar]{\vecN}
+\normalizeVec[vecNormed]{\vecN}
+%
+\begin{align*}
+    \vec{n} &= \frac{(B-A)\times(C-A)}{\norm{(B-A)\times(C-A)}}\\
+    &=
+    \frac{
+        \printVec{\vecAB} \times
+        \printVec{\vecAC}
+    }{
+        \norm{\printVecT{\vecAB}\times\printVecT{\vecAC}}
+    }
+    =
+    \frac{
+        \printCrossPComp{\vecAB}{\vecAC}
+    }{
+        \norm{\printVecT{\vecAB}\times\printVecT{\vecAC}}
+    }\\
+    &=
+    \frac{\printVec{\vecN}}{\norm{\printVecT{\vecN}}}
+    = \frac{\printVec{\vecN}}{\printScalar{\vecNormScalar}}
+    = \printVec[1]{\vecNormed}
+\end{align*}
+
+\section{Transformations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newDiagMat{mirrorMat}{1, -1, 1}
+
+Reflect the triangle across the x/z plane. Provide the reflection matrix (without homogeneous coordinates) and use it to transform the points $A,B,C$.
+
+\transformVec[vecAtransformed]{\mirrorMat}{\vecA}
+\transformVec[vecBtransformed]{\mirrorMat}{\vecB}
+\transformVec[vecCtransformed]{\mirrorMat}{\vecC}
+
+\begin{align*}
+    \mathbf{S} = \printMat{\mirrorMat}
+\end{align*}
+
+\begin{align*}
+    A' = \mathbf{S}\printVec{\vecA} = \printVec{\vecAtransformed},\quad
+    B' = \mathbf{S}\printVec{\vecB} = \printVec{\vecBtransformed},\quad
+    C' = \mathbf{S}\printVec{\vecC} = \printVec{\vecCtransformed}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{myAxis}{1,1,1}
+\newScalar{myAngle}{120}
+
+Now we want to rotate $\printScalar{\myAngle}^\circ$ around the axis $\printVecT{\myAxis}$ in counter-clockwise fashion (right-hand rule). Provide the rotation matrix $R$ and use it to transform the points $A,B,C$. (Hint: You can take advantage of the fact that this rotation only swaps the coordinate axes and can therefore dispense with the Rodriguez formula.)
+
+\newRotMat[rotationMatrix]{\myAxis}{\myAngle}
+\transformVec[vecAtransformed]{\rotationMatrix}{\vecA}
+\transformVec[vecBtransformed]{\rotationMatrix}{\vecB}
+\transformVec[vecCtransformed]{\rotationMatrix}{\vecC}
+
+\begin{align*}
+    \mathbf{R} = \printMat{\rotationMatrix}
+\end{align*}
+\begin{align*}
+    A' = \mathbf{R}\printVec{\vecA} = \printVec{\vecAtransformed},\quad
+    B' = \mathbf{R}\printVec{\vecB} = \printVec{\vecBtransformed},\quad
+    C' = \mathbf{R}\printVec{\vecC} = \printVec{\vecCtransformed}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newScalar{scaleValue}{5}
+
+Provide the matrix that represents a uniform 2D scaling by a factor of \printScalar{\scaleValue}. Use extended coordinates.
+
+\newVec{vecScale}{\scaleValue, \scaleValue}
+\newScaleMat{myNewMatrix}{\vecScale}
+
+\[
+    \mathbf{S} = \printMat{\myNewMatrix}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{vecTranslation}{2, 1}
+
+Provide the matrix that represents a 2D translation by the vector \printVecT{\vecTranslation}.
+\hfill \textbf{(1 Punkt)}
+
+\newTransMat{myTranslationMatrix}{\vecTranslation}
+\[
+    \mathbf{T} = \printMat{\myTranslationMatrix}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{vecOrigin}{0, 0, 1}
+
+Now apply this 2D translation matrix to the origin point. Provide the calculation and the result.
+
+\newTransMat{myTranslationMatrix}{\vecTranslation}
+\transformVec{\myTranslationMatrix}{\vecOrigin}
+\[
+    O' = \printMat{\myTranslationMatrix}
+    \printVec{\vecOrigin} =
+    \printVec{\transformVecResult}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{vecPoint}{1, 1, 1}
+\newVec{vecTranslation}{2, 1}
+\newScalarPi{myAngle}{0.5}
+
+Demonstrate, using an example (with concrete numbers), that for a 2D rotation and a 2D translation, it generally makes a difference whether the rotation is applied to a point first and then the translation, or the translation is applied first and then the rotation.
+
+\newTransMat{myTransMat}{\vecTranslation}
+\newRotMatTwoD[myRotMat]{\myAngle}
+\mulMat[matTR]{\myTransMat}{\myRotMat}
+\mulMat[matRT]{\myRotMat}{\myTransMat}
+\transformVec[pointTransformedA]{\matTR}{\vecPoint}
+\transformVec[pointTransformedB]{\matRT}{\vecPoint}
+\(
+    \vec{v} = \printVecT{\vecPoint},\quad
+    \vec{t} = \printVecT{\vecTranslation},\quad
+    \alpha = \printScalarAsPi{\myAngle}
+\)
+\begin{align*}
+    \mathbf{R}_{\alpha}\mathbf{T}_{t}\vec{v} &= \printMat{\myRotMat}
+    \printMat{\myTransMat}
+    \printVec{\vecPoint}
+    = \printMat{\matRT}\printVec{\vecPoint}
+    = \printVec{\pointTransformedA}\\
+    \mathbf{T}_{t}\mathbf{R}_{\alpha}\vec{v} &= \printMat{\myTransMat}
+    \printMat{\myRotMat}
+    \printVec{\vecPoint}
+    = \printMat{\matTR}\printVec{\vecPoint}
+    = \printVec{\pointTransformedB}
+\end{align*}
+
+\section{Look At}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{vecCamera}{1, 2, 3}
+\newVec{vecDir}{1, 0, 0}
+\newVec{vecUp}{0, 1, 0}
+
+Construct a look-at matrix to render a scene from point \(c = \printVecT{\vecCamera}\). The viewing direction should be chosen so that it points exactly in the positive x-direction. Specify \(A\) or \(A^{-1}\). Indicate whether you are specifying \(A\) or \(A^{-1}\). Provide the matrix with concrete values, not variables. If you lack the necessary information, you may choose them freely. In that case, indicate what you chose.
+
+\crossVec[vecRight]{\vecDir}{\vecUp}
+\begin{align*}
+    \vec{r} = \vec{d}\times \vec{u}
+    = \printVec[1]{\vecDir} \times \printVec[1]{\vecUp}
+    = \printVec[1]{\vecRight}
+\end{align*}
+% Create lookat matrix
+\newLookAtMat{\vecRight}{\vecUp}{\vecDir}{\vecCamera}
+\[
+    \mathbf{A} =
+    \begin{bmatrix}
+        r_x & r_y & r_z & \trans{-r} c\\
+        u_x & u_y & u_z & \trans{-u} c\\
+        -d_x & -d_y & -d_z & \trans{d} c\\
+        0 & 0 & 0 & 1\\
+    \end{bmatrix}
+    = \printMat{\lookAtMatResult}
+\]
+
+\section{Projection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OBACHT i) is not automated - j) is but needs i) for setup
+\newVec{vecNormal}{0.6,0.8,0}
+\newScalar{myDelta}{5}
+
+The projection \(\mathcal{P}(p)\) of a point \(p \in \R^{3}\) using a perspective projection \(\mathcal{P}\) with projection center
+at the origin onto an image plane with normal \(n\) and distance \(\delta\) from the origin can be described by \(\mathcal{P}(p) = p \frac{\delta}{\trans{p}n}\).\\
+Using homogeneous coordinates, this projection can be written as a matrix-vector product.
+Give the corresponding matrix.
+
+\[
+    \mathcal{P}(p) = \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0\\
+        \frac{n_x}{\delta} & \frac{n_y}{\delta} & \frac{n_z}{\delta} & 0
+    \end{bmatrix}
+    \text{oder}
+    \begin{bmatrix}
+        \delta & 0 & 0 & 0 \\
+        0 & \delta & 0 & 0 \\
+        0 & 0 & \delta & 0\\
+        n_x & n_y & n_z & 0
+    \end{bmatrix}
+\]
+
+For the specific case \(\vec{n}=\printVecT{\vecNormal}\) and \(\delta = \printScalar{\myDelta}\), this results in the so-called standard projection matrix. Provide this matrix.
+
+\newProjMatGen{generatedProjMat}{\vecNormal}{\myDelta}
+\[
+    \mathcal{P}_{n, \delta} = \printMat[1]{\generatedProjMat}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newVec{vecPoint}{8, 12, -4}
+
+Using this standard projection matrix, project the point \(p = \printVecT{\vecPoint}\) and express the result as a 3D point \(p' = \trans{(x, y, z)}\). Provide the intermediate steps of your calculation.
+
+\newProjMat{defaultProjMat}
+\appendToVec{vecPoint}{\vecPoint}{1}
+\transformVec[transformedPoint]{\defaultProjMat}{\vecPoint}
+\dehomogenVec[dehomogenPoint]{\transformedPoint}
+\[
+    p' = \mathbf{P}p =
+    \printMat{\defaultProjMat}
+    \printVec{\vecPoint}
+    = \printVec{\transformedPoint}
+    \widehat{=}
+    \printVec{\dehomogenPoint}
+\]
+
+\section{Lighting \& Shading}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Define Variables here
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \newVec{vecEye}{0,0,0} % Eyepos
+    \newVec{vecX}{0,0,-24} % Point to evaluate
+    \newVec{vecXNormal}{0,0,1} % Normal at point
+    \newVec{vecLsOnePos}{0,6,-18} % light source 1 position
+    \newVec{vecLsOneColor}{0,0.7,0} % light source 1 color
+    \newVec{vecLsTwoPos}{-15,0,-9} % light source 2 position
+    \newVec{vecLsTwoColor}{0,0,0.4} % light source 2 color
+    % Matrixes
+    \newDiagMat{matA}{0.15, 0.15, 0.15} % ambient term
+    \newDiagMat{matD}{0.5, 0.5, 0.5} % diffuse term
+    \newDiagMat{matS}{0.8, 0.8, 0.8} % specular term
+    % Shine Term
+    \newScalar{scalarShine}{20} % shine term
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Calculations
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % l1, l2, v
+    \subVec[vecLsOneDir]{\vecLsOnePos}{\vecX}
+    \normalizeVec[vecLsOneNorm]{\vecLsOneDir}
+    \subVec[vecLsTwoDir]{\vecLsTwoPos}{\vecX}
+    \normalizeVec[vecLsTwoNorm]{\vecLsTwoDir}
+    \subVec[vecV]{\vecEye}{\vecX}
+    \normalizeVec[vecVNorm]{\vecV}
+    % r1
+    \transposeMat{\vecXNormal}
+    \mulMat[matROneNormal]{\vecXNormal}{\transposeMatResult}
+    \mulMatScalar[matROneNormalScalar]{\matROneNormal}{2}
+    \transformVec[matROneMul]{\matROneNormalScalar}{\vecLsOneNorm}
+    \subVec[vecROneResult]{\matROneMul}{\vecLsOneNorm}
+    % r2
+    \transposeMat{\vecXNormal}
+    \mulMat[matRTwoNormal]{\vecXNormal}{\transposeMatResult}
+    \mulMatScalar[matRTwoNormalScalar]{\matRTwoNormal}{2}
+    \transformVec[matRTwoMul]{\matROneNormalScalar}{\vecLsTwoNorm}
+    \subVec[vecRTwoResult]{\matRTwoMul}{\vecLsTwoNorm}
+    % l1*n, l2*n
+    \dotVec[scalarPlnOne]{\vecLsOneNorm}{\vecXNormal}
+    \maxScalar{0}{\scalarPlnOne}
+    \mulMatScalar[matDOneScaled]{\matD}{\maxScalarResult}
+    \dotVec[scalarPlnTwo]{\vecLsTwoNorm}{\vecXNormal}
+    \maxScalar{0}{\scalarPlnTwo}
+    \mulMatScalar[matDTwoScaled]{\matD}{\maxScalarResult}
+    % v*r1, v*r2
+    \dotVec[scalarPvrOne]{\vecVNorm}{\vecROneResult}
+    \maxScalar{0}{\scalarPvrOne}
+    \powScalar{\maxScalarResult}{\scalarShine}
+    \mulMatScalar[matSOneScaled]{\matS}{\scalarPowResult}
+    \dotVec[scalarPvrTwo]{\vecVNorm}{\vecRTwoResult}
+    \maxScalar{0}{\scalarPvrTwo}
+    \powScalar{\maxScalarResult}{\scalarShine}
+    \mulMatScalar[matSTwoScaled]{\matS}{\scalarPowResult}
+    % Addition of Ambient, Diffuse and Specular
+    \addMat[addMatResultOne]{\matA}{\matDOneScaled, \matSOneScaled}
+    \addMat[addMatResultTwo]{\matA}{\matDTwoScaled, \matSTwoScaled}
+    % Final multiplications
+    \transformVec[matColorOne]{\addMatResultOne}{\vecLsOneColor}
+    \transformVec[matColorTwo]{\addMatResultTwo}{\vecLsTwoColor}
+    \addVec[vecFinalColor]{\matColorOne}{\matColorTwo}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Printing
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    Given a surface in space, the point \(\printVecT{\vecX}\) lies on this surface. At this point, the surface has the normal \(\printVecT{\vecXNormal}\). Evaluate the Phong illumination model at this point, \emph{without} using the Blinn approximation. The following parameters are given:
+    \begin{itemize}
+        \item Center of projection at position \(\printVecT{\vecEye}\)
+        \item Pointlight 1 at position \(\printVecT{\vecLsOnePos}\)
+            with color \(\printVecT{\vecLsOneColor}\)
+        \item Pointlight 2 at position \(\printVecT{\vecLsTwoPos}\)
+            with color \(\printVecT{\vecLsTwoColor}\)
+        \item \(C_a = \printMatDiag{\matA}\)
+        \item \(C_d = \printMatDiag{\matD}\)
+        \item \(C_s = \printMatDiag{\matS}\)
+        \item Shininess \(s = \printScalar{\scalarShine}\)
+    \end{itemize}
+
+    \begin{align*}
+        L(x,\vec{v}) =
+        \sum_{y \in pointlights} \left(C_a + C_d\ \max{\left(0, \trans{\vec{l}}\vec{n}\right)}
+            + C_s\ \max{\left(0, \trans{\vec{v}}\vec{r}\right)}^s\right) \cdot c_y
+    \end{align*}
+
+    % v
+    \begin{align*}
+        \vec{v} = \frac{eye - x}{\norm{eye - x}}
+        = \frac{
+            \printVec{\vecEye} -
+            \printVec{\vecX}
+        }{
+            \norm{\printVec{\vecEye} -
+            \printVec{\vecX}}
+        }
+        = \printVec[1]{\vecVNorm}
+    \end{align*}
+
+    % l1, l2
+    \[\vec{l} = \frac{y - x}{\norm{y - x}}\]
+    \begin{minipage}[t]{0.5\textwidth}
+        \begin{align*}
+            \vec{l}_1 = \frac{
+                \printVec{\vecLsOnePos} -
+                \printVec{\vecX}
+            }{
+                \norm{\printVec{\vecLsOnePos} -
+                \printVec{\vecX}}
+            }
+            = \printVec[1]{\vecLsOneNorm}
+        \end{align*}
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\textwidth}
+        \begin{align*}
+            \vec{l}_2 = \frac{
+                \printVec{\vecLsTwoPos} -
+                \printVec{\vecX}
+            }{
+                \norm{\printVec{\vecLsTwoPos} -
+                \printVec{\vecX}}
+            }
+            = \printVec[1]{\vecLsTwoNorm}
+        \end{align*}
+    \end{minipage}
+
+    % r1, r2
+    \[\vec{r} = 2\vec{n}\trans{\vec{n}}\vec{l}-\vec{l}\]
+    \begin{minipage}[t]{0.5\textwidth}
+        \begin{align*}
+            \vec{r}_1 &= 2 \printVec{\vecXNormal}
+            \printVecT{\vecXNormal}
+            \printVec[1]{\vecLsOneNorm} -
+            \printVec[1]{\vecLsOneNorm}\\
+            \vec{r}_1 &= 2 \printMat{\matROneNormal}
+            \printVec[1]{\vecLsOneNorm} -
+            \printVec[1]{\vecLsOneNorm}\\
+            \vec{r}_1 &= \printMat{\matROneNormalScalar}
+            \printVec[1]{\vecLsOneNorm} -
+            \printVec[1]{\vecLsOneNorm}\\
+            \vec{r}_1 &= \printVec[1]{\matROneMul} -
+            \printVec[1]{\vecLsOneNorm} =
+            \printVec[1]{\vecROneResult}
+        \end{align*}
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\textwidth}
+        \begin{align*}
+            \vec{r}_2 &= 2 \printVec{\vecXNormal}
+            \printVecT{\vecXNormal}
+            \printVec[1]{\vecLsTwoNorm} -
+            \printVec[1]{\vecLsTwoNorm}\\
+            \vec{r}_2 &= 2 \printMat{\matRTwoNormal}
+            \printVec[1]{\vecLsTwoNorm} -
+            \printVec[1]{\vecLsTwoNorm}\\
+            \vec{r}_2 &= \printMat{\matRTwoNormalScalar}
+            \printVec[1]{\vecLsTwoNorm} -
+            \printVec[1]{\vecLsTwoNorm}\\
+            \vec{r}_2 &= \printVec[1]{\matRTwoMul} -
+            \printVec[1]{\vecLsTwoNorm} =
+            \printVec[1]{\vecRTwoResult}
+        \end{align*}
+    \end{minipage}
+
+    % substitute
+    \begin{align*}
+        L(x,\vec{v}) &=
+            \left(
+                C_a + C_d\ \max{\left(0, \printScalar[1]{\scalarPlnOne}\right)} + C_s\ \max{\left(0, \printScalar[1]{\scalarPvrOne}\right)}^{\printScalar{\scalarShine}}
+            \right)
+            \cdot \printVec{\vecLsOneColor}\\
+        &\quad \quad +
+            \left(
+                C_a + C_d\ \max{\left(0, \printScalar[1]{\scalarPlnTwo}\right)}
+                + C_s\ \max{\left(0, \printScalar[1]{\scalarPvrTwo}\right)}^{\printScalar{\scalarShine}}
+            \right)
+            \cdot \printVec{\vecLsTwoColor}\\
+        &=
+        \left(
+            \printMat{\matA} +
+            \printMat[1]{\matDOneScaled} +
+            \printMat{\matSOneScaled}
+        \right)
+        \cdot \printVec{\vecLsOneColor}\\
+        &\quad \quad +
+        \left(
+            \printMat{\matA} +
+            \printMat[1]{\matDTwoScaled} +
+            \printMat{\matSTwoScaled}
+        \right)
+        \cdot \printVec{\vecLsTwoColor}\\
+        &=
+        \printMat{\addMatResultOne} \cdot \printVec{\vecLsOneColor} +
+        \printMat{\addMatResultTwo} \cdot \printVec{\vecLsTwoColor}\\
+        & =
+        \printVec{\vecFinalColor}
+    \end{align*}
+
+\end{document}
