@@ -9,36 +9,7 @@ glmatrix v1.0.0 --- This package provides macros for linear algebra calculations
 E-mail: rwarnking@gmail.com
 
 Released under BSD 3-Clause License
-
-BSD 3-Clause License
-    
-    Copyright (c) 2026, Rene Warnking
-    
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-    
-    1. Redistributions of source code must retain the above copyright notice, this
-       list of conditions and the following disclaimer.
-    
-    2. Redistributions in binary form must reproduce the above copyright notice,
-       this list of conditions and the following disclaimer in the documentation
-       and/or other materials provided with the distribution.
-    
-    3. Neither the name of the copyright holder nor the names of its
-       contributors may be used to endorse or promote products derived from
-       this software without specific prior written permission.
-    
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+See License Link: Default
 ----------------------------------------------------------------
 
 This package provides macros for linear algebra calculations with scalars, vectors, and matrices. Its structure is based on the JavaScript library glmatrix.js, and it similarly provides several convenience functions often used in computer graphics contexts, like creating a translation matrix.
@@ -62,73 +33,15 @@ Maintained by Rene Warnking
 E-mail: rwarnking@gmail.com
 
 Released under BSD 3-Clause License
-
-BSD 3-Clause License
-    
-    Copyright (c) 2026, Rene Warnking
-    
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-    
-    1. Redistributions of source code must retain the above copyright notice, this
-       list of conditions and the following disclaimer.
-    
-    2. Redistributions in binary form must reproduce the above copyright notice,
-       this list of conditions and the following disclaimer in the documentation
-       and/or other materials provided with the distribution.
-    
-    3. Neither the name of the copyright holder nor the names of its
-       contributors may be used to endorse or promote products derived from
-       this software without specific prior written permission.
-    
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+See License Link: Default
 ---------------------------------------------------------------
 \endpreamble
 \postamble
-Copyright (C) 2026/04/03 by
+Copyright (C) 2026/05/05 by
   Rene Warnking <rwarnking@gmail.com>
 
 Released under BSD 3-Clause License
-
-BSD 3-Clause License
-    
-    Copyright (c) 2026, Rene Warnking
-    
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-    
-    1. Redistributions of source code must retain the above copyright notice, this
-       list of conditions and the following disclaimer.
-    
-    2. Redistributions in binary form must reproduce the above copyright notice,
-       this list of conditions and the following disclaimer in the documentation
-       and/or other materials provided with the distribution.
-    
-    3. Neither the name of the copyright holder nor the names of its
-       contributors may be used to endorse or promote products derived from
-       this software without specific prior written permission.
-    
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+See License Link: Default
 
 This work is maintained by
   Rene Warnking.
@@ -164,7 +77,7 @@ This work consists of the file  glmatrix.dtx
 
 %<*package>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{glmatrix}[2026/04/03 v1.0.0 Macros for linear algebra calculations common in computer graphics]
+\ProvidesPackage{glmatrix}[2026/05/05 v1.0.0 Macros for linear algebra calculations common in computer graphics]
 
 \RequirePackage{xinttools}
 \RequirePackage{xintfrac}
@@ -178,6 +91,7 @@ This work consists of the file  glmatrix.dtx
 
 %<*driver>
 \documentclass{ltxdoc}
+
 \usepackage{xcolor}
 \definecolor{uos-red}{cmyk}{0.2, 1, 0.65, 0.25}
 
@@ -319,119 +233,16 @@ This work consists of the file  glmatrix.dtx
 \begin{document}
     \title{The \textsf{glmatrix} Package}
     \author{Rene Warnking}
-    \date{Version 1.0.0\\2026/04/03}
+    \date{Version 1.0.0\\2026/05/05}
     \maketitle
 
     \tableofcontents
 
-    \section{Introduction}
     
-    The \texttt{glmatrix} package provides a small set of macros that allow you to
-    do basic vector and matrix arithmetics in \LaTeX. It is inspired by the javascript
-    library with the same name (https://glmatrix.net/) and provides the same functions and more.
-    Using this package, you can easily do vector calculations like dot and cross
-    product as well as more complex calculations, like vector matrix multiplication.
     
-    The package is specifically targeting use cases in computer graphics.
-    Consequently, it provides macros for vector transformations using matrices and
-    the creation of commonly used matrices in computer graphics, like the lookAt matrix.
-    In combination, these macros allow you to do many calculations that regularly occurr in computer graphics.
-    
-    \clearpage
-
-    \section{Example}
-    
-    Given the following equation:
-    \[A B (\vec{v} + \vec{w})\ \vert\ v, w \in \R^3, A, B \in \R^{3\times3}\]
-    
-    The code below recreates the equation with exemplary values and directly calculates the results.
-    Then, the results are used to print a step-by-step solution with the chosen values.\\
-    Note:
-    \begin{itemize}
-    \setlength\itemsep{0em}
-    \item While creating a new vector or matrix is done by providing its name as a simple string, accessing its content after creation is done as a command (with backslash)
-    \item This package mainly provides macros for mathematical calculations. These macros assign the calculated result automatically to a variable using the optional parameter (for example \textbackslash addVec). If you wish to specify the name of the variable yourself, you may pass a string for the optional argument.
-    \end{itemize}
-    
-    \lstset{style=latexStyle}
-    \begin{lstlisting}[gobble=4]
-    % Initialize two vectors and add them together
-    \newVec{myVecV}{1,2,3}
-    \newVec{myVecW}{7,8,9}
-    \addVec[addVecResult]{\myVecV}{\myVecW}
-    
-    % Initialize two matrices and multiply them with each other
-    \newMat{myMatA}{{{0.5,2,3}{4,5,6}{7,8,9}}}
-    \newDiagMat{myMatB}{2, 3, 4}
-    \mulMat[mulMatResult]{\myMatA}{\myMatB}
-    
-    % Transform the result vector with the created matrix
-    \transformVec{\mulMatResult}{\addVecResult}
-    
-    % Print a step-by-step solution
-    \begin{align}
-        \printMat{\myMatA} \printMat{\myMatB}
-        \left(\printVec{\myVecV} + \printVec{\myVecW}\right)
-        =
-        \printMat{\mulMatResult}
-        \printVec{\addVecResult}
-        =
-        \printVec{\transformVecResult}
-    \end{align}
-    \end{lstlisting}
-    \vspace{5mm}
-    
-    When compiling the above \LaTeX{} code, the following output is created.
-    \begin{align*}
-        \begin{pmatrix}0.5&2&3\\4&5&6\\7&8&9\end{pmatrix}
-        \begin{pmatrix}2&0&0\\0&3&0\\0&0&4\end{pmatrix}
-        \left(
-            \begin{pmatrix}1\\2\\3\end{pmatrix} +
-            \begin{pmatrix}7\\8\\9\end{pmatrix}
-        \right)
-        = \begin{pmatrix}1&6&12\\8&15&24\\14&24&36\end{pmatrix}
-        \begin{pmatrix}8\\10\\12\end{pmatrix}
-        = \begin{pmatrix}212\\502\\784\end{pmatrix}
-    \end{align*}
-    
-    All three classes provide various macros to print the content of a variable for all kinds of use cases.
-    For example, you can print a vector inside a line of text using the \textbackslash printVecT, which prints a transposed version of the vector's contents.
-    
-    \clearpage
     \DocInput{glmatrix.dtx}
     \clearpage
-    \section{License}
-    Released under BSD 3-Clause License
-
-    BSD 3-Clause License
     
-    Copyright (c) 2026, Rene Warnking
-    
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-    
-    1. Redistributions of source code must retain the above copyright notice, this
-       list of conditions and the following disclaimer.
-    
-    2. Redistributions in binary form must reproduce the above copyright notice,
-       this list of conditions and the following disclaimer in the documentation
-       and/or other materials provided with the distribution.
-    
-    3. Neither the name of the copyright holder nor the names of its
-       contributors may be used to endorse or promote products derived from
-       this software without specific prior written permission.
-    
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 \end{document}
 %</driver>
 % \fi
@@ -5390,5 +5201,5 @@ This work consists of the file  glmatrix.dtx
 % \end{macro}
 
 % \iffalse
-%<*package>
+%</package>
 % \fi
